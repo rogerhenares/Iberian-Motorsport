@@ -1,7 +1,5 @@
 package com.iberianmotorsports.service.controller;
 
-import com.iberianmotorsports.UserFactory;
-import com.iberianmotorsports.service.model.User;
 import com.iberianmotorsports.service.service.UserService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -81,5 +79,6 @@ class UserControllerTest {
     private byte[] loadContent(String path) {
         return new ClassPathResource("content/" + path).getInputStream().readAllBytes();
     }
+
 
 }

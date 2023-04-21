@@ -1,8 +1,8 @@
 package com.iberianmotorsports.service.controller;
 
 import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.model.User;
 import com.iberianmotorsports.service.model.MessageResponse;
+import com.iberianmotorsports.service.model.User;
 import com.iberianmotorsports.service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -10,20 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-
     @PostMapping
-    public ResponseEntity<?> createNewUser(@RequestBody User user) throws ServiceException{
+    public ResponseEntity<?> createNewUser(@RequestBody User user) throws ServiceException {
         User createdUser = userService.saveUser(user);
         return new ResponseEntity<Object>(createdUser, HttpStatus.CREATED);
     }
@@ -57,5 +56,7 @@ public class UserController {
         messageResponse.setMessage("User has been deleted successfully.");
         return new ResponseEntity<Object>(messageResponse, HttpStatus.OK);
     }
+
+
 
 }
