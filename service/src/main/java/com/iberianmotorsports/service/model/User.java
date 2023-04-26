@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Entity
@@ -33,7 +31,7 @@ public class User implements Serializable {
     @Column(name = "nationality")
     private String nationality;
 
-    @Column(name = "open_ids")
-    private Set<UserOpenIds> userOpenIdsSet = new HashSet<>();
+//    @Column(name = "open_ids")
+//    private Set<UserOpenIds> userOpenIdsSet = new HashSet<>();
 
 }
