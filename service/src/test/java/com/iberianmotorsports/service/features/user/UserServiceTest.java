@@ -63,7 +63,7 @@ public class UserServiceTest {
         @Test
         public void saveUserWhenPlayerIdIsNotDefined(){
             User testUser = UserFactory.user();
-            testUser.setPlayerId(null);
+            testUser.setSteamId(null);
 
 
             RuntimeException exception = assertThrows(ServiceException.class,
@@ -158,7 +158,7 @@ public class UserServiceTest {
 
             when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-            RuntimeException exception = assertThrows(ServiceException.class, () ->service.findUserById(anyLong()));
+            RuntimeException exception = assertThrows(ServiceException.class, () ->service.findUserBySteamId(anyLong()));
 
             verify(userRepository).findById(anyLong());
             Assertions.assertEquals(ErrorMessages.USER_NOT_IN_DB.getDescription(), exception.getMessage());
@@ -185,7 +185,7 @@ public class UserServiceTest {
     }
 
     private void givenUserAlreadyExists() {
-        when(userRepository.findByPlayerId(anyLong())).thenReturn(Optional.of(UserFactory.user()));
+        when(userRepository.findBySteamId(anyLong())).thenReturn(Optional.of(UserFactory.user()));
     }
 
 
