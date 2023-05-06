@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "USER")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
 
     @Id
@@ -39,8 +41,4 @@ public class User implements Serializable {
     @Column(name = "nationality")
     @JsonProperty("loccountrycode")
     private String nationality;
-
-//    @Column(name = "open_ids")
-//    private Set<UserOpenIds> userOpenIdsSet = new HashSet<>();
-
 }

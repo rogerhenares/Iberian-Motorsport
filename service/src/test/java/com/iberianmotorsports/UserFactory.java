@@ -43,4 +43,11 @@ public class UserFactory{
         return user;
     }
 
+    public static User userFromSteam(){
+        User user = user();
+        user.setShortName(null);
+        user.setLastName(null);
+        return user;
+    }
+
 }

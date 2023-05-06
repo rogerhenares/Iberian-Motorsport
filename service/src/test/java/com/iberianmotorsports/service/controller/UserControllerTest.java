@@ -1,7 +1,6 @@
 package com.iberianmotorsports.service.controller;
 
 import com.iberianmotorsports.service.service.UserService;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -9,13 +8,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static com.iberianmotorsports.service.utils.Utils.loadContent;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -73,11 +72,6 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(loadContent("userdto.json")))
                 .andExpect(status().isOk());
-    }
-
-    @SneakyThrows
-    private byte[] loadContent(String path) {
-        return new ClassPathResource("content/" + path).getInputStream().readAllBytes();
     }
 
 

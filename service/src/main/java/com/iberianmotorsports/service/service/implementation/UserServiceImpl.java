@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.User;
@@ -10,6 +11,8 @@ import com.iberianmotorsports.service.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,13 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.fasterxml.jackson.core.io.NumberInput.parseLong;
-
 
 @AllArgsConstructor
 @Transactional
 @Service("userService")
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -36,7 +39,7 @@ public class UserServiceImpl implements UserService {
     OpenIdRepository openIdRepository;
 
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
     static final Pageable pageable = PageRequest.of(0,10);
 
@@ -48,7 +51,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-
+    @Override
     public User getPlayerSummary(String steamId) {
         String apiKey = "6614BF6FC7820DF1DD2C875DB66C5D82";
         String url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/" + "?key=" + apiKey + "&steamids=" + steamId;
@@ -56,9 +59,11 @@ public class UserServiceImpl implements UserService {
         String response = restTemplate.getForObject(url, String.class);
 
         ObjectMapper mapper = new ObjectMapper();
-        User user = null;
+        User user;
         try {
-            user = mapper.readValue(response, User.class);
+            JsonNode rootNode = mapper.readTree(response);
+            JsonNode playerNode = rootNode.path("response").path("players").get(0);
+            user = mapper.readValue(playerNode.toString(), User.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -110,7 +115,7 @@ public class UserServiceImpl implements UserService {
 
      private User findSteamInfo(User user) {
         List<String> userInfo = getSteamUserInfo(user);
-        user.setSteamId(parseLong(userInfo.get(0)));
+        //user.setSteamId(parseLong(userInfo.get(0)));
         user.setFirstName(userInfo.get(3));
         return user;
      }

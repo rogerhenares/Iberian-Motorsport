@@ -8,9 +8,14 @@ import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
 import com.iberianmotorsports.service.service.implementation.UserServiceImpl;
 import org.hibernate.service.spi.ServiceException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -20,7 +25,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
+import static com.iberianmotorsports.service.utils.Utils.loadContentString;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -53,11 +60,15 @@ public class UserServiceTest {
         @Test
         public void saveUser() {
             givenUserRepositorySave();
-            User testUser = UserFactory.user();
-            userRepository.save(testUser);
+            givenUserIdRetrieveUserData();
+
+            service.saveUser(Long.MAX_VALUE);
+
             verify(userRepository).save(userCaptor.capture());
-            assertEquals(UserFactory.user(), userCaptor.getValue());
+            assertEquals(UserFactory.userFromSteam(), userCaptor.getValue());
         }
+
+
 
         @Test
         public void saveUserWhenPlayerIdIsNotDefined(){
@@ -65,13 +76,13 @@ public class UserServiceTest {
             testUser.setSteamId(null);
 
 
-            RuntimeException exception = assertThrows(ServiceException.class,
+            Exception exception = assertThrows(IllegalArgumentException.class,
                     ()-> service.saveUser(1234565L));
 
             verify(userRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.STEAM_ID_UNDEFINED.getDescription(), exception.getMessage());
-
         }
+
         @Test
         public void saveUserWhenPlayerIdAlreadyExists(){
             User testUser = UserFactory.user();
@@ -82,7 +93,6 @@ public class UserServiceTest {
 
             verify(userRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATE_USER.getDescription(), exception.getMessage());
-
         }
 
         @Test
@@ -182,10 +192,28 @@ public class UserServiceTest {
             return user;
         });
     }
+    private void givenUserIdRetrieveUserData() {
+        when(restTemplate.getForObject(anyString(), eq(String.class)))
+                .thenReturn(loadContentString("userSteamReturn.json"));
+    }
 
     private void givenUserAlreadyExists() {
         when(userRepository.findBySteamId(anyLong())).thenReturn(Optional.of(UserFactory.user()));
     }
 
+
+    @ParameterizedTest
+    @MethodSource("provideStringsForIsBlank")
+    public void saveUserThrowsExceptionSteamIdInvalid(User user, Object expected){
+
+    }
+
+    private static Stream<Arguments> provideStringsForIsBlank() {
+        return Stream.of(
+                Arguments.of(UserFactory.user(), true),
+                Arguments.of(UserFactory.userInvalidFormat(), true),
+                Arguments.of(UserFactory.updatedUser(), true)
+        );
+    }
 
 }
