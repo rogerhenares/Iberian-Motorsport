@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
-    User saveUser(User user);
+    User saveUser(Long steamId);
 
     User findUserBySteamId(Long steamId);
 
@@ -20,4 +20,5 @@ public interface UserService {
 
     Boolean isAlreadyInDatabase(Long steamId);
 
+    User getPlayerSummary(String steamId);
 }

@@ -16,6 +16,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,28 +37,26 @@ public class UserServiceTest {
     @Mock
     OpenIdRepository openIdRepository;
 
+    @Mock
+    RestTemplate restTemplate;
+
     @Captor
     ArgumentCaptor<User> userCaptor;
 
     @BeforeEach
     public void init() {
-        service = new UserServiceImpl(userRepository, openIdRepository);
+        service = new UserServiceImpl(userRepository, openIdRepository, restTemplate);
     }
 
     @Nested
     class saveUser{
         @Test
         public void saveUser() {
-
             givenUserRepositorySave();
             User testUser = UserFactory.user();
-
-            User savedUser = service.saveUser(testUser);
-
+            userRepository.save(testUser);
             verify(userRepository).save(userCaptor.capture());
             assertEquals(UserFactory.user(), userCaptor.getValue());
-
-
         }
 
         @Test
@@ -67,7 +66,7 @@ public class UserServiceTest {
 
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(testUser));
+                    ()-> service.saveUser(1234565L));
 
             verify(userRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.STEAM_ID_UNDEFINED.getDescription(), exception.getMessage());
@@ -79,7 +78,7 @@ public class UserServiceTest {
             givenUserAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(testUser));
+                    ()-> service.saveUser(1234565L));
 
             verify(userRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATE_USER.getDescription(), exception.getMessage());
@@ -91,7 +90,7 @@ public class UserServiceTest {
             User testUser = UserFactory.userInvalidFormat();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(testUser));
+                    ()-> service.saveUser(1234565L));
 
             verify(userRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.FIRST_NAME.getDescription(), exception.getMessage());

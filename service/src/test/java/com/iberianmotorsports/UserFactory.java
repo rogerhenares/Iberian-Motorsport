@@ -6,7 +6,7 @@ public class UserFactory{
 
     public static final Long userId = 1L;
 
-    public static final Long playerId = 99999999999999999L;
+    public static final Long steamId = 99999999999999999L;
 
     public static final String firstName = "TestFirstName";
 
@@ -19,7 +19,7 @@ public class UserFactory{
     public static User user(){
         User user = new User();
         user.setUserId(userId);
-        user.setPlayerId(playerId);
+        user.setSteamId(steamId);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setShortName(shortName);
@@ -30,7 +30,7 @@ public class UserFactory{
     public static User userInvalidFormat() {
         User user = new User();
         user.setUserId(userId);
-        user.setPlayerId(playerId);
+        user.setSteamId(steamId);
         return user;
     }
 
