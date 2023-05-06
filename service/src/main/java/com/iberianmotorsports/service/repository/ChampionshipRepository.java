@@ -1,14 +1,14 @@
 package com.iberianmotorsports.service.repository;
 
-import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.model.Championship;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface ChampionshipRepository extends JpaRepository<Championship, Long> {
 
-    Optional<User> findBySteamId(Long steamId);
 
+    Optional<Championship> findByName(String name);
 }

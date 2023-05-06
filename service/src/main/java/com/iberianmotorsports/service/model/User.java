@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,16 +22,20 @@ public class User implements Serializable {
     @JsonProperty("steamid")
     private Long steamId;
 
+    @NotBlank
     @Column(name = "first_name")
     @JsonProperty("personaname")
     private String firstName;
 
+    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
+    @NotBlank
     @Column(name = "short_name")
     private String shortName;
 
+    @NotBlank
     @Column(name = "nationality")
     @JsonProperty("loccountrycode")
     private String nationality;

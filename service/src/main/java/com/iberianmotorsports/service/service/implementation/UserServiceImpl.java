@@ -55,17 +55,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
-        if(user.getFirstName() == null || user.getFirstName().isBlank()) throw new ServiceException(ErrorMessages.FIRST_NAME.getDescription());
-        if(user.getLastName() == null || user.getLastName().isBlank()) throw new ServiceException(ErrorMessages.LAST_NAME.getDescription());
-        if(user.getShortName() == null || user.getLastName().isBlank()) throw new ServiceException(ErrorMessages.SHORT_NAME.getDescription());
-        if(user.getNationality() == null || user.getNationality().isBlank()) throw new ServiceException(ErrorMessages.NATIONALITY.getDescription());
         return userRepository.save(user);
     }
 
     @Override
     public void deleteUser(Long steamId) {
         userRepository.deleteById(steamId);
-
     }
 
     public Boolean isAlreadyInDatabase(Long steamId) {
