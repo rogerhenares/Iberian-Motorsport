@@ -10,14 +10,14 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
+
+import static com.iberianmotorsports.service.Utils.Utils.defaultPageable;
 
 @AllArgsConstructor
 @Transactional
@@ -26,8 +26,6 @@ public class SessionServiceImpl implements SessionService {
 
     @Autowired
     private SessionRepository sessionRepository;
-
-    static final Pageable pageable = PageRequest.of(0,10);
 
     @Override
     public Session saveSession(Session session) {
@@ -52,7 +50,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Page<Session> findAllSessions() {
-        return sessionRepository.findAll(pageable);
+        return sessionRepository.findAll(defaultPageable);
     }
 
     @Override

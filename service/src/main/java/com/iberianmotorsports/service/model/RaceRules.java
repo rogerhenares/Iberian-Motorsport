@@ -14,9 +14,10 @@ public class RaceRules {
     @Column(name = "id")
     private Long id;
 
+    //TODO check if valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "race_id", referencedColumnName = "id")
-    private Long raceId;
+    private Race race;
 
     @NotNull
     @Range(min=1, max=2)

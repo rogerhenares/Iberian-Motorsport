@@ -10,14 +10,14 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
+
+import static com.iberianmotorsports.service.Utils.Utils.defaultPageable;
 
 @AllArgsConstructor
 @Transactional
@@ -26,8 +26,6 @@ public class RaceServiceImpl implements RaceService {
 
     @Autowired
     private RaceRepository raceRepository;
-
-    static final Pageable pageable = PageRequest.of(0,10);
 
     @Override
     public Race saveRace(Race race) {
@@ -52,7 +50,7 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public Page<Race> findAllRaces() {
-        return raceRepository.findAll(pageable);
+        return raceRepository.findAll(defaultPageable);
     }
 
     @Override

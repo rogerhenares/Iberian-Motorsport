@@ -9,6 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ChampionshipRepository extends JpaRepository<Championship, Long> {
 
-
     Optional<Championship> findByName(String name);
 }
