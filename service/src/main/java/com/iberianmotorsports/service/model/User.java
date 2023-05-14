@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "USER")
+@Table(name = "\"USER\"")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
 
@@ -36,7 +36,6 @@ public class User implements Serializable {
 
     @Column(name = "short_name")
     private String shortName;
-
 
     @Column(name = "nationality")
     @JsonProperty("loccountrycode")

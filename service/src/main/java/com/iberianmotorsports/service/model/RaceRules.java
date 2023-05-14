@@ -14,9 +14,8 @@ public class RaceRules {
     @Column(name = "id")
     private Long id;
 
-    //TODO check if valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "race_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "race_id")
     private Race race;
 
     @NotNull

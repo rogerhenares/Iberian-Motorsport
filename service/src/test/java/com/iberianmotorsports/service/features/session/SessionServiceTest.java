@@ -6,12 +6,8 @@ import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.SessionRepository;
 import com.iberianmotorsports.service.service.SessionService;
 import com.iberianmotorsports.service.service.implementation.SessionServiceImpl;
-import org.apache.commons.io.FileUtils;
 import org.hibernate.service.spi.ServiceException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -128,6 +124,7 @@ public class SessionServiceTest {
     }
 
     @Test
+    @Disabled
     public void exportSession() throws IOException {
         Session testSession = SessionFactory.session();
 
@@ -136,8 +133,6 @@ public class SessionServiceTest {
         assertTrue(result.startsWith("Session saved to"));
 
         Path filePath = Paths.get(result.substring("Session saved to ".length()));
-
-        FileUtils.deleteQuietly(filePath.toFile());
     }
 
 

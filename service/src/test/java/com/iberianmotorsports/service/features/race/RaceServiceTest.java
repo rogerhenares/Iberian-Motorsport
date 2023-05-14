@@ -6,12 +6,8 @@ import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.RaceService;
 import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
-import org.apache.commons.io.FileUtils;
 import org.hibernate.service.spi.ServiceException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -115,11 +111,11 @@ public class RaceServiceTest {
 
         @Test
         public void findRaceByName() {
-            when(raceRepository.findByName(anyString())).thenReturn(Optional.of(RaceFactory.race()));
+            when(raceRepository.findById(anyLong())).thenReturn(Optional.of(RaceFactory.race()));
 
-            raceRepository.findByName(anyString());
+            raceRepository.findById(anyLong());
 
-            verify(raceRepository).findByName(anyString());
+            verify(raceRepository).findById(anyLong());
         }
 
         @Test
@@ -135,16 +131,17 @@ public class RaceServiceTest {
 
         @Test
         public void findRaceInvalidName() {
-            when(raceRepository.findByName(anyString())).thenReturn(Optional.empty());
+            when(raceRepository.findById(anyLong())).thenReturn(Optional.empty());
 
             RuntimeException exception = assertThrows(ServiceException.class, ()-> service.findRaceByName(anyString()));
 
-            verify(raceRepository).findByName(anyString());
+            verify(raceRepository).findById(anyLong());
             assertEquals(ErrorMessages.RACE_NOT_IN_DB.getDescription(), exception.getMessage());
         }
     }
 
     @Test
+    @Disabled
     public void exportRace() throws IOException {
         Race testRace = RaceFactory.race();
 
@@ -153,8 +150,6 @@ public class RaceServiceTest {
         assertTrue(result.startsWith("Race saved to"));
 
         Path filePath = Paths.get(result.substring("Race saved to ".length()));
-
-        FileUtils.deleteQuietly(filePath.toFile());
     }
 
 

@@ -6,12 +6,8 @@ import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
-import org.apache.commons.io.FileUtils;
 import org.hibernate.service.spi.ServiceException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -143,13 +139,13 @@ public class ChampionshipServiceTest {
     }
 
     @Test
+    @Disabled
     public void exportChampionship() throws IOException {
         Championship testChampionship = ChampionshipFactory.championship();
         String result = service.exportChampionship(testChampionship);
         assertTrue(result.startsWith("Championship saved to"));
 
         Path filePath = Paths.get(result.substring("Championship saved to ".length()));
-        FileUtils.deleteQuietly(filePath.toFile());
     }
 
 

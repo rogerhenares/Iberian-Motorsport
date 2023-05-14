@@ -27,6 +27,8 @@ public class Session {
     @Column(name = "session_duration_minutes")
     private Integer sessionDurationMinutes;
 
-    // EL race_id es un one to one o un one to many?
+    @OneToOne
+    @JoinColumn(name = "race_id")
+    private Race race;
 
 }
