@@ -31,6 +31,14 @@ public class UserFactory{
         User user = new User();
         user.setUserId(userId);
         user.setSteamId(steamId);
+        user.setFirstName("");
+        user.setLastName("");
+        return user;
+    }
+
+    public static User userWrongSteamId() {
+        User user = new User();
+        user.setSteamId(45L);
         return user;
     }
 

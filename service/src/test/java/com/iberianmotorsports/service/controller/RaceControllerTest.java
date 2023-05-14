@@ -1,6 +1,6 @@
 package com.iberianmotorsports.service.controller;
 
-import com.iberianmotorsports.service.service.UserService;
+import com.iberianmotorsports.service.service.RaceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,11 +19,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserController.class)
-class UserControllerTest {
+@WebMvcTest(RaceController.class)
+class RaceControllerTest {
 
     @MockBean
-    UserService userService;
+    RaceService raceService;
 
     @Autowired
     MockMvc mockMvc;
@@ -37,38 +37,45 @@ class UserControllerTest {
     }
 
     @Test
-    void createNewUser() throws Exception {
-        mockMvc.perform(post("/user")
+    void createNewRace() throws Exception {
+        mockMvc.perform(post("/race")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(loadContent("userSteamReturn.json")))
+                        .content(loadContent("race.json")))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    void getUserById() throws Exception {
-        mockMvc.perform(get("/user/1"))
+    void getRaceById() throws Exception {
+        mockMvc.perform(get("/race/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void getAllUsers() throws Exception{
-        mockMvc.perform(get("/user"))
+    void getRaceByName() throws Exception {
+        mockMvc.perform(get("/race/name/testRace"))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void getAllRaces() throws Exception{
+        mockMvc.perform(get("/race"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void updateUser() throws Exception{
-        mockMvc.perform(put("/user/1").
+    void updateRace() throws Exception{
+        mockMvc.perform(put("/race/1").
                         contentType(MediaType.APPLICATION_JSON)
-                        .content(loadContent("userSteamReturn.json")))
+                        .content(loadContent("race.json")))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void deleteUser() throws Exception{
-        mockMvc.perform(delete("/user/1")
+    void deleteRace() throws Exception{
+        mockMvc.perform(delete("/race/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(loadContent("userSteamReturn.json")))
+                        .content(loadContent("race.json")))
                 .andExpect(status().isOk());
     }
 

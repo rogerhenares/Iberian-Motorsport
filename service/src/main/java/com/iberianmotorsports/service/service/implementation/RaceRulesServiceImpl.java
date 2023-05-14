@@ -66,7 +66,8 @@ public class RaceRulesServiceImpl implements RaceRulesService {
         return null;
     }
 
-    public String exportRace(RaceRules raceRules) throws IOException {
+    @Override
+    public String exportRaceRules(RaceRules raceRules) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(raceRules);
@@ -80,7 +81,7 @@ public class RaceRulesServiceImpl implements RaceRulesService {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(json);
             fileWriter.close();
-            return "Race saved to " + filePath;
+            return "Race rules saved to " + filePath;
         } else {
             return "No directory selected";
         }

@@ -75,6 +75,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         return championshipOptional.isPresent();
     }
 
+    @Override
     public String exportChampionship(Championship championship) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();

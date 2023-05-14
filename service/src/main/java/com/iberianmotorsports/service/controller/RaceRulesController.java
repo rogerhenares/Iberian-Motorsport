@@ -1,6 +1,5 @@
 package com.iberianmotorsports.service.controller;
 
-import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.MessageResponse;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -32,7 +31,6 @@ public class RaceRulesController {
         return new ResponseEntity<Object>(raceRules, HttpStatus.OK);
     }
 
-
     @GetMapping
     public ResponseEntity<?> getAllRaceRules() throws ServiceException{
         Page<RaceRules> raceRulesList = raceRulesService.findAllRaceRules();
@@ -48,9 +46,6 @@ public class RaceRulesController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteRaceRules(@PathVariable("id") Long id) throws ServiceException{
-        if(!raceRulesService.isAlreadyInDatabase(id)) {
-            throw new ServiceException(ErrorMessages.RACE_RULES_NOT_IN_DB.getDescription());
-        }
         raceRulesService.deleteRaceRules(id);
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Race rules configuration has been deleted successfully.");

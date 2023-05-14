@@ -20,6 +20,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -43,20 +44,23 @@ public class UserServiceTest {
     @Mock
     RestTemplate restTemplate;
 
+    @Value("${steam.client.id}")
+    private String apiKey;
+
     @Captor
     ArgumentCaptor<User> userCaptor;
 
     @BeforeEach
     public void init() {
-        service = new UserServiceImpl(userRepository, restTemplate);
+        service = new UserServiceImpl(userRepository, restTemplate, apiKey);
     }
 
     @Nested
     class saveUser{
         @Test
         public void saveUser() {
-            givenUserRepositorySave();
             givenUserIdRetrieveUserData();
+            givenUserRepositorySave();
 
             service.saveUser(Long.MAX_VALUE);
 
@@ -64,45 +68,27 @@ public class UserServiceTest {
             assertEquals(UserFactory.userFromSteam(), userCaptor.getValue());
         }
 
-
-
         @Test
-        public void saveUserWhenPlayerIdIsNotDefined(){
-            User testUser = UserFactory.user();
-            testUser.setSteamId(null);
+        public void saveUserWhenWrongSteamId(){
+            givenUserIdRetrieveUserDataFailed();
 
-
-            Exception exception = assertThrows(IllegalArgumentException.class,
-                    ()-> service.saveUser(1234565L));
+            Exception exception = assertThrows(ServiceException.class,
+                    ()-> service.saveUser(Long.MAX_VALUE));
 
             verify(userRepository, times(0)).save(any());
-            Assertions.assertEquals(ErrorMessages.STEAM_ID_UNDEFINED.getDescription(), exception.getMessage());
+            Assertions.assertEquals(ErrorMessages.STEAM_DATA.getDescription(), exception.getMessage());
         }
 
         @Test
-        public void saveUserWhenPlayerIdAlreadyExists(){
-            User testUser = UserFactory.user();
+        public void saveWhenUserAlreadyExists(){
             givenUserAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(1234565L));
+                    ()-> service.saveUser(Long.MAX_VALUE));
 
             verify(userRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATE_USER.getDescription(), exception.getMessage());
         }
-
-        @Test
-        public void saveUserWithInvalidFormat(){
-            User testUser = UserFactory.userInvalidFormat();
-
-            RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(1234565L));
-
-            verify(userRepository, times(0)).save(any());
-            Assertions.assertEquals(ErrorMessages.FIRST_NAME.getDescription(), exception.getMessage());
-        }
-
-
     }
 
     @Nested
@@ -110,7 +96,6 @@ public class UserServiceTest {
 
         @Test
         public void updateUser() {
-            givenUserRepositorySave();
             User testUser = UserFactory.updatedUser();
 
             User updatedUser = service.updateUser(testUser);
@@ -136,6 +121,7 @@ public class UserServiceTest {
 
         @Test
         public void deleteUser() {
+            givenUserAlreadyExists();
 
             service.deleteUser(anyLong());
 
@@ -193,6 +179,11 @@ public class UserServiceTest {
                 .thenReturn(loadContentString("userSteamReturn.json"));
     }
 
+    private void givenUserIdRetrieveUserDataFailed() {
+        when(restTemplate.getForObject(anyString(), eq(String.class)))
+                .thenReturn(loadContentString("userSteamReturnEmpty.json"));
+    }
+
     private void givenUserAlreadyExists() {
         when(userRepository.findBySteamId(anyLong())).thenReturn(Optional.of(UserFactory.user()));
     }
@@ -208,7 +199,8 @@ public class UserServiceTest {
         return Stream.of(
                 Arguments.of(UserFactory.user(), true),
                 Arguments.of(UserFactory.userInvalidFormat(), true),
-                Arguments.of(UserFactory.updatedUser(), true)
+                Arguments.of(UserFactory.updatedUser(), true),
+                Arguments.of(UserFactory.userWrongSteamId(), true)
         );
     }
 

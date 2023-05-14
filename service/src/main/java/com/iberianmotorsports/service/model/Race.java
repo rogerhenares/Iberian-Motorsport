@@ -71,4 +71,5 @@ public class Race {
     @OneToOne(mappedBy = "race")
     private Session session;
 
+
 }

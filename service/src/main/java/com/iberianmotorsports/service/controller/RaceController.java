@@ -1,8 +1,7 @@
 package com.iberianmotorsports.service.controller;
 
-import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.MessageResponse;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.service.RaceService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -32,7 +31,7 @@ public class RaceController {
         return new ResponseEntity<Object>(race, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "/name/{name}")
     public ResponseEntity<?> getRaceByName(@PathVariable("name") String name) throws ServiceException {
         Race race = raceService.findRaceByName(name);
         return new ResponseEntity<Object>(race, HttpStatus.OK);
@@ -53,9 +52,6 @@ public class RaceController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteRace(@PathVariable("id") Long id) throws ServiceException{
-        if(!raceService.isAlreadyInDatabase(id)) {
-            throw new ServiceException(ErrorMessages.RACE_NOT_IN_DB.getDescription());
-        }
         raceService.deleteRace(id);
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Race has been deleted successfully.");

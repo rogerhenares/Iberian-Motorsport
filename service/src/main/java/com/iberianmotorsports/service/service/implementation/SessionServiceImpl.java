@@ -41,12 +41,6 @@ public class SessionServiceImpl implements SessionService {
         return sessionOptional.orElse(null);
     }
 
-    @Override
-    public Session findSessionByName(String name) {
-        Optional<Session> sessionOptional = sessionRepository.findByName(name);
-        if(sessionOptional.isEmpty()) throw new ServiceException(ErrorMessages.SESSION_NOT_IN_DB.getDescription());
-        return sessionOptional.orElse(null);
-    }
 
     @Override
     public Page<Session> findAllSessions() {
@@ -73,6 +67,7 @@ public class SessionServiceImpl implements SessionService {
         return null;
     }
 
+    @Override
     public String exportSession(Session session) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();

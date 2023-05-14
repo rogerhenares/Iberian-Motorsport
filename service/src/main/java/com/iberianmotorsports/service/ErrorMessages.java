@@ -13,7 +13,11 @@ public enum ErrorMessages {
     RACE_RULES_NOT_IN_DB(9, "This race rules configuration does not exist."),
     DUPLICATED_RACE_RULES(10, "This race rules configuration already exists."),
     SESSION_NOT_IN_DB(11, "This session does not exist."),
-    DUPLICATED_SESSION(12, "This session already exists.");
+    DUPLICATED_SESSION(12, "This session already exists."),
+    STEAM_DATA(13, "Could not retrieve Steam data. Please try again."),
+    LAST_NAME(14, "Last name cannot be empty."),
+    SHORT_NAME(15, "Short name cannot be empty."),
+    NATIONALITY(16, "Nationality cannot be empty.");
 
 
     private final int code;

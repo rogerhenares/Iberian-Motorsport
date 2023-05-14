@@ -29,15 +29,15 @@ public class User implements Serializable {
     @JsonProperty("personaname")
     private String firstName;
 
-    @NotBlank
+
     @Column(name = "last_name")
     private String lastName;
 
-    @NotBlank
+
     @Column(name = "short_name")
     private String shortName;
 
-    @NotBlank
+
     @Column(name = "nationality")
     @JsonProperty("loccountrycode")
     private String nationality;

@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "name": "testName",
+  "description": "testDescription",
+  "admin_password": "testAdminPassword",
+  "carGroup": "testCarGroup",
+  "trackMedalsRequirement": 0,
+  "safetyRatingRequirement": 0,
+  "racecraftRatingRequirement": 0,
+  "password": "testPassword",
+  "spectatorPassword": "testSpectatorPassword",
+  "maxCarSlots": 0,
+  "dumpLeaderboards": 1,
+  "isRaceLocked": 0,
+  "raceList": null
+}

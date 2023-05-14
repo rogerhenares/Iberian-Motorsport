@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "championship": null,
+  "track": "testTrack",
+  "preRaceWaitingTimeSeconds": 0,
+  "sessionOverTimeSeconds": 0,
+  "ambientTemp": 0,
+  "cloudLevel": 0.0,
+  "rain": 0.0,
+  "weatherRandomness": 0,
+  "postQualySeconds": 0,
+  "postRaceSeconds": 0,
+  "serverName": "testServerName",
+  "raceRules": null,
+  "session": null
+}

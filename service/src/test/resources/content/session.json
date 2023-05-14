@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "hourOfDay": 1,
+  "dayOfWeekend": 1,
+  "timeMultiplier": 1,
+  "sessionType": "testSessionType",
+  "sessionDurationMinutes": 1
+}

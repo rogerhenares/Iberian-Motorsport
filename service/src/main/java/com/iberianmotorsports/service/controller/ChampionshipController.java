@@ -1,6 +1,5 @@
 package com.iberianmotorsports.service.controller;
 
-import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.MessageResponse;
 import com.iberianmotorsports.service.service.ChampionshipService;
@@ -32,7 +31,7 @@ public class ChampionshipController {
         return new ResponseEntity<Object>(championship, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "/name/{name}")
     public ResponseEntity<?> getChampionshipByName(@PathVariable("name") String name) throws ServiceException {
         Championship championship = championshipService.findChampionshipByName(name);
         return new ResponseEntity<Object>(championship, HttpStatus.OK);
@@ -53,9 +52,6 @@ public class ChampionshipController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteChampionship(@PathVariable("id") Long id) throws ServiceException{
-        if(!championshipService.isAlreadyInDatabase(id)) {
-            throw new ServiceException(ErrorMessages.CHAMPIONSHIP_NOT_IN_DB.getDescription());
-        }
         championshipService.deleteChampionship(id);
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Championship has been deleted successfully.");

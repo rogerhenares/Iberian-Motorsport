@@ -1,6 +1,6 @@
 package com.iberianmotorsports.service.controller;
 
-import com.iberianmotorsports.service.service.UserService;
+import com.iberianmotorsports.service.service.SessionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,11 +19,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserController.class)
-class UserControllerTest {
+@WebMvcTest(SessionController.class)
+class SessionControllerTest {
 
     @MockBean
-    UserService userService;
+    SessionService sessionService;
 
     @Autowired
     MockMvc mockMvc;
@@ -37,38 +37,38 @@ class UserControllerTest {
     }
 
     @Test
-    void createNewUser() throws Exception {
-        mockMvc.perform(post("/user")
+    void createNewSession() throws Exception {
+        mockMvc.perform(post("/session")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(loadContent("userSteamReturn.json")))
+                        .content(loadContent("session.json")))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    void getUserById() throws Exception {
-        mockMvc.perform(get("/user/1"))
+    void getSessionById() throws Exception {
+        mockMvc.perform(get("/session/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void getAllUsers() throws Exception{
-        mockMvc.perform(get("/user"))
+    void getAllSessions() throws Exception{
+        mockMvc.perform(get("/session"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void updateUser() throws Exception{
-        mockMvc.perform(put("/user/1").
+    void updateSession() throws Exception{
+        mockMvc.perform(put("/session/1").
                         contentType(MediaType.APPLICATION_JSON)
-                        .content(loadContent("userSteamReturn.json")))
+                        .content(loadContent("session.json")))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void deleteUser() throws Exception{
-        mockMvc.perform(delete("/user/1")
+    void deleteSession() throws Exception{
+        mockMvc.perform(delete("/session/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(loadContent("userSteamReturn.json")))
+                        .content(loadContent("session.json")))
                 .andExpect(status().isOk());
     }
 

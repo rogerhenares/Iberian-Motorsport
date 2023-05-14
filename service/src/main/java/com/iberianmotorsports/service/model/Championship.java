@@ -19,18 +19,22 @@ public class Championship implements Serializable {
     private Long id;
 
     @NotBlank
+    @NotNull
     @Column(name = "name")
     private String name;
 
     @NotBlank
+    @NotNull
     @Column(name = "description")
     private String description;
 
     @NotBlank
+    @NotNull
     @Column(name = "admin_password")
     private String admin_password;
 
     @NotBlank
+    @NotNull
     @Column(name = "car_group")
     private String carGroup;
 

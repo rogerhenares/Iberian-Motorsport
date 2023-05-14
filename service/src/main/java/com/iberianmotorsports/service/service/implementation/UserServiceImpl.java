@@ -13,6 +13,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,6 +35,8 @@ public class UserServiceImpl implements UserService {
 
     private RestTemplate restTemplate;
 
+    @Value("${steam.client.id}")
+    private String apiKey;
 
     @Override
     public User saveUser(Long steamId) {
@@ -42,10 +45,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    //TODO get the apikey from properties
     @Override
     public User getPlayerSummary(String steamId) {
-        String apiKey = "6614BF6FC7820DF1DD2C875DB66C5D82";
+
         String url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/" + "?key=" + apiKey + "&steamids=" + steamId;
 
         String response = restTemplate.getForObject(url, String.class);
@@ -57,8 +59,11 @@ public class UserServiceImpl implements UserService {
             JsonNode playerNode = rootNode.path("response").path("players").get(0);
             user = mapper.readValue(playerNode.toString(), User.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(ErrorMessages.STEAM_DATA.getDescription());
         }
+         catch (NullPointerException e) {
+             throw new ServiceException(ErrorMessages.STEAM_DATA.getDescription());
+         }
 
         return user;
     }
@@ -77,6 +82,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
+        if(user.getLastName() == null) throw new ServiceException(ErrorMessages.LAST_NAME.getDescription());
+        if(user.getShortName() == null) throw new ServiceException(ErrorMessages.SHORT_NAME.getDescription());
+        if(user.getNationality() == null) throw new ServiceException(ErrorMessages.NATIONALITY.getDescription());
         return userRepository.save(user);
     }
 
@@ -89,7 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Boolean isAlreadyInDatabase(Long steamId) {
-        Optional<User> userOptional = userRepository.findById(steamId);
+        Optional<User> userOptional = userRepository.findBySteamId(steamId);
         return userOptional.isPresent();
     }
 

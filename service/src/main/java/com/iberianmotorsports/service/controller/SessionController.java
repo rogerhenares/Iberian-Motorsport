@@ -1,6 +1,5 @@
 package com.iberianmotorsports.service.controller;
 
-import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.MessageResponse;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.service.SessionService;
@@ -32,11 +31,6 @@ public class SessionController {
         return new ResponseEntity<Object>(session, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{name}")
-    public ResponseEntity<?> getSessionByName(@PathVariable("name") String name) throws ServiceException {
-        Session session = sessionService.findSessionByName(name);
-        return new ResponseEntity<Object>(session, HttpStatus.OK);
-    }
 
     @GetMapping
     public ResponseEntity<?> getAllSessions() throws ServiceException{
@@ -53,9 +47,6 @@ public class SessionController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteSession(@PathVariable("id") Long id) throws ServiceException{
-        if(!sessionService.isAlreadyInDatabase(id)) {
-            throw new ServiceException(ErrorMessages.RACE_NOT_IN_DB.getDescription());
-        }
         sessionService.deleteSession(id);
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Session has been deleted successfully.");

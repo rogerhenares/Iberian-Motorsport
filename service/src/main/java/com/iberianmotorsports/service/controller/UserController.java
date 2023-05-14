@@ -22,8 +22,8 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<?> createNewUser(String steamId) throws Exception {
-        User createdUser = userService.saveUser(Long.valueOf(steamId));
+    public ResponseEntity<?> createNewUser(Long steamId) throws Exception {
+        User createdUser = userService.saveUser(steamId);
         return new ResponseEntity<Object>(createdUser, HttpStatus.CREATED);
     }
 

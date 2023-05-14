@@ -21,4 +21,6 @@ public interface UserService {
     Boolean isAlreadyInDatabase(Long steamId);
 
     User getPlayerSummary(String steamId);
+
+
 }

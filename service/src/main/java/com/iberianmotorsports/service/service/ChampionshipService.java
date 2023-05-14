@@ -4,6 +4,8 @@ import com.iberianmotorsports.service.model.Championship;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public interface ChampionshipService {
 
@@ -20,5 +22,7 @@ public interface ChampionshipService {
     void deleteChampionship(Long id);
 
     Boolean isAlreadyInDatabase(Long id);
+
+    String exportChampionship(Championship championship) throws IOException;
 
 }
