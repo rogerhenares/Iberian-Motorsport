@@ -5,15 +5,16 @@ import com.iberianmotorsports.service.model.Race;
 public class RaceFactory {
     public static final Long id = 1L;
     public static final String track = "testTrack";
-    public static final Integer preRaceWaitingTimeSeconds = 0;
+    public static final Integer preRaceWaitingTimeSeconds = 30;
     public static final Integer sessionOverTimeSeconds = 0;
     public static final Integer ambientTemp = 0;
     public static final Float cloudLevel = 0F;
     public static final Float rain = 0F;
     public static final Integer weatherRandomness = 0;
-    public static final Integer postQualySeconds = 0;
+    public static final Integer postQualySeconds = 1;
     public static final Integer postRaceSeconds = 0;
     public static final String serverName = "testServerName";
+
 
     public static Race race() {
         Race race = new Race();

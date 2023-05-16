@@ -19,14 +19,14 @@ USE `iberian-motorsport-db` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `iberian-motorsport-db`.`USER` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `player_id` BIGINT(25) NOT NULL,
+  `steam_id` BIGINT(25) NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `short_name` VARCHAR(45) NULL,
   `nationality` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idUSER_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `steam_id_UNIQUE` (`player_id` ASC))
+  UNIQUE INDEX `steam_id_UNIQUE` (`steam_id` ASC))
 ENGINE = InnoDB;
 
 
@@ -56,7 +56,7 @@ ENGINE = InnoDB;
 -- Table `iberian-motorsport-db`.`RACE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `iberian-motorsport-db`.`RACE` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `championship_id` INT NOT NULL,
   `track` VARCHAR(45) NOT NULL,
   `pre_race_waiting_time_seconds` INT NOT NULL,
@@ -82,7 +82,7 @@ ENGINE = InnoDB;
 -- Table `iberian-motorsport-db`.`SESSION`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `iberian-motorsport-db`.`SESSION` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `hour_of_day` INT NOT NULL,
   `day_of_weekend` INT NOT NULL,
   `time_multiplier` INT NOT NULL,
@@ -103,7 +103,7 @@ ENGINE = InnoDB;
 -- Table `iberian-motorsport-db`.`USER_CHAMPIONSHIP`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `iberian-motorsport-db`.`USER_CHAMPIONSHIP` (
-  `user_id` INT NOT NULL,
+  `user_id` INT NOT NULL AUTO_INCREMENT,
   `championship_id` INT NOT NULL,
   `car` VARCHAR(45) NULL,
   PRIMARY KEY (`user_id`, `championship_id`),
@@ -126,7 +126,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `iberian-motorsport-db`.`RACE_RULES` (
   `qualify_standing_type` INT NOT NULL,
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `race_id` INT NOT NULL,
   `pit_window_length_sec` INT NOT NULL,
   `driver_stint_time_sec` INT NOT NULL,

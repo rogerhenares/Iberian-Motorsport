@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "\"SESSION\"")
 public class Session {
 
     @Id
@@ -27,8 +28,8 @@ public class Session {
     @Column(name = "session_duration_minutes")
     private Integer sessionDurationMinutes;
 
-    @OneToOne
-    @JoinColumn(name = "race_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "race_id", referencedColumnName = "id")
     private Race race;
 
 }

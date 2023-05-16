@@ -7,16 +7,13 @@ import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Data
+@Table(name = "\"RACE_RULES\"")
 public class RaceRules {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "race_id")
-    private Race race;
 
     @NotNull
     @Range(min=1, max=2)
@@ -35,7 +32,7 @@ public class RaceRules {
 
     @NotNull
     @Range(min=0)
-    @Column(name = "mandatory_pitstop_cout")
+    @Column(name = "mandatory_pitstop_count")
     private Integer mandatoryPitstopCount;
 
     @NotNull
@@ -75,5 +72,9 @@ public class RaceRules {
 
     @Column(name = "tyre_set_count")
     private Integer tyreSetCount;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "race_id")
+    private Race race;
 
 }

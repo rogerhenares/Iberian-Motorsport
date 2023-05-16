@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Data
+@Table(name = "\"RACE\"")
 public class Race {
 
     @Id
@@ -70,6 +71,5 @@ public class Race {
 
     @OneToOne(mappedBy = "race")
     private Session session;
-
 
 }

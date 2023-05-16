@@ -38,8 +38,7 @@ public class UserRepositoryTest {
     void saveUserFirstNameNull() {
         User userDummy = UserFactory.user();
         userDummy.setFirstName(null);
-        assertThrows(ConstraintViolationException.class, () -> {
-            userRepository.save(userDummy);});
+        assertThrows(ConstraintViolationException.class, () -> userRepository.save(userDummy));
     }
 
     @Test
@@ -70,7 +69,7 @@ public class UserRepositoryTest {
 
     @Test
     void deleteUser() {
-        User userDummy = (User) userRepository.findAll().get(1);
+        User userDummy = (User) userRepository.findAll().get(0);
         userRepository.delete(userDummy);
 
         assertTrue(userRepository.findBySteamId(userDummy.getSteamId()).isEmpty());

@@ -9,7 +9,7 @@ public class RaceRulesFactory {
     public static final Integer driverStintTimeSec = 0;
     public static final Integer mandatoryPitstopCount = 0;
     public static final Integer maxTotalDrivingTime = 0;
-    public static final Integer maxDriversCount = 0;
+    public static final Integer maxDriversCount = 1;
     public static final Integer isRefuellingAllowedInRace = 0;
     public static final Integer isRefuellingTimeFixed = 0;
     public static final Integer isMandatoryPitstopRefuellingRequired = 0;

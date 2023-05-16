@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "\"CHAMPIONSHIP\"")
 public class Championship implements Serializable {
 
     @Id
