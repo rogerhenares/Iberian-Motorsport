@@ -33,6 +33,12 @@ public class UserController {
         return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/name/{name}")
+    public ResponseEntity<?> getUserByName(@PathVariable("name") String name) throws ServiceException {
+        User user = userService.findUserByName(name);
+        return new ResponseEntity<Object>(user, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<?> getAllUsers() throws ServiceException{
         Page<User> userList = userService.findAllUsers();

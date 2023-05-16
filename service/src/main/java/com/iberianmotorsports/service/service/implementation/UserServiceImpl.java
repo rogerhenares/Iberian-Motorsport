@@ -30,9 +30,9 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Autowired
     private UserRepository userRepository;
 
+    @Autowired
     private RestTemplate restTemplate;
 
     @Value("${steam.client.id}")
@@ -71,6 +71,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserBySteamId(Long steamId) {
         Optional<User> userOptional = userRepository.findById(steamId);
+        if(userOptional.isEmpty()) throw new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription());
+        return userOptional.orElse(null);
+    }
+
+    @Override
+    public User findUserByName(String name) {
+        Optional<User> userOptional = userRepository.findByFirstName(name);
         if(userOptional.isEmpty()) throw new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription());
         return userOptional.orElse(null);
     }

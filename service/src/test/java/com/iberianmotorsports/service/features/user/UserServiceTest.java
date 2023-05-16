@@ -157,6 +157,25 @@ public class UserServiceTest {
         }
 
         @Test
+        public void findUserByName() {
+            when(userRepository.findByFirstName(anyString())).thenReturn(Optional.of(UserFactory.user()));
+
+            userRepository.findByFirstName(anyString());
+
+            verify(userRepository).findByFirstName(anyString());
+        }
+
+        @Test
+        public void findUserInvalidName() {
+            when(userRepository.findByFirstName(anyString())).thenReturn(Optional.empty());
+
+            RuntimeException exception = assertThrows(ServiceException.class, () -> service.findUserByName(anyString()));
+
+            verify(userRepository).findByFirstName(anyString());
+            Assertions.assertEquals(ErrorMessages.USER_NOT_IN_DB.getDescription(), exception.getMessage());
+        }
+
+        @Test
         public void findAllUsers() {
             when(userRepository.findAll()).thenReturn(List.of(UserFactory.user()));
 

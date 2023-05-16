@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     Optional<User> findBySteamId(Long steamId);
 
+    Optional<User> findByFirstName(String name);
+
 }

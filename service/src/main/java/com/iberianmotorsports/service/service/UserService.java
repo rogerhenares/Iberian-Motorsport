@@ -12,6 +12,8 @@ public interface UserService {
 
     User findUserBySteamId(Long steamId);
 
+    User findUserByName(String name);
+
     Page<User> findAllUsers();
 
     User updateUser(User user);
