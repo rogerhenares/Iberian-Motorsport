@@ -3,6 +3,7 @@ package com.iberianmotorsports.service.features.championship;
 import com.iberianmotorsports.ChampionshipFactory;
 import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
+import com.iberianmotorsports.service.utils.AbstractRepositoryIT;
 import jakarta.validation.ConstraintViolationException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,16 +23,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "classpath:it.properties")
-public class ChampionshipRepositoryTest {
+public class ChampionshipRepositoryTest extends AbstractRepositoryIT {
 
-    @Autowired
-    ChampionshipRepository championshipRepository;
+    public ChampionshipRepositoryTest(
+            @Autowired
+            ChampionshipRepository championshipRepository) {
+        super(championshipRepository, null, null, null);
+    }
 
     @BeforeEach
     public void setupDataBase() {
-        Championship championshipDummy = ChampionshipFactory.championship();
-        championshipDummy.setId(null);
-        championshipRepository.save(championshipDummy);
+        createChampionship();
     }
 
     @Test

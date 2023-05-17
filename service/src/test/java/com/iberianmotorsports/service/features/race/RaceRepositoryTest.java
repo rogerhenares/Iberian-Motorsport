@@ -1,15 +1,10 @@
 package com.iberianmotorsports.service.features.race;
 
-import com.iberianmotorsports.ChampionshipFactory;
 import com.iberianmotorsports.RaceFactory;
-import com.iberianmotorsports.RaceRulesFactory;
-import com.iberianmotorsports.SessionFactory;
-import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.Race;
-import com.iberianmotorsports.service.model.RaceRules;
-import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
+import com.iberianmotorsports.service.utils.AbstractRepositoryIT;
 import jakarta.validation.ConstraintViolationException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,26 +23,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "classpath:it.properties")
-public class RaceRepositoryTest {
+public class RaceRepositoryTest extends AbstractRepositoryIT {
 
-    @Autowired
-    RaceRepository raceRepository;
-
-    @Autowired
-    ChampionshipRepository championshipRepository;
-
-    Race raceDummy = RaceFactory.race();
-
+    public RaceRepositoryTest(
+            @Autowired
+            ChampionshipRepository championshipRepository,
+            @Autowired
+            RaceRepository raceRepository) {
+        super(championshipRepository, null, null, raceRepository);
+    }
 
     @BeforeEach
     public void setupDataBase() {
-        RaceRules raceRulesDummy = RaceRulesFactory.raceRules();
-        Session sessionDummy = SessionFactory.session();
-        sessionDummy.setRace(raceDummy);
-        raceRulesDummy.setRace(raceDummy);
-        Championship championshipDummy = championshipRepository.save(ChampionshipFactory.championship());
-        raceDummy.setChampionship(championshipDummy);
-        raceRepository.save(raceDummy);
+        createRace();
     }
 
 
@@ -60,21 +48,20 @@ public class RaceRepositoryTest {
 
     @Test
     void fetchById() {
-        List<Race> raceList = raceRepository.findAll();
-        Long id = raceDummy.getId();
+        Long id = race.getId();
         Optional<Race> foundRace = raceRepository.findById(id);
 
-        assertNotNull(foundRace);
-        Assertions.assertThat(foundRace).isEqualTo(raceDummy);
+        assertTrue(foundRace.isPresent());
+        Assertions.assertThat(foundRace.get()).isEqualTo(race);
     }
 
     @Test
     void fetchByTrack() {
-        String name = raceDummy.getTrack();
+        String name = race.getTrack();
 
         Optional<Race> foundRace = raceRepository.findRaceByTrack(name);
-        Assertions.assertThat(foundRace.isPresent());
-        Assertions.assertThat(foundRace.get()).isEqualToIgnoringGivenFields(raceDummy,  "id", "championship");
+        assertTrue(foundRace.isPresent());
+        Assertions.assertThat(foundRace.get()).isEqualToIgnoringGivenFields(race,  "id", "championship");
     }
 
     @Test
@@ -86,7 +73,7 @@ public class RaceRepositoryTest {
 
     @Test
     void deleteRace() {
-        raceRepository.delete(raceDummy);
-        assertTrue(raceRepository.findById(raceDummy.getId()).isEmpty());
+        raceRepository.delete(race);
+        assertTrue(raceRepository.findById(race.getId()).isEmpty());
     }
 }
