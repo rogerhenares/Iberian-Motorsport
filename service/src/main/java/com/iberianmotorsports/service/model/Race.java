@@ -16,7 +16,6 @@ public class Race {
     @Column(name = "id")
     private Long id;
 
-    //TODO check if this will load the Champ data on loop
     @ManyToOne
     @JoinColumn(name = "championship_id", nullable = false)
     private Championship championship;

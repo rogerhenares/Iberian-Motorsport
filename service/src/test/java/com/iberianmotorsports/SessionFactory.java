@@ -7,7 +7,7 @@ public class SessionFactory {
     public static final Integer hourOfDay = 1;
     public static final Integer dayOfWeekend = 1;
     public static final Integer timeMultiplier = 1;
-    public static final String sessionType = "testSessionType";
+    public static final String sessionType = "t";
     public static final Integer sessionDurationMinutes = 1;
 
     public static Session session() {

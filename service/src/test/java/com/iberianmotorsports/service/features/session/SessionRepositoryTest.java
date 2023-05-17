@@ -1,6 +1,8 @@
 package com.iberianmotorsports.service.features.session;
 
+import com.iberianmotorsports.RaceFactory;
 import com.iberianmotorsports.SessionFactory;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.SessionRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +26,9 @@ public class SessionRepositoryTest {
 
     @BeforeEach
     public void setupDataBase() {
+        Race raceDummy = RaceFactory.race();
         Session sessionDummy = SessionFactory.session();
+        sessionDummy.setRace(raceDummy);
         sessionRepository.save(sessionDummy);
     }
 
