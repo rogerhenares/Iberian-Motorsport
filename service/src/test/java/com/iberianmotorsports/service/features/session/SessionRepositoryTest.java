@@ -1,58 +1,67 @@
 package com.iberianmotorsports.service.features.session;
 
-import com.iberianmotorsports.ChampionshipFactory;
-import com.iberianmotorsports.RaceFactory;
 import com.iberianmotorsports.SessionFactory;
-import com.iberianmotorsports.service.model.Championship;
-import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.repository.SessionRepository;
+import com.iberianmotorsports.service.utils.AbstractRepositoryIT;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.TestPropertySource;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "classpath:it.properties")
-public class SessionRepositoryTest {
+public class SessionRepositoryTest extends AbstractRepositoryIT<Session> {
 
-    @Autowired
-    SessionRepository sessionRepository;
+    public SessionRepositoryTest(@Autowired ChampionshipRepository championshipRepository,
+                                 @Autowired SessionRepository sessionRepository,
+                                 @Autowired RaceRepository raceRepository) {
+        super(championshipRepository, sessionRepository, null, raceRepository);
+    }
 
-    @Autowired
-    RaceRepository raceRepository;
-
-    @Autowired
-    ChampionshipRepository championshipRepository;
+    @Override
+    protected JpaRepository<Session, Long> getRepository() {
+        return sessionRepository;
+    }
 
     @BeforeEach
     public void setupDataBase() {
-        Championship championship = ChampionshipFactory.championship();
-        championship.setId(null);
-        championshipRepository.save(championship);
-        Race raceDummy = RaceFactory.race();
-        raceDummy.setId(null);
-        raceDummy.setChampionship(championship);
-        raceRepository.save(raceDummy);
+        createSession();
+    }
+
+    @Test
+    void save() {
+        save(session);
+    }
+
+    @Test
+    void saveWithNullValue() {
         Session sessionDummy = SessionFactory.session();
-        sessionDummy.setId(null);
-        sessionDummy.setRace(raceDummy);
-        sessionRepository.save(sessionDummy);
+        sessionDummy.setRace(null);
+        Assertions.assertThrows(DataIntegrityViolationException.class, () ->save(sessionDummy));
+    }
+
+    @Test
+    void fetchById() {
+        findById(session.getId());
     }
 
     @Test
     void fetchAllSessions() {
-        List<Session> sessionList = sessionRepository.findAll();
-        assertFalse(sessionList.isEmpty());
+        findAll();
+    }
+
+    @Test
+    void delete() {
+        delete(session.getId());
     }
 
 }

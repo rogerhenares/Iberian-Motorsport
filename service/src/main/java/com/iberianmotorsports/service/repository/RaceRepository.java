@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface RaceRepository extends JpaRepository<Race, Long> {
 
-    Optional<Race> findRaceByTrack(String track);
+    Optional<Race> findByTrack(String track);
 
 }

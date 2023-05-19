@@ -11,19 +11,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "classpath:it.properties")
-public class ChampionshipRepositoryTest extends AbstractRepositoryIT {
+public class ChampionshipRepositoryTest extends AbstractRepositoryIT<Championship> {
 
     public ChampionshipRepositoryTest(
             @Autowired
@@ -36,45 +35,45 @@ public class ChampionshipRepositoryTest extends AbstractRepositoryIT {
         createChampionship();
     }
 
+    @Override
+    protected JpaRepository<Championship, Long> getRepository() {
+        return championshipRepository;
+    }
+
+    @Test
+    void save() {
+        save(championship);
+    }
+
     @Test
     void saveChampionshipNullValue() {
         Championship championshipDummy = ChampionshipFactory.championship();
         championshipDummy.setName(null);
-        assertThrows(ConstraintViolationException.class, () -> championshipRepository.save(championshipDummy));
+        assertThrows(ConstraintViolationException.class, () ->save(championshipDummy));
     }
 
     @Test
     void fetchChampionshipById() {
-        Championship championshipDummy = championshipRepository.findAll().get(0);
-        Long id = championshipDummy.getId();
-
-        Optional<Championship> foundChampionship = championshipRepository.findById(id);
-        Assertions.assertThat(foundChampionship.isPresent());
-        Assertions.assertThat(foundChampionship.get()).isEqualTo(championshipDummy);
+        findById(championship.getId());
     }
 
     @Test
     void fetchChampionshipByName() {
-        Championship championshipDummy = championshipRepository.findAll().get(0);
-        String name = championshipDummy.getName();
-
+        String name = championship.getName();
         Optional<Championship> foundChampionship = championshipRepository.findByName(name);
-        Assertions.assertThat(foundChampionship.isPresent());
-        Assertions.assertThat(foundChampionship.get()).isEqualTo(championshipDummy);
+        assertTrue(foundChampionship.isPresent());
+        Assertions.assertThat(foundChampionship.get()).isEqualTo(championship);
     }
 
     @Test
     void fetchAllChampionship() {
-        List<Championship> championshipList = championshipRepository.findAll();
-        assertFalse(championshipList.isEmpty());
+        findAll();
     }
 
     @Test
     void deleteChampionship() {
-        Championship championshipDummy = championshipRepository.findAll().get(0);
-        championshipRepository.delete(championshipDummy);
-
-        assertTrue(championshipRepository.findById(championshipDummy.getId()).isEmpty());
+        delete(championship.getId());
     }
+
 
 }
