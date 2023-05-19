@@ -33,6 +33,7 @@ public class RaceRepositoryTest extends AbstractRepositoryIT {
         super(championshipRepository, null, null, raceRepository);
     }
 
+
     @BeforeEach
     public void setupDataBase() {
         createRace();
