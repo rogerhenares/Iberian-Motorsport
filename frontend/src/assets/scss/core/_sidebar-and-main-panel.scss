@@ -48,6 +48,7 @@
         overflow: auto;
         width: 260px;
         z-index: 4;
+        background-color: dimgrey;
 
         padding-bottom: 30px;
 
@@ -147,7 +148,7 @@
             & .dropdown-menu a:hover,
             & .dropdown-menu a:focus,
             &.active > [data-toggle="collapse"]{
-                background-color: rgba(200, 200, 200, 0.2);
+                background-color: #ff0000;
                 color: $black-color;
                 box-shadow: none;
             }
@@ -160,7 +161,7 @@
 
             &.active > a,
             &.active > a i{
-                color: $white-color;
+                color: white;
             }
 
             &.separator{
@@ -172,7 +173,7 @@
                     position: absolute;
                     height: 1px;
                     left: 15px;
-                    background-color: rgba(180,180,180, .3);
+                    background-color: $black-color;
                 }
 
                 & + li {
@@ -198,7 +199,7 @@
             line-height: 30px;
             width: 30px;
             text-align: center;
-            color: #a9afbb;
+            color: white;
         }
     }
 
