@@ -12,8 +12,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -32,11 +31,9 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    @Autowired
     private RestTemplate restTemplate;
 
-    @Value("${steam.client.id}")
-    private String apiKey;
+    private Environment env;
 
     @Override
     public User saveUser(Long steamId) {
@@ -48,6 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getPlayerSummary(String steamId) {
 
+        String apiKey = env.getProperty("steam.client.id");
         String url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/" + "?key=" + apiKey + "&steamids=" + steamId;
 
         String response = restTemplate.getForObject(url, String.class);

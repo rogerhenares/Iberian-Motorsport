@@ -20,7 +20,8 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -44,21 +45,22 @@ public class UserServiceTest {
     @Mock
     RestTemplate restTemplate;
 
-    @Value("${steam.client.id}")
-    private String apiKey;
+    @Mock
+    Environment environment;
 
     @Captor
     ArgumentCaptor<User> userCaptor;
 
     @BeforeEach
     public void init() {
-        service = new UserServiceImpl(userRepository, restTemplate, apiKey);
+        service = new UserServiceImpl(userRepository, restTemplate, environment);
     }
 
     @Nested
     class saveUser{
         @Test
         public void saveUser() {
+            ReflectionTestUtils.setField(service, "id", 1);
             givenUserIdRetrieveUserData();
             givenUserRepositorySave();
 
