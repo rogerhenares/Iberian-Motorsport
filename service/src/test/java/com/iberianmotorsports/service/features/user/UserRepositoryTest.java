@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -31,8 +30,10 @@ public class UserRepositoryTest {
     public void setupDataBase() {
         User userDummy = UserFactory.user();
         userDummy.setUserId(null);
-        userRepository.save(userDummy);
+        User savedUser = userRepository.save(userDummy);
+        assertNotNull(savedUser);
     }
+
 
     @Test
     void saveUserFirstNameNull() {

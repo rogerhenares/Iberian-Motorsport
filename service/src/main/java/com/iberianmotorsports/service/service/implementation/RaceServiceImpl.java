@@ -43,7 +43,7 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public Race findRaceByName(String name) {
-        Optional<Race> raceOptional = raceRepository.findRaceByTrack(name);
+        Optional<Race> raceOptional = raceRepository.findByTrack(name);
         if(raceOptional.isEmpty()) throw new ServiceException(ErrorMessages.RACE_NOT_IN_DB.getDescription());
         return raceOptional.orElse(null);
     }
