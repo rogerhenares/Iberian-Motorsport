@@ -73,13 +73,6 @@ public class Championship implements Serializable {
     @Column(name = "is_race_locked")
     private Integer isRaceLocked;
 
-    @NotNull
-    @Column(name = "start_date")
-    private Date startDate;
-
-    @NotNull
-    @Column(name = "end_date")
-    private Date endDate;
 
     @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY)
     private List<Race> raceList;
