@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
-    User saveUser(User user);
+    User saveUser(Long steamId);
 
     User findUserBySteamId(Long steamId);
+
+    User findUserByName(String name);
 
     Page<User> findAllUsers();
 
@@ -19,5 +21,8 @@ public interface UserService {
     void deleteUser(Long steamId);
 
     Boolean isAlreadyInDatabase(Long steamId);
+
+    User getPlayerSummary(String steamId);
+
 
 }

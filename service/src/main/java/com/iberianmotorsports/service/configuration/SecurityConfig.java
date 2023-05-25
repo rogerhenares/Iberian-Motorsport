@@ -17,7 +17,7 @@ public class SecurityConfig {
         http
                 .addFilterBefore(new SteamTokenValidation(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                    .requestMatchers("/public/**").permitAll()
+                    .requestMatchers("/public/**", "/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()

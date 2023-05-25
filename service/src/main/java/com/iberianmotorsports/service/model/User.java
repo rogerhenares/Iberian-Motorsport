@@ -1,7 +1,9 @@
 package com.iberianmotorsports.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,7 +11,8 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "USER")
+@Table(name = "\"USER\"")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
 
     @Id
@@ -21,12 +24,15 @@ public class User implements Serializable {
     @JsonProperty("steamid")
     private Long steamId;
 
+    @NotBlank
     @Column(name = "first_name")
     @JsonProperty("personaname")
     private String firstName;
 
+
     @Column(name = "last_name")
     private String lastName;
+
 
     @Column(name = "short_name")
     private String shortName;
@@ -34,8 +40,4 @@ public class User implements Serializable {
     @Column(name = "nationality")
     @JsonProperty("loccountrycode")
     private String nationality;
-
-//    @Column(name = "open_ids")
-//    private Set<UserOpenIds> userOpenIdsSet = new HashSet<>();
-
 }

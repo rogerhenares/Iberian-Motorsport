@@ -3,23 +3,31 @@ package com.iberianmotorsports.service.features.user;
 import com.iberianmotorsports.UserFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.User;
-import com.iberianmotorsports.service.repository.OpenIdRepository;
 import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
 import com.iberianmotorsports.service.service.implementation.UserServiceImpl;
 import org.hibernate.service.spi.ServiceException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
+import static com.iberianmotorsports.service.utils.Utils.loadContentString;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -34,70 +42,53 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    OpenIdRepository openIdRepository;
+    RestTemplate restTemplate;
+
+    @Value("${steam.client.id}")
+    private String apiKey;
 
     @Captor
     ArgumentCaptor<User> userCaptor;
 
     @BeforeEach
     public void init() {
-        service = new UserServiceImpl(userRepository, openIdRepository);
+        service = new UserServiceImpl(userRepository, restTemplate, apiKey);
     }
 
     @Nested
     class saveUser{
         @Test
         public void saveUser() {
-
+            givenUserIdRetrieveUserData();
             givenUserRepositorySave();
-            User testUser = UserFactory.user();
 
-            User savedUser = service.saveUser(testUser);
+            service.saveUser(Long.MAX_VALUE);
 
             verify(userRepository).save(userCaptor.capture());
-            assertEquals(UserFactory.user(), userCaptor.getValue());
-
-
+            assertEquals(UserFactory.userFromSteam(), userCaptor.getValue());
         }
 
         @Test
-        public void saveUserWhenPlayerIdIsNotDefined(){
-            User testUser = UserFactory.user();
-            testUser.setSteamId(null);
+        public void saveUserWhenWrongSteamId(){
+            givenUserIdRetrieveUserDataFailed();
 
-
-            RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(testUser));
+            Exception exception = assertThrows(ServiceException.class,
+                    ()-> service.saveUser(Long.MAX_VALUE));
 
             verify(userRepository, times(0)).save(any());
-            Assertions.assertEquals(ErrorMessages.STEAM_ID_UNDEFINED.getDescription(), exception.getMessage());
-
+            Assertions.assertEquals(ErrorMessages.STEAM_DATA.getDescription(), exception.getMessage());
         }
+
         @Test
-        public void saveUserWhenPlayerIdAlreadyExists(){
-            User testUser = UserFactory.user();
+        public void saveWhenUserAlreadyExists(){
             givenUserAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(testUser));
+                    ()-> service.saveUser(Long.MAX_VALUE));
 
             verify(userRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATE_USER.getDescription(), exception.getMessage());
-
         }
-
-        @Test
-        public void saveUserWithInvalidFormat(){
-            User testUser = UserFactory.userInvalidFormat();
-
-            RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveUser(testUser));
-
-            verify(userRepository, times(0)).save(any());
-            Assertions.assertEquals(ErrorMessages.FIRST_NAME.getDescription(), exception.getMessage());
-        }
-
-
     }
 
     @Nested
@@ -105,7 +96,6 @@ public class UserServiceTest {
 
         @Test
         public void updateUser() {
-            givenUserRepositorySave();
             User testUser = UserFactory.updatedUser();
 
             User updatedUser = service.updateUser(testUser);
@@ -131,6 +121,7 @@ public class UserServiceTest {
 
         @Test
         public void deleteUser() {
+            givenUserAlreadyExists();
 
             service.deleteUser(anyLong());
 
@@ -166,6 +157,25 @@ public class UserServiceTest {
         }
 
         @Test
+        public void findUserByName() {
+            when(userRepository.findByFirstName(anyString())).thenReturn(Optional.of(UserFactory.user()));
+
+            userRepository.findByFirstName(anyString());
+
+            verify(userRepository).findByFirstName(anyString());
+        }
+
+        @Test
+        public void findUserInvalidName() {
+            when(userRepository.findByFirstName(anyString())).thenReturn(Optional.empty());
+
+            RuntimeException exception = assertThrows(ServiceException.class, () -> service.findUserByName(anyString()));
+
+            verify(userRepository).findByFirstName(anyString());
+            Assertions.assertEquals(ErrorMessages.USER_NOT_IN_DB.getDescription(), exception.getMessage());
+        }
+
+        @Test
         public void findAllUsers() {
             when(userRepository.findAll()).thenReturn(List.of(UserFactory.user()));
 
@@ -183,10 +193,34 @@ public class UserServiceTest {
             return user;
         });
     }
+    private void givenUserIdRetrieveUserData() {
+        when(restTemplate.getForObject(anyString(), eq(String.class)))
+                .thenReturn(loadContentString("userSteamReturn.json"));
+    }
+
+    private void givenUserIdRetrieveUserDataFailed() {
+        when(restTemplate.getForObject(anyString(), eq(String.class)))
+                .thenReturn(loadContentString("userSteamReturnEmpty.json"));
+    }
 
     private void givenUserAlreadyExists() {
         when(userRepository.findBySteamId(anyLong())).thenReturn(Optional.of(UserFactory.user()));
     }
 
+
+    @ParameterizedTest
+    @MethodSource("provideStringsForIsBlank")
+    public void saveUserThrowsExceptionSteamIdInvalid(User user, Object expected){
+
+    }
+
+    private static Stream<Arguments> provideStringsForIsBlank() {
+        return Stream.of(
+                Arguments.of(UserFactory.user(), true),
+                Arguments.of(UserFactory.userInvalidFormat(), true),
+                Arguments.of(UserFactory.updatedUser(), true),
+                Arguments.of(UserFactory.userWrongSteamId(), true)
+        );
+    }
 
 }

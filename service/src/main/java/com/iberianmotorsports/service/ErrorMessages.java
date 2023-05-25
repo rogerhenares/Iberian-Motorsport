@@ -6,9 +6,19 @@ public enum ErrorMessages {
     USER_NOT_IN_DB(2, "This user does not exist."),
     STEAM_ID_UNDEFINED(3, "Steam Id is undefined."),
     FIRST_NAME(4, "First name cannot be empty."),
-    LAST_NAME(5, "Last name cannot be empty."),
-    SHORT_NAME(6,"Short name cannot be empty."),
-    NATIONALITY(7, "Nationality cannot be empty.");
+    CHAMPIONSHIP_NOT_IN_DB(5, "This Championship does not exist."),
+    DUPLICATED_CHAMPIONSHIP(6, "This Championship already exists."),
+    RACE_NOT_IN_DB(7, "This race does not exist."),
+    DUPLICATED_RACE(8, "This race already exists."),
+    RACE_RULES_NOT_IN_DB(9, "This race rules configuration does not exist."),
+    DUPLICATED_RACE_RULES(10, "This race rules configuration already exists."),
+    SESSION_NOT_IN_DB(11, "This session does not exist."),
+    DUPLICATED_SESSION(12, "This session already exists."),
+    STEAM_DATA(13, "Could not retrieve Steam data. Please try again."),
+    LAST_NAME(14, "Last name cannot be empty."),
+    SHORT_NAME(15, "Short name cannot be empty."),
+    NATIONALITY(16, "Nationality cannot be empty.");
+
 
     private final int code;
     private final String description;

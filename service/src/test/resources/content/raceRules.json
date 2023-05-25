@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "race": null,
+  "qualifyStandingType": 1,
+  "pitWindowLengthSec": 0,
+  "driverStintTimeSec": 0,
+  "mandatoryPitstopCount": 0,
+  "maxTotalDrivingTime": 0,
+  "maxDriversCount": 0,
+  "isRefuellingAllowedInRace": 0,
+  "isRefuellingTimeFixed": 0,
+  "isMandatoryPitstopRefuellingRequired": 0,
+  "isMandatoryPitstopTyreChangeRequired": 0,
+  "isMandatoryPitstopSwapDriverRequired": 0,
+  "tyreSetCount": 0
+}
