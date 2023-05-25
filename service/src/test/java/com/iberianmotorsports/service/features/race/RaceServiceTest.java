@@ -131,11 +131,10 @@ public class RaceServiceTest {
 
         @Test
         public void findRaceInvalidName() {
-            when(raceRepository.findById(anyLong())).thenReturn(Optional.empty());
+            when(raceRepository.findByTrack(anyString())).thenReturn(Optional.empty());
 
             RuntimeException exception = assertThrows(ServiceException.class, ()-> service.findRaceByName(anyString()));
 
-            verify(raceRepository).findById(anyLong());
             assertEquals(ErrorMessages.RACE_NOT_IN_DB.getDescription(), exception.getMessage());
         }
     }

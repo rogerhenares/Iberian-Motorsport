@@ -67,9 +67,6 @@ public class Race {
     @Column(name = "server_name")
     private String serverName;
 
-    @NotNull
-    @Column(name = "start_date")
-    private Date startDate;
 
     @OneToOne(mappedBy = "race")
     private RaceRules raceRules;

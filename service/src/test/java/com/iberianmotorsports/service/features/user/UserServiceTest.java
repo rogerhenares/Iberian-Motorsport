@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.core.env.Environment;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -60,7 +59,6 @@ public class UserServiceTest {
     class saveUser{
         @Test
         public void saveUser() {
-            ReflectionTestUtils.setField(service, "id", 1);
             givenUserIdRetrieveUserData();
             givenUserRepositorySave();
 
