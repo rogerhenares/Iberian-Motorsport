@@ -39,7 +39,6 @@ public class RaceRepositoryTest extends AbstractRepositoryIT<Race>{
         return raceRepository;
     }
 
-
     @BeforeEach
     public void setupDataBase() {
         createRace();

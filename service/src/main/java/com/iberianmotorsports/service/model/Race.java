@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Table(name = "\"RACE\"")
@@ -64,6 +66,10 @@ public class Race {
     @NotEmpty
     @Column(name = "server_name")
     private String serverName;
+
+    @NotNull
+    @Column(name = "start_date")
+    private Date startDate;
 
     @OneToOne(mappedBy = "race")
     private RaceRules raceRules;

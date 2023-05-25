@@ -1,0 +1,11 @@
+version: "2.0"
+services:
+  nginx:
+    image: nginx:1.17.3
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ../build:/usr/share/nginx/html
+      - ../nginx/conf.d:/etc/nginx/conf.d
+      - ../nginx/ssl:/etc/ssl

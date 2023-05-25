@@ -2,6 +2,7 @@
 target/
 bin/
 build/
+frontend/node_modules/
 
 # Ignore IDE specific files
 .idea/

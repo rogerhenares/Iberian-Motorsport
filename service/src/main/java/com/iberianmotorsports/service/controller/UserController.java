@@ -22,8 +22,13 @@ public class UserController {
 
 
     @PostMapping
+<<<<<<< Updated upstream
     public ResponseEntity<?> createNewUser(Long steamId) throws Exception {
         User createdUser = userService.saveUser(steamId);
+=======
+    public ResponseEntity<?> createNewUser(String steamId) throws ServiceException {
+        User createdUser = userService.saveUser(Long.valueOf(steamId));
+>>>>>>> Stashed changes
         return new ResponseEntity<Object>(createdUser, HttpStatus.CREATED);
     }
 
@@ -40,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers() throws ServiceException{
+    public ResponseEntity<?> getAllUsers() throws ServiceException {
         Page<User> userList = userService.findAllUsers();
         return new ResponseEntity<Object>(userList, HttpStatus.OK);
     }
