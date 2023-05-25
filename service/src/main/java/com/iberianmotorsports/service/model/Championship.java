@@ -7,6 +7,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -71,6 +72,14 @@ public class Championship implements Serializable {
     @NotNull
     @Column(name = "is_race_locked")
     private Integer isRaceLocked;
+
+    @NotNull
+    @Column(name = "start_date")
+    private Date startDate;
+
+    @NotNull
+    @Column(name = "end_date")
+    private Date endDate;
 
     @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY)
     private List<Race> raceList;

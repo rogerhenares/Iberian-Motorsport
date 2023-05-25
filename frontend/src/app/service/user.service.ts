@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../model/User';
 import { handleError } from '../util/Error.handler';
@@ -47,7 +46,7 @@ export class UserService {
         return this.httpClient.get<User>(url)
             .pipe(
                 tap(user => console.log('fetched user by name')),
-                catchError(handleError('UserService -> getUserByUserId', null, errorNotify))
+                catchError(handleError('UserService -> getUserByName', null, errorNotify))
             );
     }
 
@@ -60,6 +59,15 @@ export class UserService {
             .pipe(
                 tap(response => console.log('fetched user page')),
                 catchError(handleError('UserService -> getUserList', null, errorNotify))
+            );
+    }
+
+    deleteUser(userId: Number, errorNotify?: any) {
+        let url = this.url + userId;
+        return this.httpClient.delete<User>(url)
+            .pipe(
+                tap(response => console.log('delete user')),
+                catchError(handleError('UserService -> deleteUser', null, errorNotify))
             );
     }
 }
