@@ -1,29 +1,22 @@
 package com.iberianmotorsports.service.service.implementation;
 
+import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.User;
 import com.iberianmotorsports.service.repository.OpenIdRepository;
 import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
-import com.iberianmotorsports.service.ErrorMessages;
-
-import java.lang.Throwable;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpClient;
-import java.rmi.ServerException;
-import java.util.Optional;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 import static com.fasterxml.jackson.core.io.NumberInput.parseLong;
 
@@ -49,8 +42,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
+    public User findUserBySteamId(Long steamId) {
+        Optional<User> userOptional = userRepository.findById(steamId);
         if(userOptional.isEmpty()) throw new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription());
         return userOptional.orElse(null);
     }
@@ -70,18 +63,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+    public void deleteUser(Long steamId) {
+        userRepository.deleteById(steamId);
 
     }
 
-    public Boolean isAlreadyInDatabase(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        return userOptional.isPresent();
-    }
-
-    public Boolean playerIdIsAlreadyInDatabase(Long playerId) {
-        Optional<User> userOptional = userRepository.findByPlayerId(playerId);
+    public Boolean isAlreadyInDatabase(Long steamId) {
+        Optional<User> userOptional = userRepository.findById(steamId);
         return userOptional.isPresent();
     }
 
@@ -99,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
      private User findSteamInfo(User user) {
         List<String> userInfo = getSteamUserInfo(user);
-        user.setPlayerId(parseLong(userInfo.get(0)));
+        user.setSteamId(parseLong(userInfo.get(0)));
         user.setFirstName(userInfo.get(3));
         return user;
      }

@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,10 +17,12 @@ public class User implements Serializable {
     @Column(name = "id")
     private Long userId;
 
-    @Column(name = "player_id")
-    private Long playerId;
+    @Column(name = "steam_id")
+    @JsonProperty("steamid")
+    private Long steamId;
 
     @Column(name = "first_name")
+    @JsonProperty("personaname")
     private String firstName;
 
     @Column(name = "last_name")
@@ -29,6 +32,7 @@ public class User implements Serializable {
     private String shortName;
 
     @Column(name = "nationality")
+    @JsonProperty("loccountrycode")
     private String nationality;
 
 //    @Column(name = "open_ids")
