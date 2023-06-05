@@ -15,20 +15,20 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const headers = req.headers;
         const headerAuthorization = headers.get('Authorization');
+        console.log("THIS IS A FLAG FROM INTERCEPTOR -> ", this.router.url);
         if (headerAuthorization == null) {
             req = req.clone({
                 setHeaders: {
-                    Authorization: 'Bearer ' + this.appContext.authenticationInfo.authorizationToken
+                    Authorization: this.appContext.authenticationInfo.authorizationToken
                 }
             });
         }
         return next.handle(req).pipe(
             retry(0),
             catchError((error: HttpErrorResponse) => {
-                if (error instanceof HttpErrorResponse && error.status === 401) {
-                    // handle 401 errors
+                if (error instanceof HttpErrorResponse && error.status === 403) {
                     this.appContext.clearUser();
-                    this.router.navigateByUrl('/login');
+                    window.location.href = error.headers.get("Location");
                 }
                 return throwError(error);
             })

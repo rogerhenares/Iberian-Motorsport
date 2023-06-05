@@ -7,10 +7,12 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from '../components/components.module';
 import { AppComponent } from './component/app.component';
 import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.component';
-import {UserAdminService} from "../../service/user-admin.service";
-import {UserService} from "../../service/user.service";
-import {ProcessService} from "../../service/process.service";
+import { UserAdminService } from "../../service/user-admin.service";
+import { UserService } from "../../service/user.service";
+import { ProcessService } from "../../service/process.service";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { AuthenticationInterceptor } from "../../authentication/authentication.interceptor";
+import {AppContext} from "../../util/AppContext";
 
 @NgModule({
   imports: [
@@ -28,13 +30,12 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     AdminLayoutComponent,
   ],
   providers: [
-      /**
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
-      multi: true
+      multi: true,
     },
-       */
+    AppContext,
     UserAdminService,
     UserService,
     ProcessService],
