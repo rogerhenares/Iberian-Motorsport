@@ -2,6 +2,8 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
+import com.iberianmotorsports.service.controller.DTO.SessionDTO;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.SessionRepository;
 import com.iberianmotorsports.service.service.SessionService;
@@ -10,14 +12,13 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
-
-import static com.iberianmotorsports.service.Utils.Utils.defaultPageable;
 
 @AllArgsConstructor
 @Transactional
@@ -27,8 +28,11 @@ public class SessionServiceImpl implements SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
+    private SessionMapper sessionMapper;
+
     @Override
-    public Session saveSession(Session session) {
+    public Session saveSession(SessionDTO sessionDTO) {
+        Session session = sessionMapper.apply(sessionDTO);
         if (isAlreadyInDatabase(session.getId()))
             throw new ServiceException(ErrorMessages.DUPLICATED_SESSION.getDescription());
         return sessionRepository.save(session);
@@ -43,8 +47,8 @@ public class SessionServiceImpl implements SessionService {
 
 
     @Override
-    public Page<Session> findAllSessions() {
-        return sessionRepository.findAll(defaultPageable);
+    public Page<Session> findAllSessions(Pageable pageRequest) {
+        return sessionRepository.findAll(pageRequest);
     }
 
     @Override

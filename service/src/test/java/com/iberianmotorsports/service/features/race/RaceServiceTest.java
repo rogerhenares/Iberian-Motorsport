@@ -4,6 +4,7 @@ import com.iberianmotorsports.RaceFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.repository.RaceRepository;
+import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceService;
 import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.hibernate.service.spi.ServiceException;
@@ -27,7 +28,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class RaceServiceTest {
 
-    private RaceService service;
+    private RaceService raceService;
+
+    private ChampionshipService championshipService;
 
     @Mock
     private RaceRepository raceRepository;
@@ -35,9 +38,10 @@ public class RaceServiceTest {
     @Captor
     ArgumentCaptor<Race> raceCaptor;
 
+
     @BeforeEach
     public void init() {
-        service = new RaceServiceImpl(raceRepository);
+        raceService = new RaceServiceImpl(championshipService, raceRepository);
     }
 
     @Nested
@@ -48,7 +52,7 @@ public class RaceServiceTest {
             Race testRace = RaceFactory.race();
             givenRaceRepositorySave();
 
-            service.saveRace(testRace);
+            raceService.saveRace(testRace);
 
             verify(raceRepository).save(raceCaptor.capture());
             assertEquals(RaceFactory.race(), raceCaptor.getValue());
@@ -60,7 +64,7 @@ public class RaceServiceTest {
             givenRaceAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveRace(testRace));
+                    ()-> raceService.saveRace(testRace));
 
             verify(raceRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATED_RACE.getDescription(), exception.getMessage());
@@ -76,7 +80,7 @@ public class RaceServiceTest {
             Race testRace = RaceFactory.race();
             givenRaceRepositorySave();
 
-            service.updateRace(testRace);
+            raceService.updateRace(testRace);
 
             verify(raceRepository).save(raceCaptor.capture());
             assertEquals(RaceFactory.race(), raceCaptor.getValue());
@@ -91,7 +95,7 @@ public class RaceServiceTest {
         @Test
         public void deleteRace() {
 
-            service.deleteRace(anyLong());
+            raceService.deleteRace(anyLong());
 
             verify(raceRepository).deleteById(anyLong());
         }
@@ -123,7 +127,7 @@ public class RaceServiceTest {
             when(raceRepository.findById(anyLong())).thenReturn(Optional.empty());
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.findRaceById(anyLong()));
+                    ()-> raceService.findRaceById(anyLong()));
 
             verify(raceRepository).findById(anyLong());
             Assertions.assertEquals(ErrorMessages.RACE_NOT_IN_DB.getDescription(), exception.getMessage());
@@ -133,7 +137,7 @@ public class RaceServiceTest {
         public void findRaceInvalidName() {
             when(raceRepository.findByTrack(anyString())).thenReturn(Optional.empty());
 
-            RuntimeException exception = assertThrows(ServiceException.class, ()-> service.findRaceByName(anyString()));
+            RuntimeException exception = assertThrows(ServiceException.class, ()-> raceService.findRaceByName(anyString()));
 
             assertEquals(ErrorMessages.RACE_NOT_IN_DB.getDescription(), exception.getMessage());
         }
@@ -144,7 +148,7 @@ public class RaceServiceTest {
     public void exportRace() throws IOException {
         Race testRace = RaceFactory.race();
 
-        String result = service.exportRace(testRace);
+        String result = raceService.exportRace(testRace);
 
         assertTrue(result.startsWith("Race saved to"));
 

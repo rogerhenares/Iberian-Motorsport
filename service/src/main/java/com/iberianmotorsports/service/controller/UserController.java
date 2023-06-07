@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable("id") Long userId) throws ServiceException {
-        User user = userService.findUserBySteamId(userId);
+    public ResponseEntity<?> getUserBySteamId(@PathVariable("id") Long steamId) throws ServiceException {
+        User user = userService.findUserBySteamId(steamId);
         return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
 
@@ -40,8 +41,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers() throws ServiceException {
-        Page<User> userList = userService.findAllUsers();
+    public ResponseEntity<?> getAllUsers(Pageable pageRequest) throws ServiceException {
+        Page<User> userList = userService.findAllUsers(pageRequest);
         return new ResponseEntity<Object>(userList, HttpStatus.OK);
     }
 

@@ -1,6 +1,10 @@
 package com.iberianmotorsports;
 
 import com.iberianmotorsports.service.model.Championship;
+import com.iberianmotorsports.service.model.Race;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChampionshipFactory {
 

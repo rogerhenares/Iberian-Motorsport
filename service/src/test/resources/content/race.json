@@ -8,7 +8,7 @@
   "cloudLevel": 0.0,
   "rain": 0.0,
   "weatherRandomness": 0,
-  "postQualySeconds": 0,
+  "postQualySeconds": 1,
   "postRaceSeconds": 0,
   "serverName": "testServerName",
   "raceRules": null,

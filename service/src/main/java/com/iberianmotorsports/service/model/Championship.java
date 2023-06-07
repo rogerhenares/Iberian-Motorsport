@@ -73,6 +73,8 @@ public class Championship implements Serializable {
     @Column(name = "is_race_locked")
     private Integer isRaceLocked;
 
+    @Column(name = "image_content")
+    private String imageContent;
 
     @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY)
     private List<Race> raceList;

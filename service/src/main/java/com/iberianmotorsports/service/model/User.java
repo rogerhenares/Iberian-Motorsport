@@ -29,10 +29,8 @@ public class User implements Serializable {
     @JsonProperty("personaname")
     private String firstName;
 
-
     @Column(name = "last_name")
     private String lastName;
-
 
     @Column(name = "short_name")
     private String shortName;
@@ -40,4 +38,5 @@ public class User implements Serializable {
     @Column(name = "nationality")
     @JsonProperty("loccountrycode")
     private String nationality;
+
 }

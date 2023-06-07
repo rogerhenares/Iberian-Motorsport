@@ -12,12 +12,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class SteamTokenValidation extends OncePerRequestFilter {
 
     private final static String IS_VALID = "is_valid:true";
+    private final static String OPENID_MODE_ID_RES = "openid.mode=id_res";
+    private final static String OPENID_MODE_CHECK_AUTHENTICATION = "openid.mode=check_authentication";
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
@@ -26,23 +28,17 @@ public class SteamTokenValidation extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        if(request.getParameter("openid.sig") == null){
+        if(request.getHeader("Authorization") == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
+        String authDecoded = new String(Base64.getDecoder()
+                .decode(request.getHeader("Authorization")),
+                StandardCharsets.UTF_8);
+        authDecoded = authDecoded.replace(OPENID_MODE_ID_RES, OPENID_MODE_CHECK_AUTHENTICATION);
         String validateTokenURL = "https://steamcommunity.com/openid/login?" +
-                "openid.ns=http://specs.openid.net/auth/2.0" +
-                "&openid.mode=check_authentication" +
-                "&openid.op_endpoint=" + request.getParameter("openid.op_endpoint") +
-                "&openid.claimed_id=" + request.getParameter("openid.claimed_id") +
-                "&openid.identity=" + request.getParameter("openid.identity") +
-                "&openid.return_to=" + request.getParameter("openid.return_to") +
-                "&openid.response_nonce=" + request.getParameter("openid.response_nonce") +
-                "&openid.assoc_handle=" + request.getParameter("openid.assoc_handle") +
-                "&openid.signed=" + request.getParameter("openid.signed") +
-                "&openid.sig=" + request.getParameter("openid.sig");
-
+                authDecoded;
         String validationResponse = restTemplate.getForObject(validateTokenURL, String.class);
 
         assert validationResponse != null;

@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.controller;
 
+import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.MessageResponse;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.service.RaceService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,7 @@ public class RaceController {
     private RaceService raceService;
 
     @PostMapping
-    public ResponseEntity<?> createNewRace(Race race) throws Exception {
+    public ResponseEntity<?> createNewRace(@RequestBody Race race){
         Race createdRace = raceService.saveRace(race);
         return new ResponseEntity<Object>(createdRace, HttpStatus.CREATED);
     }
@@ -38,8 +40,8 @@ public class RaceController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllRaces() throws ServiceException{
-        Page<Race> raceList = raceService.findAllRaces();
+    public ResponseEntity<?> getAllRaces(Pageable pageRequest) throws ServiceException{
+        Page<Race> raceList = raceService.findAllRaces(pageRequest);
         return new ResponseEntity<Object>(raceList, HttpStatus.OK);
     }
 
