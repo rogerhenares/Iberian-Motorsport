@@ -6,6 +6,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -24,8 +29,10 @@ public class SecurityConfig {
                     .and()
                     .exceptionHandling()
                     .authenticationEntryPoint(new SteamLoginConfiguration());
+                http.cors().and().csrf().disable();
         return http.build();
     }
+
 }
 
 

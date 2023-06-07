@@ -1,7 +1,9 @@
 package com.iberianmotorsports.service.service;
 
+import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -9,13 +11,13 @@ import java.io.IOException;
 @Service
 public interface ChampionshipService {
 
-    Championship saveChampionship(Championship championship);
+    Championship saveChampionship(ChampionshipDTO championshipDTO);
 
     Championship findChampionshipById(Long id);
 
     Championship findChampionshipByName(String name);
 
-    Page<Championship> findAllChampionships();
+    Page<Championship> findAllChampionships(Pageable pageable);
 
     Championship updateChampionship(Championship championship);
 

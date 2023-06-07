@@ -1,5 +1,7 @@
 package com.iberianmotorsports.service.controller;
 
+import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.SessionDTO;
 import com.iberianmotorsports.service.model.MessageResponse;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.service.SessionService;
@@ -7,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +22,13 @@ public class SessionController {
     @Autowired
     private SessionService sessionService;
 
+    private SessionDTOMapper sessionDTOMapper;
+
     @PostMapping
-    public ResponseEntity<?> createNewSession(Session session) throws Exception {
-        Session createdSession = sessionService.saveSession(session);
-        return new ResponseEntity<Object>(createdSession, HttpStatus.CREATED);
+    public ResponseEntity<?> createNewSession(SessionDTO sessionDTO) throws Exception {
+        Session createdSession = sessionService.saveSession(sessionDTO);
+        SessionDTO createdSessionDTO = sessionDTOMapper.apply(createdSession);
+        return new ResponseEntity<Object>(createdSessionDTO, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
@@ -33,8 +39,8 @@ public class SessionController {
 
 
     @GetMapping
-    public ResponseEntity<?> getAllSessions() throws ServiceException{
-        Page<Session> sessionList = sessionService.findAllSessions();
+    public ResponseEntity<?> getAllSessions(Pageable pageRequest) throws ServiceException{
+        Page<Session> sessionList = sessionService.findAllSessions(pageRequest);
         return new ResponseEntity<Object>(sessionList, HttpStatus.OK);
     }
 

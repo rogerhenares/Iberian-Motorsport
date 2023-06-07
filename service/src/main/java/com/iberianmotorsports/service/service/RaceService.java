@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.service;
 
 import com.iberianmotorsports.service.model.Race;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public interface RaceService {
 
     Race findRaceByName(String name);
 
-    Page<Race> findAllRaces();
+    Page<Race> findAllRaces(Pageable pageRequest);
 
     Race updateRace(Race Race);
 

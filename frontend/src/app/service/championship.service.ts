@@ -6,11 +6,12 @@ import { Championship } from '../model/Championship';
 import { handleError } from '../util/Error.handler';
 import { environment } from '../../environments/environment';
 import { Page } from '../model/Page';
+import {Pageable} from "../model/Pageable";
 
 @Injectable()
 export class ChampionshipService {
 
-    private url: string = environment.apiPath + 'championship/';
+    private url: string = environment.apiPath + 'championship';
 
     constructor(
         private httpClient: HttpClient
@@ -42,7 +43,7 @@ export class ChampionshipService {
             );
     }
 
-    getUserByName(championshipName: String, errorNotify?: any) {
+    getChampionshipByName(championshipName: String, errorNotify?: any) {
         const url = this.url + '/name/' + championshipName;
         return this.httpClient.get<Championship>(url)
             .pipe(
@@ -51,11 +52,8 @@ export class ChampionshipService {
             );
     }
 
-    getChampionshipList(page: Number, errorNotify?: any) {
-        let url = this.url + '/list/?';
-        if (page) {
-            url += 'page=' + page;
-        }
+    getChampionshipList(pageable: Pageable, errorNotify?: any) {
+        let url = this.url + "?page=" + pageable.page + "&size=" + pageable.size;
         return this.httpClient.get<Page>(url)
             .pipe(
                 tap(response => console.log('fetched Championship page')),

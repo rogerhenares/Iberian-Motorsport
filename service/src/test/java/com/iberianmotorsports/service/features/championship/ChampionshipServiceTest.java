@@ -2,6 +2,9 @@ package com.iberianmotorsports.service.features.championship;
 
 import com.iberianmotorsports.ChampionshipFactory;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
+import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipMapper;
 import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
@@ -14,6 +17,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,22 +37,29 @@ public class ChampionshipServiceTest {
     @Mock
     private ChampionshipRepository championshipRepository;
 
+    private ChampionshipMapper championshipMapper;
+
+    private ChampionshipDTOMapper championshipDTOMapper;
+
     @Captor
     ArgumentCaptor<Championship> championshipCaptor;
 
     @BeforeEach
     public void init() {
-        service = new ChampionshipServiceImpl(championshipRepository);
+        championshipMapper = new ChampionshipMapper();
+        championshipDTOMapper = new ChampionshipDTOMapper();
+        service = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
     }
 
     @Nested
     class saveChampionship {
+
+
         @Test
         public void saveChampionship() {
             Championship testChampionship = ChampionshipFactory.championship();
             givenChampionshipRepositorySave();
-
-            service.saveChampionship(testChampionship);
+            service.saveChampionship(championshipDTOMapper.apply(testChampionship));
 
             verify(championshipRepository).save(championshipCaptor.capture());
             assertEquals(ChampionshipFactory.championship(), championshipCaptor.getValue());
@@ -60,7 +71,7 @@ public class ChampionshipServiceTest {
             givenChampionshipAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveChampionship(testChampionship));
+                    ()-> service.saveChampionship(championshipDTOMapper.apply(testChampionship)));
 
             verify(championshipRepository, times(0)).save(any());
             assertEquals(ErrorMessages.DUPLICATED_CHAMPIONSHIP.getDescription(), exception.getMessage());

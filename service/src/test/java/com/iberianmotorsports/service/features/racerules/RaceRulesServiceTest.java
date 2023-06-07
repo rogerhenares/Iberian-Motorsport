@@ -2,6 +2,8 @@ package com.iberianmotorsports.service.features.raceRulesrules;
 
 import com.iberianmotorsports.RaceRulesFactory;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.repository.RaceRulesRepository;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -33,12 +35,18 @@ public class RaceRulesServiceTest {
     @Mock
     private RaceRulesRepository raceRulesRepository;
 
+    private RaceRulesMapper raceRulesMapper;
+
+    private RaceRulesDTOMapper raceRulesDTOMapper;
+
     @Captor
     ArgumentCaptor<RaceRules> raceRulesCaptor;
 
     @BeforeEach
     public void init() {
-        service = new RaceRulesServiceImpl(raceRulesRepository);
+        raceRulesDTOMapper = new RaceRulesDTOMapper();
+        raceRulesMapper = new RaceRulesMapper();
+        service = new RaceRulesServiceImpl(raceRulesRepository, raceRulesMapper, raceRulesDTOMapper);
     }
 
     @Nested
@@ -49,7 +57,7 @@ public class RaceRulesServiceTest {
             RaceRules testRaceRules = RaceRulesFactory.raceRules();
             givenRaceRulesRepositorySave();
 
-            service.saveRaceRules(testRaceRules);
+            service.saveRaceRules(raceRulesDTOMapper.apply(testRaceRules));
 
             verify(raceRulesRepository).save(raceRulesCaptor.capture());
             assertEquals(RaceRulesFactory.raceRules(), raceRulesCaptor.getValue());
@@ -61,7 +69,7 @@ public class RaceRulesServiceTest {
             givenRaceRulesAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveRaceRules(testRaceRules));
+                    ()-> service.saveRaceRules(raceRulesDTOMapper.apply(testRaceRules)));
 
             verify(raceRulesRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATED_RACE_RULES.getDescription(), exception.getMessage());
@@ -147,7 +155,8 @@ public class RaceRulesServiceTest {
     }
 
     private void givenRaceRulesAlreadyExists() {
-        when(raceRulesRepository.findById(anyLong())).thenReturn(Optional.of(RaceRulesFactory.raceRules()));
+        when(raceRulesRepository.save(any())).thenThrow(ServiceException.class);
     }
+
 
 }
