@@ -14,17 +14,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
-import static com.iberianmotorsports.service.Utils.Utils.defaultPageable;
-
 
 @AllArgsConstructor
 @Transactional
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -68,9 +67,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserBySteamId(Long steamId) {
-        Optional<User> userOptional = userRepository.findById(steamId);
-        if(userOptional.isEmpty()) throw new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription());
-        return userOptional.orElse(null);
+        return userRepository.findBySteamId(steamId).orElseThrow(() ->
+                new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription()));
     }
 
     @Override
@@ -81,8 +79,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findAllUsers() {
-        return userRepository.findAll(defaultPageable);
+    public Page<User> findAllUsers(Pageable pageRequest) {
+        return userRepository.findAll(pageRequest);
     }
 
     @Override

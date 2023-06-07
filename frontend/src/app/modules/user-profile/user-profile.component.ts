@@ -24,6 +24,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getData() {
+    console.log("CURRENT TOKEN -> ", this.appContext.authenticationInfo);
     this.userService.getInfoDummy().subscribe(
     response => {
       if (response) {

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
 
     @PostMapping
     public ResponseEntity<?> createNewUser(Long steamId) {
@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers() throws ServiceException {
-        Page<User> userList = userService.findAllUsers();
+    public ResponseEntity<?> getAllUsers(Pageable pageable) throws ServiceException {
+        Page<User> userList = userService.findAllUsers(pageable);
         return new ResponseEntity<Object>(userList, HttpStatus.OK);
     }
 

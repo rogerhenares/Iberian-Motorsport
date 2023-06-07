@@ -15,7 +15,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const headers = req.headers;
         const headerAuthorization = headers.get('Authorization');
-        console.log("THIS IS A FLAG FROM INTERCEPTOR -> ", this.router.url);
+        console.log("THIS IS A FLAG FROM INTERCEPTOR -> ", decodeURIComponent(this.router.url));
+        console.log("THIS IS THE AUTH -> ", atob(this.appContext.authenticationInfo.authorizationToken));
         if (headerAuthorization == null) {
             req = req.clone({
                 setHeaders: {

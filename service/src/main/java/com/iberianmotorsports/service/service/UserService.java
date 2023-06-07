@@ -3,6 +3,7 @@ package com.iberianmotorsports.service.service;
 
 import com.iberianmotorsports.service.model.User;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,7 @@ public interface UserService {
 
     User findUserByName(String name);
 
-    Page<User> findAllUsers();
+    Page<User> findAllUsers(Pageable pageRequest);
 
     User updateUser(User user);
 

@@ -13,6 +13,7 @@ import { ProcessService } from "../../service/process.service";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AuthenticationInterceptor } from "../../authentication/authentication.interceptor";
 import {AppContext} from "../../util/AppContext";
+import {ChampionshipService} from "../../service/championship.service";
 
 @NgModule({
   imports: [
@@ -33,11 +34,12 @@ import {AppContext} from "../../util/AppContext";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
-      multi: true,
+      multi: true
     },
     AppContext,
     UserAdminService,
     UserService,
+    ChampionshipService,
     ProcessService],
   bootstrap: [AppComponent]
 })

@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "\"USER\"")
+@Table(name="USER")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
 
