@@ -11,8 +11,6 @@ import {UserAdminService} from "../../service/user-admin.service";
 import {UserService} from "../../service/user.service";
 import {ProcessService} from "../../service/process.service";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import {ChampionshipService} from "../../service/championship.service";
-import {ChampionshipComponent} from "../championship/championship.component";
 
 @NgModule({
   imports: [
@@ -39,7 +37,6 @@ import {ChampionshipComponent} from "../championship/championship.component";
        */
     UserAdminService,
     UserService,
-    ChampionshipService,
     ProcessService],
   bootstrap: [AppComponent]
 })

@@ -20,9 +20,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .addFilterBefore(new SteamTokenValidation(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                    .requestMatchers("/public/**", "/**").permitAll()
+                    .requestMatchers("/public/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
