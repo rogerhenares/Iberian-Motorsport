@@ -22,9 +22,9 @@ public class ChampionshipController {
 
     @Autowired
     private ChampionshipService championshipService;
-
+    @Autowired
     private ChampionshipDTOMapper championshipDTOMapper;
-
+    @Autowired
     private ChampionshipMapper championshipMapper;
 
     @PostMapping

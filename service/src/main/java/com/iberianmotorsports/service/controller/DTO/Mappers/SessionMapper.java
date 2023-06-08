@@ -11,6 +11,7 @@ public class SessionMapper implements Function<SessionDTO, Session> {
     @Override
     public Session apply(SessionDTO sessionDTO) {
         Session session = new Session();
+        session.setId(sessionDTO.id());
         session.setHourOfDay(sessionDTO.hourOfDay());
         session.setDayOfWeekend(sessionDTO.dayOfWeekend());
         session.setTimeMultiplier(sessionDTO.timeMultiplier());

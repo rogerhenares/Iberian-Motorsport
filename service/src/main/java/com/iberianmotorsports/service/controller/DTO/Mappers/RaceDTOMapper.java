@@ -19,6 +19,7 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
     public RaceDTO apply(Race race) {
 
         return new RaceDTO(
+                race.getId(),
                 race.getChampionship().getId(),
                 race.getTrack(),
                 race.getPreRaceWaitingTimeSeconds(),

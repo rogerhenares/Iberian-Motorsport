@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.features.raceRulesrules;
 
 import com.iberianmotorsports.RaceRulesFactory;
+import com.iberianmotorsports.SessionFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
@@ -155,7 +156,7 @@ public class RaceRulesServiceTest {
     }
 
     private void givenRaceRulesAlreadyExists() {
-        when(raceRulesRepository.save(any())).thenThrow(ServiceException.class);
+        when(raceRulesRepository.findById(anyLong())).thenReturn(Optional.of(RaceRulesFactory.raceRules()));
     }
 
 

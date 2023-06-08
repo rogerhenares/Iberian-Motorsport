@@ -11,6 +11,7 @@ public class SessionDTOMapper implements Function<Session, SessionDTO> {
     @Override
     public SessionDTO apply(Session session) {
         return new SessionDTO(
+                session.getId(),
                 session.getHourOfDay(),
                 session.getDayOfWeekend(),
                 session.getTimeMultiplier(),

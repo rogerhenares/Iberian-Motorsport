@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
 public record RaceDTO (
+        Long id,
         Long championshipId,
         String track,
         Integer preRaceWaitingTimeSeconds,

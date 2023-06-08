@@ -2,6 +2,9 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceMapper;
+import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
@@ -29,11 +32,15 @@ public class RaceServiceImpl implements RaceService {
 
     private RaceRepository raceRepository;
 
+    private RaceMapper raceMapper;
+
+    private RaceDTOMapper raceDTOMapper;
+
     @Override
-    public Race saveRace(Race race) {
+    public Race saveRace(RaceDTO raceDTO) {
+        Race race = raceMapper.apply(raceDTO);
         if (isAlreadyInDatabase(race.getId()))
             throw new ServiceException(ErrorMessages.DUPLICATED_RACE.getDescription());
-//        race.setChampionship(championshipService.findChampionshipById(race.getChampionship().getId()));
         return raceRepository.save(race);
     }
 

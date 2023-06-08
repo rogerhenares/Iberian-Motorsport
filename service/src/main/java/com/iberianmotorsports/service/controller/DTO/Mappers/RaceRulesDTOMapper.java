@@ -12,6 +12,7 @@ public class RaceRulesDTOMapper implements Function<RaceRules, RaceRulesDTO> {
     @Override
     public RaceRulesDTO apply(RaceRules raceRules) {
         return new RaceRulesDTO(
+                raceRules.getId(),
                 raceRules.getQualifyStandingType(),
                 raceRules.getPitWindowLengthSec(),
                 raceRules.getDriverStintTimeSec(),

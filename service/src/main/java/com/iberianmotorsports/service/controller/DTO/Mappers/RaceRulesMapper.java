@@ -11,6 +11,7 @@ public class RaceRulesMapper implements Function<RaceRulesDTO, RaceRules> {
     @Override
     public RaceRules apply(RaceRulesDTO raceRulesDTO) {
         RaceRules raceRules = new RaceRules();
+        raceRules.setId(raceRulesDTO.id());
         raceRules.setQualifyStandingType(raceRulesDTO.qualifyStandingType());
         raceRules.setPitWindowLengthSec(raceRulesDTO.pitWindowLengthSec());
         raceRules.setDriverStintTimeSec(raceRulesDTO.driverStintTimeSec());

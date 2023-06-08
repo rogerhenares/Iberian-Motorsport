@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.service;
 
+import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.model.Race;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,7 @@ import java.io.IOException;
 @Service
 public interface RaceService {
 
-    Race saveRace(Race race);
+    Race saveRace(RaceDTO raceDTO);
 
     Race findRaceById(Long id);
 

@@ -44,6 +44,8 @@ public class SessionServiceTest {
 
     @BeforeEach
     public void init() {
+        sessionMapper = new SessionMapper();
+        sessionDTOMapper = new SessionDTOMapper();
         service = new SessionServiceImpl(sessionRepository, sessionMapper);
     }
 

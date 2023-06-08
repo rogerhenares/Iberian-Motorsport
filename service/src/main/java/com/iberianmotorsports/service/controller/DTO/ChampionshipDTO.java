@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
 public record ChampionshipDTO(
+        Long id,
         String name,
         String description,
         String admin_password,

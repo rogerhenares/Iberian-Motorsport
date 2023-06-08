@@ -11,6 +11,7 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
     @Override
     public Championship apply(ChampionshipDTO championshipDTO) {
         Championship championship = new Championship();
+        championship.setId(championshipDTO.id());
         championship.setName(championshipDTO.name());
         championship.setDescription(championshipDTO.description());
         championship.setAdmin_password(championshipDTO.admin_password());

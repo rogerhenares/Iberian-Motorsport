@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .cors().and()
                 .addFilterBefore(new SteamTokenValidation(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                    .requestMatchers("/public/**").permitAll()
+                    .requestMatchers("/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()

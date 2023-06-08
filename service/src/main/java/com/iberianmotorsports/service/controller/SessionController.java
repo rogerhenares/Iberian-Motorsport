@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.controller;
 
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
 import com.iberianmotorsports.service.model.MessageResponse;
 import com.iberianmotorsports.service.model.Session;
@@ -21,8 +22,10 @@ public class SessionController {
 
     @Autowired
     private SessionService sessionService;
-
+    @Autowired
     private SessionDTOMapper sessionDTOMapper;
+    @Autowired
+    private SessionMapper sessionMapper;
 
     @PostMapping
     public ResponseEntity<?> createNewSession(SessionDTO sessionDTO) throws Exception {
@@ -34,13 +37,14 @@ public class SessionController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getSessionById(@PathVariable("id") Long id) throws ServiceException {
         Session session = sessionService.findSessionById(id);
-        return new ResponseEntity<Object>(session, HttpStatus.OK);
+        SessionDTO sessionDTO = sessionDTOMapper.apply(session);
+        return new ResponseEntity<Object>(sessionDTO, HttpStatus.OK);
     }
 
 
     @GetMapping
     public ResponseEntity<?> getAllSessions(Pageable pageRequest) throws ServiceException{
-        Page<Session> sessionList = sessionService.findAllSessions(pageRequest);
+        Page<SessionDTO> sessionList = sessionService.findAllSessions(pageRequest).map(sessionDTOMapper);
         return new ResponseEntity<Object>(sessionList, HttpStatus.OK);
     }
 
@@ -48,7 +52,8 @@ public class SessionController {
     public ResponseEntity<?> updateSession(@PathVariable("id") Long id, @RequestBody Session session) throws ServiceException{
         session.setId(id);
         Session updatedSession = sessionService.updateSession(session);
-        return new ResponseEntity<Object>(updatedSession, HttpStatus.OK);
+        SessionDTO updatedSessionDTO = sessionDTOMapper.apply(updatedSession);
+        return new ResponseEntity<Object>(updatedSessionDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

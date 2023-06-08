@@ -22,9 +22,9 @@ public class RaceRulesController {
 
     @Autowired
     private RaceRulesService raceRulesService;
-
+    @Autowired
     private RaceRulesDTOMapper raceRulesDTOMapper;
-
+    @Autowired
     private RaceRulesMapper raceRulesMapper;
 
     @PostMapping

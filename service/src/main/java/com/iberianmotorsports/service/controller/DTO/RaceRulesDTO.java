@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
 public record RaceRulesDTO(
+        Long id,
         Long qualifyStandingType,
         Integer pitWindowLengthSec,
         Integer driverStintTimeSec,

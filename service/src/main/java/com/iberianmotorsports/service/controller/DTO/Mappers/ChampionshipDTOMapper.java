@@ -11,6 +11,7 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
     @Override
     public ChampionshipDTO apply(Championship championship) {
         return new ChampionshipDTO(
+                championship.getId(),
                 championship.getName(),
                 championship.getDescription(),
                 championship.getAdmin_password(),
