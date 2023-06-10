@@ -1,5 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
+import java.time.LocalDateTime;
+
 public record ChampionshipDTO(
         Long id,
         String name,
@@ -14,6 +16,14 @@ public record ChampionshipDTO(
         Integer maxCarSlots,
         Integer dumpLeaderboards,
         Integer isRaceLocked,
-        String imageContent
+        Integer randomizeTrackWhenEmpty,
+        String centralEntryListPath,
+        Integer allowAutoDq,
+        Integer shortFormationLap,
+        Integer dumpEntryList,
+        Integer formationLapType,
+        Integer ignorePrematureDisconnects,
+        String imageContent,
+        LocalDateTime startDate
 ) {
 }

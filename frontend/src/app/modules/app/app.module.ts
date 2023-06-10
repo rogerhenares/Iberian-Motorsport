@@ -9,8 +9,10 @@ import { AppComponent } from './component/app.component';
 import { AdminLayoutComponent } from '../layouts/admin-layout/admin-layout.component';
 import {UserAdminService} from "../../service/user-admin.service";
 import {UserService} from "../../service/user.service";
+import {ChampionshipService} from "../../service/championship.service";
 import {ProcessService} from "../../service/process.service";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import {Championship} from "../../model/Championship";
 
 @NgModule({
   imports: [
@@ -37,7 +39,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
        */
     UserAdminService,
     UserService,
-    ProcessService],
+    ProcessService,
+    ChampionshipService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

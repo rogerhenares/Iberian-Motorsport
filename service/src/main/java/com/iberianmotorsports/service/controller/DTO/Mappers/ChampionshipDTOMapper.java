@@ -24,7 +24,15 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getMaxCarSlots(),
                 championship.getDumpLeaderboards(),
                 championship.getIsRaceLocked(),
-                championship.getImageContent()
+                championship.getRandomizeTrackWhenEmpty(),
+                championship.getCentralEntryListPath(),
+                championship.getAllowAutoDq(),
+                championship.getShortFormationLap(),
+                championship.getDumpEntryList(),
+                championship.getFormationLapType(),
+                championship.getIgnorePrematureDisconnects(),
+                championship.getImageContent(),
+                championship.getStartDate()
         );
     }
 }

@@ -21,6 +21,15 @@ public class ChampionshipFactory {
     public static final Integer maxCarSlots = 0;
     public static final Integer dumpLeaderboards = 1;
     public static final Integer isRaceLocked = 0;
+    public static final Integer randomizeTrackWhenEmpty = 0;
+    public static final String centralEntryListPath = "testCentralEntryListPath";
+    public static final Integer allowAutoDq = 0;
+    public static final Integer shortFormationLap = 0;
+    public static final Integer dumpEntryList = 0;
+    public static final Integer formationLapType = 0;
+    public static final Integer ignorePrematureDisconnects = 0;
+    public static final String imageContent = "testImage";
+
 
     public static Championship championship() {
         Championship championship = new Championship();
@@ -37,6 +46,14 @@ public class ChampionshipFactory {
         championship.setTrackMedalsRequirement(trackMedalsRequirement);
         championship.setSafetyRatingRequirement(safetyRatingRequirement);
         championship.setRacecraftRatingRequirement(racecraftRatingRequirement);
+        championship.setRandomizeTrackWhenEmpty(randomizeTrackWhenEmpty);
+        championship.setCentralEntryListPath(centralEntryListPath);
+        championship.setAllowAutoDq(allowAutoDq);
+        championship.setShortFormationLap(shortFormationLap);
+        championship.setDumpEntryList(dumpEntryList);
+        championship.setFormationLapType(formationLapType);
+        championship.setIgnorePrematureDisconnects(ignorePrematureDisconnects);
+        championship.setImageContent(imageContent);
         return championship;
     }
 

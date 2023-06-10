@@ -2,7 +2,8 @@ import {Component, NgModule, OnInit} from '@angular/core';
 import {ChampionshipService} from "../../service/championship.service";
 import {Championship} from "../../model/Championship";
 import {Pageable} from "../../model/Pageable";
-import {skip} from "rxjs";
+import {ActivatedRoute, Router} from '@angular/router';
+
 
 
 @Component({
@@ -17,8 +18,11 @@ export class ChampionshipComponent implements OnInit {
     totalPages: number = 0;
     pageable: Pageable = new Pageable(0,3);
     selectedChampionshipId: number | null = null;
+    private router: Router;
+    private route: ActivatedRoute | null;
 
-    constructor(private championshipService: ChampionshipService) {}
+
+    constructor(private championshipService: ChampionshipService, router: Router) {}
 
     ngOnInit(): void {
         console.log('ChampionshipComponent initialized');
@@ -59,5 +63,10 @@ export class ChampionshipComponent implements OnInit {
         } else {
         }
     }
+
+    createNewChampionship() {
+        this.router.navigate(['/championship/new']);
+    }
+
 }
 

@@ -24,7 +24,15 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
         championship.setMaxCarSlots(championshipDTO.maxCarSlots());
         championship.setDumpLeaderboards(championshipDTO.dumpLeaderboards());
         championship.setIsRaceLocked(championshipDTO.isRaceLocked());
+        championship.setRandomizeTrackWhenEmpty(championshipDTO.randomizeTrackWhenEmpty());
+        championship.setCentralEntryListPath(championshipDTO.centralEntryListPath());
+        championship.setAllowAutoDq(championshipDTO.allowAutoDq());
+        championship.setShortFormationLap(championshipDTO.shortFormationLap());
+        championship.setDumpEntryList(championshipDTO.dumpEntryList());
+        championship.setFormationLapType(championshipDTO.formationLapType());
+        championship.setIgnorePrematureDisconnects(championshipDTO.ignorePrematureDisconnects());
         championship.setImageContent(championshipDTO.imageContent());
+        championship.setStartDate(championshipDTO.startDate());
         return championship;
     }
 }

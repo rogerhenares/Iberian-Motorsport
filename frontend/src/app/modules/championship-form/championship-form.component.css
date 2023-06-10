@@ -1,0 +1,9 @@
+.description-input {
+    height: 60px;
+}
+.custom-select {
+    width: 97%;
+    height: 46%;
+    display:block;
+    padding-bottom:5px;
+}

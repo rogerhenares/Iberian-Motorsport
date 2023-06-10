@@ -26,9 +26,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <button class="btn btn-primary" (click)="goToPreviousPage()" [disabled]="this.pageable.page === 0">Previous</button>
                 <button class="btn btn-primary" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
+            </div>
+            <div class="col-md-6 text-right align-self-center">
+                <button class="btn btn-primary" routerLink="/championship/new">Add Championship</button>
             </div>
         </div>
 
