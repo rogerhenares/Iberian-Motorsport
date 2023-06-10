@@ -1,6 +1,6 @@
 package com.iberianmotorsports.service.configuration;
 
-import com.iberianmotorsports.service.service.UserService;
+import com.iberianmotorsports.service.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,19 +17,23 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
         "com.iberianmotorsports.service.service"})
 public class SecurityConfig {
 
-    private final UserService userService;
+    private final static String BASIC_USER = "BASIC_USER";
+    private final static String ADMIN = "ADMIN";
 
-    public SecurityConfig(UserService userService) {
-        this.userService = userService;
+    private final AuthService authService;
+
+    public SecurityConfig(AuthService authService) {
+        this.authService = authService;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 //.cors().and()
-                .addFilterBefore(new SteamTokenValidation(userService), BasicAuthenticationFilter.class)
+                .addFilterBefore(new SteamTokenValidation(authService), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
                     .requestMatchers("/public/**").permitAll()
+                    //.requestMatchers("/admin/**").hasAnyRole(ADMIN)
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()

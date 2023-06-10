@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.repository.RoleRepository;
 import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
 import jakarta.transaction.Transactional;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -26,19 +28,21 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final String BASIC_USER = "BASIC_USER";
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserRepository userRepository;
-
+    private RoleRepository roleRepository;
     private RestTemplate restTemplate;
-
     private Environment env;
 
     @Override
     public User saveUser(Long steamId) {
         if (isAlreadyInDatabase(steamId)) throw new ServiceException(ErrorMessages.DUPLICATE_USER.getDescription());
         User user = getPlayerSummary(String.valueOf(steamId));
-        return userRepository.save(user);
+        user.setRoles(List.of(roleRepository.findRoleByRole(BASIC_USER)));
+        User userSaved = userRepository.save(user);
+        return userSaved;
     }
 
     @Override

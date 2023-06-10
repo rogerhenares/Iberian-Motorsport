@@ -21,6 +21,8 @@ export class AuthenticationInfo {
         this.authorizationToken = objStorageToken['authorizationToken'];
         this.refreshToken = objStorageToken['refreshToken'];
         this.expiresIn = objStorageToken['expiresIn'];
+    }else {
+      this.authorizationToken = '';
     }
   }
 

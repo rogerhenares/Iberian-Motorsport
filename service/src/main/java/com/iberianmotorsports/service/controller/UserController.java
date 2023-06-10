@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -36,6 +37,13 @@ public class UserController {
     @GetMapping(value = "/name/{name}")
     public ResponseEntity<?> getUserByName(@PathVariable("name") String name) throws ServiceException {
         User user = userService.findUserByName(name);
+        return new ResponseEntity<Object>(user, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/loggedUser")
+    public ResponseEntity<?> getLoggedUser() throws ServiceException {
+        Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserBySteamId(steamId);
         return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
 

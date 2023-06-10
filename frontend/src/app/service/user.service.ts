@@ -5,6 +5,7 @@ import { User } from '../model/User';
 import { handleError } from '../util/Error.handler';
 import { environment } from '../../environments/environment';
 import { Page } from '../model/Page';
+import {AppContext} from "../util/AppContext";
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,8 @@ export class UserService {
     private url: string = environment.apiPath + 'user/';
 
     constructor(
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private appContext: AppContext
         ) {
     }
 
@@ -25,7 +27,7 @@ export class UserService {
     }
 
     getLoggedUser(errorNotify?: any) {
-        return this.httpClient.get<User>(this.url)
+        return this.httpClient.get<User>(this.url + 'loggedUser')
             .pipe(
                 tap(user => console.log('fetched logged user info')),
                 catchError(handleError('UserService -> getLoggedUser', null, errorNotify))

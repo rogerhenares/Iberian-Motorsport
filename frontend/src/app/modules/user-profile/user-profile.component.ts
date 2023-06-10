@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../service/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {AppContext} from "../../util/AppContext";
 
 @Component({
@@ -13,18 +13,14 @@ export class UserProfileComponent implements OnInit {
 
 
   constructor(public router: Router,
-              public activatedRoute: ActivatedRoute,
-              private userService: UserService,
-              private appContext: AppContext
+              public appContext: AppContext,
+              private userService: UserService
   ) { }
 
   ngOnInit() {
-    console.log("decoded URI -> ", decodeURIComponent(this.router.url.split('?')[1]));
-    this.appContext.authenticationInfo.authorizationToken = btoa(decodeURIComponent(this.router.url.split('?')[1]));
   }
 
   getData() {
-    console.log("CURRENT TOKEN -> ", this.appContext.authenticationInfo);
     this.userService.getInfoDummy().subscribe(
     response => {
       if (response) {

@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class SteamLoginConfiguration implements AuthenticationEntryPoint {
     private static final String HOST = "http://localhost:4200/";
-    private static final String REDIRECT_TO = "http://localhost:4200/user-profile";
+    private static final String REDIRECT_TO = "http://localhost:4200/login";
     private static final String BASE_LOGIN_URL = "https://steamcommunity.com/openid/login?" +
             "&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" +
             "&openid.identity=http://specs.openid.net/auth/2.0/identifier_select" +
