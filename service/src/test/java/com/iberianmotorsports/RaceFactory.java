@@ -14,6 +14,7 @@ public class RaceFactory {
     public static final Integer postQualySeconds = 1;
     public static final Integer postRaceSeconds = 0;
     public static final String serverName = "testServerName";
+    public static final Long championshipId = 1L;
 
 
     public static Race race() {
@@ -29,6 +30,7 @@ public class RaceFactory {
         race.setPostQualySeconds(postQualySeconds);
         race.setSessionOverTimeSeconds(sessionOverTimeSeconds);
         race.setWeatherRandomness(weatherRandomness);
+        race.setChampionshipId(championshipId);
         return race;
     }
 }

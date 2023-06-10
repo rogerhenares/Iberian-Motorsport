@@ -2,6 +2,9 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
+import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipMapper;
 import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
@@ -10,14 +13,13 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
-
-import static com.iberianmotorsports.service.Utils.Utils.defaultPageable;
 
 @AllArgsConstructor
 @Transactional
@@ -27,8 +29,12 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     @Autowired
     private ChampionshipRepository championshipRepository;
 
+    private ChampionshipMapper championshipMapper;
+
+
     @Override
-    public Championship saveChampionship(Championship championship) {
+    public Championship saveChampionship(ChampionshipDTO championshipDTO) {
+        Championship championship = championshipMapper.apply(championshipDTO);
         if (isInDatabase(championship.getName()))
             throw new ServiceException(ErrorMessages.DUPLICATED_CHAMPIONSHIP.getDescription());
         return championshipRepository.save(championship);
@@ -51,8 +57,8 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     }
 
     @Override
-    public Page<Championship> findAllChampionships() {
-        return championshipRepository.findAll(defaultPageable);
+    public Page<Championship> findAllChampionships(Pageable pageRequest) {
+        return championshipRepository.findAll(pageRequest);
     }
 
     @Override

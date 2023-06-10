@@ -36,6 +36,13 @@ public class UserRepositoryTest {
 
 
     @Test
+    void saveUserIdNull() {
+        User userDummy = UserFactory.user();
+        userDummy.setUserId(null);
+        assertThrows(ConstraintViolationException.class, () -> userRepository.save(userDummy));
+    }
+
+    @Test
     void saveUserFirstNameNull() {
         User userDummy = UserFactory.user();
         userDummy.setFirstName(null);
