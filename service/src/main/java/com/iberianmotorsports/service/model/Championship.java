@@ -7,7 +7,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -73,13 +73,32 @@ public class Championship implements Serializable {
     @Column(name = "is_race_locked")
     private Integer isRaceLocked;
 
-    @NotNull
-    @Column(name = "start_date")
-    private Date startDate;
+    @Column(name="randomize_track_when_empty")
+    private Integer randomizeTrackWhenEmpty;
 
-    @NotNull
-    @Column(name = "end_date")
-    private Date endDate;
+    @Column(name="central_entry_list_path")
+    private String centralEntryListPath;
+
+    @Column(name="allow_auto_dq")
+    private Integer allowAutoDq;
+
+    @Column(name="short_formation_lap")
+    private Integer shortFormationLap;
+
+    @Column(name="dump_entry_list")
+    private Integer dumpEntryList;
+
+    @Column(name="formation_lap_type")
+    private Integer formationLapType;
+
+    @Column(name="ignore_premature_disconnects")
+    private Integer ignorePrematureDisconnects;
+
+    @Column(name = "image_content")
+    private String imageContent;
+
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
     @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY)
     private List<Race> raceList;

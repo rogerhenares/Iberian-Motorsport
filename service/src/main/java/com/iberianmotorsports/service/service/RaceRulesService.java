@@ -1,7 +1,9 @@
 package com.iberianmotorsports.service.service;
 
+import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
 import com.iberianmotorsports.service.model.RaceRules;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -9,12 +11,12 @@ import java.io.IOException;
 @Service
 public interface RaceRulesService {
 
-    RaceRules saveRaceRules(RaceRules raceRules);
+    RaceRules saveRaceRules(RaceRulesDTO raceRulesDTO);
 
     RaceRules findRaceRulesById(Long id);
 
 
-    Page<RaceRules> findAllRaceRules();
+    Page<RaceRules> findAllRaceRules(Pageable pageable);
 
     RaceRules updateRaceRules(RaceRules raceRules);
 

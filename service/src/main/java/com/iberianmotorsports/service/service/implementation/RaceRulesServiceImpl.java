@@ -2,6 +2,9 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
+import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.repository.RaceRulesRepository;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -10,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
@@ -17,7 +21,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.iberianmotorsports.service.Utils.Utils.defaultPageable;
 
 @AllArgsConstructor
 @Transactional
@@ -27,8 +30,13 @@ public class RaceRulesServiceImpl implements RaceRulesService {
     @Autowired
     private RaceRulesRepository raceRulesRepository;
 
+    private RaceRulesMapper raceRulesMapper;
+
+    private RaceRulesDTOMapper raceRulesDTOMapper;
+
     @Override
-    public RaceRules saveRaceRules(RaceRules raceRules) {
+    public RaceRules saveRaceRules(RaceRulesDTO raceRulesDTO) {
+        RaceRules raceRules = raceRulesMapper.apply(raceRulesDTO);
         if (isAlreadyInDatabase(raceRules.getId()))
             throw new ServiceException(ErrorMessages.DUPLICATED_RACE_RULES.getDescription());
         return raceRulesRepository.save(raceRules);
@@ -42,8 +50,8 @@ public class RaceRulesServiceImpl implements RaceRulesService {
     }
 
     @Override
-    public Page<RaceRules> findAllRaceRules() {
-        return raceRulesRepository.findAll(defaultPageable);
+    public Page<RaceRules> findAllRaceRules(Pageable pageRequest) {
+        return raceRulesRepository.findAll(pageRequest);
     }
 
     @Override

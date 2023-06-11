@@ -2,6 +2,8 @@ package com.iberianmotorsports.service.features.session;
 
 import com.iberianmotorsports.SessionFactory;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.SessionRepository;
 import com.iberianmotorsports.service.service.SessionService;
@@ -30,6 +32,10 @@ public class SessionServiceTest {
 
     private SessionService service;
 
+    private SessionMapper sessionMapper;
+
+    private SessionDTOMapper sessionDTOMapper;
+
     @Mock
     private SessionRepository sessionRepository;
 
@@ -38,7 +44,9 @@ public class SessionServiceTest {
 
     @BeforeEach
     public void init() {
-        service = new SessionServiceImpl(sessionRepository);
+        sessionMapper = new SessionMapper();
+        sessionDTOMapper = new SessionDTOMapper();
+        service = new SessionServiceImpl(sessionRepository, sessionMapper);
     }
 
     @Nested
@@ -49,7 +57,7 @@ public class SessionServiceTest {
             Session testSession = SessionFactory.session();
             givenSessionRepositorySave();
 
-            service.saveSession(testSession);
+            service.saveSession(sessionDTOMapper.apply(testSession));
 
             verify(sessionRepository).save(sessionCaptor.capture());
             assertEquals(SessionFactory.session(), sessionCaptor.getValue());
@@ -61,7 +69,7 @@ public class SessionServiceTest {
             givenSessionAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveSession(testSession));
+                    ()-> service.saveSession(sessionDTOMapper.apply(testSession)));
 
             verify(sessionRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATED_SESSION.getDescription(), exception.getMessage());

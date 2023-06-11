@@ -1,10 +1,17 @@
 package com.iberianmotorsports.service.features.race;
 
+import com.iberianmotorsports.ChampionshipFactory;
 import com.iberianmotorsports.RaceFactory;
+import com.iberianmotorsports.RaceRulesFactory;
+import com.iberianmotorsports.SessionFactory;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.Mappers.*;
 import com.iberianmotorsports.service.model.Race;
+import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
+import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceService;
+import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
 import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.*;
@@ -27,17 +34,41 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class RaceServiceTest {
 
-    private RaceService service;
+    private RaceService raceService;
+
+    private ChampionshipService championshipService;
 
     @Mock
     private RaceRepository raceRepository;
 
+    @Mock
+    private ChampionshipRepository championshipRepository;
+
     @Captor
     ArgumentCaptor<Race> raceCaptor;
+    private RaceDTOMapper raceDTOMapper;
+    private RaceMapper raceMapper;
+    private ChampionshipMapper championshipMapper;
+    private SessionMapper sessionMapper;
+    private SessionDTOMapper sessionDTOMapper;
+    private RaceRulesMapper raceRulesMapper;
+    private RaceRulesDTOMapper raceRulesDTOMapper;
+
+
+
+
 
     @BeforeEach
     public void init() {
-        service = new RaceServiceImpl(raceRepository);
+        sessionMapper = new SessionMapper();
+        sessionDTOMapper = new SessionDTOMapper();
+        raceRulesMapper = new RaceRulesMapper();
+        raceRulesDTOMapper = new RaceRulesDTOMapper();
+        championshipMapper = new ChampionshipMapper();
+        raceMapper = new RaceMapper(raceRulesMapper, sessionMapper, championshipRepository);
+        raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper);
+        championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
+        raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, raceDTOMapper);
     }
 
     @Nested
@@ -46,21 +77,29 @@ public class RaceServiceTest {
         @Test
         public void saveRace() {
             Race testRace = RaceFactory.race();
+            testRace.setChampionship(ChampionshipFactory.championship());
+            testRace.setSession(SessionFactory.session());
+            testRace.setRaceRules(RaceRulesFactory.raceRules());
             givenRaceRepositorySave();
+            givenChampionshipExists();
 
-            service.saveRace(testRace);
+            raceService.saveRace(raceDTOMapper.apply(testRace));
 
             verify(raceRepository).save(raceCaptor.capture());
-            assertEquals(RaceFactory.race(), raceCaptor.getValue());
+            assertEquals(testRace, raceCaptor.getValue());
         }
 
         @Test
         public void saveDuplicateRace() {
             Race testRace = RaceFactory.race();
+            testRace.setChampionship(ChampionshipFactory.championship());
+            testRace.setSession(SessionFactory.session());
+            testRace.setRaceRules(RaceRulesFactory.raceRules());
+            givenChampionshipExists();
             givenRaceAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveRace(testRace));
+                    ()-> raceService.saveRace(raceDTOMapper.apply(testRace)));
 
             verify(raceRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATED_RACE.getDescription(), exception.getMessage());
@@ -76,7 +115,7 @@ public class RaceServiceTest {
             Race testRace = RaceFactory.race();
             givenRaceRepositorySave();
 
-            service.updateRace(testRace);
+            raceService.updateRace(testRace);
 
             verify(raceRepository).save(raceCaptor.capture());
             assertEquals(RaceFactory.race(), raceCaptor.getValue());
@@ -91,7 +130,7 @@ public class RaceServiceTest {
         @Test
         public void deleteRace() {
 
-            service.deleteRace(anyLong());
+            raceService.deleteRace(anyLong());
 
             verify(raceRepository).deleteById(anyLong());
         }
@@ -123,7 +162,7 @@ public class RaceServiceTest {
             when(raceRepository.findById(anyLong())).thenReturn(Optional.empty());
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.findRaceById(anyLong()));
+                    ()-> raceService.findRaceById(anyLong()));
 
             verify(raceRepository).findById(anyLong());
             Assertions.assertEquals(ErrorMessages.RACE_NOT_IN_DB.getDescription(), exception.getMessage());
@@ -131,11 +170,10 @@ public class RaceServiceTest {
 
         @Test
         public void findRaceInvalidName() {
-            when(raceRepository.findById(anyLong())).thenReturn(Optional.empty());
+            when(raceRepository.findByTrack(anyString())).thenReturn(Optional.empty());
 
-            RuntimeException exception = assertThrows(ServiceException.class, ()-> service.findRaceByName(anyString()));
+            RuntimeException exception = assertThrows(ServiceException.class, ()-> raceService.findRaceByName(anyString()));
 
-            verify(raceRepository).findById(anyLong());
             assertEquals(ErrorMessages.RACE_NOT_IN_DB.getDescription(), exception.getMessage());
         }
     }
@@ -145,13 +183,16 @@ public class RaceServiceTest {
     public void exportRace() throws IOException {
         Race testRace = RaceFactory.race();
 
-        String result = service.exportRace(testRace);
+        String result = raceService.exportRace(testRace);
 
         assertTrue(result.startsWith("Race saved to"));
 
         Path filePath = Paths.get(result.substring("Race saved to ".length()));
     }
 
+    private void givenChampionshipExists() {
+        when(championshipRepository.findById(anyLong())).thenReturn(Optional.of(ChampionshipFactory.championship()));
+    }
 
     private void givenRaceRepositorySave() {
         when(raceRepository.save(any(Race.class))).then((Answer<Race>) invocation -> {

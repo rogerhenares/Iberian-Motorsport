@@ -41,8 +41,7 @@ public class UserServiceImpl implements UserService {
         if (isAlreadyInDatabase(steamId)) throw new ServiceException(ErrorMessages.DUPLICATE_USER.getDescription());
         User user = getPlayerSummary(String.valueOf(steamId));
         user.setRoles(List.of(roleRepository.findRoleByRole(BASIC_USER)));
-        User userSaved = userRepository.save(user);
-        return userSaved;
+        return userRepository.save(user);
     }
 
     @Override
@@ -100,7 +99,7 @@ public class UserServiceImpl implements UserService {
         if(!isAlreadyInDatabase(steamId)) {
             throw new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription());
         }
-        userRepository.deleteById(steamId);
+        userRepository.deleteBySteamId(steamId);
     }
 
     public Boolean isAlreadyInDatabase(Long steamId) {

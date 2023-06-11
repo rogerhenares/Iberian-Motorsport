@@ -40,6 +40,7 @@ public class SecurityConfig {
                     .and()
                     .exceptionHandling()
                     .authenticationEntryPoint(new SteamLoginConfiguration());
+        //http.cors().and().csrf().disable();
         return http.build();
     }
 }
