@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
         this.steamParams = btoa(decodeURIComponent(this.router.url.split('?')[1]));
         console.log(decodeURIComponent(this.router.url.split('?')[1]));
         console.log(this.appContext);
-        //this.authenticate(steamParams);
+        this.authenticate();
     }
 
     authenticate() {
