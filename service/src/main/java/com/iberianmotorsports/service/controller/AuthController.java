@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.controller;
 
+import com.iberianmotorsports.service.controller.DTO.AuthDTO;
 import com.iberianmotorsports.service.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class AuthController {
     @GetMapping
     public ResponseEntity<?> getLoggingToken(@RequestParam String steamEncoded)  {
         String token = authService.newLoggingRequest(steamEncoded);
-        return ResponseEntity.ok(new testDto(token));
+        return ResponseEntity.ok(new AuthDTO(token));
     }
 
 }
