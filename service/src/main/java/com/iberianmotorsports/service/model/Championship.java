@@ -33,7 +33,7 @@ public class Championship implements Serializable {
     @NotBlank
     @NotNull
     @Column(name = "admin_password")
-    private String admin_password;
+    private String adminPassword;
 
     @NotBlank
     @NotNull

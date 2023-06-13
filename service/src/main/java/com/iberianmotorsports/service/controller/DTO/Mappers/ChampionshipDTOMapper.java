@@ -14,7 +14,7 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getId(),
                 championship.getName(),
                 championship.getDescription(),
-                championship.getAdmin_password(),
+                championship.getAdminPassword(),
                 championship.getCarGroup(),
                 championship.getTrackMedalsRequirement(),
                 championship.getSafetyRatingRequirement(),
