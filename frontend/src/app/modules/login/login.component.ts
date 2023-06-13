@@ -7,7 +7,6 @@ import {AuthenticationService} from "../../service/authentication.service";
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html'
-    //styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
@@ -19,10 +18,8 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log("INIT LOGIN COMPONENT");
-        this.steamParams = btoa(decodeURIComponent(this.router.url.split('?')[1]));
-        console.log(decodeURIComponent(this.router.url.split('?')[1]));
-        console.log(this.appContext);
+        //let test2 = decodeURIComponent(this.router.url.split('?')[1]);
+        this.steamParams = btoa(decodeURIComponent(this.router.url.replace("/login?", "")));
         this.authenticate();
     }
 

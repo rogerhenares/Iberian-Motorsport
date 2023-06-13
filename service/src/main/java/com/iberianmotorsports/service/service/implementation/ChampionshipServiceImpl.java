@@ -3,7 +3,6 @@ package com.iberianmotorsports.service.service.implementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
-import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipMapper;
 import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
