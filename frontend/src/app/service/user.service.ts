@@ -80,4 +80,8 @@ export class UserService {
                 catchError(handleError('UserService -> deleteUser', null, errorNotify))
             );
     }
+
+    getUser() {
+
+    }
 }

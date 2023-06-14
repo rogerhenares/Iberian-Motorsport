@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../service/user.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AppContext} from "../../util/AppContext";
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {User} from "../../model/User";
 
 @Component({
   selector: 'app-user-profile',
@@ -10,22 +12,38 @@ import {AppContext} from "../../util/AppContext";
 })
 export class UserProfileComponent implements OnInit {
 
+  user: User = new User();
 
+  profileForm : FormGroup;
 
   constructor(public router: Router,
               public appContext: AppContext,
-              private userService: UserService
-  ) { }
+              private userService: UserService,
+              private formBuilder: FormBuilder,
+              private activeRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    const routeParams = this.activeRoute.snapshot.params;
+    this.profileFormBuilder();
+    this.getData()
   }
-
   getData() {
-    this.userService.getInfoDummy().subscribe(
-    response => {
-      if (response) {
-        console.log("log test");
-      }
+    this.userService.getLoggedUser().subscribe(user => {
+        if (user) {
+          this.user.steamId= user.steamId
+        }
+      });
+  }
+  profileFormBuilder() {
+    this.profileForm = null;
+    this.profileForm = this.formBuilder.group({
+      steamId: [ 0 , Validators.required]
+      // firstName: ['', Validators.required],
+      // lastName: ['', Validators.required],
+      // shortName: ['', Validators.required],
+      // nationality: ['']
     });
+
   }
 }
