@@ -8,16 +8,11 @@
                       <p class="card-category">Complete your profile</p>
                   </div>
                   <div class="card-body">
-                      <form [formGroup]="profileForm">
-
-
-                          <label for="steamId">Steam ID:</label>
-                          <input id="steamId" type="number" formControlName="steamId">
-
+                      <!--<form [formGroup]="profileForm">-->
                           <div class="row">
                               <div class="col-md-5">
                                 <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="SteamId" disabled [(ngModel)]="user.steamId">
+                                    <input id="steamId" matInput placeholder="SteamId" [(ngModel)]="user.steamId" disabled>
                                   </mat-form-field>
                               </div>
                           </div>
@@ -33,8 +28,6 @@
                                   </mat-form-field>
                               </div>
                           </div>
-
-
                           <div class="row">
                               <div class="col-md-6">
                                 <mat-form-field class="example-full-width">
@@ -49,7 +42,7 @@
                           </div>
                           <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
                           <div class="clearfix"></div>
-                      </form>
+                      <!--</form>-->
                   </div>
               </div>
           </div>
@@ -69,18 +62,3 @@
       </div>
   </div>
 </div>
-<!--                          <div class="row">-->
-<!--                              <div class="col-md-12">-->
-<!--                                <label>About Me</label>-->
-<!--                                <mat-form-field class="example-full-width">-->
-<!--                                   <textarea matInput placeholder="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."></textarea>-->
-<!--                                 </mat-form-field>-->
-<!--                                  &lt;!&ndash; <div class="form-group">-->
-
-<!--                                      <div class="form-group">-->
-<!--                                          <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>-->
-<!--                                          <textarea class="form-control" rows="5"></textarea>-->
-<!--                                      </div>-->
-<!--                                  </div> &ndash;&gt;-->
-<!--                              </div>-->
-<!--                          </div>-->

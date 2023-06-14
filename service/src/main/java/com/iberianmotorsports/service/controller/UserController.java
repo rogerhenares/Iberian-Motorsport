@@ -54,7 +54,8 @@ public class UserController {
     public ResponseEntity<?> getLoggedUser() throws ServiceException {
         Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserBySteamId(steamId);
-        return new ResponseEntity<Object>(user, HttpStatus.OK);
+        UserDTO userDTO = userDTOMapper.apply(user);
+        return new ResponseEntity<Object>(userDTO, HttpStatus.OK);
     }
 
     @GetMapping

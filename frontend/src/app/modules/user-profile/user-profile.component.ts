@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../service/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {AppContext} from "../../util/AppContext";
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {User} from "../../model/User";
@@ -19,19 +19,18 @@ export class UserProfileComponent implements OnInit {
   constructor(public router: Router,
               public appContext: AppContext,
               private userService: UserService,
-              private formBuilder: FormBuilder,
-              private activeRoute: ActivatedRoute
+              private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    const routeParams = this.activeRoute.snapshot.params;
     this.profileFormBuilder();
     this.getData()
   }
   getData() {
     this.userService.getLoggedUser().subscribe(user => {
         if (user) {
-          this.user.steamId= user.steamId
+          this.user = user;
+          console.log(this.user)
         }
       });
   }
