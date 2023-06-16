@@ -1,7 +1,7 @@
 export class User {
 
     userId: Number;
-    steamId: Number;
+    steamId: String;
     firstName: String;
     lastName: String;
     shortName: String;
@@ -9,7 +9,7 @@ export class User {
 
     constructor() {
         this.userId = -1;
-        this.steamId = -1;
+        this.steamId = '';
         this.firstName = '';
         this.lastName = '';
         this.shortName = '';
