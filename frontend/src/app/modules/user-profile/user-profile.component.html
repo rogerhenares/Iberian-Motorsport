@@ -8,41 +8,41 @@
                       <p class="card-category">Complete your profile</p>
                   </div>
                   <div class="card-body">
-                      <!--<form [formGroup]="profileForm">-->
+                      <form (ngSubmit)="onSubmit()" [formGroup]="profileForm" >
                           <div class="row">
                               <div class="col-md-5">
                                 <mat-form-field class="example-full-width">
-                                    <input id="steamId" matInput placeholder="SteamId" [(ngModel)]="user.steamId" disabled>
+                                    <input id="steamId" matInput placeholder="SteamId" [(ngModel)]="user.steamId" formControlName="steamId" disabled>
                                   </mat-form-field>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="First Name" type="text">
+                                    <input matInput placeholder="First Name" [(ngModel)]="user.firstName" formControlName="firstName" type="text">
                                   </mat-form-field>
                               </div>
                               <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Last Name" type="text">
+                                      <input matInput placeholder="Last Name" [(ngModel)]="user.lastName" formControlName="lastName" type="text">
                                   </mat-form-field>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-md-6">
                                 <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="City" type="text">
+                                  <input matInput placeholder="shortName" [(ngModel)]="user.shortName" formControlName="shortName" type="text">
                                 </mat-form-field>
                               </div>
                               <div class="col-md-6">
                                 <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Nationality" type="text">
+                                  <input matInput placeholder="Nationality" [(ngModel)]="user.nationality" formControlName="nationality" type="text">
                                 </mat-form-field>
                               </div>
                           </div>
                           <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
                           <div class="clearfix"></div>
-                      <!--</form>-->
+                      </form>
                   </div>
               </div>
           </div>

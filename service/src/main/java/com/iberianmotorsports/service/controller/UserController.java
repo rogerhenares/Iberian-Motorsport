@@ -64,10 +64,12 @@ public class UserController {
         return new ResponseEntity<Object>(userList, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") Long userId, @RequestBody User user) throws ServiceException{
-        user.setUserId(userId);
-        User updatedUser = userService.updateUser(user);
+    @PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) throws ServiceException{
+        Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userToUpdate = userMapper.apply(userDTO);
+        userToUpdate.setSteamId(steamId);
+        User updatedUser = userService.updateUser(userToUpdate);
         UserDTO updatedUserDTO = userDTOMapper.apply(updatedUser);
         return new ResponseEntity<Object>(updatedUserDTO, HttpStatus.OK);
     }

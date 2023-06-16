@@ -18,14 +18,6 @@ export class UserService {
         ) {
     }
 
-    getInfoDummy() {
-        return this.httpClient.get<User>(this.url+"76561197994761085")
-            .pipe(
-                tap(),
-                catchError(handleError('test', null, null))
-            );
-    }
-
     getLoggedUser(errorNotify?: any) {
         return this.httpClient.get<User>(this.url + 'loggedUser')
             .pipe(

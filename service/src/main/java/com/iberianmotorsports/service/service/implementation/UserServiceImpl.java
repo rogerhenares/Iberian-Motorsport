@@ -91,7 +91,12 @@ public class UserServiceImpl implements UserService {
         if(user.getLastName() == null) throw new ServiceException(ErrorMessages.LAST_NAME.getDescription());
         if(user.getShortName() == null) throw new ServiceException(ErrorMessages.SHORT_NAME.getDescription());
         if(user.getNationality() == null) throw new ServiceException(ErrorMessages.NATIONALITY.getDescription());
-        return userRepository.save(user);
+        User saveUser = findUserBySteamId(user.getSteamId());
+        saveUser.setNationality(user.getNationality());
+        saveUser.setFirstName(user.getFirstName());
+        saveUser.setLastName(user.getLastName());
+        saveUser.setShortName(user.getShortName());
+        return userRepository.save(saveUser);
     }
 
     @Override

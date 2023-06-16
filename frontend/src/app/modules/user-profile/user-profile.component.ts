@@ -26,22 +26,27 @@ export class UserProfileComponent implements OnInit {
     this.profileFormBuilder();
     this.getData()
   }
+  onSubmit(){
+    if(this.profileForm.valid){
+      this.userService.updateUserInfo(this.user).subscribe(response => {if(response){
+      }});
+    }
+  }
   getData() {
     this.userService.getLoggedUser().subscribe(user => {
         if (user) {
           this.user = user;
-          console.log(this.user)
         }
       });
   }
   profileFormBuilder() {
     this.profileForm = null;
     this.profileForm = this.formBuilder.group({
-      steamId: [ 0 , Validators.required]
-      // firstName: ['', Validators.required],
-      // lastName: ['', Validators.required],
-      // shortName: ['', Validators.required],
-      // nationality: ['']
+      steamId: [ 0 , Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      shortName: ['', Validators.required],
+      nationality: ['']
     });
 
   }
