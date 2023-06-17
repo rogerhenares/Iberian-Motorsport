@@ -3,6 +3,7 @@ package com.iberianmotorsports.service.features.user;
 import com.iberianmotorsports.UserFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.repository.RoleRepository;
 import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
 import com.iberianmotorsports.service.service.implementation.UserServiceImpl;
@@ -40,6 +41,8 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private RoleRepository roleRepository;
 
     @Mock
     RestTemplate restTemplate;
@@ -52,13 +55,13 @@ public class UserServiceTest {
 
     @BeforeEach
     public void init() {
-        service = new UserServiceImpl(userRepository, restTemplate, environment);
+        service = new UserServiceImpl(userRepository, roleRepository, restTemplate, environment);
     }
 
     @Nested
     class saveUser{
         @Test
-        public void saveUser() {
+        public void saveUserBasic() {
             givenUserIdRetrieveUserData();
             givenUserRepositorySave();
 

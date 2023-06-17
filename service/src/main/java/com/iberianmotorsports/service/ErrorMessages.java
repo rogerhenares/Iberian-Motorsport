@@ -17,8 +17,9 @@ public enum ErrorMessages {
     STEAM_DATA(13, "Could not retrieve Steam data. Please try again."),
     LAST_NAME(14, "Last name cannot be empty."),
     SHORT_NAME(15, "Short name cannot be empty."),
-    NATIONALITY(16, "Nationality cannot be empty.");
-
+    NATIONALITY(16, "Nationality cannot be empty."),
+    AUTH_TOKEN_NOT_FOUND(17, "unable to found auth token"),
+    AUTH_TOKEN_UNABLE_TO_REFRESH(18, "unable to refresh auth token");
 
     private final int code;
     private final String description;

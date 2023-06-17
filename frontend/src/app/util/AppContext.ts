@@ -70,4 +70,12 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
     isLoggedUser(user: User) {
         return this.user.steamId === user.steamId;
     }
+
+    isLoggedUserActive(){
+        return this.user.steamId !== undefined &&
+            this.user.firstName !== undefined &&
+            this.user.lastName !== undefined &&
+            this.user.nationality !== undefined &&
+            this.user.shortName !== undefined;
+    }
 }

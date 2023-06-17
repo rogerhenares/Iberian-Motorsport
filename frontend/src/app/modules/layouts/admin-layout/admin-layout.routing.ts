@@ -10,6 +10,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {ChampionshipComponent} from "../../championship/championship.component";
 import {ChampionshipFormComponent} from "../../championship-form/championship-form.component";
+import {LoginComponent} from "../../login/login.component";
 import {RaceRulesFormComponent} from "../../racerules-form/race-rules-form.component";
 import {SessionFormComponent} from "../../session-form/session-form.component";
 import {RaceFormComponent} from "../../race-form/race-form.component";
@@ -24,6 +25,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
+    { path: 'login',          component: LoginComponent },
     { path: 'championship',   component: ChampionshipComponent },
     { path: 'championship/new', component: ChampionshipFormComponent },
     { path: 'race-rules/new', component: RaceRulesFormComponent },

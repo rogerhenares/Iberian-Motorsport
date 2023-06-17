@@ -5,6 +5,7 @@ import { User } from '../model/User';
 import { handleError } from '../util/Error.handler';
 import { environment } from '../../environments/environment';
 import { Page } from '../model/Page';
+import {AppContext} from "../util/AppContext";
 
 @Injectable()
 export class UserService {
@@ -12,20 +13,13 @@ export class UserService {
     private url: string = environment.apiPath + 'user/';
 
     constructor(
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private appContext: AppContext
         ) {
     }
 
-    getInfoDummy() {
-        return this.httpClient.get<User>(this.url+1)
-            .pipe(
-                tap(),
-                catchError(handleError('test', null, null))
-            );
-    }
-
     getLoggedUser(errorNotify?: any) {
-        return this.httpClient.get<User>(this.url)
+        return this.httpClient.get<User>(this.url + 'loggedUser')
             .pipe(
                 tap(user => console.log('fetched logged user info')),
                 catchError(handleError('UserService -> getLoggedUser', null, errorNotify))
@@ -77,5 +71,9 @@ export class UserService {
                 tap(response => console.log('delete user')),
                 catchError(handleError('UserService -> deleteUser', null, errorNotify))
             );
+    }
+
+    getUser() {
+
     }
 }

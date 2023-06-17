@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../service/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {AppContext} from "../../util/AppContext";
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {User} from "../../model/User";
 
 @Component({
   selector: 'app-user-profile',
@@ -10,25 +12,42 @@ import {AppContext} from "../../util/AppContext";
 })
 export class UserProfileComponent implements OnInit {
 
+  user: User = new User();
 
+  profileForm : FormGroup;
 
   constructor(public router: Router,
-              public activatedRoute: ActivatedRoute,
+              public appContext: AppContext,
               private userService: UserService,
-              private appContext: AppContext
-  ) { }
+              private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
-    console.log("decoded URI -> ", decodeURIComponent(this.router.url.split('?')[1]));
-    this.appContext.authenticationInfo.authorizationToken = btoa(decodeURIComponent(this.router.url.split('?')[1]));
+    this.profileFormBuilder();
+    this.getData()
   }
-
+  onSubmit(){
+    if(this.profileForm.valid){
+      this.userService.updateUserInfo(this.user).subscribe(response => {if(response){
+      }});
+    }
+  }
   getData() {
-    this.userService.getInfoDummy().subscribe(
-    response => {
-      if (response) {
-        console.log("log test");
-      }
+    this.userService.getLoggedUser().subscribe(user => {
+        if (user) {
+          this.user = user;
+        }
+      });
+  }
+  profileFormBuilder() {
+    this.profileForm = null;
+    this.profileForm = this.formBuilder.group({
+      steamId: [ 0 , Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      shortName: ['', Validators.required],
+      nationality: ['']
     });
+
   }
 }

@@ -7,10 +7,6 @@ export class AuthenticationInfo {
 
   authorizationToken: string;
 
-  refreshToken: string;
-
-  expiresIn: number;
-
   constructor() {
   }
 
@@ -19,8 +15,8 @@ export class AuthenticationInfo {
     if (strStorageToken != null) {
         const objStorageToken = JSON.parse(strStorageToken);
         this.authorizationToken = objStorageToken['authorizationToken'];
-        this.refreshToken = objStorageToken['refreshToken'];
-        this.expiresIn = objStorageToken['expiresIn'];
+    }else {
+      this.authorizationToken = '';
     }
   }
 
@@ -30,7 +26,6 @@ export class AuthenticationInfo {
 
   remove() {
     this.authorizationToken = null;
-    this.refreshToken = null;
     localStorage.removeItem(this.LOCAL_STORAGE_TOKEN);
   }
 }

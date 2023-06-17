@@ -16,7 +16,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSelectModule} from "@angular/material/select";
+import {MatSelectModule} from '@angular/material/select';
+import {LoginComponent} from "../../login/login.component";
 import {ChampionshipComponent} from "../../championship/championship.component";
 import {ChampionshipFormComponent} from "../../championship-form/championship-form.component";
 import {RaceRulesFormComponent} from "../../racerules-form/race-rules-form.component";
@@ -47,6 +48,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatCheckboxModule
     ],
   declarations: [
+    LoginComponent,
     DashboardComponent,
     UserProfileComponent,
     TableListComponent,
