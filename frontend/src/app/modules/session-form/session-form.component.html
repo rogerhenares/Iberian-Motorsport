@@ -1,0 +1,81 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">New Race Rules</h4>
+                        <p class="card-category">Create a new set of Race Rules</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="testbox">
+                            <form id="raceRulesForm" (ngSubmit)="onSubmit()" [formGroup]="sessionForm">
+                                <div class="item">
+                                    <div class="name-item">
+                                        <div>
+                                            <mat-form-field>
+                                                <mat-label>Hour Of Day</mat-label>
+                                                <input matInput [(ngModel)]="session.hourOfDay" formControlName="hourOfDay"/>
+                                                <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.hourOfDay.errors)">Hour Of Day Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                                <mat-label>Day Of The Weekend</mat-label>
+                                                <input matInput [(ngModel)]="session.dayOfWeekend" formControlName="dayOfWeekend"/>
+                                                <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.dayOfWeekend.errors)">Day Of The Weekend Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                                <mat-label>Time Multiplier</mat-label>
+                                                <input matInput [(ngModel)]="session.timeMultiplier" formControlName="timeMultiplier"/>
+                                                <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.timeMultiplier.errors)">Time Multiplier Error</mat-error>                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                                <mat-label>Session Type</mat-label>
+                                                <input matInput [(ngModel)]="session.sessionType" formControlName="sessionType"/>
+                                                <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.sessionType.errors)">Session Type Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                                <mat-label>Session Duration Minutes</mat-label>
+                                                <input matInput [(ngModel)]="session.sessionDurationMinutes" formControlName="sessionDurationMinutes"/>
+                                                <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.sessionDurationMinutes.errors)">Max Total Driving Time Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                </div>
+                                <div class="btn-block">
+                                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal
+    #requestSuccessSwal
+    title=""
+    text=""
+    type="success"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    timer=2000>
+</swal>
+
+<swal
+    #requestFailSwal
+    title="{{'swal-cancelled.title' | translate}}"
+    text="{{'swal-cancelled.text' | translate}}"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    type="error"
+    timer=4000>
+</swal>
