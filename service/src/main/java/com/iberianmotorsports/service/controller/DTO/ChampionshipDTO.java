@@ -6,7 +6,7 @@ public record ChampionshipDTO(
         Long id,
         String name,
         String description,
-        String admin_password,
+        String adminPassword,
         String carGroup,
         Integer trackMedalsRequirement,
         Integer safetyRatingRequirement,

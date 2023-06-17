@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
 import {Router} from "@angular/router";
 import {Championship} from "../../model/Championship";
 import {ChampionshipService} from "../../service/championship.service";
+import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 
 @Component({
     selector: 'app-championship-form',
@@ -10,49 +12,55 @@ import {ChampionshipService} from "../../service/championship.service";
     styleUrls: ['./championship-form.component.css']
 })
 export class ChampionshipFormComponent {
-    private router: Router;
+
+    @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
+    @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
     championship: Championship = new Championship();
 
-    constructor(private championshipService: ChampionshipService, router: Router) { }
+    championshipForm: FormGroup;
 
-    submit() {
+    constructor(
+        private championshipService: ChampionshipService,
+        public router: Router,
+        private formBuilder: FormBuilder
+    ) {}
 
-        // Assign input values to championship object
-        this.championship.name = (document.getElementById('name') as HTMLInputElement).value;
-        this.championship.description = (document.getElementById('description') as HTMLInputElement).value;
-        this.championship.password = (document.getElementById('password') as HTMLInputElement).value;
-        this.championship.spectatorPassword = (document.getElementById('spectator-password') as HTMLInputElement).value;
-        this.championship.adminPassword = (document.getElementById('admin-password') as HTMLInputElement).value;
-        this.championship.trackMedalsRequirement = Number((document.getElementById('track-medals-requirement') as HTMLInputElement).value);
-        this.championship.safetyRatingRequirement = Number((document.getElementById('safety-rating-requirement') as HTMLInputElement).value);
-        this.championship.racecraftRatingRequirement = Number((document.getElementById('racecraft-rating-requirement') as HTMLInputElement).value);
-        this.championship.carGroup = (document.getElementById('car-group') as HTMLInputElement).value;
-        this.championship.maxCarSlots = Number((document.getElementById('max-car-slots') as HTMLInputElement).value);
-        this.championship.dumpLeaderboards = Number((document.getElementById('dump-leaderboards') as HTMLInputElement).value);
-        this.championship.isRaceLocked = Number((document.getElementById('is-race-locked') as HTMLInputElement).value);
-        this.championship.randomizeTrackWhenEmpty = Number((document.getElementById('randomize-track-when-empty') as HTMLInputElement).value);
-        this.championship.allowAutoDQ = Number((document.getElementById('allow-auto-dq') as HTMLInputElement).value);
-        this.championship.shortFormationLap = Number((document.getElementById('short-formation-lap') as HTMLInputElement).value);
-        this.championship.dumpEntryList = Number((document.getElementById('dump-entry-list') as HTMLInputElement).value);
-        this.championship.formationLapType = Number((document.getElementById('formation-lap-type') as HTMLInputElement).value);
-        this.championship.ignorePrematureDisconnects = Number((document.getElementById('ignore-premature-disconnects') as HTMLInputElement).value);
-        this.championship.centralEntryListPath = (document.getElementById('central-entry-list-path') as HTMLInputElement).value;
-        this.championship.imageContent = (document.getElementById('picture') as HTMLInputElement).value;
-
-        // Call the service to save the championship object
-        this.championshipService.saveChampionship(this.championship)
-            .subscribe(() => {
-                // Success callback
-                // Redirect to the championship list page
-                this.router.navigate(['/championship']);
-            }, (error) => {
-                // Error callback
-                console.error(error);
-                // Handle the error appropriately
-            });
+    ngOnInit() {
+        this.championship = new Championship;
+        this.championshipFormBuilder();
     }
 
+    onSubmit() {
+        console.log(this.championship)
+        this.championshipService.saveChampionship(this.championship).subscribe()
+    }
+
+    championshipFormBuilder() {
+            this.championshipForm = this.formBuilder.group({
+            name: ['', [Validators.required]],
+            startDate: ["2023-06-13T16:40", [Validators.required]],
+            description: ['', [Validators.required]],
+            password: ['', [Validators.required]],
+            spectatorPassword: ['', [Validators.required]],
+            adminPassword: ['', [Validators.required]],
+            trackMedalsRequirement: [1, [Validators.required, Validators.min(0), Validators.max(3)]],
+            safetyRatingRequirement: [1, [Validators.required, Validators.min(-1), Validators.max(99)]],
+            racecraftRatingRequirement: [1, [Validators.required, Validators.min(-1), Validators.max(99)]],
+            carGroup: ['', [Validators.required]],
+            maxCarSlots: [30, [Validators.required, Validators.min(1)]],
+            dumpLeaderboards: [1, [Validators.required, Validators.min(0), Validators.max(1)]],
+            isRaceLocked: [1, [Validators.required, Validators.min(0), Validators.max(1)]],
+            randomizeTrackWhenEmpty: [1, [Validators.required, Validators.min(0), Validators.max(1)]],
+            allowAutoDQ: [0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            shortFormationLap: [0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            dumpEntryList: [0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            ignorePrematureDisconnects: [0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            formationLapType: [0, [Validators.required]],
+            centralEntryListPath: [''],
+            imageContent: ['']
+        })
+    }
 
 }
 
