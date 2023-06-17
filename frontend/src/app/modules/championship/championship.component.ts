@@ -18,11 +18,9 @@ export class ChampionshipComponent implements OnInit {
     totalPages: number = 0;
     pageable: Pageable = new Pageable(0,3);
     selectedChampionshipId: number | null = null;
-    private router: Router;
-    private route: ActivatedRoute | null;
 
 
-    constructor(private championshipService: ChampionshipService, router: Router) {}
+    constructor(private championshipService: ChampionshipService, public router: Router) {}
 
     ngOnInit(): void {
         console.log('ChampionshipComponent initialized');
@@ -65,8 +63,7 @@ export class ChampionshipComponent implements OnInit {
     }
 
     createNewChampionship() {
-        this.router.navigate(['/championship/new']);
+        this.router.navigateByUrl("championship/new");
     }
-
 }
 

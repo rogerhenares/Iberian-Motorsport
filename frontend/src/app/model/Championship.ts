@@ -20,28 +20,30 @@ export class Championship {
     formationLapType: Number;
     ignorePrematureDisconnects: Number;
     imageContent: String;
+    startDate: Date;
 
     constructor() {
-        this.id = -1;
+        this.id = null;
         this.name= '';
         this.description= '';
         this.adminPassword= '';
         this.carGroup= '';
-        this.trackMedalsRequirement= -1;
-        this.safetyRatingRequirement= -1;
-        this.racecraftRatingRequirement= -1;
+        this.trackMedalsRequirement= 0;
+        this.safetyRatingRequirement= 0;
+        this.racecraftRatingRequirement= 0;
         this.password= '';
         this.spectatorPassword= '';
-        this.maxCarSlots= -1;
-        this.dumpLeaderboards= -1;
-        this.isRaceLocked= -1;
-        this.randomizeTrackWhenEmpty= -1;
+        this.maxCarSlots= 30;
+        this.dumpLeaderboards= 0;
+        this.isRaceLocked= 0;
+        this.randomizeTrackWhenEmpty= 0;
         this.centralEntryListPath= '';
-        this.allowAutoDQ= -1;
-        this.shortFormationLap= -1;
-        this.dumpEntryList= -1;
-        this.formationLapType= -1;
-        this.ignorePrematureDisconnects= -1;
+        this.allowAutoDQ= 0;
+        this.shortFormationLap= 0;
+        this.dumpEntryList= 0;
+        this.formationLapType= 0;
+        this.ignorePrematureDisconnects= 0;
         this.imageContent= '';
+        this.startDate = new Date;
     }
 }
