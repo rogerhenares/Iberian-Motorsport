@@ -16,9 +16,9 @@ import {RaceRulesService} from "../../service/racerules.service";
 import {SessionService} from "../../service/session.service";
 import {LanguageTranslationModule} from "../../util/language-translation.module";
 import {RaceService} from "../../service/race.service";
-import { AuthenticationInterceptor } from "../../authentication/authentication.interceptor";
 import {AppContext} from "../../util/AppContext";
 import {AuthenticationService} from "../../service/authentication.service";
+import {AuthenticationInterceptor} from "../../authentication/authentication.interceptor";
 
 @NgModule({
   imports: [

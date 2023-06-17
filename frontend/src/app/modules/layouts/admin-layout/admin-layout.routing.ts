@@ -10,10 +10,10 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {ChampionshipComponent} from "../../championship/championship.component";
 import {ChampionshipFormComponent} from "../../championship-form/championship-form.component";
-import {LoginComponent} from "../../login/login.component";
 import {RaceRulesFormComponent} from "../../racerules-form/race-rules-form.component";
 import {SessionFormComponent} from "../../session-form/session-form.component";
 import {RaceFormComponent} from "../../race-form/race-form.component";
+import {LoginComponent} from "../../login/login.component";
 
 export const AdminLayoutRoutes: Routes = [
 
