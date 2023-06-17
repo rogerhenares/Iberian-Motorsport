@@ -7,11 +7,12 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
 @Data
-@Table(name = "\"USER\"")
+@Table(name="USER")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
 
@@ -39,4 +40,11 @@ public class User implements Serializable {
     @JsonProperty("loccountrycode")
     private String nationality;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "USER_ROLE",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 }

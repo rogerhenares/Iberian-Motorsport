@@ -12,7 +12,9 @@ import {UserService} from "../../service/user.service";
 import {ChampionshipService} from "../../service/championship.service";
 import {ProcessService} from "../../service/process.service";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import {Championship} from "../../model/Championship";
+import { AuthenticationInterceptor } from "../../authentication/authentication.interceptor";
+import {AppContext} from "../../util/AppContext";
+import {AuthenticationService} from "../../service/authentication.service";
 
 @NgModule({
   imports: [
@@ -30,14 +32,14 @@ import {Championship} from "../../model/Championship";
     AdminLayoutComponent,
   ],
   providers: [
-      /**
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
       multi: true
     },
-       */
+    AppContext,
     UserAdminService,
+    AuthenticationService,
     UserService,
     ProcessService,
     ChampionshipService],

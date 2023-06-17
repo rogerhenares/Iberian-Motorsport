@@ -1,26 +1,27 @@
 package com.iberianmotorsports.service.configuration;
 
+import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.service.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.List;
 
+@Component
+@AllArgsConstructor
 public class SteamTokenValidation extends OncePerRequestFilter {
 
-    private final static String IS_VALID = "is_valid:true";
-    private final static String OPENID_MODE_ID_RES = "openid.mode=id_res";
-    private final static String OPENID_MODE_CHECK_AUTHENTICATION = "openid.mode=check_authentication";
-    private RestTemplate restTemplate = new RestTemplate();
+    private final AuthService authService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -32,30 +33,21 @@ public class SteamTokenValidation extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
-        String authDecoded = new String(Base64.getDecoder()
-                .decode(request.getHeader("Authorization")),
-                StandardCharsets.UTF_8);
-        authDecoded = authDecoded.replace(OPENID_MODE_ID_RES, OPENID_MODE_CHECK_AUTHENTICATION);
-        String validateTokenURL = "https://steamcommunity.com/openid/login?" +
-                authDecoded;
-        String validationResponse = restTemplate.getForObject(validateTokenURL, String.class);
-
-        assert validationResponse != null;
-        if(validationResponse.contains(IS_VALID)){
-            Authentication authentication = createAuthenticationToken(request.getParameter("openid.sig"));
+        if(authService.validateLoggingToken(request.getHeader("Authorization"))){
+            Authentication authentication = createAuthenticationToken(request.getHeader("Authorization"));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
     }
 
     private Authentication createAuthenticationToken(String token) {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+        User loggedUser = authService.getLoggedUser(token);
 
-        List<SimpleGrantedAuthority> authorities = Collections.singletonList(authority);
+        List<SimpleGrantedAuthority> authorities = loggedUser.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRole()))
+                .toList();
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(token, null, authorities);
-
-        return authentication;
+        return new UsernamePasswordAuthenticationToken(loggedUser.getSteamId(), token, authorities);
     }
+
 }

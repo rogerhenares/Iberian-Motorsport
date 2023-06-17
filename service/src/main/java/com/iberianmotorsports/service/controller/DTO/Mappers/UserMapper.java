@@ -12,7 +12,7 @@ public class UserMapper implements Function<UserDTO, User> {
     @Override
     public User apply(UserDTO userDTO) {
         User user = new User();
-        user.setSteamId(userDTO.steamId());
+        user.setSteamId(Long.valueOf(userDTO.steamId()));
         user.setFirstName(userDTO.firstName());
         user.setLastName(userDTO.lastName());
         user.setShortName(userDTO.shortName());

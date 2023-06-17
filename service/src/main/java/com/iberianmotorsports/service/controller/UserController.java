@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -27,7 +28,6 @@ public class UserController {
     private UserDTOMapper userDTOMapper;
     @Autowired
     private UserMapper userMapper;
-
 
     @PostMapping
     public ResponseEntity<?> createNewUser(Long steamId) {
@@ -50,16 +50,26 @@ public class UserController {
         return new ResponseEntity<Object>(userDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/loggedUser")
+    public ResponseEntity<?> getLoggedUser() throws ServiceException {
+        Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserBySteamId(steamId);
+        UserDTO userDTO = userDTOMapper.apply(user);
+        return new ResponseEntity<Object>(userDTO, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<?> getAllUsers(Pageable pageRequest) throws ServiceException {
         Page<UserDTO> userList = userService.findAllUsers(pageRequest).map(userDTOMapper);
         return new ResponseEntity<Object>(userList, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") Long userId, @RequestBody User user) throws ServiceException{
-        user.setUserId(userId);
-        User updatedUser = userService.updateUser(user);
+    @PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) throws ServiceException{
+        Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userToUpdate = userMapper.apply(userDTO);
+        userToUpdate.setSteamId(steamId);
+        User updatedUser = userService.updateUser(userToUpdate);
         UserDTO updatedUserDTO = userDTOMapper.apply(updatedUser);
         return new ResponseEntity<Object>(updatedUserDTO, HttpStatus.OK);
     }

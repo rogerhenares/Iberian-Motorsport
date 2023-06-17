@@ -1,5 +1,5 @@
 # Ignore compiled files and build directories
-target/
+service/target/
 bin/
 build/
 frontend/node_modules/

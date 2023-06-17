@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.controller.DTO.UserDTO;
 import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.repository.RoleRepository;
 import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
 import jakarta.transaction.Transactional;
@@ -19,26 +19,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @AllArgsConstructor
 @Transactional
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
 
+    private static final String BASIC_USER = "BASIC_USER";
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserRepository userRepository;
-
+    private RoleRepository roleRepository;
     private RestTemplate restTemplate;
-
     private Environment env;
 
     @Override
     public User saveUser(Long steamId) {
         if (isAlreadyInDatabase(steamId)) throw new ServiceException(ErrorMessages.DUPLICATE_USER.getDescription());
         User user = getPlayerSummary(String.valueOf(steamId));
+        user.setRoles(List.of(roleRepository.findRoleByRole(BASIC_USER)));
         return userRepository.save(user);
     }
 
@@ -68,9 +70,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserBySteamId(Long steamId) {
-        Optional<User> userOptional = userRepository.findBySteamId(steamId);
-        if(userOptional.isEmpty()) throw new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription());
-        return userOptional.orElse(null);
+        return userRepository.findBySteamId(steamId).orElseThrow(() ->
+                new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription()));
     }
 
     @Override
@@ -90,7 +91,12 @@ public class UserServiceImpl implements UserService {
         if(user.getLastName() == null) throw new ServiceException(ErrorMessages.LAST_NAME.getDescription());
         if(user.getShortName() == null) throw new ServiceException(ErrorMessages.SHORT_NAME.getDescription());
         if(user.getNationality() == null) throw new ServiceException(ErrorMessages.NATIONALITY.getDescription());
-        return userRepository.save(user);
+        User saveUser = findUserBySteamId(user.getSteamId());
+        saveUser.setNationality(user.getNationality());
+        saveUser.setFirstName(user.getFirstName());
+        saveUser.setLastName(user.getLastName());
+        saveUser.setShortName(user.getShortName());
+        return userRepository.save(saveUser);
     }
 
     @Override

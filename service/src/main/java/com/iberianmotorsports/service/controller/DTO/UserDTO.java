@@ -1,7 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
 public record UserDTO(
-        Long steamId,
+        String steamId,
         String firstName,
         String lastName,
         String shortName,

@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,13 +14,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerAdvisor
         extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value
-            = { ServiceException.class })
+    @ExceptionHandler(value = { ServiceException.class })
     protected ResponseEntity<Object> handleConflict(
             ServiceException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler(value = { ConstraintViolationException.class })
+    protected ResponseEntity<Object> handleConflict(
+            ConstraintViolationException ex, WebRequest request) {
+        String bodyOfResponse = ex.getMessage();
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
 }
