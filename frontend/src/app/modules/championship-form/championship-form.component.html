@@ -1,136 +1,214 @@
-<!DOCTYPE html>
-<html>
-<body>
-<div class="testbox">
-        <form id="championshipForm" (ngSubmit)="onSubmit()" [formGroup]="championshipForm">
-        <div class="banner">
-            <h1>Create new Championship</h1>
-        </div>
-        <div class="item">
-            <div class="name-item">
-                <div>
-                    <label for="name">Name</label>
-                    <input id="name" type="text" [(ngModel)]="championship.name" formControlName="name" placeholder="New Championship"/>
-                </div>
-                <div>
-                    <label for="startDate">Starting Date</label>
-                    <input id="startDate" type="datetime-local" [(ngModel)]="championship.startDate" formControlName="startDate"/>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">New Championship</h4>
+                        <p class="card-category">Create a new championship</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="testbox">
+                            <form id="championshipForm" (ngSubmit)="onSubmit()" [formGroup]="championshipForm">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="item">
+                                    <div class="name-item">
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Name</mat-label>
+                                            <input matInput  [(ngModel)]="championship.name" formControlName="name" placeholder="New Championship"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.name.invalid)">Name error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Starting Date</mat-label>
+                                            <input matInput type="datetime-local" [(ngModel)]="championship.startDate" formControlName="startDate"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.startDate.errors)">Starting Date Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                <div class="item">
+                                        <mat-form-field>
+                                        <mat-label>Description</mat-label>
+                                        <input matInput [(ngModel)]="championship.description" formControlName="description" placeholder="New Description"/>
+                                        <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.description.errors)">Description Error</mat-error>
+                                        </mat-form-field>
+                                </div>
+                                <div class="item">
+                                    <div class="name-item">
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Password</mat-label>
+                                            <input matInput [(ngModel)]="championship.password" formControlName="password" placeholder="Password"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.password.errors)">Password Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Spectator Password</mat-label>
+                                            <input matInput [(ngModel)]="championship.spectatorPassword" formControlName="spectatorPassword" placeholder="Spectator Password"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.spectatorPassword.errors)">Spectator Password Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="name-item">
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label >Admin Password</mat-label>
+                                            <input matInput [(ngModel)]="championship.adminPassword" formControlName="adminPassword" placeholder="Admin Password"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.adminPassword.errors)">Admin Password Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="name-item">
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Track Medals Requirement</mat-label>
+                                            <input matInput [(ngModel)]="championship.trackMedalsRequirement" formControlName="trackMedalsRequirement"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.trackMedalsRequirement.errors)">Track Medals Requirement Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Safety Rating Requirement</mat-label>
+                                            <input matInput [(ngModel)]="championship.safetyRatingRequirement" formControlName="safetyRatingRequirement"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.safetyRatingRequirement.errors)">Safety Rating Requirement Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Racecraft Rating Requirement</mat-label>
+                                            <input matInput [(ngModel)]="championship.racecraftRatingRequirement" formControlName="racecraftRatingRequirement"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.racecraftRatingRequirement.errors)">Racecraft Rating Requirement Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Car Group</mat-label>
+                                            <mat-select [(ngModel)]="championship.carGroup" formControlName="carGroup">
+                                                <mat-option value="primary">Free for all</mat-option>
+                                                <mat-option value="GT3">GT3</mat-option>
+                                                <mat-option value="GT4">GT4</mat-option>
+                                                <mat-option value="GTC">GTC</mat-option>
+                                                <mat-option value="TCX">TCX</mat-option>
+                                            </mat-select>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.carGroup.errors)">Car Group Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Max Car Slots</mat-label>
+                                            <input matInput [(ngModel)]="championship.maxCarSlots" formControlName="maxCarSlots"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.maxCarSlots.errors)">Max Car Slots Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-checkbox class="example-margin" [(ngModel)]="championship.dumpLeaderboards" formControlName="dumpLeaderboards" >Dump Leaderboards</mat-checkbox>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.dumpLeaderboards.errors)">Dump Leaderboards Error</mat-error>
+                                        </div>
+                                        <div>
+                                            <mat-checkbox class="example-margin" [(ngModel)]="championship.isRaceLocked" formControlName="isRaceLocked">Is Race Locked</mat-checkbox>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.isRaceLocked.errors)">Is Race Locked Error</mat-error>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Randomize Track When Empty</mat-label>
+                                            <input matInput [(ngModel)]="championship.randomizeTrackWhenEmpty" formControlName="randomizeTrackWhenEmpty"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.randomizeTrackWhenEmpty.errors)">Randomize Track When Empty Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Allow Auto DQ</mat-label>
+                                            <input matInput [(ngModel)]="championship.allowAutoDQ" formControlName="allowAutoDQ"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.allowAutoDQ.errors)">Allow Auto DQ Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Short Formation Lap</mat-label>
+                                            <input matInput [(ngModel)]="championship.shortFormationLap" formControlName="shortFormationLap"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.shortFormationLap.errors)">Short Formation Lap Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Dump Entry List</mat-label>
+                                            <input matInput [(ngModel)]="championship.dumpEntryList" formControlName="dumpEntryList"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.dumpEntryList.errors)">Dump Entry List Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Ignore Premature Disconnects</mat-label>
+                                            <input matInput [(ngModel)]="championship.ignorePrematureDisconnects" formControlName="ignorePrematureDisconnects"/>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.ignorePrematureDisconnects.errors)">Ignore Premature Disconnects Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Formation Lap Type</mat-label>
+                                            <mat-select [(ngModel)]="championship.formationLapType" formControlName="formationLapType">
+                                                <mat-option value="0">0</mat-option>
+                                                <mat-option value="1">1</mat-option>
+                                                <mat-option value="3">3</mat-option>
+                                            </mat-select>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.formationLapType.errors)">Formation Lap Type Error</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div>
+                                            <mat-form-field>
+                                            <mat-label>Central Entry List Path</mat-label>
+                                            <input matInput [(ngModel)]="championship.centralEntryListPath" formControlName="centralEntryListPath"/>
+                                            <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.centralEntryListPath.errors)">Central Entry List Path Error</mat-label>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div>
+                                        <mat-label>Upload Picture</mat-label>
+                                        <div>
+                                            <input type="file" class="file-upload" [(ngModel)]="championship.imageContent" formControlName="imageContent"/>
+                                            <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.imageContent.errors)">Image Error</mat-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-block">
+                                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="item">
-                    <label for="description">Description</label>
-                    <input id="description" type="text" [(ngModel)]="championship.description" formControlName="description" placeholder="New Description"/>
-        </div>
-        <div class="item">
-            <div class="name-item">
-                <div>
-                    <label for="password">Password</label>
-                    <input id="password" type="text" [(ngModel)]="championship.password" formControlName="password" placeholder="Password"/>
-                </div>
-                <div>
-                    <label for="spectator-password">Spectator Password</label>
-                    <input id="spectator-password" type="text" [(ngModel)]="championship.spectatorPassword" formControlName="spectatorPassword" placeholder="Spectator Password"/>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="name-item">
-                <div>
-                    <label for="admin-password">Admin Password</label>
-                    <input id="admin-password" type="text" [(ngModel)]="championship.adminPassword" formControlName="adminPassword" placeholder="Admin Password"/>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="name-item">
-                <div>
-                    <label for="track-medals-requirement">Track Medals Requirement</label>
-                    <input id="track-medals-requirement" type="number" min="0" max="3" pattern="[0-3]"
-                           [(ngModel)]="championship.trackMedalsRequirement" formControlName="trackMedalsRequirement"/>
-                </div>
-                <div>
-                    <label for="safety-rating-requirement">Safety Rating Requirement</label>
-                    <input id="safety-rating-requirement" type="number" min="-1" max="99" pattern="[-1-99]"
-                           [(ngModel)]="championship.safetyRatingRequirement" formControlName="safetyRatingRequirement"/>
-                </div>
-                <div>
-                    <label for="racecraft-rating-requirement">Racecraft Rating Requirement</label>
-                    <input id="racecraft-rating-requirement" type="number" min="-1" max="99" pattern="[-1-99]"
-                           [(ngModel)]="championship.racecraftRatingRequirement" formControlName="racecraftRatingRequirement"/>
-                </div>
-                <div>
-                    <label for="car-group">Car Group</label>
-                    <select id="car-group" class="custom-select" [(ngModel)]="championship.carGroup" formControlName="carGroup">
-                        <option value="FreeForAll">Free for all</option>
-                        <option value="GT3">GT3</option>
-                        <option value="GT4">GT4</option>
-                        <option value="GTC">GTC</option>
-                        <option value="TCX">TCX</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="max-car-slots">Max Car Slots</label>
-                    <input id="max-car-slots" type="number" [(ngModel)]="championship.maxCarSlots" formControlName="maxCarSlots"/>
-                </div>
-                <div>
-                    <label for="dump-leaderboards">Dump Leaderboards</label>
-                    <input id="dump-leaderboards" type="number" min="0" max="1" pattern="[0-1]"
-                           [(ngModel)]="championship.dumpLeaderboards" formControlName="dumpLeaderboards"/>
-                </div>
-                <div>
-                    <label for="is-race-locked">Is Race Locked</label>
-                    <input id="is-race-locked" type="number" min="0" max="1" pattern="[0-1]"
-                           [(ngModel)]="championship.isRaceLocked" formControlName="isRaceLocked"/>
-                </div>
-                <div>
-                    <label for="randomize-track-when-empty">Randomize Track When Empty</label>
-                    <input id="randomize-track-when-empty" type="number" min="0" max="1" pattern="[0-1]"
-                           [(ngModel)]="championship.randomizeTrackWhenEmpty" formControlName="randomizeTrackWhenEmpty"/>
-                </div>
-                <div>
-                    <label for="allow-auto-dq">Allow Auto DQ</label>
-                    <input id="allow-auto-dq" type="number" min="0" max="1" pattern="[0-1]"
-                           [(ngModel)]="championship.allowAutoDQ" formControlName="allowAutoDQ"/>
-                </div>
-                <div>
-                    <label for="short-formation-lap">Short Formation Lap</label>
-                    <input id="short-formation-lap" type="number" min="0" max="1" pattern="[0-1]"
-                           [(ngModel)]="championship.shortFormationLap" formControlName="shortFormationLap"/>
-                </div>
-                <div>
-                    <label for="dump-entry-list">Dump Entry List</label>
-                    <input id="dump-entry-list" type="number" min="0" max="1" pattern="[0-1]"
-                           [(ngModel)]="championship.dumpEntryList" formControlName="dumpEntryList"/>
-                </div>
-                <div>
-                    <label for="ignore-premature-disconnects">Ignore Premature Disconnects</label>
-                    <input id="ignore-premature-disconnects" type="number" min="0" max="1" pattern="[0-1]"
-                           [(ngModel)]="championship.ignorePrematureDisconnects" formControlName="ignorePrematureDisconnects"/>
-                </div>
-                <div>
-                    <label for="formation-lap-type">Formation Lap Type</label>
-                    <select id="formation-lap-type" class="custom-select" [(ngModel)]="championship.formationLapType" formControlName="formationLapType">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="central-entry-list-path">Central Entry List Path</label>
-                    <input id="central-entry-list-path" type="text"
-                           [(ngModel)]="championship.centralEntryListPath" formControlName="centralEntryListPath"/>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <label for="imageContent">Upload Picture</label>
-            <input id="imageContent" type="file" [(ngModel)]="championship.imageContent" formControlName="imageContent"/>
-        </div>
-        <div class="btn-block">
-            <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+    </div>
 </div>
-</body>
-</html>
+
+<swal
+    #requestSuccessSwal
+    title=""
+    text=""
+    type="success"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    timer=2000>
+</swal>
+
+<swal
+    #requestFailSwal
+    title="{{'swal-cancelled.title' | translate}}"
+    text="{{'swal-cancelled.text' | translate}}"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    type="error"
+    timer=4000>
+</swal>

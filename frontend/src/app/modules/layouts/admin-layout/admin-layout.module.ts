@@ -20,7 +20,13 @@ import {MatSelectModule} from '@angular/material/select';
 import {LoginComponent} from "../../login/login.component";
 import {ChampionshipComponent} from "../../championship/championship.component";
 import {ChampionshipFormComponent} from "../../championship-form/championship-form.component";
-import {Championship} from "../../../model/Championship";
+import {RaceRulesFormComponent} from "../../racerules-form/race-rules-form.component";
+import {MatIconModule} from "@angular/material/icon";
+import {SessionFormComponent} from "../../session-form/session-form.component";
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {TranslateModule} from "@ngx-translate/core";
+import {RaceFormComponent} from "../../race-form/race-form.component";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -36,6 +42,10 @@ import {Championship} from "../../../model/Championship";
         MatSelectModule,
         MatTooltipModule,
         NgOptimizedImage,
+        MatIconModule,
+        SweetAlert2Module,
+        TranslateModule,
+        MatCheckboxModule
     ],
   declarations: [
     LoginComponent,
@@ -48,7 +58,10 @@ import {Championship} from "../../../model/Championship";
     NotificationsComponent,
     UpgradeComponent,
     ChampionshipComponent,
-    ChampionshipFormComponent
+    ChampionshipFormComponent,
+    RaceRulesFormComponent,
+    SessionFormComponent,
+    RaceFormComponent
   ]
 })
 

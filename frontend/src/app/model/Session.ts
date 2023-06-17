@@ -7,11 +7,11 @@ export class Session {
     sessionDurationMinutes: Number;
 
     constructor() {
-        this.id = -1;
-        this.hourOfDay= -1;
-        this.dayOfWeekend= -1;
-        this.timeMultiplier= -1;
+        this.id = null;
+        this.hourOfDay= null;
+        this.dayOfWeekend= null;
+        this.timeMultiplier= null;
         this.sessionType= '';
-        this.sessionDurationMinutes= -1;
+        this.sessionDurationMinutes= null;
     }
 }
