@@ -4,7 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
 import {handleError} from "../util/Error.handler";
 import {Page} from "../model/Page";
-import {Session} from "protractor";
+import {Session} from "../model/Session";
+
 
 @Injectable()
 export class SessionService {

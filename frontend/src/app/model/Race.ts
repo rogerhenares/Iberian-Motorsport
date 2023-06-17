@@ -12,16 +12,16 @@ export class Race {
     serverName: String;
 
     constructor() {
-        this.id= -1;
+        this.id= null;
         this.track= '';
-        this.preRaceWaitingTimeSeconds= -1;
-        this.sessionOverTimeSeconds= -1;
-        this.ambientTemp= -1;
-        this.cloudLevel= -1;
-        this.rain= -1;
-        this.weatherRandomness= -1;
-        this.postQualySeconds= -1;
-        this.postRaceSeconds= -1;
+        this.preRaceWaitingTimeSeconds= null;
+        this.sessionOverTimeSeconds= null;
+        this.ambientTemp= null;
+        this.cloudLevel= null;
+        this.rain= null;
+        this.weatherRandomness= null;
+        this.postQualySeconds= null;
+        this.postRaceSeconds= null;
         this.serverName= '';
     }
 }

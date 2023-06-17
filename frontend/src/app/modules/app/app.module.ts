@@ -12,7 +12,11 @@ import {UserService} from "../../service/user.service";
 import {ChampionshipService} from "../../service/championship.service";
 import {ProcessService} from "../../service/process.service";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import {Championship} from "../../model/Championship";
+import {RaceRulesService} from "../../service/racerules.service";
+import {SessionService} from "../../service/session.service";
+import {TranslateService} from "@ngx-translate/core";
+import {LanguageTranslationModule} from "../../util/language-translation.module";
+import {RaceService} from "../../service/race.service";
 
 @NgModule({
   imports: [
@@ -23,7 +27,8 @@ import {Championship} from "../../model/Championship";
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    LanguageTranslationModule
   ],
   declarations: [
     AppComponent,
@@ -39,8 +44,12 @@ import {Championship} from "../../model/Championship";
        */
     UserAdminService,
     UserService,
+    RaceRulesService,
     ProcessService,
-    ChampionshipService],
+    ChampionshipService,
+    SessionService,
+    RaceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

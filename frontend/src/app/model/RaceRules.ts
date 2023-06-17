@@ -14,18 +14,18 @@ export class RaceRules  {
     tyreSetCount: Number;
 
     constructor() {
-        this.id= -1;
-        this.qualifyStandingType= -1;
-        this.pitWindowLengthSec= -1;
-        this.driverStintTimeSec= -1;
-        this.mandatoryPitstopCount= -1;
-        this.maxTotalDrivingTime= -1;
-        this.maxDriversCount= -1;
-        this.isRefuellingAllowedInRace= -1;
-        this.isRefuellingTimeFixed= -1;
-        this.isMandatoryPitstopRefuellingRequired= -1;
-        this.isMandatoryPitstopTyreChangeRequired= -1;
-        this.isMandatoryPitstopSwapDriverRequired= -1;
-        this.tyreSetCount= -1;
+        this.id= null;
+        this.qualifyStandingType= null;
+        this.pitWindowLengthSec= null;
+        this.driverStintTimeSec= null;
+        this.mandatoryPitstopCount= null;
+        this.maxTotalDrivingTime= null;
+        this.maxDriversCount= null;
+        this.isRefuellingAllowedInRace= null;
+        this.isRefuellingTimeFixed= null;
+        this.isMandatoryPitstopRefuellingRequired= null;
+        this.isMandatoryPitstopTyreChangeRequired= null;
+        this.isMandatoryPitstopSwapDriverRequired= null;
+        this.tyreSetCount= null;
     }
 }

@@ -10,64 +10,12 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {ChampionshipComponent} from "../../championship/championship.component";
 import {ChampionshipFormComponent} from "../../championship-form/championship-form.component";
+import {RaceRulesFormComponent} from "../../racerules-form/race-rules-form.component";
+import {SessionFormComponent} from "../../session-form/session-form.component";
+import {RaceFormComponent} from "../../race-form/race-form.component";
 
 export const AdminLayoutRoutes: Routes = [
-    {
-      path: '',
-      children: [ {
-        path: 'dashboard',
-        component: DashboardComponent
-    }]}, {
-    path: '',
-    children: [ {
-      path: 'userprofile',
-      component: UserProfileComponent
-    }]
-    }, {
-      path: '',
-      children: [ {
-        path: 'icons',
-        component: IconsComponent
-        }]
-    }, {
-        path: '',
-        children: [ {
-            path: 'notifications',
-            component: NotificationsComponent
-        }]
-    }, {
-        path: '',
-        children: [ {
-            path: 'maps',
-            component: MapsComponent
-        }]
-    }, {
-        path: '',
-        children: [ {
-            path: 'typography',
-            component: TypographyComponent
-        }]
-    }, {
-        path: '',
-        children: [ {
-            path: 'upgrade',
-            component: UpgradeComponent
-        }]
-    },
-    {
-        path: '',
-        children: [ {
-            path: 'championship',
-            component: ChampionshipComponent
-        }]
-    },
-    {
-        path: '',
-        children: [ {
-            path: 'championship/new',
-            component: ChampionshipFormComponent
-        }]
-    },
+
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
@@ -77,5 +25,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'championship',   component: ChampionshipComponent },
-    { path: 'championship/new', component: ChampionshipFormComponent}
+    { path: 'championship/new', component: ChampionshipFormComponent },
+    { path: 'race-rules/new', component: RaceRulesFormComponent },
+    { path: 'session/new',    component: SessionFormComponent },
+    { path: 'race/new',       component: RaceFormComponent}
 ];

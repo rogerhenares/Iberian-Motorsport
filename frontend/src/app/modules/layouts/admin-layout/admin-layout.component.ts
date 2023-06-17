@@ -86,7 +86,7 @@ export class AdminLayoutComponent implements OnInit {
           $(this).siblings().removeClass('active');
           $(this).addClass('active');
 
-          var new_color = $(this).data('color');
+          let new_color = $(this).data('color');
 
           if($sidebar.length !== 0){
               $sidebar.attr('data-color', new_color);
@@ -104,7 +104,7 @@ export class AdminLayoutComponent implements OnInit {
           $(this).parent('li').addClass('active');
 
 
-          var new_image = $(this).find("img").attr('src');
+          let new_image = $(this).find("img").attr('src');
 
           if($sidebar_img_container.length !=0 ){
               $sidebar_img_container.fadeOut('fast', function(){
