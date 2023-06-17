@@ -129,7 +129,7 @@
                 position: absolute;
                 bottom: 15px;
                 left: 15px;
-                color: $white-color;
+                color: black;
                 font-size: $font-size-h4;
                 text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);
             }
@@ -251,7 +251,7 @@
 
     [class*="card-header-"],
     &[class*="bg-"]{
-        color: $white-color;
+        color: black;
 
         .card-title a,
         .card-title,
@@ -409,6 +409,7 @@
     .card-header {
       &.card-header-icon + .card-body .card-title,
       &.card-header-icon + .card-body .card-category {
+          color: black;
           margin-top: -20px;
       }
     }
@@ -522,7 +523,7 @@
 
       .ct-chart{
         .card-title{
-            color: $white-color;
+            color: black
         }
         .card-category{
             margin-bottom: 0;

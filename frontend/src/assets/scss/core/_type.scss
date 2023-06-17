@@ -48,7 +48,7 @@ h6, .h6{
 .media .media-heading{
     //font-weight: $font-weight-extra-bold;
     font-family: raceSport;
-
+    color: black;
     &,
     a{
         color: #FFF;
@@ -57,6 +57,7 @@ h6, .h6{
 }
 
 .card-blog .card-title{
+    color: black;
     font-weight: $font-weight-extra-bold;
 }
 

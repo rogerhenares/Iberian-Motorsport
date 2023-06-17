@@ -8916,13 +8916,13 @@ button:focus {
     -webkit-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
             box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4); }
   .card [class*="card-header-"], .card[class*="bg-"] {
-    color: #fff; }
+    color: black; }
     .card [class*="card-header-"] .card-title a,
     .card [class*="card-header-"] .card-title,
     .card [class*="card-header-"] .icon i, .card[class*="bg-"] .card-title a,
     .card[class*="bg-"] .card-title,
     .card[class*="bg-"] .icon i {
-      color: #fff; }
+      color: black; }
     .card [class*="card-header-"] .icon i, .card[class*="bg-"] .icon i {
       border-color: rgba(255, 255, 255, 0.25); }
     .card [class*="card-header-"] .author a,
