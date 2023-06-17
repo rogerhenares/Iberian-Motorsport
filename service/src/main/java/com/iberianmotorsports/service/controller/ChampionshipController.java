@@ -4,7 +4,7 @@ import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipMapper;
 import com.iberianmotorsports.service.model.Championship;
-import com.iberianmotorsports.service.model.MessageResponse;
+import com.iberianmotorsports.service.controller.DTO.MessageResponse;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;

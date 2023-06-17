@@ -1,3 +1,8 @@
 .sidebar-wrapper{
     background-color: dimgray;
 }
+
+@font-face {
+    font-family: raceSport;
+    src: url(assets/font/raceSport.ttf) format("opentype");
+}

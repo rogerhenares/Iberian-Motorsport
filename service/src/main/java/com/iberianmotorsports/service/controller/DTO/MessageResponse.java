@@ -1,4 +1,4 @@
-package com.iberianmotorsports.service.model;
+package com.iberianmotorsports.service.controller.DTO;
 
 import java.io.Serializable;
 

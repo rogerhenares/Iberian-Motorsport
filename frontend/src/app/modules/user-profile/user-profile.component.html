@@ -11,31 +11,31 @@
                       <form (ngSubmit)="onSubmit()" [formGroup]="profileForm" >
                           <div class="row">
                               <div class="col-md-5">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field>
                                     <input id="steamId" matInput placeholder="SteamId" [(ngModel)]="user.steamId" formControlName="steamId" disabled>
                                   </mat-form-field>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field>
                                     <input matInput placeholder="First Name" [(ngModel)]="user.firstName" formControlName="firstName" type="text">
                                   </mat-form-field>
                               </div>
                               <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field>
                                       <input matInput placeholder="Last Name" [(ngModel)]="user.lastName" formControlName="lastName" type="text">
                                   </mat-form-field>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field>
                                   <input matInput placeholder="shortName" [(ngModel)]="user.shortName" formControlName="shortName" type="text">
                                 </mat-form-field>
                               </div>
                               <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field>
                                   <input matInput placeholder="Nationality" [(ngModel)]="user.nationality" formControlName="nationality" type="text">
                                 </mat-form-field>
                               </div>

@@ -3,7 +3,7 @@ package com.iberianmotorsports.service.controller;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
-import com.iberianmotorsports.service.model.MessageResponse;
+import com.iberianmotorsports.service.controller.DTO.MessageResponse;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.service.RaceRulesService;
 import lombok.RequiredArgsConstructor;

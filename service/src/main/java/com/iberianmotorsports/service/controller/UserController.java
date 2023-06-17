@@ -3,7 +3,7 @@ package com.iberianmotorsports.service.controller;
 import com.iberianmotorsports.service.controller.DTO.Mappers.UserDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.UserMapper;
 import com.iberianmotorsports.service.controller.DTO.UserDTO;
-import com.iberianmotorsports.service.model.MessageResponse;
+import com.iberianmotorsports.service.controller.DTO.MessageResponse;
 import com.iberianmotorsports.service.model.User;
 import com.iberianmotorsports.service.service.UserService;
 import lombok.RequiredArgsConstructor;

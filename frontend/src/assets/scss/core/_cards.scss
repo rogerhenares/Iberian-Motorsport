@@ -10,7 +10,7 @@
   width: 100%;
 
     .card-category:not([class*="text-"]) {
-        color: $gray-color;
+        color: #999999;
     }
     .card-category{
         margin-top: 10px;
@@ -183,7 +183,7 @@
     &.bg-success,
     &.card-rotate.bg-success .front,
     &.card-rotate.bg-success .back{
-      background: #00FFC0;
+      background: #FFE500;
     }
     .card-header-warning .card-icon,
     .card-header-warning .card-text,
@@ -199,7 +199,7 @@
     &.bg-danger,
     &.card-rotate.bg-danger .front,
     &.card-rotate.bg-danger .back{
-      background: linear-gradient(60deg, $red-400, $red-600);
+      background: linear-gradient(60deg, #FFE500, #FFE50080);
     }
 
     .card-header-rose .card-icon,
@@ -208,7 +208,7 @@
     &.bg-rose,
     &.card-rotate.bg-rose .front,
     &.card-rotate.bg-rose .back{
-      background: linear-gradient(60deg, $pink-400, $pink-600);
+      background: linear-gradient(60deg, #FFE500, #FFE50080);
     }
 
     .card-header-primary .card-icon,
@@ -222,7 +222,7 @@
     .card-header-danger .card-icon,
     .card-header-danger:not(.card-header-icon):not(.card-header-text),
     .card-header-danger .card-text{
-        @include shadow-big-color($brand-danger);
+        @include shadow-big-color(#FFE500);
     }
 
     .card-header-rose .card-icon,
@@ -256,7 +256,7 @@
         .card-title a,
         .card-title,
         .icon i{
-            color: $white-color;
+            color: black;
         }
 
         .icon i{
@@ -397,6 +397,7 @@
             padding: 0;
         }
         .nav-tabs-title {
+            color: black;
             float: left;
             padding: 10px 10px 10px 0;
             line-height: 24px;
@@ -484,9 +485,9 @@
       padding: 0;
 
       .card-title + .card-category{
-        color: rgba(255, 255, 255, 0.62);
+        color: rgba(0, 0, 0, 0.80);
         a {
-          color: $white-color;
+          color: black;
         }
       }
 
@@ -512,7 +513,7 @@
         margin-right: 0;
 
         .card-title{
-          color: $white-color;
+          color: black;
           margin-top: 0;
         }
       }
