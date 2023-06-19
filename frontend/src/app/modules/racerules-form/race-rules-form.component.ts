@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -12,6 +12,8 @@ import {TranslateService} from "@ngx-translate/core";
     templateUrl: './race-rules-form.component.html'
 })
 export class RaceRulesFormComponent {
+
+    @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
@@ -33,7 +35,7 @@ export class RaceRulesFormComponent {
         this.raceRulesFormBuilder();
     }
 
-    onSubmit() {
+    raceRulesSubmit() {
         this.raceRulesFormSubmitted= true;
         if (this.raceRulesForm.valid) {
             this.raceRulesService.saveRaceRules(this.raceRules).subscribe(response => {

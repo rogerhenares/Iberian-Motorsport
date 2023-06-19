@@ -1,15 +1,17 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
+<div class="container-fluid">
+<mat-stepper>
+    <mat-step [stepControl]="raceForm" label="Race">
+
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title">New Race</h4>
                         <p class="card-category">Create a new Race</p>
                     </div>
+
                     <div class="card-body">
                         <div class="testbox">
-                            <form id="raceRulesForm" (ngSubmit)="onSubmit()" [formGroup]="raceForm">
+                            <form id="raceForm" (ngSubmit)="raceSubmit()" [formGroup]="raceForm">
                                 <div class="item">
                                     <div class="name-item">
                                         <div>
@@ -83,18 +85,32 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
+
+                                    <div>
+                                        <button mat-button matStepperPrevious>Back</button>
+                                        <button mat-button matStepperNext>Next</button>
+                                    </div>
                                 </div>
                                 <div class="btn-block">
                                     <button id="submit" type="submit" class="btn btn-primary">Submit</button>
                                 </div>
+
                             </form>
                         </div>
+
+                            <mat-step [stepControl]="sessionForm" label="Session">
+                                <app-session-form [formGroup]="sessionForm"></app-session-form>
+                            </mat-step>
+                            <mat-step [stepControl]="raceRulesForm" label="Race Rules">
+                                <app-race-rules-form [formGroup]="raceRulesForm"></app-race-rules-form>
+                            </mat-step>
                     </div>
                 </div>
-            </div>
-        </div>
+            </mat-step>
+        </mat-stepper>
     </div>
 </div>
+
 
 <swal
     #requestSuccessSwal

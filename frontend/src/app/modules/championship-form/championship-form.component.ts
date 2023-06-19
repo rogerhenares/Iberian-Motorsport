@@ -11,6 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: 'app-championship-form',
     templateUrl: './championship-form.component.html',
+    styleUrls: ['./championship-form.component.css']
 })
 
 export class ChampionshipFormComponent {

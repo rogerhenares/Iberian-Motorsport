@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -13,6 +13,8 @@ import {TranslateService} from "@ngx-translate/core";
     templateUrl: './session-form.component.html'
 })
 export class SessionFormComponent {
+
+    @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
@@ -33,7 +35,7 @@ export class SessionFormComponent {
         this.sessionFormBuilder();
     }
 
-    onSubmit() {
+    sessionSubmit() {
         this.sessionFormSubmitted= true;
         if (this.sessionForm.valid) {
             this.sessionService.saveSession(this.session).subscribe(response => {

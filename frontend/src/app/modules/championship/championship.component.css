@@ -1,3 +1,6 @@
 .selected {
     background-color: #FFE50060;
 }
+.align-right {
+    margin-left: auto;
+}

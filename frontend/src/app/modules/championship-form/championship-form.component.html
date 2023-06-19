@@ -108,48 +108,41 @@
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.maxCarSlots.errors)">Max Car Slots Error</mat-error>
                                             </mat-form-field>
                                         </div>
-                                        <div>
-                                            <mat-checkbox class="example-margin" [(ngModel)]="championship.dumpLeaderboards" formControlName="dumpLeaderboards" >Dump Leaderboards</mat-checkbox>
+                                        <div class="checkbox-container">
+                                        <div class="checkbox-group">
+                                            <mat-checkbox [(ngModel)]="championship.dumpLeaderboards" formControlName="dumpLeaderboards" >Dump Leaderboards</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.dumpLeaderboards.errors)">Dump Leaderboards Error</mat-error>
                                         </div>
-                                        <div>
-                                            <mat-checkbox class="example-margin" [(ngModel)]="championship.isRaceLocked" formControlName="isRaceLocked">Is Race Locked</mat-checkbox>
+                                        <div class="checkbox-group align-right">
+                                            <mat-checkbox [(ngModel)]="championship.isRaceLocked" formControlName="isRaceLocked">Is Race Locked</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.isRaceLocked.errors)">Is Race Locked Error</mat-error>
                                         </div>
-                                        <div>
-                                            <mat-form-field>
-                                            <mat-label>Randomize Track When Empty</mat-label>
-                                            <input matInput [(ngModel)]="championship.randomizeTrackWhenEmpty" formControlName="randomizeTrackWhenEmpty"/>
+                                        </div>
+                                        <div class="checkbox-container">
+                                        <div class="checkbox-group">
+                                            <mat-checkbox [(ngModel)]="championship.randomizeTrackWhenEmpty" formControlName="randomizeTrackWhenEmpty">Randomize Track When Empty</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.randomizeTrackWhenEmpty.errors)">Randomize Track When Empty Error</mat-error>
-                                            </mat-form-field>
                                         </div>
-                                        <div>
-                                            <mat-form-field>
-                                            <mat-label>Allow Auto DQ</mat-label>
-                                            <input matInput [(ngModel)]="championship.allowAutoDQ" formControlName="allowAutoDQ"/>
+                                        <div class="checkbox-group align-right">
+                                            <mat-checkbox  [(ngModel)]="championship.allowAutoDQ" formControlName="allowAutoDQ">Allow Auto DQ</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.allowAutoDQ.errors)">Allow Auto DQ Error</mat-error>
-                                            </mat-form-field>
                                         </div>
-                                        <div>
-                                            <mat-form-field>
-                                            <mat-label>Short Formation Lap</mat-label>
-                                            <input matInput [(ngModel)]="championship.shortFormationLap" formControlName="shortFormationLap"/>
+                                        </div>
+                                        <div class="checkbox-container">
+                                        <div class="checkbox-group">
+                                            <mat-checkbox [(ngModel)]="championship.shortFormationLap" formControlName="shortFormationLap">Short Formation Lap</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.shortFormationLap.errors)">Short Formation Lap Error</mat-error>
-                                            </mat-form-field>
                                         </div>
-                                        <div>
-                                            <mat-form-field>
-                                            <mat-label>Dump Entry List</mat-label>
-                                            <input matInput [(ngModel)]="championship.dumpEntryList" formControlName="dumpEntryList"/>
+                                        <div class="checkbox-group align-right">
+                                            <mat-checkbox [(ngModel)]="championship.dumpEntryList" formControlName="dumpEntryList">Dump Entry List</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.dumpEntryList.errors)">Dump Entry List Error</mat-error>
-                                            </mat-form-field>
                                         </div>
-                                        <div>
-                                            <mat-form-field>
-                                            <mat-label>Ignore Premature Disconnects</mat-label>
-                                            <input matInput [(ngModel)]="championship.ignorePrematureDisconnects" formControlName="ignorePrematureDisconnects"/>
+                                        </div>
+                                        <div class="checkbox-container">
+                                        <div class="checkbox-group">
+                                            <mat-checkbox  [(ngModel)]="championship.ignorePrematureDisconnects" formControlName="ignorePrematureDisconnects">Ignore Premature Disconnects</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.ignorePrematureDisconnects.errors)">Ignore Premature Disconnects Error</mat-error>
-                                            </mat-form-field>
+                                        </div>
                                         </div>
                                         <div>
                                             <mat-form-field>

@@ -27,6 +27,7 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import {TranslateModule} from "@ngx-translate/core";
 import {RaceFormComponent} from "../../race-form/race-form.component";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatStepperModule} from "@angular/material/stepper";
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatIconModule,
         SweetAlert2Module,
         TranslateModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatStepperModule
     ],
   declarations: [
     LoginComponent,

@@ -65,5 +65,9 @@ export class ChampionshipComponent implements OnInit {
     createNewChampionship() {
         this.router.navigateByUrl("championship/new");
     }
+
+    createNewRace() {
+        this.router.navigateByUrl("race/new");
+    }
 }
 
