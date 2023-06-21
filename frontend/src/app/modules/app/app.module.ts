@@ -19,6 +19,7 @@ import {RaceService} from "../../service/race.service";
 import {AppContext} from "../../util/AppContext";
 import {AuthenticationService} from "../../service/authentication.service";
 import {AuthenticationInterceptor} from "../../authentication/authentication.interceptor";
+import {NewRace} from "../new-race/new-race";
 
 @NgModule({
   imports: [
@@ -50,7 +51,7 @@ import {AuthenticationInterceptor} from "../../authentication/authentication.int
     ProcessService,
     ChampionshipService,
     SessionService,
-    RaceService
+    RaceService,
   ],
   bootstrap: [AppComponent]
 })

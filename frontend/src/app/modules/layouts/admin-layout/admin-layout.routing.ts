@@ -14,6 +14,8 @@ import {RaceRulesFormComponent} from "../../racerules-form/race-rules-form.compo
 import {SessionFormComponent} from "../../session-form/session-form.component";
 import {RaceFormComponent} from "../../race-form/race-form.component";
 import {LoginComponent} from "../../login/login.component";
+import {NewRace} from "../../new-race/new-race";
+import {ChampionshipListComponent} from "../../championship-list/championship-list.component";
 
 export const AdminLayoutRoutes: Routes = [
 
@@ -28,7 +30,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'login',          component: LoginComponent },
     { path: 'championship',   component: ChampionshipComponent },
     { path: 'championship/new', component: ChampionshipFormComponent },
-    { path: 'race-rules/new', component: RaceRulesFormComponent },
-    { path: 'session/new',    component: SessionFormComponent },
-    { path: 'race/new',       component: RaceFormComponent}
+    { path: 'championship-list', component: ChampionshipListComponent},
+    { path: 'race-rules/form', component: RaceRulesFormComponent },
+    { path: 'session/form',    component: SessionFormComponent },
+    { path: 'race/form',       component: RaceFormComponent},
+    { path: 'race/new',        component: NewRace}
 ];

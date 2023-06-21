@@ -10,6 +10,7 @@ export class Race {
     postQualySeconds: Number;
     postRaceSeconds: Number;
     serverName: String;
+    sessionCount: Number;
 
     constructor() {
         this.id= null;
@@ -23,5 +24,6 @@ export class Race {
         this.postQualySeconds= null;
         this.postRaceSeconds= null;
         this.serverName= '';
+        this.sessionCount= null;
     }
 }

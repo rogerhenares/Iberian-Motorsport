@@ -1,93 +1,80 @@
-<div class="card">
-    <div class="card-header card-header-danger">
-        <h4 class="card-title">New Race Rules</h4>
-        <p class="card-category">Create a new set of Race Rules</p>
-    </div>
-    <div class="card-body">
-        <div class="testbox">
-            <form id="raceRulesForm" (ngSubmit)="raceRulesSubmit()" [formGroup]="raceRulesForm">
-                <div class="item">
-                    <div class="name-item">
-                        <div>
-                            <mat-form-field>
-                            <mat-label>Qualify Standing Type</mat-label>
-                            <input matInput [(ngModel)]="raceRules.qualifyStandingType" formControlName="qualifyStandingType"/>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.qualifyStandingType.errors)">Qualify Standing Type Error</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field>
-                            <mat-label>Pit Window Length Seconds</mat-label>
-                            <input matInput [(ngModel)]="raceRules.pitWindowLengthSec" formControlName="pitWindowLengthSec"/>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.pitWindowLengthSec.errors)">Pit Window Length Seconds Error</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field>
-                            <mat-label>Driver Stint Time Seconds</mat-label>
-                            <input matInput [(ngModel)]="raceRules.driverStintTimeSec" formControlName="driverStintTimeSec"/>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.driverStintTimeSec.errors)">Driver Stint Time Seconds Error</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field>
-                            <mat-label>Mandatory Pitstop Count</mat-label>
-                            <input matInput [(ngModel)]="raceRules.mandatoryPitstopCount" formControlName="mandatoryPitstopCount"/>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.mandatoryPitstopCount.errors)">Mandatory Pitstop Count Error</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field>
-                            <mat-label>Max Total Driving Time</mat-label>
-                            <input matInput [(ngModel)]="raceRules.maxTotalDrivingTime" formControlName="maxTotalDrivingTime"/>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.maxTotalDrivingTime.errors)">Max Total Driving Time Error</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field>
-                            <mat-label>Max Total Driving Time</mat-label>
-                            <input matInput [(ngModel)]="raceRules.maxDriversCount" formControlName="maxDriversCount"/>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.maxDriversCount.errors)">Max Drivers Count Error</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-checkbox [(ngModel)]="raceRules.isRefuellingAllowedInRace" formControlName="isRefuellingAllowedInRace">Is Refuelling Allowed In Race</mat-checkbox>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isRefuellingAllowedInRace.errors)">Is Refuelling Allowed In Race Error</mat-error>
-                        </div>
-                        <div>
-                            <mat-checkbox [(ngModel)]="raceRules.isRefuellingTimeFixed" formControlName="isRefuellingTimeFixed">Is Refuelling Time Fixed</mat-checkbox>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isRefuellingTimeFixed.errors)">Is Refuelling Time Fixed Error</mat-error>
-                        </div>
-                        <div>
-                            <mat-checkbox [(ngModel)]="raceRules.isMandatoryPitstopRefuellingRequired" formControlName="isMandatoryPitstopRefuellingRequired">Is Mandatory Pitstop Refuelling Required</mat-checkbox>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isMandatoryPitstopRefuellingRequired.errors)">Is Mandatory Pitstop Refuelling Required Error</mat-error>
-                        </div>
-                        <div>
-                            <mat-checkbox [(ngModel)]="raceRules.isMandatoryPitstopTyreChangeRequired" formControlName="isMandatoryPitstopTyreChangeRequired">Is Mandatory Pitstop Tyre Change Required</mat-checkbox>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isMandatoryPitstopTyreChangeRequired.errors)">Is Mandatory Pitstop Tyre Change Required Error</mat-error>
-                        </div>
-                        <div>
-                            <mat-checkbox [(ngModel)]="raceRules.isMandatoryPitstopSwapDriverRequired" formControlName="isMandatoryPitstopSwapDriverRequired">Is Mandatory Pitstop Swap Driver Required</mat-checkbox>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isMandatoryPitstopSwapDriverRequired.errors)">Is Mandatory Pitstop Swap Driver Required Error</mat-error>
-                        </div>
-                        <div>
-                            <mat-form-field>
-                            <mat-label for="tyre-set-count">Tyre Set Count</mat-label>
-                            <input matInput [(ngModel)]="raceRules.tyreSetCount" formControlName="tyreSetCount"/>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.tyreSetCount.errors)">Tyre Set Count Error</mat-error>
-                            </mat-form-field>
-                        </div>
+<div class="card-body">
+    <div class="testbox">
+        <form id="raceRulesForm" (ngSubmit)="raceRulesSubmit()" [formGroup]="raceRulesForm">
+            <div class="item">
+                <div class="name-item">
+                    <div>
+                        <mat-form-field>
+                        <mat-label>Qualify Standing Type</mat-label>
+                        <input matInput [(ngModel)]="raceRules.qualifyStandingType" formControlName="qualifyStandingType"/>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.qualifyStandingType.errors)">Qualify Standing Type Error</mat-error>
+                        </mat-form-field>
                     </div>
                     <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button>
+                        <mat-form-field>
+                        <mat-label>Pit Window Length Seconds</mat-label>
+                        <input matInput [(ngModel)]="raceRules.pitWindowLengthSec" formControlName="pitWindowLengthSec"/>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.pitWindowLengthSec.errors)">Pit Window Length Seconds Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                        <mat-label>Driver Stint Time Seconds</mat-label>
+                        <input matInput [(ngModel)]="raceRules.driverStintTimeSec" formControlName="driverStintTimeSec"/>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.driverStintTimeSec.errors)">Driver Stint Time Seconds Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                        <mat-label>Mandatory Pitstop Count</mat-label>
+                        <input matInput [(ngModel)]="raceRules.mandatoryPitstopCount" formControlName="mandatoryPitstopCount"/>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.mandatoryPitstopCount.errors)">Mandatory Pitstop Count Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                        <mat-label>Max Total Driving Time</mat-label>
+                        <input matInput [(ngModel)]="raceRules.maxTotalDrivingTime" formControlName="maxTotalDrivingTime"/>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.maxTotalDrivingTime.errors)">Max Total Driving Time Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                        <mat-label>Max Total Driving Time</mat-label>
+                        <input matInput [(ngModel)]="raceRules.maxDriversCount" formControlName="maxDriversCount"/>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.maxDriversCount.errors)">Max Drivers Count Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-checkbox [(ngModel)]="raceRules.isRefuellingAllowedInRace" formControlName="isRefuellingAllowedInRace">Is Refuelling Allowed In Race</mat-checkbox>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isRefuellingAllowedInRace.errors)">Is Refuelling Allowed In Race Error</mat-error>
+                    </div>
+                    <div>
+                        <mat-checkbox [(ngModel)]="raceRules.isRefuellingTimeFixed" formControlName="isRefuellingTimeFixed">Is Refuelling Time Fixed</mat-checkbox>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isRefuellingTimeFixed.errors)">Is Refuelling Time Fixed Error</mat-error>
+                    </div>
+                    <div>
+                        <mat-checkbox [(ngModel)]="raceRules.isMandatoryPitstopRefuellingRequired" formControlName="isMandatoryPitstopRefuellingRequired">Is Mandatory Pitstop Refuelling Required</mat-checkbox>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isMandatoryPitstopRefuellingRequired.errors)">Is Mandatory Pitstop Refuelling Required Error</mat-error>
+                    </div>
+                    <div>
+                        <mat-checkbox [(ngModel)]="raceRules.isMandatoryPitstopTyreChangeRequired" formControlName="isMandatoryPitstopTyreChangeRequired">Is Mandatory Pitstop Tyre Change Required</mat-checkbox>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isMandatoryPitstopTyreChangeRequired.errors)">Is Mandatory Pitstop Tyre Change Required Error</mat-error>
+                    </div>
+                    <div>
+                        <mat-checkbox [(ngModel)]="raceRules.isMandatoryPitstopSwapDriverRequired" formControlName="isMandatoryPitstopSwapDriverRequired">Is Mandatory Pitstop Swap Driver Required</mat-checkbox>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isMandatoryPitstopSwapDriverRequired.errors)">Is Mandatory Pitstop Swap Driver Required Error</mat-error>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                        <mat-label for="tyre-set-count">Tyre Set Count</mat-label>
+                        <input matInput [(ngModel)]="raceRules.tyreSetCount" formControlName="tyreSetCount"/>
+                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.tyreSetCount.errors)">Tyre Set Count Error</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
-                <div class="btn-block">
-                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 

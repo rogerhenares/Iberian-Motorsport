@@ -1,0 +1,36 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">New Race</h4>
+                <p class="card-category">Create a new Race</p>
+            </div>
+            <mat-stepper style="background: #212121">
+                <mat-step [stepControl]="raceForm">
+                    <app-race-form (formSubmitted)="raceSubmit()" [formGroup]="raceForm"></app-race-form>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </mat-step>
+                <mat-step [stepControl]="sessionForm">
+                    <app-session-form (formSubmitted)="sessionSubmit()" [formGroup]="sessionForm"></app-session-form>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </mat-step>
+                <mat-step [stepControl]="raceRulesForm">
+                    <app-race-rules-form (formSubmitted)="raceRulesSubmit()" [formGroup]="raceRulesForm"></app-race-rules-form>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                    <div class="btn-block">
+                        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </mat-step>
+            </mat-stepper>
+        </div>
+    </div>
+</div>
