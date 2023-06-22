@@ -30,6 +30,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatStepperModule} from "@angular/material/stepper";
 import {NewRace} from "../../new-race/new-race";
 import {ChampionshipListComponent} from "../../championship-list/championship-list.component";
+import {ChampionshipDetailsComponent} from "../../championship-details/championship-details.component";
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import {ChampionshipListComponent} from "../../championship-list/championship-li
     SessionFormComponent,
     RaceFormComponent,
     NewRace,
-    ChampionshipListComponent
+    ChampionshipListComponent,
+    ChampionshipDetailsComponent
   ]
 })
 

@@ -13,7 +13,7 @@ export class Championship {
     dumpLeaderboards: Number;
     isRaceLocked: Number;
     randomizeTrackWhenEmpty: Number;
-    centralEntryListPath: String;
+    centralEntryListPath: any;
     allowAutoDQ: Number;
     shortFormationLap: Number;
     dumpEntryList: Number;

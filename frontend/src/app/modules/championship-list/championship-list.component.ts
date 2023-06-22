@@ -44,7 +44,7 @@ export class ChampionshipListComponent {
     }
 
     selectChampionship(championshipId) {
-        this.selectedChampionshipId = championshipId;
+        this.router.navigate(['/championship/', championshipId])
     }
 
     goToPreviousPage() {

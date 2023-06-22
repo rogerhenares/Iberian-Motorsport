@@ -35,7 +35,7 @@ export class ChampionshipService {
     }
 
     getChampionshipById(championshipId: Number, errorNotify?: any) {
-        const url = this.url + championshipId;
+        const url = this.url + '/' + championshipId;
         return this.httpClient.get<Championship>(url)
             .pipe(
                 tap(user => console.log('fetched Championship by championshipId')),
