@@ -97,7 +97,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a mat-button class="nav-link" href="#settings" data-toggle="tab">
-                                            <i class="material-icons">cloud</i> Server
+                                            <i class="material-icons">cloud</i> Results
                                             <div class="ripple-container"></div>
                                         </a>
                                     </li>
@@ -111,58 +111,82 @@
                                <app-table-list></app-table-list>
                             </div>
                             <div class="tab-pane" id="messages">
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                        </td>
-                                        <td>
-                                            Mandatory pitstop
-                                                - pit window
-                                                - refulling required
-                                                - change tyres
-                                                - swapdriver (endurance)
-                                                - driver time (endurance)
-                                            tyres count
-                                            In game
-                                                Session (libres, qualy, race)
-                                                    - Day
-                                                    - hour
-                                                duration
-
-                                            ambientTemp
-                                            cloudLevel
-                                            rain
-                                            weatherRandomness
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                        </td>
-                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <h3>General Info</h3>
+                                <ul>
+                                    <li>name : crashgate #666</li>
+                                    <li>password : 666</li>
+                                    <li>spectator password : 666 (only for admin)</li>
+                                    <li>no se que poner :D </li>
+                                </ul>
+                                <hr>
+                                <h3>Session</h3>
+                                <div class="row">
+                                    <div class="col-3 h4" style="margin-left: 16px;">Race</div>
+                                    <div class="col-3 h4">Qualy</div>
+                                    <div class="col-3 h4">Practice</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="margin-left: 16px;">Day (Monday)</div>
+                                    <div class="col-3">Day (Monday)</div>
+                                    <div class="col-3">Day (Monday)</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="margin-left: 16px;">Hour (18:30)</div>
+                                    <div class="col-3">Hour (18:30)</div>
+                                    <div class="col-3">Hour (18:30)</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="margin-left: 16px;">Duration (60 min)</div>
+                                    <div class="col-3">Duration (60 min)</div>
+                                    <div class="col-3">Duration (60 min)</div>
+                                </div>
+                                <hr>
+                                <h3>Mandatory Pitstop</h3>
+                                <ul>
+                                    <li>Pit window (45 minutes)</li>
+                                    <li>Refueling required <input type="checkbox" name="refueling" checked disabled></li>
+                                    <li>Change tyres <input type="checkbox" name="change_tyres" disabled></li>
+                                </ul>
+                                <hr>
+                                <h3>Weather</h3>
+                                <ul>
+                                    <li>Ambient temperature (45c)</li>
+                                    <li>Cloud level (1)</li>
+                                    <li>Rain (4)</li>
+                                    <li>Weather randomness (1)</li>
+                                </ul>
                             </div>
                             <div class="tab-pane" id="settings">
-                                <table class="table">
+                                <table class="table" style="text-align: center">
+                                    <thead class=" text-primary">
+                                        <th>POS</th>
+                                        <th>NAME</th>
+                                        <th>CAR</th>
+                                        <th>BEST TIME</th>
+                                        <th>POINTS</th>
+                                    </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                        </td>
-                                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                        </td>
-                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                        </td>
-                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                    </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td style="text-align: left">Brahyam Agudelo  <img style="height: 15px;" src="assets/flags/es.svg"></td>
+                                            <td><img style="height: 30px;" src="assets/car-logo/Lamborghini.png"></td>
+                                            <td class="text-primary">2:00:610</td>
+                                            <td class="text-primary">18</td>
+                                        </tr>
+                                        <tr style="background-color: #00FFC0; color: black">
+                                            <td>2</td>
+                                            <td style="text-align: left">Abel dos Ramos  <img style="height: 15px;" src="assets/flags/es.svg"></td>
+                                            <td><img style="height: 30px;" src="assets/car-logo/Lamborghini.png"></td>
+                                            <td class="text-primary">1:54:321</td>
+                                            <td class="text-primary">10</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td style="text-align: left">Dani Santo  <img style="height: 15px;" src="assets/flags/es.svg"></td>
+                                            <td><mat-icon>airline_seat_recline_extra</mat-icon></td>
+                                            <td class="text-primary" style="color: purple !important;">1:53:321</td>
+                                            <td class="text-primary">3(+1)</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

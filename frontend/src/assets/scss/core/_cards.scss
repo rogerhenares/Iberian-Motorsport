@@ -183,7 +183,7 @@
     &.bg-success,
     &.card-rotate.bg-success .front,
     &.card-rotate.bg-success .back{
-      background: #FFE500;
+      background: #00FFC0;
     }
     .card-header-warning .card-icon,
     .card-header-warning .card-text,
@@ -199,7 +199,7 @@
     &.bg-danger,
     &.card-rotate.bg-danger .front,
     &.card-rotate.bg-danger .back{
-      background: linear-gradient(60deg, #FFE500, #FFE50080);
+      background: linear-gradient(60deg, #00FFC0, #00FFC080);
     }
 
     .card-header-rose .card-icon,
@@ -208,7 +208,7 @@
     &.bg-rose,
     &.card-rotate.bg-rose .front,
     &.card-rotate.bg-rose .back{
-      background: linear-gradient(60deg, #FFE500, #FFE50080);
+      background: linear-gradient(60deg, #00FFC0, #00FFC080);
     }
 
     .card-header-primary .card-icon,
@@ -222,7 +222,7 @@
     .card-header-danger .card-icon,
     .card-header-danger:not(.card-header-icon):not(.card-header-text),
     .card-header-danger .card-text{
-        @include shadow-big-color(#FFE500);
+        @include shadow-big-color(#00FFC0);
     }
 
     .card-header-rose .card-icon,
