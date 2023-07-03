@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.service;
 
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,7 @@ import java.io.IOException;
 @Service
 public interface SessionService {
 
-    Session saveSession(SessionDTO sessionDTO);
+    Session saveSession(SessionDTO sessionDTO, Race race);
 
     Session findSessionById(Long id);
 

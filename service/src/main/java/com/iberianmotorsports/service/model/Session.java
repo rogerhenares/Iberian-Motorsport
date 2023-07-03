@@ -33,4 +33,5 @@ public class Session {
     @JoinColumn(name = "race_id", referencedColumnName = "id")
     private Race race;
 
+
 }

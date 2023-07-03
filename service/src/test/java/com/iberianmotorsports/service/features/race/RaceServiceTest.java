@@ -82,7 +82,7 @@ public class RaceServiceTest {
         public void saveRace() {
             Race testRace = RaceFactory.race();
             testRace.setChampionship(ChampionshipFactory.championship());
-            testRace.setSession(SessionFactory.session());
+            testRace.setSessionList(SessionFactory.sessionList());
             testRace.setRaceRules(RaceRulesFactory.raceRules());
             givenRaceRepositorySave();
             givenChampionshipExists();
@@ -97,7 +97,7 @@ public class RaceServiceTest {
         public void saveDuplicateRace() {
             Race testRace = RaceFactory.race();
             testRace.setChampionship(ChampionshipFactory.championship());
-            testRace.setSession(SessionFactory.session());
+            testRace.setSessionList(SessionFactory.sessionList());
             testRace.setRaceRules(RaceRulesFactory.raceRules());
             givenChampionshipExists();
             givenRaceAlreadyExists();

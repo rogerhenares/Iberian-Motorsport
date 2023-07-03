@@ -38,7 +38,7 @@ public class ChampionshipFactory {
         championship.setDescription(description);
         championship.setPassword(password);
         championship.setCarGroup(carGroup);
-        championship.setAdmin_password(adminPassword);
+        championship.setAdminPassword(adminPassword);
         championship.setDumpLeaderboards(dumpLeaderboards);
         championship.setIsRaceLocked(isRaceLocked);
         championship.setMaxCarSlots(maxCarSlots);

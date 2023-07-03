@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.SessionRepository;
 import com.iberianmotorsports.service.service.SessionService;
@@ -31,10 +32,11 @@ public class SessionServiceImpl implements SessionService {
     private SessionMapper sessionMapper;
 
     @Override
-    public Session saveSession(SessionDTO sessionDTO) {
+    public Session saveSession(SessionDTO sessionDTO, Race race) {
         Session session = sessionMapper.apply(sessionDTO);
         if (isAlreadyInDatabase(session.getId()))
             throw new ServiceException(ErrorMessages.DUPLICATED_SESSION.getDescription());
+        session.setRace(race);
         return sessionRepository.save(session);
     }
 

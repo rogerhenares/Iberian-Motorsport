@@ -6,10 +6,15 @@ import com.iberianmotorsports.service.controller.DTO.Mappers.RaceDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
+import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
 import com.iberianmotorsports.service.model.Race;
+import com.iberianmotorsports.service.model.RaceRules;
+import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
+import com.iberianmotorsports.service.service.RaceRulesService;
 import com.iberianmotorsports.service.service.RaceService;
+import com.iberianmotorsports.service.service.SessionService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -41,8 +46,14 @@ public class RaceServiceImpl implements RaceService {
     @Override
     public Race saveRace(RaceDTO raceDTO) {
         Race race = raceMapper.apply(raceDTO);
-        if (isAlreadyInDatabase(race.getId()))
-            throw new ServiceException(ErrorMessages.DUPLICATED_RACE.getDescription());
+        race.setId(null);
+        Race createdRace = raceRepository.save(race);
+        //TODO include statement to evaluate sessionDTO should contains every session for free practice/ qualy / race/
+        raceDTO.sessionDTOList()
+                .stream()
+                .map(sessionDTO -> sessionService.saveSession(sessionDTO, createdRace))
+                .toList();
+        raceRulesService.saveRaceRules(raceDTO.raceRulesDTO(), createdRace);
         return raceRepository.save(race);
     }
 
