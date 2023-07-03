@@ -1,6 +1,10 @@
 package com.iberianmotorsports;
 
+import com.iberianmotorsports.service.model.Role;
 import com.iberianmotorsports.service.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserFactory{
 
@@ -16,6 +20,8 @@ public class UserFactory{
 
     public static final String nationality = "TestNationality";
 
+    public static final List<Role> roles = new ArrayList<>();
+
     public static User user(){
         User user = new User();
         user.setUserId(userId);
@@ -24,6 +30,7 @@ public class UserFactory{
         user.setLastName(lastName);
         user.setShortName(shortName);
         user.setNationality(nationality);
+        user.setRoles(roles);
         return user;
     }
 
@@ -56,6 +63,15 @@ public class UserFactory{
         user.setShortName(null);
         user.setLastName(null);
         return user;
+    }
+
+    public static List<User> userList(Integer numberOfUsers) {
+        List<User> userList = new ArrayList<>();
+        for(int i = 0; i < numberOfUsers; i++) {
+            User user = UserFactory.user();
+            userList.add(user);
+        }
+        return userList;
     }
 
 }

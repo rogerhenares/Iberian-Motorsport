@@ -1,9 +1,16 @@
 package com.iberianmotorsports.service.controller;
 
+import com.iberianmotorsports.ChampionshipFactory;
+import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
+import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipMapper;
+import com.iberianmotorsports.service.service.AuthService;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +21,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static com.iberianmotorsports.service.utils.Utils.loadContent;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,6 +34,15 @@ class ChampionshipControllerTest {
     @MockBean
     ChampionshipService championshipService;
 
+    @MockBean
+    AuthService authService;
+
+    @MockBean
+    ChampionshipDTOMapper championshipDTOMapper;
+
+    @MockBean
+    ChampionshipMapper championshipMapper;
+
     @Autowired
     MockMvc mockMvc;
 
@@ -32,9 +50,7 @@ class ChampionshipControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @BeforeEach
-    public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+    public void setup() {mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();}
 
     @Test
     void createNewChampionship() throws Exception {
@@ -65,6 +81,8 @@ class ChampionshipControllerTest {
 
     @Test
     void updateChampionship() throws Exception{
+        when(championshipMapper.apply(ArgumentMatchers.any())).thenReturn(ChampionshipFactory.championship());
+
         mockMvc.perform(put("/championship/1").
                         contentType(MediaType.APPLICATION_JSON)
                         .content(loadContent("championship.json")))

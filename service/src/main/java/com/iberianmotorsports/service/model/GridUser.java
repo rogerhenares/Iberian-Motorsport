@@ -23,5 +23,5 @@ public class GridUser implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "grid_id", referencedColumnName = "id")
-    private Role role;
+    private Grid grid;
 }

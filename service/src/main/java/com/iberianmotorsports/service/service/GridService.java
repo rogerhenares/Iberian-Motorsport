@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.service;
 
+import com.iberianmotorsports.service.controller.DTO.GridDTO;
 import com.iberianmotorsports.service.model.Grid;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ public interface GridService {
 
     List<Grid> getGridForChampionship(Long championshipId);
 
-    Grid createGridEntry(Grid grid);
+    GridDTO createGridEntry(GridDTO gridDTO);
 
     Grid updateGridEntry(Grid gridUpdate);
 

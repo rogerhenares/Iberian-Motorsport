@@ -1,5 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
+import java.util.List;
+
 public record RaceDTO (
         Long id,
         Long championshipId,
@@ -13,7 +15,7 @@ public record RaceDTO (
         Integer postQualySeconds,
         Integer postRaceSeconds,
         String serverName,
-        Record raceRulesDTO,
-        Record sessionDTO
+        RaceRulesDTO raceRulesDTO,
+        List<SessionDTO> sessionDTOList
 ) {
 }

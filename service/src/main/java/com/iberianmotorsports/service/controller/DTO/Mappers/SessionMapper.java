@@ -17,6 +17,7 @@ public class SessionMapper implements Function<SessionDTO, Session> {
         session.setTimeMultiplier(sessionDTO.timeMultiplier());
         session.setSessionType(sessionDTO.sessionType());
         session.setSessionDurationMinutes(sessionDTO.sessionDurationMinutes());
+        session.setRace(sessionDTO.race());
         return session;
     }
 }

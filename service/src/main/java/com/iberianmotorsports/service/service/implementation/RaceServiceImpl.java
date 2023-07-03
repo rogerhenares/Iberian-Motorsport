@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.repository.RaceRepository;
@@ -34,7 +35,8 @@ public class RaceServiceImpl implements RaceService {
 
     private RaceMapper raceMapper;
 
-    private RaceDTOMapper raceDTOMapper;
+    private SessionService sessionService;
+    private RaceRulesService raceRulesService;
 
     @Override
     public Race saveRace(RaceDTO raceDTO) {
