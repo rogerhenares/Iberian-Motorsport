@@ -5,6 +5,7 @@ import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.repository.RaceRulesRepository;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -35,10 +36,11 @@ public class RaceRulesServiceImpl implements RaceRulesService {
     private RaceRulesDTOMapper raceRulesDTOMapper;
 
     @Override
-    public RaceRules saveRaceRules(RaceRulesDTO raceRulesDTO) {
+    public RaceRules saveRaceRules(RaceRulesDTO raceRulesDTO, Race race) {
         RaceRules raceRules = raceRulesMapper.apply(raceRulesDTO);
         if (isAlreadyInDatabase(raceRules.getId()))
             throw new ServiceException(ErrorMessages.DUPLICATED_RACE_RULES.getDescription());
+        raceRules.setRace(race);
         return raceRulesRepository.save(raceRules);
     }
 

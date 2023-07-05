@@ -2,8 +2,10 @@ package com.iberianmotorsports.service.controller;
 
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
+import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
-import com.iberianmotorsports.service.controller.DTO.MessageResponse;
+import com.iberianmotorsports.service.model.MessageResponse;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.service.RaceRulesService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +30,8 @@ public class RaceRulesController {
     private RaceRulesMapper raceRulesMapper;
 
     @PostMapping
-    public ResponseEntity<?> createNewRaceRules(RaceRulesDTO raceRulesDTO) throws Exception {
-        RaceRules createdRaceRules = raceRulesService.saveRaceRules(raceRulesDTO);
+    public ResponseEntity<?> createNewRaceRules(RaceRulesDTO raceRulesDTO, Race race) throws Exception {
+        RaceRules createdRaceRules = raceRulesService.saveRaceRules(raceRulesDTO, race);
         RaceRulesDTO createdRaceRulesDTO = raceRulesDTOMapper.apply(createdRaceRules);
         return new ResponseEntity<Object>(createdRaceRulesDTO, HttpStatus.CREATED);
     }

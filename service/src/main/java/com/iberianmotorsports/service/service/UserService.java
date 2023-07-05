@@ -1,7 +1,6 @@
 package com.iberianmotorsports.service.service;
 
 
-import com.iberianmotorsports.service.controller.DTO.UserDTO;
 import com.iberianmotorsports.service.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +25,6 @@ public interface UserService {
 
     User getPlayerSummary(String steamId);
 
+    Boolean isProfileCompleted(Long steamId);
 
 }

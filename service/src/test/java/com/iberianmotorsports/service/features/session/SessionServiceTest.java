@@ -1,9 +1,11 @@
 package com.iberianmotorsports.service.features.session;
 
+import com.iberianmotorsports.RaceFactory;
 import com.iberianmotorsports.SessionFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.SessionRepository;
 import com.iberianmotorsports.service.service.SessionService;
@@ -55,9 +57,10 @@ public class SessionServiceTest {
         @Test
         public void saveSession() {
             Session testSession = SessionFactory.session();
+            Race testRace = RaceFactory.race();
             givenSessionRepositorySave();
 
-            service.saveSession(sessionDTOMapper.apply(testSession));
+            service.saveSession(sessionDTOMapper.apply(testSession), testRace);
 
             verify(sessionRepository).save(sessionCaptor.capture());
             assertEquals(SessionFactory.session(), sessionCaptor.getValue());
@@ -66,10 +69,11 @@ public class SessionServiceTest {
         @Test
         public void saveDuplicateSession() {
             Session testSession = SessionFactory.session();
+            Race testRace = RaceFactory.race();
             givenSessionAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveSession(sessionDTOMapper.apply(testSession)));
+                    ()-> service.saveSession(sessionDTOMapper.apply(testSession), testRace));
 
             verify(sessionRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATED_SESSION.getDescription(), exception.getMessage());

@@ -28,8 +28,10 @@ public class Session {
     @Column(name = "session_duration_minutes")
     private Integer sessionDurationMinutes;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    //TODO
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "race_id", referencedColumnName = "id")
     private Race race;
+
 
 }

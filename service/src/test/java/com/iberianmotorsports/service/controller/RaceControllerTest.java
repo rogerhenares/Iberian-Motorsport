@@ -1,9 +1,15 @@
 package com.iberianmotorsports.service.controller;
 
+import com.iberianmotorsports.RaceFactory;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceMapper;
+import com.iberianmotorsports.service.service.AuthService;
 import com.iberianmotorsports.service.service.RaceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static com.iberianmotorsports.service.utils.Utils.loadContent;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,6 +31,15 @@ class RaceControllerTest {
 
     @MockBean
     RaceService raceService;
+
+    @MockBean
+    AuthService authService;
+
+    @MockBean
+    RaceDTOMapper raceDTOMapper;
+
+    @MockBean
+    RaceMapper raceMapper;
 
     @Autowired
     MockMvc mockMvc;
@@ -65,6 +81,8 @@ class RaceControllerTest {
 
     @Test
     void updateRace() throws Exception{
+        when(raceMapper.apply(ArgumentMatchers.any())).thenReturn(RaceFactory.race());
+
         mockMvc.perform(put("/race/1").
                         contentType(MediaType.APPLICATION_JSON)
                         .content(loadContent("race.json")))

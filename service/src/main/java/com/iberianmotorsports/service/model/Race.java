@@ -6,9 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
+import java.util.List;
+
 @Entity
 @Data
-@Table(name = "\"RACE\"")
+@Table(name = "RACE")
 public class Race {
 
     @Id
@@ -68,8 +70,8 @@ public class Race {
     @OneToOne(mappedBy = "race")
     private RaceRules raceRules;
 
-    @OneToOne(mappedBy = "race")
-    private Session session;
+    @OneToMany(mappedBy = "race")
+    private List<Session> sessionList;
 
     @Transient
     private Long championshipId;

@@ -3,7 +3,8 @@ package com.iberianmotorsports.service.controller;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
-import com.iberianmotorsports.service.controller.DTO.MessageResponse;
+import com.iberianmotorsports.service.model.MessageResponse;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.service.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class SessionController {
     private SessionMapper sessionMapper;
 
     @PostMapping
-    public ResponseEntity<?> createNewSession(SessionDTO sessionDTO) throws Exception {
-        Session createdSession = sessionService.saveSession(sessionDTO);
+    public ResponseEntity<?> createNewSession(SessionDTO sessionDTO, Race race) throws Exception {
+        Session createdSession = sessionService.saveSession(sessionDTO, race);
         SessionDTO createdSessionDTO = sessionDTOMapper.apply(createdSession);
         return new ResponseEntity<Object>(createdSessionDTO, HttpStatus.CREATED);
     }
@@ -44,8 +45,8 @@ public class SessionController {
 
     @GetMapping
     public ResponseEntity<?> getAllSessions(Pageable pageRequest) throws ServiceException{
-        Page<SessionDTO> sessionList = sessionService.findAllSessions(pageRequest).map(sessionDTOMapper);
-        return new ResponseEntity<Object>(sessionList, HttpStatus.OK);
+        Page<SessionDTO> sessionPage = sessionService.findAllSessions(pageRequest).map(sessionDTOMapper);
+        return new ResponseEntity<Object>(sessionPage, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")

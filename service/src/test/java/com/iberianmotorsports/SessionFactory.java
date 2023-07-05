@@ -2,6 +2,8 @@ package com.iberianmotorsports;
 
 import com.iberianmotorsports.service.model.Session;
 
+import java.util.List;
+
 public class SessionFactory {
     public static final Long id = 1L;
     public static final Integer hourOfDay = 1;
@@ -19,5 +21,9 @@ public class SessionFactory {
         session.setSessionType(sessionType);
         session.setSessionDurationMinutes(sessionDurationMinutes);
         return session;
+    }
+
+    public static List<Session> sessionList() {
+        return List.of(session());
     }
 }

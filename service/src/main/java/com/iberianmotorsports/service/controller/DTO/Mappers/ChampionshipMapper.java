@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

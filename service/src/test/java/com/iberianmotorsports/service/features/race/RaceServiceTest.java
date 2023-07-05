@@ -10,7 +10,9 @@ import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
+import com.iberianmotorsports.service.service.RaceRulesService;
 import com.iberianmotorsports.service.service.RaceService;
+import com.iberianmotorsports.service.service.SessionService;
 import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
 import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.hibernate.service.spi.ServiceException;
@@ -51,8 +53,10 @@ public class RaceServiceTest {
     private ChampionshipMapper championshipMapper;
     private SessionMapper sessionMapper;
     private SessionDTOMapper sessionDTOMapper;
+    private SessionService sessionService;
     private RaceRulesMapper raceRulesMapper;
     private RaceRulesDTOMapper raceRulesDTOMapper;
+    private RaceRulesService raceRulesService;
 
 
 
@@ -68,7 +72,7 @@ public class RaceServiceTest {
         raceMapper = new RaceMapper(raceRulesMapper, sessionMapper, championshipRepository);
         raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper);
         championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
-        raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, raceDTOMapper);
+        raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService);
     }
 
     @Nested
@@ -78,7 +82,7 @@ public class RaceServiceTest {
         public void saveRace() {
             Race testRace = RaceFactory.race();
             testRace.setChampionship(ChampionshipFactory.championship());
-            testRace.setSession(SessionFactory.session());
+            testRace.setSessionList(SessionFactory.sessionList());
             testRace.setRaceRules(RaceRulesFactory.raceRules());
             givenRaceRepositorySave();
             givenChampionshipExists();
@@ -93,7 +97,7 @@ public class RaceServiceTest {
         public void saveDuplicateRace() {
             Race testRace = RaceFactory.race();
             testRace.setChampionship(ChampionshipFactory.championship());
-            testRace.setSession(SessionFactory.session());
+            testRace.setSessionList(SessionFactory.sessionList());
             testRace.setRaceRules(RaceRulesFactory.raceRules());
             givenChampionshipExists();
             givenRaceAlreadyExists();

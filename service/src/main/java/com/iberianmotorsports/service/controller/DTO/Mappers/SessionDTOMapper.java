@@ -16,7 +16,8 @@ public class SessionDTOMapper implements Function<Session, SessionDTO> {
                 session.getDayOfWeekend(),
                 session.getTimeMultiplier(),
                 session.getSessionType(),
-                session.getSessionDurationMinutes()
+                session.getSessionDurationMinutes(),
+                session.getRace()
         );
     }
 }

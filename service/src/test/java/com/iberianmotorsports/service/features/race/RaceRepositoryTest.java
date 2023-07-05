@@ -46,7 +46,7 @@ public class RaceRepositoryTest extends AbstractRepositoryIT<Race>{
 
     @Test
     void save() {
-        save(race);
+        Race createdRace = getRepository().save(race);
     }
 
     @Test

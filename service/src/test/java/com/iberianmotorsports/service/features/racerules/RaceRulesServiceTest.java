@@ -1,10 +1,12 @@
 package com.iberianmotorsports.service.features.raceRulesrules;
 
+import com.iberianmotorsports.RaceFactory;
 import com.iberianmotorsports.RaceRulesFactory;
 import com.iberianmotorsports.SessionFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
+import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.repository.RaceRulesRepository;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -56,9 +58,10 @@ public class RaceRulesServiceTest {
         @Test
         public void saveRaceRules() {
             RaceRules testRaceRules = RaceRulesFactory.raceRules();
+            Race testRace = RaceFactory.race();
             givenRaceRulesRepositorySave();
 
-            service.saveRaceRules(raceRulesDTOMapper.apply(testRaceRules));
+            service.saveRaceRules(raceRulesDTOMapper.apply(testRaceRules), testRace);
 
             verify(raceRulesRepository).save(raceRulesCaptor.capture());
             assertEquals(RaceRulesFactory.raceRules(), raceRulesCaptor.getValue());
@@ -67,10 +70,11 @@ public class RaceRulesServiceTest {
         @Test
         public void saveDuplicateRaceRules() {
             RaceRules testRaceRules = RaceRulesFactory.raceRules();
+            Race testRace = RaceFactory.race();
             givenRaceRulesAlreadyExists();
 
             RuntimeException exception = assertThrows(ServiceException.class,
-                    ()-> service.saveRaceRules(raceRulesDTOMapper.apply(testRaceRules)));
+                    ()-> service.saveRaceRules(raceRulesDTOMapper.apply(testRaceRules), testRace));
 
             verify(raceRulesRepository, times(0)).save(any());
             Assertions.assertEquals(ErrorMessages.DUPLICATED_RACE_RULES.getDescription(), exception.getMessage());

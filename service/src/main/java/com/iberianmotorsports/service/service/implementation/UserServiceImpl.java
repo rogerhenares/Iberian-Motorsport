@@ -112,4 +112,12 @@ public class UserServiceImpl implements UserService {
         return userOptional.isPresent();
     }
 
+    @Override
+    public Boolean isProfileCompleted(Long steamId) {
+        User user = findUserBySteamId(steamId);
+        return !user.getLastName().isBlank() &&
+            !user.getFirstName().isBlank() &&
+            !user.getNationality().isBlank() &&
+            !user.getShortName().isBlank();
+    }
 }

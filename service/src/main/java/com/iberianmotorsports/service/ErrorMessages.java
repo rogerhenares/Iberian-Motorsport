@@ -19,7 +19,19 @@ public enum ErrorMessages {
     SHORT_NAME(15, "Short name cannot be empty."),
     NATIONALITY(16, "Nationality cannot be empty."),
     AUTH_TOKEN_NOT_FOUND(17, "unable to found auth token"),
-    AUTH_TOKEN_UNABLE_TO_REFRESH(18, "unable to refresh auth token");
+    AUTH_TOKEN_UNABLE_TO_REFRESH(18, "unable to refresh auth token"),
+    CAR_ID_NOT_FOUND(19, "car not found by Id"),
+    CAR_MODEL_NOT_FOUND(20, "car not found by model"),
+    GRID_ID_NOT_FOUND(21, "grid not found by Id"),
+    GRID_DRIVER_NOT_ALLOWED(22, "only grid manager and the driver can perform this action"),
+    GRID_DRIVER_HAS_GRID_ALREADY(23, "driver already has a grid entry for this championship"),
+    GRID_CAR_NUMBER_IS_ALREADY_ON_USE(24, "car number is already on use"),
+    GRID_CHAMPIONSHIP_IS_FULL(25, "championship grid is already full"),
+    GRID_CAR_IS_NOT_ALLOWED_FOR_THIS_CHAMPIONSHIP(26, "car is not allowed for this championship"),
+    GRID_USER_NOT_FOUND(27, "grid user not found"),
+    USER_PROFILE_IS_NOT_COMPLETED(28, "user profile must be completed"),
+
+    DEFAULT(999, "");
 
     private final int code;
     private final String description;
