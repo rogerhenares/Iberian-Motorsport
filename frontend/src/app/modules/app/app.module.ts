@@ -20,6 +20,8 @@ import {AppContext} from "../../util/AppContext";
 import {AuthenticationService} from "../../service/authentication.service";
 import {AuthenticationInterceptor} from "../../authentication/authentication.interceptor";
 import {NewRace} from "../new-race/new-race";
+import {DatePipe} from "@angular/common";
+import {TimezoneService} from "../../service/timezone.service";
 
 @NgModule({
   imports: [
@@ -52,6 +54,8 @@ import {NewRace} from "../new-race/new-race";
     ChampionshipService,
     SessionService,
     RaceService,
+    DatePipe,
+    TimezoneService
   ],
   bootstrap: [AppComponent]
 })

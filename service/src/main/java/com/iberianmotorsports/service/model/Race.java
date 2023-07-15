@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -66,6 +67,10 @@ public class Race {
     @NotEmpty
     @Column(name = "server_name")
     private String serverName;
+
+    @NotEmpty
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
     @OneToOne(mappedBy = "race")
     private RaceRules raceRules;

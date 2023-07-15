@@ -11,6 +11,7 @@ export class Race {
     postRaceSeconds: Number;
     serverName: String;
     sessionCount: Number;
+    startDate: String;
 
     constructor() {
         this.id= null;
@@ -25,5 +26,6 @@ export class Race {
         this.postRaceSeconds= null;
         this.serverName= '';
         this.sessionCount= null;
+        this.startDate = null;
     }
 }

@@ -3,6 +3,10 @@ import {ChampionshipService} from "../../service/championship.service";
 import {Championship} from "../../model/Championship";
 import {Pageable} from "../../model/Pageable";
 import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from "rxjs";
+import {DatePipe} from "@angular/common";
+import {TimezoneService} from "../../service/timezone.service";
+import {Race} from "../../model/Race";
 
 
 
@@ -18,11 +22,16 @@ export class ChampionshipComponent implements OnInit {
     totalPages: number = 0;
     pageable: Pageable = new Pageable(0,3);
     selectedChampionshipId: number | null = null;
+    selectedChampionship: Championship;
+    upcomingRaces: Race[];
+    closestRace: Race;
 
 
     constructor(
         private championshipService: ChampionshipService,
-        public router: Router
+        public router: Router,
+        private datePipe: DatePipe,
+        private timezoneService: TimezoneService
     ) {}
 
     ngOnInit(): void {
@@ -35,6 +44,10 @@ export class ChampionshipComponent implements OnInit {
             (response: any) => {
                 this.championships = response.content;
                 this.totalPages = response.totalPages.valueOf() -1;
+
+                this.championships.forEach(championship => {
+                    this.closestRace = this.getClosestRace(championship);
+                });
             },
             (error: any) => {
                 console.error('Failed to fetch championships', error);
@@ -42,9 +55,21 @@ export class ChampionshipComponent implements OnInit {
         );
     }
 
+
     selectChampionship(championshipId) {
         this.selectedChampionshipId = championshipId;
+        this.championshipService.getChampionshipById(this.selectedChampionshipId).subscribe(championship => {
+            this.selectedChampionship = championship as Championship;
+
+            this.selectedChampionship.raceList = this.getUpcomingRaces(this.selectedChampionship)
+                .sort((a, b) => new Date(a.startDate.toString()).valueOf() - new Date(b.startDate.toString()).valueOf());
+
+
+            console.log(this.selectedChampionship);
+        });
     }
+
+
 
     goToPreviousPage() {
         if (this.pageable.page >= 1) {
@@ -68,5 +93,29 @@ export class ChampionshipComponent implements OnInit {
     createNewRace() {
         this.router.navigateByUrl("race/new");
     }
+
+    transformDate(date: string): string {
+        return this.datePipe.transform(new Date(date), 'short', this.timezoneService.userTimezone);
+    }
+
+    formatDate(date: string): string {
+        return this.transformDate(date);
+    }
+
+    getHour(date: string): string {
+        return this.datePipe.transform(this.transformDate(date), 'HH');
+    }
+
+    getUpcomingRaces(championship: any): any[] {
+        const nowInUserTimezone = new Date().toLocaleString("en-US", {timeZone: this.timezoneService.userTimezone});
+        return championship.raceList.filter(race => new Date(race.startDate.toString()) > new Date(nowInUserTimezone));
+    }
+
+    getClosestRace(championship: any): any {
+        const nowInUserTimezone = new Date().toLocaleString("en-US", {timeZone: this.timezoneService.userTimezone});
+        const upcomingRaces = championship.raceList.filter(race => new Date(race.startDate.toString()).valueOf() > new Date(nowInUserTimezone).valueOf());
+        return upcomingRaces.sort((a, b) => new Date(a.startDate).valueOf() - new Date(b.startDate).valueOf())[0];
+    }
+
 }
 

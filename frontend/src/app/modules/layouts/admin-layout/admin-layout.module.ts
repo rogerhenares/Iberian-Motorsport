@@ -31,6 +31,7 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {NewRace} from "../../new-race/new-race";
 import {ChampionshipListComponent} from "../../championship-list/championship-list.component";
 import {ChampionshipDetailsComponent} from "../../championship-details/championship-details.component";
+import {CollapsibleSectionComponent} from "../../collapsible-section/collapsible-section.component";
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import {ChampionshipDetailsComponent} from "../../championship-details/champions
     RaceFormComponent,
     NewRace,
     ChampionshipListComponent,
-    ChampionshipDetailsComponent
+    ChampionshipDetailsComponent,
+    CollapsibleSectionComponent
   ]
 })
 

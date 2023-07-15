@@ -2,8 +2,8 @@ package com.iberianmotorsports.service.controller;
 
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
+import com.iberianmotorsports.service.controller.DTO.MessageResponse;
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
-import com.iberianmotorsports.service.model.MessageResponse;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.service.SessionService;

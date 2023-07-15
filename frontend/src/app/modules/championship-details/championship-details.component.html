@@ -11,50 +11,18 @@
                     </div>
                 <div class="card-body table-responsive">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-chart"  [class.selected]="selectedRaceId == 3" (click)="selectRace(3)">
-                                <div class="card-header card-header-success">
-                                    <img src="assets/img/barcelona.jpg" alt="imagen circuito" style="width: 100%; height: auto;">
-                                    <div class="ct-chart" id="dailySalesChart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-category">Barcelona</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i>12:00 24/06/23
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-chart"  [class.selected]="selectedRaceId == 2" (click)="selectRace(2)">
-                                <div class="card-header card-header-success">
-                                    <img src="assets/img/suzuka.webp" alt="imagen circuito" style="width: 100%; height: auto;">
-                                    <div class="ct-chart" id="dailySalesChart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-category">Nurbugringo</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i>22:00 02/07/23
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div *ngFor="let race of upcomingRaces" class="col-md-4">
                             <div class="card card-chart" [class.selected]="selectedRaceId == 1" (click)="selectRace(1)">
                                 <div class="card-header card-header-success">
                                     <img src="assets/img/suzuka.webp" alt="imagen circuito" style="width: 100%; height: auto;">
-                                    <div class="ct-chart" id="dailySalesChart"></div>
+                                    <div class="ct-chart" id=""></div>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-category">Suzuka</p>
+                                    <p class="card-category">{{race.track}}</p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        <i class="material-icons">access_time</i>19:30 16/07/23
+                                        <i class="material-icons">access_time</i>{{race.startDate}}
                                     </div>
                                 </div>
                             </div>

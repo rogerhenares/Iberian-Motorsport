@@ -5,6 +5,7 @@ import {ChampionshipService} from "../../service/championship.service";
 import {Championship} from "../../model/Championship";
 import {Race} from "../../model/Race";
 import {Pageable} from "../../model/Pageable";
+import {TimezoneService} from "../../service/timezone.service";
 
 @Component({
     selector: 'app-championship-details',
@@ -13,7 +14,8 @@ import {Pageable} from "../../model/Pageable";
 })
 
 export class ChampionshipDetailsComponent implements OnInit {
-    races: Race[]
+    races: Race[];
+    upcomingRaces: Race[];
     championshipId: number;
     championship: Championship;
     selectedRaceId: number | null = null;
@@ -23,7 +25,8 @@ export class ChampionshipDetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private http: HttpClient,
-        private championshipService: ChampionshipService
+        private championshipService: ChampionshipService,
+        private timezoneService: TimezoneService
     ) {
     }
 
@@ -33,7 +36,15 @@ export class ChampionshipDetailsComponent implements OnInit {
             this.fetchChampionshipDetails(championshipId);
             console.log(this.championship)
         });
+
+        this.championship.raceList.forEach(race => {
+            if (new Date(race.startDate.toString()) > new Date()) {
+                race.startDate = this.timezoneService.convertDateToUserTimezone(race.startDate.toString());
+                this.upcomingRaces.push(race);
+            }
+        });
     }
+
 
     createNewRace() {
 
@@ -45,7 +56,6 @@ export class ChampionshipDetailsComponent implements OnInit {
                 (response: any) => {
                     console.log('API response:', response);
                     this.championship = response;
-                    console.log(this.championship)
                 },
                 (error: any) => {
                     console.error('Error fetching championship details:', error);

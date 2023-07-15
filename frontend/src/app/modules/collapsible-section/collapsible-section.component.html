@@ -1,0 +1,8 @@
+<div class="card">
+  <div class="card-header card-header-danger" (click)="onToggle()">
+    <h4 class="card-title">{{ sectionTitle }}</h4>
+  </div>
+  <div class="card-body table-responsive" *ngIf="isOpen">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+import {Race} from "./Race";
+
 export class Championship {
     id: Number;
     name: String;
@@ -21,6 +23,7 @@ export class Championship {
     ignorePrematureDisconnects: Number;
     imageContent: String;
     startDate: String;
+    raceList: Array<Race>;
 
     constructor() {
         this.id = null;
@@ -45,5 +48,6 @@ export class Championship {
         this.ignorePrematureDisconnects= null;
         this.imageContent= '';
         this.startDate = null;
+        this.raceList = null;
     }
 }

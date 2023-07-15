@@ -2,12 +2,10 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12">
             <div class="card">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title">Current Championships</h4>
-                </div>
+            <app-collapsible-section [sectionTitle]="'Current Championships'" [isOpen]="currentChampionshipsOpen "  (toggle)="currentChampionshipsOpen = !currentChampionshipsOpen">
                 <div class="card-body table-responsive">
                     <div class="row">
-                        <div class="col-md-4" *ngFor="let championship of championships">
+                        <div class="col-md-4" *ngFor="let championship of currentChampionships">
                             <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
                                 <div class="card-header card-header-success">
                                     <img [src]=championship.imageContent alt="jojojo" style="width: 100%; height: auto;">
@@ -19,7 +17,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        <i class="material-icons">access_time</i>Barcelona 24/06/23
+                                        <i class="material-icons">access_time</i>{{championship.startDate | date: 'MMM d, h a'}}
                                     </div>
                                 </div>
                             </div>
@@ -27,22 +25,21 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <button class="btn btn-primary" (click)="goToPreviousPage()" [disabled]="this.pageable.page === 0">Previous</button>
-                            <button class="btn btn-primary" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
+                            <button class="btn btn-primary" (click)="goToPreviousPage(pageableCurrentChampionships, currentChampionships)" [disabled]="pageableCurrentChampionships.page === 0">Previous</button>
+                            <button class="btn btn-primary" (click)="goToNextPage(pageableCurrentChampionships, currentChampionships)" [disabled]="pageableCurrentChampionships.page === totalPages - 1">Next</button>
                         </div>
                         <div class="col-md-6 text-right align-self-center">
                             <button class="btn btn-primary" (click)="createNewChampionship()">Add Championship</button>
                         </div>
                     </div>
                 </div>
+            </app-collapsible-section>
             </div>
             <div class="card">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title">Upcoming Championships</h4>
-                </div>
+                <app-collapsible-section [sectionTitle]="'Upcoming Championships'" [isOpen]="upcomingChampionshipsOpen"  (toggle)="upcomingChampionshipsOpen = !upcomingChampionshipsOpen">
                 <div class="card-body table-responsive">
                     <div class="row">
-                        <div class="col-md-4" *ngFor="let championship of championships">
+                        <div class="col-md-4" *ngFor="let championship of upcomingChampionships">
                             <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
                                 <div class="card-header card-header-success">
                                     <img [src]=championship.imageContent alt="jojojo" style="width: 100%; height: auto;">
@@ -54,7 +51,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        <i class="material-icons">access_time</i>Barcelona 24/06/23
+                                        <i class="material-icons">access_time</i>{{championship.startDate | date: 'MMM d, h a'}}
                                     </div>
                                 </div>
                             </div>
@@ -62,20 +59,20 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <button class="btn btn-primary" (click)="goToPreviousPage()" [disabled]="this.pageable.page === 0">Previous</button>
-                            <button class="btn btn-primary" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
+                            <button class="btn btn-primary" (click)="goToPreviousPage(pageableUpcomingChampionships, upcomingChampionships)" [disabled]="pageableUpcomingChampionships.page === 0">Previous</button>
+                            <button class="btn btn-primary" (click)="goToNextPage(pageableUpcomingChampionships, upcomingChampionships)" [disabled]="pageableUpcomingChampionships.page === totalPages - 1">Next</button>
                         </div>
                     </div>
                 </div>
+                </app-collapsible-section>
             </div>
             <div class="card">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title">Past Championships</h4>
-                </div>
+        <app-collapsible-section [sectionTitle]="'Past Championships'" [isOpen]="pastChampionshipsOpen" (toggle)="pastChampionshipsOpen = !pastChampionshipsOpen">
+
                 <div class="card-body table-responsive">
                     <div class="row">
-                        <div class="col-md-4" *ngFor="let championship of championships">
-                            <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
+                        <div class="col-md-4" *ngFor="let championship of pastChampionships">
+                            <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)" >
                                 <div class="card-header card-header-success">
                                     <img [src]=championship.imageContent alt="jojojo" style="width: 100%; height: auto;">
                                     <div class="ct-chart"></div>
@@ -86,7 +83,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        <i class="material-icons">access_time</i>Barcelona 24/06/23
+                                        <i class="material-icons">access_time</i>{{championship.startDate | date: 'MMM d, h a'}}
                                     </div>
                                 </div>
                             </div>
@@ -94,11 +91,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <button class="btn btn-primary" (click)="goToPreviousPage()" [disabled]="this.pageable.page === 0">Previous</button>
-                            <button class="btn btn-primary" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
+                            <button class="btn btn-primary" (click)="goToPreviousPage(pageablePastChampionships, pastChampionships)" [disabled]="pageablePastChampionships.page === 0">Previous</button>
+                            <button class="btn btn-primary" (click)="goToNextPage(pageablePastChampionships, pastChampionships)" [disabled]="pageablePastChampionships.page === totalPages - 1">Next</button>
                         </div>
                     </div>
                 </div>
+        </app-collapsible-section>
             </div>
         </div>
     </div>
