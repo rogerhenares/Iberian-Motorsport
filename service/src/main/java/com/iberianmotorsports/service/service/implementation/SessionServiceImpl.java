@@ -34,8 +34,6 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Session saveSession(SessionDTO sessionDTO, Race race) {
         Session session = sessionMapper.apply(sessionDTO);
-        if (isAlreadyInDatabase(session.getId()))
-            throw new ServiceException(ErrorMessages.DUPLICATED_SESSION.getDescription());
         session.setRace(race);
         return sessionRepository.save(session);
     }

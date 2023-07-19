@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,10 @@ import java.util.function.Function;
 
 @Service
 public class ChampionshipMapper implements Function<ChampionshipDTO, Championship> {
+
+    @Autowired
+    RaceMapper raceMapper;
+
     @Override
     public Championship apply(ChampionshipDTO championshipDTO) {
         Championship championship = new Championship();
@@ -34,6 +39,7 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
         championship.setIgnorePrematureDisconnects(championshipDTO.ignorePrematureDisconnects());
         championship.setImageContent(championshipDTO.imageContent());
         championship.setStartDate(championshipDTO.startDate());
+        championship.setRaceList(championshipDTO.raceList().stream().map(raceMapper).toList());
         return championship;
     }
 }

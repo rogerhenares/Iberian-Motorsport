@@ -9,6 +9,6 @@ public record SessionDTO(
         Integer timeMultiplier,
         String sessionType,
         Integer sessionDurationMinutes,
-        Race race
+        Long raceId
 ) {
 }

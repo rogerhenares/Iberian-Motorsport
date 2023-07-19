@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "\"CHAMPIONSHIP\"")
+@Table(name = "CHAMPIONSHIP")
 public class Championship implements Serializable {
 
     @Id
@@ -21,22 +22,18 @@ public class Championship implements Serializable {
     private Long id;
 
     @NotBlank
-    @NotNull
     @Column(name = "name")
     private String name;
 
     @NotBlank
-    @NotNull
     @Column(name = "description")
     private String description;
 
     @NotBlank
-    @NotNull
     @Column(name = "admin_password")
     private String adminPassword;
 
     @NotBlank
-    @NotNull
     @Column(name = "car_group")
     private String carGroup;
 
@@ -100,7 +97,8 @@ public class Championship implements Serializable {
     @Column(name = "start_date")
     private LocalDateTime startDate;
 
-    @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @ToString.Exclude
     private List<Race> raceList;
 
 }

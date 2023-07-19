@@ -30,6 +30,7 @@ public enum ErrorMessages {
     GRID_CAR_IS_NOT_ALLOWED_FOR_THIS_CHAMPIONSHIP(26, "car is not allowed for this championship"),
     GRID_USER_NOT_FOUND(27, "grid user not found"),
     USER_PROFILE_IS_NOT_COMPLETED(28, "user profile must be completed"),
+    RACE_SESSION_TYPE_MISSING(29, "Each race must have all session type defined (P, Q, R)"),
 
     DEFAULT(999, "");
 

@@ -3,6 +3,7 @@ package com.iberianmotorsports.service.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
@@ -75,6 +76,7 @@ public class RaceRules {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "race_id")
+    @ToString.Exclude
     private Race race;
 
 }

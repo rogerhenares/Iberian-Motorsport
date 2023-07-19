@@ -8,6 +8,7 @@ import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
@@ -16,14 +17,16 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class RaceMapper implements Function<RaceDTO, Race> {
 
+    @Autowired
     RaceRulesMapper raceRulesMapper;
+    @Autowired
     SessionMapper sessionMapper;
-    private final ChampionshipRepository championshipRepository;
 
     @Override
     public Race apply(RaceDTO raceDTO) {
         Race race = new Race();
         race.setId(raceDTO.id());
+        race.setChampionshipId(raceDTO.championshipId());
         race.setTrack(raceDTO.track());
         race.setPreRaceWaitingTimeSeconds(raceDTO.preRaceWaitingTimeSeconds());
         race.setSessionOverTimeSeconds(raceDTO.sessionOverTimeSeconds());
@@ -34,10 +37,8 @@ public class RaceMapper implements Function<RaceDTO, Race> {
         race.setPostQualySeconds(raceDTO.postQualySeconds());
         race.setPostRaceSeconds(raceDTO.postRaceSeconds());
         race.setServerName(raceDTO.serverName());
-        race.setChampionshipId(raceDTO.championshipId());
-        race.setChampionship(championshipRepository.findById(raceDTO.championshipId()).get());
         race.setRaceRules(raceRulesMapper.apply(raceDTO.raceRulesDTO()));
-        race.setSessionList(raceDTO.sessionDTOList().stream().map(sessionMapper).toList());
+        if(raceDTO.sessionDTOList() != null) race.setSessionList(raceDTO.sessionDTOList().stream().map(sessionMapper).toList());
         return race;
     }
 }

@@ -9,6 +9,7 @@ import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.repository.RaceRulesRepository;
 import com.iberianmotorsports.service.service.RaceRulesService;
+import com.iberianmotorsports.service.service.RaceService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -38,8 +39,6 @@ public class RaceRulesServiceImpl implements RaceRulesService {
     @Override
     public RaceRules saveRaceRules(RaceRulesDTO raceRulesDTO, Race race) {
         RaceRules raceRules = raceRulesMapper.apply(raceRulesDTO);
-        if (isAlreadyInDatabase(raceRules.getId()))
-            throw new ServiceException(ErrorMessages.DUPLICATED_RACE_RULES.getDescription());
         raceRules.setRace(race);
         return raceRulesRepository.save(raceRules);
     }

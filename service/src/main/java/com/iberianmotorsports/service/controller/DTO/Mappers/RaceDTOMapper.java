@@ -15,6 +15,7 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
 
     RaceRulesDTOMapper raceRulesDTOMapper;
     SessionDTOMapper sessionDTOMapper;
+
     @Override
     public RaceDTO apply(Race race) {
 
@@ -32,7 +33,7 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                 race.getPostRaceSeconds(),
                 race.getServerName(),
                 raceRulesDTOMapper.apply(race.getRaceRules()),
-                race.getSessionList().stream().map(sessionDTOMapper).toList()
+                race.getSessionList() != null ? race.getSessionList().stream().map(sessionDTOMapper).toList() : null
         );
     }
 

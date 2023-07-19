@@ -7,9 +7,11 @@ import com.iberianmotorsports.service.controller.DTO.Mappers.RaceMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
+import com.iberianmotorsports.service.controller.DTO.SessionDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.model.Session;
+import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -26,13 +28,19 @@ import org.springframework.stereotype.Service;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
 @Transactional
 @Service("RaceService")
 public class RaceServiceImpl implements RaceService {
+
+    private static final Set<String> SESSION_TYPE_MANDATORY = Set.of("P", "Q", "R");
 
     private ChampionshipService championshipService;
 
@@ -47,14 +55,28 @@ public class RaceServiceImpl implements RaceService {
     public Race saveRace(RaceDTO raceDTO) {
         Race race = raceMapper.apply(raceDTO);
         race.setId(null);
-        Race createdRace = raceRepository.save(race);
-        //TODO include statement to evaluate sessionDTO should contains every session for free practice/ qualy / race/
-        raceDTO.sessionDTOList()
+        race.setRaceRules(null);
+        race.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
+        Race savedRace = raceRepository.save(race);
+
+        if(raceDTO.sessionDTOList() != null) {
+            if(!validateSessionForRace(raceDTO.sessionDTOList()))
+                throw new ServiceException(ErrorMessages.RACE_SESSION_TYPE_MISSING.getDescription());
+
+            race.setSessionList(raceDTO.sessionDTOList()
                 .stream()
-                .map(sessionDTO -> sessionService.saveSession(sessionDTO, createdRace))
-                .toList();
-        raceRulesService.saveRaceRules(raceDTO.raceRulesDTO(), createdRace);
-        return raceRepository.save(race);
+                .map(sessionDTO -> sessionService.saveSession(sessionDTO, savedRace))
+                .toList());
+        }
+        race.setRaceRules(raceRulesService.saveRaceRules(raceDTO.raceRulesDTO(), savedRace));
+        return savedRace;
+    }
+
+    private Boolean validateSessionForRace(List<SessionDTO> sessionDTOList) {
+        Set<String> sessionTypeList = sessionDTOList.stream()
+                .map(SessionDTO::sessionType)
+                .collect(Collectors.toSet());
+        return sessionTypeList.containsAll(SESSION_TYPE_MANDATORY);
     }
 
     @Override

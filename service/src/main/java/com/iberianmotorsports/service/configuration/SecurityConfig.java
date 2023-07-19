@@ -22,6 +22,15 @@ public class SecurityConfig  {
     private final static String BASIC_USER = "BASIC_USER";
     private final static String ADMIN = "ADMIN";
 
+    private static final String[] AUTH_WHITE_LIST = {
+            "/public/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**"
+    };
+
     private final AuthService authService;
 
     public SecurityConfig(AuthService authService) {
@@ -34,8 +43,8 @@ public class SecurityConfig  {
                 .cors().and().csrf().disable()
                 .addFilterBefore(new SteamTokenValidation(authService), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                    .requestMatchers("/public/**", "/swagger-ui").permitAll()
-//                    //.requestMatchers("/admin/**").hasAnyRole(ADMIN)
+                    .requestMatchers(AUTH_WHITE_LIST).permitAll()
+                    .requestMatchers("/admin/**").hasAnyRole(ADMIN)
                     .anyRequest().authenticated()
                 .and()
                 .formLogin()

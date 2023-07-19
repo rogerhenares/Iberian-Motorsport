@@ -68,6 +68,7 @@ public class Race {
     @Column(name = "server_name")
     private String serverName;
 
+    @OneToOne(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @NotEmpty
     @Column(name = "start_date")
     private LocalDateTime startDate;
@@ -75,7 +76,7 @@ public class Race {
     @OneToOne(mappedBy = "race")
     private RaceRules raceRules;
 
-    @OneToMany(mappedBy = "race")
+    @OneToMany(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Session> sessionList;
 
     @Transient

@@ -2,12 +2,17 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
 @Service
 public class ChampionshipDTOMapper implements Function<Championship, ChampionshipDTO> {
+
+    @Autowired
+    RaceDTOMapper raceDTOMapper;
+
     @Override
     public ChampionshipDTO apply(Championship championship) {
         return new ChampionshipDTO(
@@ -32,7 +37,8 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getFormationLapType(),
                 championship.getIgnorePrematureDisconnects(),
                 championship.getImageContent(),
-                championship.getStartDate()
+                championship.getStartDate(),
+                championship.getRaceList().stream().map(raceDTOMapper).toList()
         );
     }
 }
