@@ -27,7 +27,7 @@ export class ChampionshipComponent implements OnInit {
         this.getChampionshipList(this.pageable.page);
     }
 
-    getChampionshipList(page: Number): void {
+    getChampionshipList(page: number): void {
         this.pageable.page = page;
         this.championshipService.getChampionshipList(this.pageable).subscribe(
             (response: any) => {

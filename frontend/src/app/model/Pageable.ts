@@ -1,6 +1,6 @@
 export class Pageable {
-    page: Number;
-    size: Number;
+    page: number;
+    size: number;
 
     constructor(page, size) {
         this.page = page

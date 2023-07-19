@@ -10,6 +10,7 @@ import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.model.Session;
+import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -47,14 +48,21 @@ public class RaceServiceImpl implements RaceService {
     public Race saveRace(RaceDTO raceDTO) {
         Race race = raceMapper.apply(raceDTO);
         race.setId(null);
-        Race createdRace = raceRepository.save(race);
-        //TODO include statement to evaluate sessionDTO should contains every session for free practice/ qualy / race/
-        raceDTO.sessionDTOList()
+        race.setRaceRules(null);
+        race.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
+        Race savedRace = raceRepository.save(race);
+
+        if(raceDTO.sessionDTOList() != null) {
+            if(!validateSessionForRace(raceDTO.sessionDTOList()))
+                throw new ServiceException(ErrorMessages.RACE_SESSION_TYPE_MISSING.getDescription());
+
+            race.setSessionList(raceDTO.sessionDTOList()
                 .stream()
-                .map(sessionDTO -> sessionService.saveSession(sessionDTO, createdRace))
-                .toList();
-        raceRulesService.saveRaceRules(raceDTO.raceRulesDTO(), createdRace);
-        return raceRepository.save(race);
+                .map(sessionDTO -> sessionService.saveSession(sessionDTO, savedRace))
+                .toList());
+        }
+        race.setRaceRules(raceRulesService.saveRaceRules(raceDTO.raceRulesDTO(), savedRace));
+        return savedRace;
     }
 
     @Override

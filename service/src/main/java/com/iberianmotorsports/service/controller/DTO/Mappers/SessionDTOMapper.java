@@ -10,6 +10,7 @@ import java.util.function.Function;
 public class SessionDTOMapper implements Function<Session, SessionDTO> {
     @Override
     public SessionDTO apply(Session session) {
+        if (session == null) return null;
         return new SessionDTO(
                 session.getId(),
                 session.getHourOfDay(),
@@ -17,7 +18,7 @@ public class SessionDTOMapper implements Function<Session, SessionDTO> {
                 session.getTimeMultiplier(),
                 session.getSessionType(),
                 session.getSessionDurationMinutes(),
-                session.getRace()
+                session.getRace().getId()
         );
     }
 }

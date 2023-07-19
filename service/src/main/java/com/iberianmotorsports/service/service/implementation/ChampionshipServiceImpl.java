@@ -62,7 +62,10 @@ public class ChampionshipServiceImpl implements ChampionshipService {
 
     @Override
     public Championship updateChampionship(Championship championship) {
-        return championshipRepository.save(championship);
+        championship.setRaceList(championshipRepository.getById(championship.getId()).getRaceList());
+        Championship updatedChampionship = championshipRepository.save(championship);
+        updatedChampionship.getRaceList().size();
+        return updatedChampionship;
     }
 
     @Override

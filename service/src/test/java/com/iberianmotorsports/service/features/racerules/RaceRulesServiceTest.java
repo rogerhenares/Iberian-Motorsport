@@ -1,4 +1,4 @@
-package com.iberianmotorsports.service.features.raceRulesrules;
+package com.iberianmotorsports.service.features.racerules;
 
 import com.iberianmotorsports.RaceFactory;
 import com.iberianmotorsports.RaceRulesFactory;

@@ -11,13 +11,13 @@ public class SessionMapper implements Function<SessionDTO, Session> {
     @Override
     public Session apply(SessionDTO sessionDTO) {
         Session session = new Session();
+        if (sessionDTO == null) return session;
         session.setId(sessionDTO.id());
         session.setHourOfDay(sessionDTO.hourOfDay());
         session.setDayOfWeekend(sessionDTO.dayOfWeekend());
         session.setTimeMultiplier(sessionDTO.timeMultiplier());
         session.setSessionType(sessionDTO.sessionType());
         session.setSessionDurationMinutes(sessionDTO.sessionDurationMinutes());
-        session.setRace(sessionDTO.race());
         return session;
     }
 }

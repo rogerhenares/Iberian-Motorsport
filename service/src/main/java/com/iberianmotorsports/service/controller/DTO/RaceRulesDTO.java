@@ -13,6 +13,7 @@ public record RaceRulesDTO(
         Integer isMandatoryPitstopRefuellingRequired,
         Integer isMandatoryPitstopTyreChangeRequired,
         Integer isMandatoryPitstopSwapDriverRequired,
-        Integer tyreSetCount
+        Integer tyreSetCount,
+        Long raceId
 ) {
 }

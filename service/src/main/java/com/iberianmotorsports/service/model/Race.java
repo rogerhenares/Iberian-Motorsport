@@ -18,7 +18,7 @@ public class Race {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "championship_id", nullable = false)
     private Championship championship;
 
@@ -67,10 +67,10 @@ public class Race {
     @Column(name = "server_name")
     private String serverName;
 
-    @OneToOne(mappedBy = "race")
+    @OneToOne(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private RaceRules raceRules;
 
-    @OneToMany(mappedBy = "race")
+    @OneToMany(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Session> sessionList;
 
     @Transient

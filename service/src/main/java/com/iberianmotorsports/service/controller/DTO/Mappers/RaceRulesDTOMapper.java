@@ -11,6 +11,7 @@ import java.util.function.Function;
 public class RaceRulesDTOMapper implements Function<RaceRules, RaceRulesDTO> {
     @Override
     public RaceRulesDTO apply(RaceRules raceRules) {
+        if(raceRules == null) return null;
         return new RaceRulesDTO(
                 raceRules.getId(),
                 raceRules.getQualifyStandingType(),
@@ -24,7 +25,8 @@ public class RaceRulesDTOMapper implements Function<RaceRules, RaceRulesDTO> {
                 raceRules.getIsMandatoryPitstopRefuellingRequired(),
                 raceRules.getIsMandatoryPitstopTyreChangeRequired(),
                 raceRules.getIsMandatoryPitstopSwapDriverRequired(),
-                raceRules.getTyreSetCount()
+                raceRules.getTyreSetCount(),
+                raceRules.getRace().getId()
         );
     }
 }

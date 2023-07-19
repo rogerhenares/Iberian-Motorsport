@@ -1,6 +1,9 @@
 package com.iberianmotorsports.service.controller.DTO;
 
+import com.iberianmotorsports.service.model.Race;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record ChampionshipDTO(
         Long id,
@@ -24,6 +27,7 @@ public record ChampionshipDTO(
         Integer formationLapType,
         Integer ignorePrematureDisconnects,
         String imageContent,
-        LocalDateTime startDate
+        LocalDateTime startDate,
+        List<RaceDTO> raceList
 ) {
 }
