@@ -7,6 +7,7 @@ import com.iberianmotorsports.service.controller.DTO.Mappers.RaceMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
+import com.iberianmotorsports.service.controller.DTO.SessionDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.model.Session;
@@ -27,13 +28,19 @@ import org.springframework.stereotype.Service;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
 @Transactional
 @Service("RaceService")
 public class RaceServiceImpl implements RaceService {
+
+    private static final Set<String> SESSION_TYPE_MANDATORY = Set.of("P", "Q", "R");
 
     private ChampionshipService championshipService;
 
@@ -63,6 +70,13 @@ public class RaceServiceImpl implements RaceService {
         }
         race.setRaceRules(raceRulesService.saveRaceRules(raceDTO.raceRulesDTO(), savedRace));
         return savedRace;
+    }
+
+    private Boolean validateSessionForRace(List<SessionDTO> sessionDTOList) {
+        Set<String> sessionTypeList = sessionDTOList.stream()
+                .map(SessionDTO::sessionType)
+                .collect(Collectors.toSet());
+        return sessionTypeList.containsAll(SESSION_TYPE_MANDATORY);
     }
 
     @Override

@@ -2,10 +2,11 @@ package com.iberianmotorsports.service.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
-@Table(name = "\"SESSION\"")
+@Table(name = "SESSION")
 public class Session {
 
     @Id
@@ -28,9 +29,9 @@ public class Session {
     @Column(name = "session_duration_minutes")
     private Integer sessionDurationMinutes;
 
-    //TODO
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "race_id", referencedColumnName = "id")
+    @ToString.Exclude
     private Race race;
 
 
