@@ -10,18 +10,18 @@
                         <div class="col-md-4" *ngFor="let championship of championships">
                             <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
                                 <div class="card-header card-header-success">
-                                    <img [src]=championship.imageContent alt="jojojo" style="width: 100%; height: auto;">
+                                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
                                     <div class="ct-chart" id="dailySalesChart"></div>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">{{championship.name}}</h4>
+                                    <h4 class="card-title" style="color: #ff9800">{{championship.name}}</h4>
                                     <p class="card-category">{{championship.description}}</p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
                                         <i class="material-icons">access_time</i>
-                                        <span *ngIf="closestRace">
-                                        {{closestRace.track}} {{transformDate(closestRace.startDate)}}
+                                        <span>
+                                        {{championship.startDate | date: 'MMM d, h a'}}
                                         </span>
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@
                             <button class="btn btn-primary" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
                         </div>
                         <div class="col-md-6 text-right align-self-center">
-                            <button class="btn btn-primary" (click)="createNewChampionship()">Add Championship</button>
+<!--                            <button class="btn btn-primary" (click)="createNewChampionship()">Add Championship</button>-->
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,6 @@
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title">RACES</h4>
-<!--                        <p class="card-category">next race on {{transformDate(selectedChampionship.raceList[0].startDate.toString())}}</p>-->
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-hover">
@@ -63,7 +62,7 @@
                             </tbody>
                         </table>
                         <div class="col-md-6 text-right align-right">
-                            <button class="btn btn-primary" (click)="createNewRace()">Add Race</button>
+<!--                            <button class="btn btn-primary" (click)="createNewRace()">Add Race</button>-->
                         </div>
                     </div>
                 </div>
@@ -105,7 +104,7 @@
                             <div class="tab-pane" id="messages"  *ngIf="selectedRace" style="color: #999999">
                                 <h3 style="color: #ff9800">General Info</h3>
                                 <ul>
-                                    <li>name : {{selectedRace.track}}</li>
+                                    <li>name : {{selectedRace.serverName}}</li>
                                     <li>password : {{selectedChampionship.password}}</li>
                                     <li>spectator password : {{selectedChampionship.spectatorPassword}}</li>
                                     <li>admin password : {{selectedChampionship.adminPassword}} </li>
@@ -114,7 +113,7 @@
                                 <h3 style="color: #ff9800">Session</h3>
                                 <div style="text-align: left; margin-left: 16px">
                                 <div class="row">
-                                    <div class="col-4 h4" style="text-decoration: underline" *ngFor="let session of selectedRace.sessionDTOList">
+                                    <div class="col-4 h4" style="color:#00FFC0" *ngFor="let session of selectedRace.sessionDTOList">
                                         {{getSessionType(session.sessionType)}}
                                     </div>
                                 </div>

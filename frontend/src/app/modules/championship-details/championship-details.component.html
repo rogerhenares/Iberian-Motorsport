@@ -10,15 +10,15 @@
                         <div *ngFor="let race of pagedData()" class="col-md-4">
                             <div class="card card-chart" [class.selected]="selectedRaceId == race.id" (click)="selectRace(race.id)">
                                 <div class="card-header card-header-success">
-                                    <img src="assets/img/suzuka.webp" alt="imagen circuito" style="width: 100%; height: auto;">
+                                    <img [src]="getImage(race.track)" alt="imagen circuito" style="width: 100%; height: auto;">
                                     <div class="ct-chart" id=""></div>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-category">{{race.track}}</p>
+                                    <p class="card-category" style="color: #ff9800">{{race.track}}</p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        <i class="material-icons">access_time</i>{{race.startDate}}
+                                        <i class="material-icons">access_time</i>{{race.startDate| date: 'MMM d, h:mm a'}}
                                     </div>
                                 </div>
                             </div>
@@ -75,15 +75,15 @@
                         <div class="tab-pane" id="messages"  *ngIf="selectedRace" style="color: #999999">
                             <h3 style="color: #ff9800">General Info</h3>
                             <ul>
-                                <li>name : {{selectedRace.track}}</li>
-                                <li>password : {{championship.password}}</li>
-                                <li>spectator password : {{championship.spectatorPassword}}</li>
-                                <li>admin password : {{championship.adminPassword}} </li>
+                                <li>name : <span style="color:#00FFC0">{{selectedRace.serverName}}</span></li>
+                                <li>password : <span style="color:#00FFC0">{{championship.password}}</span></li>
+                                <li>spectator password : <span style="color:#00FFC0">{{championship.spectatorPassword}}</span></li>
+                                <li>admin password : <span style="color:#00FFC0">{{championship.adminPassword}}</span> </li>
                             </ul>
                             <hr>
                             <h3 style="color: #ff9800">Session</h3>
                             <div class="row" style="text-align: left">
-                                <div class="col-4 h4" style="text-decoration: underline" *ngFor="let session of selectedRace.sessionDTOList">
+                                <div class="col-4 h4" style="color:#00FFC0" *ngFor="let session of selectedRace.sessionDTOList">
                                     {{getSessionType(session.sessionType)}}
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                 <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">{{getDayOfWeekend(session.dayOfWeekend)}}</div>
                             </div>
                             <div class="row">
-                                <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">Hour: {{session.hourOfDay}}</div>
+                                <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">Hour: {{session.hourOfDay}}:00</div>
                             </div>
                             <div class="row">
                                 <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">{{session.sessionDurationMinutes}} min</div>
@@ -100,18 +100,27 @@
                             <hr>
                             <h3 style="color: #ff9800">Mandatory Pitstop</h3>
                             <ul>
-                                <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec == 0">Not required</li>
-                                <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec > 0">Required: {{selectedRace.raceRulesDTO.pitWindowLengthSec}} seconds</li>
-                                <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec > 0">Refueling required <input type="checkbox" [checked]="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 0" disabled></li>
-                                <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec > 0">Change tyres <input type="checkbox" [checked]="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 0" disabled></li>
+                                <li *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount == 0">Not required</li>
+                                <span *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount > 0">
+                                    <li>mandatory: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.mandatoryPitstopCount}}</span></li>
+                                    <li>window: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.pitWindowLengthSec/60}} min </span></li>
+                                    <li>Refueling:
+                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 0"> required </span>
+                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 1"> NOT required </span>
+                                    </li>
+                                    <li>Change tyres:
+                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 0"> required </span>
+                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 1"> NOT required </span>
+                                    </li>
+                                </span>
                             </ul>
                             <hr>
                             <h3 style="color: #ff9800">Weather</h3>
                             <ul>
-                                <li>Ambient temperature ({{selectedRace.ambientTemp}})</li>
-                                <li>Cloud level ({{selectedRace.cloudLevel}})</li>
-                                <li>Rain ({{selectedRace.rain}})</li>
-                                <li>Weather randomness ({{selectedRace.weatherRandomness}})</li>
+                                <li>Ambient temperature: <span style="color:#00FFC0">{{selectedRace.ambientTemp}} ºC </span></li>
+                                <li>Cloud level: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.cloudLevel)}} %</span></li>
+                                <li>Rain: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.rain)}} %</span></li>
+                                <li>Weather randomness: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.weatherRandomness)}} % </span></li>
                             </ul>
                         </div>
                         <div class="tab-pane" id="settings" *ngIf="selectedRace">

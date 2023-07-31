@@ -8,11 +8,11 @@
                         <div class="col-md-4" *ngFor="let championship of currentChampionships">
                             <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
                                 <div class="card-header card-header-success">
-                                    <img [src]=championship.imageContent alt="jojojo" style="width: 100%; height: auto;">
+                                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
                                     <div class="ct-chart"></div>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">{{championship.name}}</h4>
+                                    <h4 class="card-title" >{{championship.name}}</h4>
                                     <p class="card-category">{{championship.description}}</p>
                                 </div>
                                 <div class="card-footer">
@@ -42,7 +42,7 @@
                         <div class="col-md-4" *ngFor="let championship of upcomingChampionships">
                             <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
                                 <div class="card-header card-header-success">
-                                    <img [src]=championship.imageContent alt="jojojo" style="width: 100%; height: auto;">
+                                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
                                     <div class="ct-chart"></div>
                                 </div>
                                 <div class="card-body">
@@ -74,7 +74,7 @@
                         <div class="col-md-4" *ngFor="let championship of pastChampionships">
                             <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)" >
                                 <div class="card-header card-header-success">
-                                    <img [src]=championship.imageContent alt="jojojo" style="width: 100%; height: auto;">
+                                    <img [src]="championship.imageContent"  alt="jojojo" style="width: 100%; height: auto;">
                                     <div class="ct-chart"></div>
                                 </div>
                                 <div class="card-body">

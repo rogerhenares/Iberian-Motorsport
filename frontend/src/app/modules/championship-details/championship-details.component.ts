@@ -119,5 +119,14 @@ export class ChampionshipDetailsComponent implements OnInit {
         }
     }
 
+    getImage(trackName: string) {
+        const trimmedTrackName = trackName.trim();
+        const sanitizedTrackName = trimmedTrackName.replace(/\s+/g, "");
+        return "assets/img/" + sanitizedTrackName + ".png";
+    }
+
+    getWeatherPercentage(number){
+        return number * 100;
+    }
 
 }
