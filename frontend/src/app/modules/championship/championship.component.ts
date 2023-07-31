@@ -23,6 +23,8 @@ export class ChampionshipComponent implements OnInit {
     pageable: Pageable = new Pageable(0,3);
     selectedChampionshipId: number | null = null;
     selectedChampionship: Championship;
+    selectedRaceId: number | null = null;
+    selectedRace: Race;
     upcomingRaces: Race[];
     closestRace: Race;
 
@@ -61,14 +63,52 @@ export class ChampionshipComponent implements OnInit {
         this.championshipService.getChampionshipById(this.selectedChampionshipId).subscribe(championship => {
             this.selectedChampionship = championship as Championship;
 
-            this.selectedChampionship.raceList = this.getUpcomingRaces(this.selectedChampionship)
-                .sort((a, b) => new Date(a.startDate.toString()).valueOf() - new Date(b.startDate.toString()).valueOf());
+            // this.selectedChampionship.raceList = this.getUpcomingRaces(this.selectedChampionship)
+            //     .sort((a, b) => new Date(a.startDate.toString()).valueOf() - new Date(b.startDate.toString()).valueOf());
 
-
-            console.log(this.selectedChampionship);
+            if (this.selectedChampionship.raceList?.length > 0) {
+                this.selectRace(this.selectedChampionship.raceList[0].id);
+            }
         });
+
     }
 
+    selectRace(raceId) {
+        this.selectedRaceId = raceId;
+        this.selectedRace = this.selectedChampionship.raceList.find(race => race.id === raceId);
+        console.log(this.selectedRaceId)
+    }
+
+    getSessionType(type: string) {
+        switch(type) {
+            case 'Q':
+                return 'Qualy';
+            case 'P':
+                return 'Practice';
+            case 'R':
+                return 'Race';
+            default:
+                return 'Unknown'; // This will be returned if the session type is not Q, P, or R
+        }
+    }
+
+    getDayOfWeekend(type: number){
+        switch (type) {
+            case 1:
+                return "Friday";
+            case 2:
+                return "Saturday";
+            case 3:
+                return "Sunday";
+        }
+    }
+
+    getMandatoryPitstop(type: number) {
+        switch(type) {
+            case 0:
+                return "Not required";
+        }
+    }
 
 
     goToPreviousPage() {
@@ -95,15 +135,18 @@ export class ChampionshipComponent implements OnInit {
     }
 
     transformDate(date: string): string {
-        return this.datePipe.transform(new Date(date), 'short', this.timezoneService.userTimezone);
+        let shortDate = this.datePipe.transform(new Date(date), 'M/d/yyyy', this.timezoneService.userTimezone);
+
+        return shortDate;
     }
+
 
     formatDate(date: string): string {
         return this.transformDate(date);
     }
 
     getHour(date: string): string {
-        return this.datePipe.transform(this.transformDate(date), 'HH');
+        return this.datePipe.transform(new Date(date), "HH:mm");
     }
 
     getUpcomingRaces(championship: any): any[] {

@@ -32,6 +32,7 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                 race.getPostQualySeconds(),
                 race.getPostRaceSeconds(),
                 race.getServerName(),
+                race.getStartDate(),
                 raceRulesDTOMapper.apply(race.getRaceRules()),
                 race.getSessionList() != null ? race.getSessionList().stream().map(sessionDTOMapper).toList() : null
         );

@@ -99,8 +99,21 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
-    public Race updateRace(Race race) {
-        return raceRepository.save(race);
+    public Race updateRace(RaceDTO raceDTO) {
+        Race race = raceMapper.apply(raceDTO);
+        Race raceToUpdate = findRaceById(race.getId());
+        raceToUpdate.setTrack(race.getTrack());
+        raceToUpdate.setPreRaceWaitingTimeSeconds(race.getPreRaceWaitingTimeSeconds());
+        raceToUpdate.setSessionOverTimeSeconds(race.getSessionOverTimeSeconds());
+        raceToUpdate.setAmbientTemp(race.getAmbientTemp());
+        raceToUpdate.setCloudLevel(race.getCloudLevel());
+        raceToUpdate.setRain(race.getRain());
+        raceToUpdate.setWeatherRandomness(race.getWeatherRandomness());
+        raceToUpdate.setPostQualySeconds(race.getPostQualySeconds());
+        raceToUpdate.setPostRaceSeconds(race.getPostRaceSeconds());
+        raceToUpdate.setServerName(race.getServerName());
+        raceToUpdate.setStartDate(race.getStartDate());
+        return raceRepository.save(raceToUpdate);
     }
 
     @Override

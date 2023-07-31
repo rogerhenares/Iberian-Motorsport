@@ -1,5 +1,8 @@
+import {RaceRules} from "./RaceRules";
+import {Session} from "./Session";
+
 export class Race {
-    id: Number;
+    id: number;
     track: String;
     preRaceWaitingTimeSeconds: Number;
     sessionOverTimeSeconds: Number;
@@ -12,6 +15,8 @@ export class Race {
     serverName: String;
     sessionCount: Number;
     startDate: String;
+    raceRulesDTO: RaceRules;
+    sessionDTOList: Array<Session>;
 
     constructor() {
         this.id= null;
@@ -27,5 +32,7 @@ export class Race {
         this.serverName= '';
         this.sessionCount= null;
         this.startDate = null;
+        this.raceRulesDTO = null;
+        this.sessionDTOList = null;
     }
 }

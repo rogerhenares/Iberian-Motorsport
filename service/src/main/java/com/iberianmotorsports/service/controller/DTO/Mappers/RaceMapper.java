@@ -37,6 +37,7 @@ public class RaceMapper implements Function<RaceDTO, Race> {
         race.setPostQualySeconds(raceDTO.postQualySeconds());
         race.setPostRaceSeconds(raceDTO.postRaceSeconds());
         race.setServerName(raceDTO.serverName());
+        race.setStartDate(raceDTO.startDate());
         race.setRaceRules(raceRulesMapper.apply(raceDTO.raceRulesDTO()));
         if(raceDTO.sessionDTOList() != null) race.setSessionList(raceDTO.sessionDTOList().stream().map(sessionMapper).toList());
         return race;

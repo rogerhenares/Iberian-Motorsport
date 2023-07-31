@@ -20,7 +20,7 @@ import {ChampionshipDetailsComponent} from "../../championship-details/champions
 
 export const AdminLayoutRoutes: Routes = [
 
-    { path: 'dashboard',      component: DashboardComponent },
+    { path: 'dashboard-feo',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
@@ -29,9 +29,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'login',          component: LoginComponent },
-    { path: 'championship',   component: ChampionshipComponent },
+    { path: 'dashboard',   component: ChampionshipComponent },
     { path: 'championship/new', component: ChampionshipFormComponent },
-    { path: 'championship-list', component: ChampionshipListComponent},
+    { path: 'championship', component: ChampionshipListComponent},
     { path: 'championship/:championshipId', component: ChampionshipDetailsComponent},
     { path: 'race-rules/form', component: RaceRulesFormComponent },
     { path: 'session/form',    component: SessionFormComponent },

@@ -19,7 +19,7 @@ public interface RaceService {
 
     Page<Race> findAllRaces(Pageable pageRequest);
 
-    Race updateRace(Race Race);
+    Race updateRace(RaceDTO RaceDTO);
 
     void deleteRace(Long id);
 

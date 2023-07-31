@@ -58,9 +58,7 @@ public class RaceController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateRace(@PathVariable("id") Long id, @RequestBody RaceDTO raceDTO) throws ServiceException{
-        Race race = raceMapper.apply(raceDTO);
-        race.setId(id);
-        Race updatedRace = raceService.updateRace(race);
+        Race updatedRace = raceService.updateRace(raceDTO);
         RaceDTO updatedRaceDTO = raceDTOMapper.apply(updatedRace);
         return new ResponseEntity<Object>(updatedRaceDTO, HttpStatus.OK);
     }

@@ -6,6 +6,7 @@ import com.iberianmotorsports.RaceRulesFactory;
 import com.iberianmotorsports.SessionFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.*;
+import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
@@ -69,7 +70,7 @@ public class RaceServiceTest {
         raceRulesMapper = new RaceRulesMapper();
         raceRulesDTOMapper = new RaceRulesDTOMapper();
         championshipMapper = new ChampionshipMapper();
-        raceMapper = new RaceMapper(raceRulesMapper, sessionMapper, championshipRepository);
+        raceMapper = new RaceMapper(raceRulesMapper, sessionMapper);
         raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper);
         championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
         raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService);
@@ -117,9 +118,10 @@ public class RaceServiceTest {
         @Test
         public void updateRace() {
             Race testRace = RaceFactory.race();
+            RaceDTO testRaceDTO = raceDTOMapper.apply(testRace);
             givenRaceRepositorySave();
 
-            raceService.updateRace(testRace);
+            raceService.updateRace(testRaceDTO);
 
             verify(raceRepository).save(raceCaptor.capture());
             assertEquals(RaceFactory.race(), raceCaptor.getValue());

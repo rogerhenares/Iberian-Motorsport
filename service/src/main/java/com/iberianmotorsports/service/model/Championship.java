@@ -1,7 +1,9 @@
 package com.iberianmotorsports.service.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
@@ -94,7 +96,9 @@ public class Championship implements Serializable {
     @Column(name = "image_content")
     private String imageContent;
 
+    @NotEmpty
     @Column(name = "start_date")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
 
     @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)

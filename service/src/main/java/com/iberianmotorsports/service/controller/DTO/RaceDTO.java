@@ -1,5 +1,8 @@
 package com.iberianmotorsports.service.controller.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record RaceDTO (
@@ -15,6 +18,8 @@ public record RaceDTO (
         Integer postQualySeconds,
         Integer postRaceSeconds,
         String serverName,
+        @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+        LocalDateTime startDate,
         RaceRulesDTO raceRulesDTO,
         List<SessionDTO> sessionDTOList
 ) {

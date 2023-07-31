@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -68,12 +69,11 @@ public class Race {
     @Column(name = "server_name")
     private String serverName;
 
-    @OneToOne(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @NotEmpty
     @Column(name = "start_date")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
 
-    @OneToOne(mappedBy = "race")
+    @OneToOne(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private RaceRules raceRules;
 
     @OneToMany(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
