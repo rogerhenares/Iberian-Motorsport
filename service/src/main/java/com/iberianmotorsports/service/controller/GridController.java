@@ -26,9 +26,6 @@ public class GridController {
     @Autowired
     private GridDTOMapper gridDTOMapper;
 
-    @Autowired
-    private GridMapper gridMapper;
-
 
     @GetMapping(value=("/{id}"))
     public ResponseEntity<?> getGridForChampionship(@PathVariable("id") Long championshipId) throws ServiceException {
@@ -39,7 +36,8 @@ public class GridController {
 
     @PostMapping
     public ResponseEntity<?> createNewGrid(@RequestBody GridDTO gridDTO) {
-        GridDTO createdGridDTO = gridService.createGridEntry(gridDTO);
+        Grid gridCreated = gridService.createGridEntry(gridDTO);
+        GridDTO createdGridDTO = gridDTOMapper.apply(gridCreated);
         return new ResponseEntity<Object>(createdGridDTO, HttpStatus.CREATED);
     }
 

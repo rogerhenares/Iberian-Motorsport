@@ -11,9 +11,11 @@ public interface GridService {
 
     List<Grid> getGridForChampionship(Long championshipId);
 
-    GridDTO createGridEntry(GridDTO gridDTO);
+    Grid createGridEntry(GridDTO gridDTO);
 
-    Grid updateGridEntry(Grid gridUpdate);
+    Grid updateGridCar(Long gridId , Long carId);
+
+    Grid updateGridCarNumber(Long gridId, Integer carNumber);
 
     void addDriver(Long gridId, Long steamId);
 

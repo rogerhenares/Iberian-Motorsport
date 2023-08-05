@@ -31,6 +31,8 @@ public enum ErrorMessages {
     GRID_USER_NOT_FOUND(27, "grid user not found"),
     USER_PROFILE_IS_NOT_COMPLETED(28, "user profile must be completed"),
     RACE_SESSION_TYPE_MISSING(29, "Each race must have all session type defined (P, Q, R)"),
+    SANCTION_NOT_FOUND(30, "Sanction with id not found"),
+    GRID_RACE_NOT_FOUND(31, "Grid for Race not found"),
 
     DEFAULT(999, "");
 

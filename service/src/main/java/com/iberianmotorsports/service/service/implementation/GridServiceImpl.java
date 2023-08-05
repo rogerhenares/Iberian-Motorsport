@@ -8,6 +8,7 @@ import com.iberianmotorsports.service.model.*;
 import com.iberianmotorsports.service.model.composeKey.GridUserPrimaryKey;
 import com.iberianmotorsports.service.repository.GridRepository;
 import com.iberianmotorsports.service.repository.GridUserRepository;
+import com.iberianmotorsports.service.repository.SanctionRepository;
 import com.iberianmotorsports.service.service.CarService;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.GridService;
@@ -37,6 +38,7 @@ public class GridServiceImpl  implements GridService {
     GridUserRepository gridUserRepository;
     GridMapper gridMapper;
     GridDTOMapper gridDTOMapper;
+    private final SanctionRepository sanctionRepository;
 
     @Override
     public List<Grid> getGridForChampionship(Long championshipId) {
@@ -47,35 +49,22 @@ public class GridServiceImpl  implements GridService {
     }
 
     @Override
-    public GridDTO createGridEntry(@Valid GridDTO gridDTO) {
+    public Grid createGridEntry(@Valid GridDTO gridDTO) {
         Grid grid = gridMapper.apply(gridDTO);
-        driverValidForChampionship(grid.getDrivers().get(0).getSteamId(), grid.getChampionship().getId());
-        validateCarNumberForChampionship(grid.getChampionship().getId(), grid.getCarNumber());
-        if(isChampionshipGridFull(grid.getChampionship().getId())){
-            throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
-        }
-        if(carService.isCarCategory(grid.getCar().getId(), grid.getChampionship().getCarGroup())){
-            throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
-        }
-        User driverManager = userService.findUserBySteamId(grid.getDrivers().get(0).getSteamId());
+
+        validateGridForChampionship(grid);
+        loadDriversForGrid(grid);
         grid.setChampionship(championshipService.findChampionshipById(grid.getChampionship().getId()));
-        grid.setDrivers(List.of(driverManager));
         grid.setCar(carService.getCarById(grid.getCar().getId()));
         Grid createdGrid = gridRepository.save(grid);
-        setGridManager(driverManager.getSteamId(), createdGrid.getId());
-        return gridDTOMapper.apply(grid);
-    }
-
-    //TODO to be implemented
-    @Override
-    public Grid updateGridEntry(Grid gridUpdate) {
-        return null;
+        //TODO validate
+        setGridManager(grid.getDrivers().get(0).getSteamId(), createdGrid.getId());
+        return grid;
     }
 
     @Override
     public void addDriver(Long gridId, Long steamId) {
-        GridDTO gridDTO = getGrid(gridId);
-        Grid grid = gridMapper.apply(gridDTO);
+        Grid grid = getGrid(gridId);
         driverValidForChampionship(steamId, grid.getChampionship().getId());
         isDriverOrGridManager(steamId, grid);
         User driverToAdd = userService.findUserBySteamId(steamId);
@@ -85,12 +74,29 @@ public class GridServiceImpl  implements GridService {
 
     @Override
     public void removeDriver(Long gridId, Long steamId) {
-        GridDTO gridDTO = getGrid(gridId);
-        Grid grid = gridMapper.apply(gridDTO);
+        Grid grid = getGrid(gridId);
         isDriverOrGridManager(steamId, grid);
         User driverToRemove = userService.findUserBySteamId(steamId);
         grid.getDrivers().remove(driverToRemove);
         gridRepository.save(grid);
+    }
+
+    @Override
+    public Grid updateGridCar(Long gridId, Long carId) {
+        Grid grid = getGrid(gridId);
+        Car carToUpdate = carService.getCarById(carId);
+        validateCarForGrid(grid);
+        grid.setCar(carToUpdate);
+        gridRepository.save(grid);
+        return grid;
+    }
+
+    @Override
+    public Grid updateGridCarNumber(Long gridId, Integer carNumber) {
+        Grid grid = getGrid(gridId);
+        validateCarNumberForChampionship(grid.getChampionship().getId(), carNumber);
+        grid.setCarNumber(carNumber);
+        return grid;
     }
 
     private void validateCarNumberForChampionship(Long championshipId, Integer carNumber){
@@ -100,10 +106,9 @@ public class GridServiceImpl  implements GridService {
         }
     }
 
-    private GridDTO getGrid(Long gridId) {
-        Grid grid = gridRepository.findById(gridId).orElseThrow(() ->
+    private Grid getGrid(Long gridId) {
+        return gridRepository.findById(gridId).orElseThrow(() ->
                 new ServiceException(ErrorMessages.GRID_ID_NOT_FOUND.getDescription()));
-        return gridDTOMapper.apply(grid);
     }
 
     private void isDriverOrGridManager(Long driverSteamId, Grid grid){
@@ -154,5 +159,29 @@ public class GridServiceImpl  implements GridService {
                 new ServiceException(ErrorMessages.GRID_USER_NOT_FOUND.getDescription()));
         gridManager.setGridManager(Boolean.TRUE);
         gridUserRepository.save(gridManager);
+    }
+
+    private void validateGridForChampionship(Grid grid) {
+        for (User driver: grid.getDrivers()) {
+            driverValidForChampionship(driver.getSteamId(), grid.getChampionship().getId());
+        }
+        validateCarNumberForChampionship(grid.getChampionship().getId(), grid.getCarNumber());
+        validateCarForGrid(grid);
+        if(isChampionshipGridFull(grid.getChampionship().getId())){
+            throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
+        }
+    }
+
+    private void validateCarForGrid(Grid grid){
+        if(carService.isCarCategory(grid.getCar().getId(), grid.getChampionship().getCarGroup())){
+            throw new ServiceException(ErrorMessages.GRID_CAR_IS_NOT_ALLOWED_FOR_THIS_CHAMPIONSHIP.getDescription());
+        }
+        //TODO validate if car is available for charity
+    }
+
+    private void loadDriversForGrid(Grid grid) {
+        grid.setDrivers(grid.getDrivers().stream()
+                .map(driver -> userService.findUserBySteamId(driver.getSteamId()))
+                .toList());
     }
 }

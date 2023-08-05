@@ -2,6 +2,8 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.CarDTO;
 import com.iberianmotorsports.service.controller.DTO.GridDTO;
+import com.iberianmotorsports.service.model.Car;
+import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.User;
 import com.iberianmotorsports.service.repository.CarRepository;

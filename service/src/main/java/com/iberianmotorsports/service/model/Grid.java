@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
@@ -41,4 +42,12 @@ public class Grid implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<User> drivers;
+
+    @OneToMany(mappedBy = "grid", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @ToString.Exclude
+    private List<GridRace> gridRaceList;
+
+    @Transient
+    private Double points;
+
 }

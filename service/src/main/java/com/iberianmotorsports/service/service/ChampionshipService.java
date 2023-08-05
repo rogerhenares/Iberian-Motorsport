@@ -27,4 +27,5 @@ public interface ChampionshipService {
 
     String exportChampionship(Championship championship) throws IOException;
 
+    //TODO implements points/position/results calculation
 }

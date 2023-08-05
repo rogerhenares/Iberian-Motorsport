@@ -25,6 +25,8 @@ import java.util.Optional;
 @Service("ChampionshipService")
 public class ChampionshipServiceImpl implements ChampionshipService {
 
+    //TODO create a list of available cars for championship
+
     @Autowired
     private ChampionshipRepository championshipRepository;
 
