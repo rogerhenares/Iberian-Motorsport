@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface GridRaceRepository extends JpaRepository<GridRace, GridRacePrimaryKey> {
 
-    List<GridRace> findGridRacesByRace(Race race);
+    List<GridRace> findGridRacesByGridRacePrimaryKey_Race(Race race);
 
-    List<GridRace> findGridRacesByRace_Championship(Championship championship);
+    List<GridRace> findGridRacesByGridRacePrimaryKey_Race_Championship(Championship championship);
 
 }

@@ -9,6 +9,8 @@ import java.util.List;
 @Service
 public interface GridService {
 
+    Grid getGridById(Long gridId);
+
     List<Grid> getGridForChampionship(Long championshipId);
 
     Grid createGridEntry(GridDTO gridDTO);

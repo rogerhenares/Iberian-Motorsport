@@ -39,12 +39,4 @@ public class GridRace implements Serializable {
     @OneToMany(mappedBy = "gridRace", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<Sanction> sanctionList;
-
-    @ManyToOne
-    @JoinColumn(name = "race_id", referencedColumnName = "id")
-    private Race race;
-
-    @ManyToOne
-    @JoinColumn(name = "grid_id", referencedColumnName = "id")
-    private Grid grid;
 }

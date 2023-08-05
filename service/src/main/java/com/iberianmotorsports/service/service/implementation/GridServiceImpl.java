@@ -38,7 +38,13 @@ public class GridServiceImpl  implements GridService {
     GridUserRepository gridUserRepository;
     GridMapper gridMapper;
     GridDTOMapper gridDTOMapper;
-    private final SanctionRepository sanctionRepository;
+    SanctionRepository sanctionRepository;
+
+    @Override
+    public Grid getGridById(Long gridId) {
+        return gridRepository.findById(gridId)
+                .orElseThrow(() -> new ServiceException(ErrorMessages.GRID_ID_NOT_FOUND.getDescription()));
+    }
 
     @Override
     public List<Grid> getGridForChampionship(Long championshipId) {

@@ -43,7 +43,7 @@ public class Grid implements Serializable {
     )
     private List<User> drivers;
 
-    @OneToMany(mappedBy = "grid", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "gridRacePrimaryKey.grid", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<GridRace> gridRaceList;
 

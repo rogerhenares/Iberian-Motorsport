@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.service.implementation;
 
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.composeKey.GridRacePrimaryKey;
@@ -30,7 +31,9 @@ public class GridRaceServiceImpl implements GridRaceService {
 
     @Override
     public GridRace getGridRace(Long gridId, Long raceId) throws ServiceException {
-        GridRacePrimaryKey id = new GridRacePrimaryKey(gridId, raceId);
+        Race race = raceService.findRaceById(raceId);
+        Grid grid = gridService.getGridById(gridId);
+        GridRacePrimaryKey id = new GridRacePrimaryKey(grid, race);
         return gridRaceRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorMessages.GRID_RACE_NOT_FOUND.getDescription()));
     }
@@ -38,7 +41,7 @@ public class GridRaceServiceImpl implements GridRaceService {
     @Override
     public List<GridRace> getGridRaceForRace(Long raceId) {
         Race race = raceService.findRaceById(raceId);
-        return gridRaceRepository.findGridRacesByRace(race);
+        return gridRaceRepository.findGridRacesByGridRacePrimaryKey_Race(race);
     }
 
     @Override
