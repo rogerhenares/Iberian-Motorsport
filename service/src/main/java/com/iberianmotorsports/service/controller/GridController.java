@@ -30,7 +30,7 @@ public class GridController {
     private GridMapper gridMapper;
 
 
-    @GetMapping(value=("{id}"))
+    @GetMapping(value=("/{id}"))
     public ResponseEntity<?> getGridForChampionship(@PathVariable("id") Long championshipId) throws ServiceException {
         List<Grid> gridList = gridService.getGridForChampionship(championshipId);
         List<GridDTO> gridDTOList = gridList.stream().map(gridDTOMapper).toList();
@@ -43,7 +43,19 @@ public class GridController {
         return new ResponseEntity<Object>(createdGridDTO, HttpStatus.CREATED);
     }
 
-    // TODO should we validate the Car number when we add the Driver to the grid or after?
+    @PutMapping(value= "/{id}/carNumber/{carNumber}")
+    public ResponseEntity<?> updateGridEntry(@PathVariable("id") Long id, @PathVariable("carNumber") Integer carNumber) throws ServiceException {
+        Grid updatedGrid = gridService.updateGridCarNumber(id, carNumber);
+        GridDTO updatedGridDTO = gridDTOMapper.apply(updatedGrid);
+        return new ResponseEntity<Object>(updatedGridDTO, HttpStatus.OK);
+    }
+
+    @PutMapping(value= "/{id}/car/{carId}")
+    public ResponseEntity<?> updateGridEntry(@PathVariable("id") Long id, @PathVariable("carId") Long carId) throws ServiceException {
+        Grid updatedGrid = gridService.updateGridCar(id, carId);
+        GridDTO updatedGridDTO = gridDTOMapper.apply(updatedGrid);
+        return new ResponseEntity<Object>(updatedGridDTO, HttpStatus.OK);
+    }
 
     @PutMapping("/add/{id}")
     public ResponseEntity<?> addDriver(@PathVariable("id") Long gridId, Long steamId) {

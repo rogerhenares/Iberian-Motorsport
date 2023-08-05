@@ -8,8 +8,9 @@ public record GridDTO(
         Long id,
         Integer carNumber,
         String carLicense,
-        CarDTO carDTO,
-        ChampionshipDTO championshipDTO,
-        List<UserDTO> driversList
+        Long carId,
+        Long championshipId,
+        List<Long> driversList
+
 ) {
 }

@@ -32,6 +32,8 @@ import {NewRace} from "../../new-race/new-race";
 import {ChampionshipListComponent} from "../../championship-list/championship-list.component";
 import {ChampionshipDetailsComponent} from "../../championship-details/championship-details.component";
 import {CollapsibleSectionComponent} from "../../collapsible-section/collapsible-section.component";
+import {RaceInfoComponent} from "../../race-info/race-info.component";
+import {StandingsComponent} from "../../standings/standings.component";
 
 
 @NgModule({
@@ -71,7 +73,9 @@ import {CollapsibleSectionComponent} from "../../collapsible-section/collapsible
     NewRace,
     ChampionshipListComponent,
     ChampionshipDetailsComponent,
-    CollapsibleSectionComponent
+    CollapsibleSectionComponent,
+    RaceInfoComponent,
+    StandingsComponent
   ]
 })
 

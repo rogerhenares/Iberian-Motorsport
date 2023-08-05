@@ -34,12 +34,12 @@ export class UserService {
             );
     }
 
-    getUserByUserId(userId: Number, errorNotify?: any) {
-        const url = this.url + userId;
+    getUserBySteamId(steamId: Number, errorNotify?: any) {
+        const url = this.url + steamId;
         return this.httpClient.get<User>(url)
             .pipe(
                 tap(user => console.log('fetched user by userId')),
-                catchError(handleError('UserService -> getUserByUserId', null, errorNotify))
+                catchError(handleError('UserService -> getUserBySteamId', null, errorNotify))
             );
     }
 

@@ -98,54 +98,13 @@
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
-                            <div class="tab-pane active" id="standings" *ngIf="selectedChampionship">
-                               <app-table-list></app-table-list>
+                            <div class="tab-pane active" id="standings" *ngIf="selectedRace">
+                               <app-standings [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-standings>
                             </div>
                             <div class="tab-pane" id="messages"  *ngIf="selectedRace" style="color: #999999">
-                                <h3 style="color: #ff9800">General Info</h3>
-                                <ul>
-                                    <li>name : {{selectedRace.serverName}}</li>
-                                    <li>password : {{selectedChampionship.password}}</li>
-                                    <li>spectator password : {{selectedChampionship.spectatorPassword}}</li>
-                                    <li>admin password : {{selectedChampionship.adminPassword}} </li>
-                                </ul>
-                                <hr>
-                                <h3 style="color: #ff9800">Session</h3>
-                                <div style="text-align: left; margin-left: 16px">
-                                <div class="row">
-                                    <div class="col-4 h4" style="color:#00FFC0" *ngFor="let session of selectedRace.sessionDTOList">
-                                        {{getSessionType(session.sessionType)}}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">{{getDayOfWeekend(session.dayOfWeekend)}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">Hour: {{session.hourOfDay}}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">{{session.sessionDurationMinutes}} min</div>
-
-                                </div>
-                                </div>
-                                <hr>
-                                <h3 style="color: #ff9800">Mandatory Pitstop</h3>
-                                <ul>
-                                    <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec == 0">{{getMandatoryPitstop(selectedRace.raceRulesDTO.pitWindowLengthSec)}}</li>
-                                    <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec > 0">Required: {{selectedRace.raceRulesDTO.pitWindowLengthSec}} seconds</li>
-                                    <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec > 0">Refueling required <input type="checkbox" [checked]="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 0" disabled></li>
-                                    <li *ngIf="selectedRace.raceRulesDTO.pitWindowLengthSec > 0">Change tyres <input type="checkbox" [checked]="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 0" disabled></li>
-                                </ul>
-                                <hr>
-                                <h3 style="color: #ff9800">Weather</h3>
-                                <ul>
-                                    <li>Ambient temperature ({{selectedRace.ambientTemp}})</li>
-                                    <li>Cloud level ({{selectedRace.cloudLevel}})</li>
-                                    <li>Rain ({{selectedRace.rain}})</li>
-                                    <li>Weather randomness ({{selectedRace.weatherRandomness}})</li>
-                                </ul>
+                                <app-race-info [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-race-info>
                             </div>
-                            <div class="tab-pane" id="settings" *ngIf="selectedRace">
+                                <div class="tab-pane" id="settings" *ngIf="selectedRace">
                                 <table class="table" style="text-align: center">
                                     <thead class=" text-primary">
                                         <th>POS</th>

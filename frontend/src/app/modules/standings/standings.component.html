@@ -1,0 +1,15 @@
+<div class="table-responsive" style="text-align: center">
+    <table class="table">
+        <thead class=" text-primary">
+        <th>POS</th>
+        <th>NAME</th>
+        <th>CAR</th>
+        <th>POINTS</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of userList">
+            <td style="text-align: left">{{user.firstName}} {{user.lastName}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

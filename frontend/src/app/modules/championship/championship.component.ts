@@ -79,36 +79,6 @@ export class ChampionshipComponent implements OnInit {
         console.log(this.selectedRaceId)
     }
 
-    getSessionType(type: string) {
-        switch(type) {
-            case 'Q':
-                return 'Qualy';
-            case 'P':
-                return 'Practice';
-            case 'R':
-                return 'Race';
-            default:
-                return 'Unknown'; // This will be returned if the session type is not Q, P, or R
-        }
-    }
-
-    getDayOfWeekend(type: number){
-        switch (type) {
-            case 1:
-                return "Friday";
-            case 2:
-                return "Saturday";
-            case 3:
-                return "Sunday";
-        }
-    }
-
-    getMandatoryPitstop(type: number) {
-        switch(type) {
-            case 0:
-                return "Not required";
-        }
-    }
 
 
     goToPreviousPage() {

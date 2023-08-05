@@ -40,7 +40,10 @@ public class GridServiceImpl  implements GridService {
 
     @Override
     public List<Grid> getGridForChampionship(Long championshipId) {
-        return gridRepository.findGridsByChampionshipId(championshipId);
+        List<Grid> grids = gridRepository.findGridsByChampionshipId(championshipId);
+        grids.stream()
+                .peek(grid -> grid.setPoints(grid.getGridRaceList().stream().mapToDouble(GridRace::getPoints).sum()));
+        return grids;
     }
 
     @Override
@@ -146,7 +149,7 @@ public class GridServiceImpl  implements GridService {
     }
 
     private void setGridManager(Long steamId, Long gridId){
-        GridUserPrimaryKey gridUserPrimaryKey = new GridUserPrimaryKey(steamId, gridId.intValue());
+        GridUserPrimaryKey gridUserPrimaryKey = new GridUserPrimaryKey(steamId, gridId.longValue());
         GridUser gridManager = gridUserRepository.findById(gridUserPrimaryKey).orElseThrow(() ->
                 new ServiceException(ErrorMessages.GRID_USER_NOT_FOUND.getDescription()));
         gridManager.setGridManager(Boolean.TRUE);

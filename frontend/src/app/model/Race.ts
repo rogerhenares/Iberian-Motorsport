@@ -1,5 +1,6 @@
 import {RaceRules} from "./RaceRules";
 import {Session} from "./Session";
+import {Grid} from "./Grid";
 
 export class Race {
     id: number;
@@ -17,6 +18,7 @@ export class Race {
     startDate: String;
     raceRulesDTO: RaceRules;
     sessionDTOList: Array<Session>;
+    grid: Grid;
 
     constructor() {
         this.id= null;
@@ -34,5 +36,6 @@ export class Race {
         this.startDate = null;
         this.raceRulesDTO = null;
         this.sessionDTOList = null;
+        this.grid = null;
     }
 }

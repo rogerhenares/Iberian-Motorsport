@@ -17,10 +17,11 @@ import {LoginComponent} from "../../login/login.component";
 import {NewRace} from "../../new-race/new-race";
 import {ChampionshipListComponent} from "../../championship-list/championship-list.component";
 import {ChampionshipDetailsComponent} from "../../championship-details/championship-details.component";
+import {RaceInfoComponent} from "../../race-info/race-info.component";
 
 export const AdminLayoutRoutes: Routes = [
 
-    { path: 'dashboard-feo',      component: DashboardComponent },
+    { path: 'dashboard-feo',  component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
@@ -29,9 +30,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'login',          component: LoginComponent },
-    { path: 'dashboard',   component: ChampionshipComponent },
+    { path: 'dashboard',      component: ChampionshipComponent },
     { path: 'championship/new', component: ChampionshipFormComponent },
-    { path: 'championship', component: ChampionshipListComponent},
+    { path: 'championship',    component: ChampionshipListComponent},
     { path: 'championship/:championshipId', component: ChampionshipDetailsComponent},
     { path: 'race-rules/form', component: RaceRulesFormComponent },
     { path: 'session/form',    component: SessionFormComponent },

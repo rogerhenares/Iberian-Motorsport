@@ -22,6 +22,7 @@ import {AuthenticationInterceptor} from "../../authentication/authentication.int
 import {NewRace} from "../new-race/new-race";
 import {DatePipe} from "@angular/common";
 import {TimezoneService} from "../../service/timezone.service";
+import {GridService} from "../../service/grid.service";
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import {TimezoneService} from "../../service/timezone.service";
     SessionService,
     RaceService,
     DatePipe,
-    TimezoneService
+    TimezoneService,
+    GridService
   ],
   bootstrap: [AppComponent]
 })

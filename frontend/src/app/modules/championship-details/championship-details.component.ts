@@ -125,8 +125,5 @@ export class ChampionshipDetailsComponent implements OnInit {
         return "assets/img/" + sanitizedTrackName + ".png";
     }
 
-    getWeatherPercentage(number){
-        return number * 100;
-    }
 
 }
