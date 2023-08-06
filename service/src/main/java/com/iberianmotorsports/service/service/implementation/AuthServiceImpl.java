@@ -9,6 +9,8 @@ import com.iberianmotorsports.service.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,11 +41,12 @@ public class AuthServiceImpl implements AuthService {
                 .decode(steamResponseParametersEncoded), StandardCharsets.UTF_8);
         authDecoded = authDecoded.replace(OPENID_MODE_ID_RES, OPENID_MODE_CHECK_AUTHENTICATION);
         String validateTokenURL = STEAM_LOGIN_URL + authDecoded;
-        String validationResponse = restTemplate.getForObject(validateTokenURL, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(validateTokenURL, HttpMethod.GET, null, String.class);
+        String responseBody = response.getBody();
 
         String token = "invalid";
-        assert validationResponse != null;
-        if (validationResponse.contains(IS_VALID)) {
+        assert responseBody != null;
+        if (responseBody.contains(IS_VALID)) {
             Long steamId = extractSteamID(authDecoded);
             Pattern regex = Pattern.compile(OPENID_RESPONSE_NONCE_PATTERN);
             Matcher matcher = regex.matcher(authDecoded);

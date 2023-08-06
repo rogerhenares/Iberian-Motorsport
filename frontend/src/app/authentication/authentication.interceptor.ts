@@ -17,7 +17,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
             req = req.clone({
                 setHeaders: {
                     Authorization: this.appContext.authenticationInfo.authorizationToken
-                    //Authorization: "NzY1NjExOTc5OTQ3NjEwODUyMDIzLTA2LTEwVDE1OjIxOjUxWllLRExSUEZQamJzL2IzU0llU1pvUkxrQUxLRT0="
                 }
             });
         }
