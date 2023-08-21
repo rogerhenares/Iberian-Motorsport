@@ -7,6 +7,7 @@ import { handleError } from '../util/Error.handler';
 import { environment } from '../../environments/environment';
 import { Page } from '../model/Page';
 import {Pageable} from "../model/Pageable";
+import {CriteriaChampionship} from "../model/CriteriaChampionship";
 
 @Injectable()
 export class ChampionshipService {
@@ -59,6 +60,27 @@ export class ChampionshipService {
                 tap(response => console.log('fetched Championship page')),
                 catchError(handleError('ChampionshipService -> findAllChampionships', null, errorNotify))
             );
+    }
+
+    getChampionshipByCriteria(criteria: CriteriaChampionship, pageable: Pageable, errorNotify?: any) {
+        let url = this.url + "/filtered" + "?" + "finished=" + criteria.finished + "&started="
+            + criteria.started + "&logged=" + criteria.logged + "&page=" + pageable.page + "&size=" + pageable.size;
+        return this.httpClient.get<Page>(url)
+            .pipe(
+                tap(response => console.log('fetched Championship page per criteria')),
+                catchError(handleError('ChampionshipService -> findChampionshipByCriteria', null, errorNotify))
+            )
+    }
+
+    getChampionshipByCriteriaAdmin(criteria: CriteriaChampionship, pageable: Pageable, errorNotify?: any) {
+        let url = this.url + "/admin/filtered" + "?"
+            + "disabled=" + criteria.disabled + "&finished=" + criteria.finished + "&started="
+            + criteria.started + "&logged=" + criteria.logged + "&page=" + pageable.page + "&size=" + pageable.size;
+        return this.httpClient.get<Page>(url)
+            .pipe(
+                tap(response => console.log('fetched Championship page per criteria')),
+                catchError(handleError('ChampionshipService -> findChampionshipByCriteria', null, errorNotify))
+            )
     }
 
     deleteChampionship(championshipId: Number, errorNotify?: any) {

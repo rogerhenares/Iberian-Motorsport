@@ -4,24 +4,25 @@ import {Grid} from "./Grid";
 
 export class Race {
     id: number;
-    track: String;
-    preRaceWaitingTimeSeconds: Number;
-    sessionOverTimeSeconds: Number;
-    ambientTemp: Number;
-    cloudLevel: Number;
-    rain: Number;
-    weatherRandomness: Number;
-    postQualySeconds: Number;
-    postRaceSeconds: Number;
-    serverName: String;
-    sessionCount: Number;
-    startDate: String;
+    track: string;
+    preRaceWaitingTimeSeconds: number;
+    sessionOverTimeSeconds: number;
+    ambientTemp: number;
+    cloudLevel: number;
+    rain: number;
+    weatherRandomness: number;
+    postQualySeconds: number;
+    postRaceSeconds: number;
+    serverName: string;
+    sessionCount: number;
+    startDate: string;
     raceRulesDTO: RaceRules;
     sessionDTOList: Array<Session>;
     grid: Grid;
+    championshipId: number;
 
     constructor() {
-        this.id= null;
+        this.id= -1;
         this.track= '';
         this.preRaceWaitingTimeSeconds= null;
         this.sessionOverTimeSeconds= null;
@@ -37,5 +38,6 @@ export class Race {
         this.raceRulesDTO = null;
         this.sessionDTOList = null;
         this.grid = null;
+        this.championshipId = null;
     }
 }

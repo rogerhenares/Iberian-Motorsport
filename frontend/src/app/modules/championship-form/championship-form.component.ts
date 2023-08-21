@@ -13,7 +13,6 @@ import {TranslateService} from "@ngx-translate/core";
     templateUrl: './championship-form.component.html',
     styleUrls: ['./championship-form.component.css']
 })
-
 export class ChampionshipFormComponent {
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
@@ -70,8 +69,9 @@ export class ChampionshipFormComponent {
             dumpEntryList: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
             ignorePrematureDisconnects: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
             formationLapType: [null, [Validators.required]],
-            centralEntryListPath: [''],
-            imageContent: ['']
+            centralEntryListPath: ['', Validators.required],
+            imageContent: ['', Validators.required],
+            disabled: [1, Validators.required]
         })
     }
 }

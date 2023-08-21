@@ -24,21 +24,28 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.profileFormBuilder();
+    console.log("init ->", this.user)
     this.getData()
   }
+
   onSubmit(){
     if(this.profileForm.valid){
+      console.log('submit ->', this.user)
       this.userService.updateUserInfo(this.user).subscribe(response => {if(response){
-      }});
+        }
+      });
     }
   }
+
   getData() {
     this.userService.getLoggedUser().subscribe(user => {
         if (user) {
           this.user = user;
         }
-      });
+      }
+    );
   }
+
   profileFormBuilder() {
     this.profileForm = null;
     this.profileForm = this.formBuilder.group({
@@ -48,6 +55,5 @@ export class UserProfileComponent implements OnInit {
       shortName: ['', Validators.required],
       nationality: ['']
     });
-
   }
 }

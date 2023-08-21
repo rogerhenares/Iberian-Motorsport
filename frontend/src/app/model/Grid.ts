@@ -1,4 +1,5 @@
 import {User} from "./User";
+import {Car} from "./Car";
 
 
 export class Grid {
@@ -7,7 +8,9 @@ export class Grid {
     carLicense: string;
     carId: number;
     championshipId: number;
-    driversList: Array<number>;
+    driversList: Array<User>;
+    car: Car;
+    points: number;
 
     constructor() {
         this.id = null;
@@ -16,5 +19,7 @@ export class Grid {
         this.carId = null;
         this.championshipId = null;
         this.driversList = [];
+        this.car = null;
+        this.points = null;
     }
 }

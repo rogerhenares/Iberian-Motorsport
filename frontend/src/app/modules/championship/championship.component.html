@@ -1,147 +1,37 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title">My championships</h4>
+<div class="card-body table-responsive">
+    <div class="row">
+        <div class="col-md-4" *ngFor="let championship of championships">
+            <div class="card card-chart" [class.selected]="selectedChampionship?.id == championship.id" (click)="selectChampionship(championship)">
+                <div class="card-header card-header-success">
+                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
+                    <div class="ct-chart" id="dailySalesChart"></div>
                 </div>
-                <div class="card-body table-responsive">
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let championship of championships">
-                            <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
-                                <div class="card-header card-header-success">
-                                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
-                                    <div class="ct-chart" id="dailySalesChart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title" style="color: #ff9800">{{championship.name}}</h4>
-                                    <p class="card-category">{{championship.description}}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i>
-                                        <span>
-                                        {{championship.startDate | date: 'MMM d, h a'}}
+                <div class="card-body">
+                    <h4 class="card-title" style="color: #ff9800">{{championship.name}}</h4>
+                    <p class="card-category">{{championship.description}}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i>
+                        <span *ngIf="championship.nextRace">
+                                            {{championship.nextRace.startDate | date: 'MMM d, h a'}}
                                         </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button class="btn btn-primary" (click)="goToPreviousPage()" [disabled]="this.pageable.page === 0">Previous</button>
-                            <button class="btn btn-primary" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
-                        </div>
-                        <div class="col-md-6 text-right align-self-center">
-<!--                            <button class="btn btn-primary" (click)="createNewChampionship()">Add Championship</button>-->
-                        </div>
+                        <span *ngIf="!championship.nextRace">
+                                            TO BE ANNOUNCED
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row" style="padding-left: 15px; padding-right: 15px">
-            <div class="col-lg-6 col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">RACES</h4>
-                    </div>
-                    <div class="card-body table-responsive">
-                        <table class="table table-hover">
-                            <thead class="text-warning">
-                            <th>Circuito</th>
-                            <th>Día</th>
-                            <th>Horario</th>
-                            </thead>
-                            <tbody *ngIf="selectedChampionship && selectedChampionship.raceList?.length > 0">
-                            <tr *ngFor="let race of selectedChampionship.raceList" [class.selected]="selectedRaceId == race.id" (click)="selectRace(race.id)">
-                                <td>{{race.track}}</td>
-                                <td>{{formatDate(race.startDate)}}</td>
-                                <td>{{getHour(race.startDate)}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="col-md-6 text-right align-right">
-<!--                            <button class="btn btn-primary" (click)="createNewRace()">Add Race</button>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="card" >
-                    <div class="card-header card-header-tabs card-header-danger">
-                        <div class="nav-tabs-navigation">
-                            <div class="nav-tabs-wrapper">
-                                <span class="nav-tabs-title">Info:</span>
-                                <ul class="nav nav-tabs" data-tabs="tabs">
-                                    <li class="nav-item">
-                                        <a mat-button class="nav-link active" href="#standings" data-toggle="tab">
-                                            <i class="material-icons">content_paste</i> Standings
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a mat-button class="nav-link" href="#messages" data-toggle="tab">
-                                            <i class="material-icons">code</i> Info
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a mat-button class="nav-link" href="#settings" data-toggle="tab">
-                                            <i class="material-icons">cloud</i> Results
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="standings" *ngIf="selectedRace">
-                               <app-standings [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-standings>
-                            </div>
-                            <div class="tab-pane" id="messages"  *ngIf="selectedRace" style="color: #999999">
-                                <app-race-info [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-race-info>
-                            </div>
-                                <div class="tab-pane" id="settings" *ngIf="selectedRace">
-                                <table class="table" style="text-align: center">
-                                    <thead class=" text-primary">
-                                        <th>POS</th>
-                                        <th>NAME</th>
-                                        <th>CAR</th>
-                                        <th>BEST TIME</th>
-                                        <th>POINTS</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td style="text-align: left">Brahyam Agudelo  <img style="height: 15px;" src="assets/flags/es.svg"></td>
-                                            <td><img style="height: 30px;" src="assets/car-logo/Lamborghini.png"></td>
-                                            <td class="text-primary">2:00:610</td>
-                                            <td class="text-primary">18</td>
-                                        </tr>
-                                        <tr style="background-color: #00FFC030">
-                                            <td>2</td>
-                                            <td style="text-align: left">Abel dos Ramos  <img style="height: 15px;" src="assets/flags/es.svg"></td>
-                                            <td><img style="height: 30px;" src="assets/car-logo/Lamborghini.png"></td>
-                                            <td class="text-primary">1:54:321</td>
-                                            <td class="text-primary">10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td style="text-align: left">Dani Santo  <img style="height: 15px;" src="assets/flags/es.svg"></td>
-                                            <td><img style="height: 30px;" src="assets/car-logo/Lamborghini.png"></td>
-                                            <td class="text-primary" style="color: purple !important;">1:53:321</td>
-                                            <td class="text-primary">3(+1)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <button class="btn btn-primary" style="color: black" (click)="goToPreviousPage()" [disabled]="this.pageable.page === 0">Previous</button>
+        <button class="btn btn-primary" style="color: black" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
+    </div>
+    <div *ngIf="isCreation" class="col-md-6 text-right align-self-center">
+        <button class="btn btn-primary" style="color: black" (click)="createNewChampionship()">Add Championship</button>
     </div>
 </div>

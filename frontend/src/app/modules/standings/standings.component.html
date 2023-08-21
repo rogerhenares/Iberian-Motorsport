@@ -1,15 +1,32 @@
-<div class="table-responsive" style="text-align: center">
+<div class="table-responsive" style="text-align: center; overflow-y: auto; max-height: 400px">
+    <div *ngIf="!grid?.length" style="width: 100%; color: #00EBB1">
+        <p style="width: 100%;">There is no available info for this championship.</p>
+    </div>
+    <ng-container *ngIf="grid?.length">
     <table class="table">
         <thead class=" text-primary">
-        <th>POS</th>
-        <th>NAME</th>
-        <th>CAR</th>
-        <th>POINTS</th>
+        <th class="posHeader">POS</th>
+        <th class="nameHeader">NAME</th>
+        <th class="carHeader">CAR</th>
+        <th class="pointsHeader">POINTS</th>
         </thead>
         <tbody>
-        <tr *ngFor="let user of userList">
-            <td style="text-align: left">{{user.firstName}} {{user.lastName}}</td>
-        </tr>
+        <ng-container *ngFor="let grid of grid; let i = index">
+            <tr [ngClass]="{'selected': isGridFromLoggedUser(grid)}">
+                <td class="posColumn" style="text-align: left">{{i + 1}}</td>
+                <td class="nameColumn" style="text-align: left">
+                    <ng-container *ngFor="let user of grid.driversList;">
+                    <span>
+                        {{user.firstName}} {{user.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">
+                    </span>
+                    <br>
+                    </ng-container>
+                </td>
+                <td class="carColumn" style="text-align: left"><img style="height: 30px" src="assets/car-logo/{{grid.car.manufacturer}}.png">{{grid.car.model}}</td>
+                <td class="pointsColumn" style="text-align: left">{{grid.points}}</td>
+            </tr>
+        </ng-container>
         </tbody>
     </table>
+    </ng-container>
 </div>

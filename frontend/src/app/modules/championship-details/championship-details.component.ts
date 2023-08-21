@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {ChampionshipService} from "../../service/championship.service";
 import {Championship} from "../../model/Championship";
 import {Race} from "../../model/Race";
 import {Pageable} from "../../model/Pageable";
 import {TimezoneService} from "../../service/timezone.service";
+import {AppContext} from "../../util/AppContext";
+import {RaceService} from "../../service/race.service";
+import {GridService} from "../../service/grid.service";
+import {Grid} from "../../model/Grid";
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-championship-details',
@@ -27,7 +32,11 @@ export class ChampionshipDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private http: HttpClient,
         private championshipService: ChampionshipService,
-        private timezoneService: TimezoneService
+        private timezoneService: TimezoneService,
+        public appContext : AppContext,
+        public router: Router,
+        public raceService: RaceService,
+        private gridService: GridService,
     ) {
     }
 
@@ -46,10 +55,6 @@ export class ChampionshipDetailsComponent implements OnInit {
         });
     }
 
-
-    createNewRace() {
-
-    }
 
     fetchChampionshipDetails(championshipId: number) {
         this.championshipService.getChampionshipById(championshipId)
@@ -94,36 +99,31 @@ export class ChampionshipDetailsComponent implements OnInit {
         }
     }
 
-
-    getSessionType(type: string) {
-        switch(type) {
-            case 'Q':
-                return 'Qualy';
-            case 'P':
-                return 'Practice';
-            case 'R':
-                return 'Race';
-            default:
-                return 'Unknown'; // This will be returned if the session type is not Q, P, or R
-        }
-    }
-
-    getDayOfWeekend(type: number){
-        switch (type) {
-            case 1:
-                return "Friday";
-            case 2:
-                return "Saturday";
-            case 3:
-                return "Sunday";
-        }
-    }
-
     getImage(trackName: string) {
         const trimmedTrackName = trackName.trim();
         const sanitizedTrackName = trimmedTrackName.replace(/\s+/g, "");
         return "assets/img/" + sanitizedTrackName + ".png";
     }
 
+    createNewRace(championshipId: number) {
+        console.log(this.championship)
+        console.log(championshipId)
+        this.router.navigateByUrl("/race/new", {state: {championshipId: championshipId}});
+    }
+
+    editRace(championshipId: number, race: Race) {
+        this.router.navigateByUrl("/race/new", { state: { championshipId: championshipId, race: race } });
+    }
+
+    deleteRace() {
+        console.log("delete race click")
+        this.raceService.deleteRace(this.selectedRaceId).subscribe()
+    }
+
+    joinChampionship() {
+        let championshipId: number = this.championship.id
+        console.log("ChampionshipId", championshipId)
+        this.router.navigate(['/join'], { state: { championshipId: championshipId} });
+    }
 
 }

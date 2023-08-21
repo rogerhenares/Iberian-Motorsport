@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
       <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
                       <h4 class="card-title">Edit Profile</h4>
@@ -12,50 +12,36 @@
                           <div class="row">
                               <div class="col-md-5">
                                 <mat-form-field>
-                                    <input id="steamId" matInput placeholder="SteamId" [(ngModel)]="user.steamId" formControlName="steamId" disabled>
+                                    <input id="steamId" style="color: #999999" matInput placeholder="SteamId" [(ngModel)]="user.steamId" formControlName="steamId" readonly>
                                   </mat-form-field>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-md-6">
                                   <mat-form-field>
-                                    <input matInput placeholder="First Name" [(ngModel)]="user.firstName" formControlName="firstName" type="text">
+                                    <input style="color: #999999" matInput placeholder="First Name"  [(ngModel)]="user.firstName" formControlName="firstName" type="text">
                                   </mat-form-field>
                               </div>
                               <div class="col-md-6">
                                   <mat-form-field>
-                                      <input matInput placeholder="Last Name" [(ngModel)]="user.lastName" formControlName="lastName" type="text">
+                                      <input style="color: #999999" matInput placeholder="Last Name" [(ngModel)]="user.lastName" formControlName="lastName" type="text">
                                   </mat-form-field>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-md-6">
                                 <mat-form-field>
-                                  <input matInput placeholder="shortName" [(ngModel)]="user.shortName" formControlName="shortName" type="text">
+                                  <input style="color: #999999" matInput placeholder="shortName" [(ngModel)]="user.shortName" formControlName="shortName" type="text">
                                 </mat-form-field>
                               </div>
                               <div class="col-md-6">
                                 <mat-form-field>
-                                  <input matInput placeholder="Nationality" [(ngModel)]="user.nationality" formControlName="nationality" type="text">
+                                  <input style="color: #999999" matInput placeholder="Nationality" [(ngModel)]="user.nationality" formControlName="nationality" type="text">
                                 </mat-form-field>
                               </div>
                           </div>
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
-                          <div class="clearfix"></div>
+                          <button mat-raised-button type="submit" style="color: black" class="btn btn-primary pull-right">Update Profile</button>
                       </form>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-profile">
-                  <div class="card-avatar">
-                      <a href="javascript:void(0)">
-                          <img class="img" src="../../../assets/img/faces/marc.jpg" />
-                      </a>
-                  </div>
-                  <div class="card-body">
-                      <h6 class="card-category text-gray">Level server </h6>
-                      <h4 class="card-title">name</h4>
                   </div>
               </div>
           </div>

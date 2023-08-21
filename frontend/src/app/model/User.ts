@@ -1,11 +1,12 @@
 export class User {
 
-    userId: Number;
-    steamId: String;
-    firstName: String;
-    lastName: String;
-    shortName: String;
-    nationality: String;
+    userId: number;
+    steamId: string;
+    firstName: string;
+    lastName: string;
+    shortName: string;
+    nationality: string;
+    roleList: Array<string>
 
     constructor() {
         this.userId = -1;
@@ -14,5 +15,6 @@ export class User {
         this.lastName = '';
         this.shortName = '';
         this.nationality = '';
+        this.roleList = [];
     }
 }

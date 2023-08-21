@@ -1,28 +1,28 @@
 import {Race} from "./Race";
 
 export class Championship {
-    id: Number;
-    name: String;
-    description: String;
-    adminPassword: String;
-    carGroup: String;
-    trackMedalsRequirement: Number;
-    safetyRatingRequirement: Number;
-    racecraftRatingRequirement: Number;
-    password: String;
-    spectatorPassword: String;
-    maxCarSlots: Number;
-    dumpLeaderboards: Number;
-    isRaceLocked: Number;
-    randomizeTrackWhenEmpty: Number;
+    id: number;
+    name: string;
+    description: string;
+    adminPassword: string;
+    carGroup: string;
+    trackMedalsRequirement: number;
+    safetyRatingRequirement: number;
+    racecraftRatingRequirement: number;
+    password: string;
+    spectatorPassword: string;
+    maxCarSlots: number;
+    dumpLeaderboards: number;
+    isRaceLocked: number;
+    randomizeTrackWhenEmpty: number;
     centralEntryListPath: any;
-    allowAutoDQ: Number;
-    shortFormationLap: Number;
-    dumpEntryList: Number;
-    formationLapType: Number;
-    ignorePrematureDisconnects: Number;
-    imageContent: String;
-    startDate: String;
+    allowAutoDQ: number;
+    shortFormationLap: number;
+    dumpEntryList: number;
+    formationLapType: number;
+    ignorePrematureDisconnects: number;
+    imageContent: string;
+    startDate: string;
     raceList: Array<Race>;
 
     constructor() {
@@ -49,5 +49,9 @@ export class Championship {
         this.imageContent= '';
         this.startDate = null;
         this.raceList = null;
+        this.disabled = null;
+        this.nextRace = null;
+        this.carList = null;
+        this.championshipCategoryList = null;
     }
 }

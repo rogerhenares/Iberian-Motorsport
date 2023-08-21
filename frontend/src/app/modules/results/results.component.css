@@ -1,0 +1,27 @@
+.posColumn, .posHeader {
+    text-align: left;
+}
+
+.nameColumn, .nameHeader {
+    text-align: left;
+}
+
+.carColumn, .carHeader {
+    text-align: left;
+}
+
+.pointsColumn, .pointsHeader {
+    text-align: left;
+}
+
+.timeHeader, .timeColumn {
+    text-align: left;
+}
+
+.selected {
+    background-color: #00FFC030;
+}
+
+.fasterLap {
+    color: purple;
+}

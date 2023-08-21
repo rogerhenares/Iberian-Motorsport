@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        console.log('LoginComponent initialized')
         //let test2 = decodeURIComponent(this.router.url.split('?')[1]);
         this.steamParams = btoa(decodeURIComponent(this.router.url.replace("/login?", "")));
         this.authenticate();

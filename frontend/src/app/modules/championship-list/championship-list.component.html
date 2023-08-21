@@ -2,101 +2,24 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12">
             <div class="card">
-            <app-collapsible-section [sectionTitle]="'Current Championships'" [isOpen]="currentChampionshipsOpen "  (toggle)="currentChampionshipsOpen = !currentChampionshipsOpen">
-                <div class="card-body table-responsive">
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let championship of currentChampionships">
-                            <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
-                                <div class="card-header card-header-success">
-                                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
-                                    <div class="ct-chart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title" >{{championship.name}}</h4>
-                                    <p class="card-category">{{championship.description}}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i>{{championship.startDate | date: 'MMM d, h a'}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button class="btn btn-primary" (click)="goToPreviousPage(pageableCurrentChampionships, currentChampionships)" [disabled]="pageableCurrentChampionships.page === 0">Previous</button>
-                            <button class="btn btn-primary" (click)="goToNextPage(pageableCurrentChampionships, currentChampionships)" [disabled]="pageableCurrentChampionships.page === totalPages - 1">Next</button>
-                        </div>
-                        <div class="col-md-6 text-right align-self-center">
-                            <button class="btn btn-primary" (click)="createNewChampionship()">Add Championship</button>
-                        </div>
-                    </div>
-                </div>
-            </app-collapsible-section>
-            </div>
-            <div class="card">
-                <app-collapsible-section [sectionTitle]="'Upcoming Championships'" [isOpen]="upcomingChampionshipsOpen"  (toggle)="upcomingChampionshipsOpen = !upcomingChampionshipsOpen">
-                <div class="card-body table-responsive">
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let championship of upcomingChampionships">
-                            <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)">
-                                <div class="card-header card-header-success">
-                                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
-                                    <div class="ct-chart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">{{championship.name}}</h4>
-                                    <p class="card-category">{{championship.description}}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i>{{championship.startDate | date: 'MMM d, h a'}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button class="btn btn-primary" (click)="goToPreviousPage(pageableUpcomingChampionships, upcomingChampionships)" [disabled]="pageableUpcomingChampionships.page === 0">Previous</button>
-                            <button class="btn btn-primary" (click)="goToNextPage(pageableUpcomingChampionships, upcomingChampionships)" [disabled]="pageableUpcomingChampionships.page === totalPages - 1">Next</button>
-                        </div>
-                    </div>
-                </div>
+                <app-collapsible-section [sectionTitle]="'Current Championships'" [isOpen]="currentChampionshipsOpen "  (toggle)="currentChampionshipsOpen = !currentChampionshipsOpen">
+                            <app-championship [criteria]="this.criteria.criteriaStarted()" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
                 </app-collapsible-section>
             </div>
             <div class="card">
-        <app-collapsible-section [sectionTitle]="'Past Championships'" [isOpen]="pastChampionshipsOpen" (toggle)="pastChampionshipsOpen = !pastChampionshipsOpen">
-
-                <div class="card-body table-responsive">
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let championship of pastChampionships">
-                            <div class="card card-chart" [class.selected]="selectedChampionshipId == championship.id" (click)="selectChampionship(championship.id)" >
-                                <div class="card-header card-header-success">
-                                    <img [src]="championship.imageContent"  alt="jojojo" style="width: 100%; height: auto;">
-                                    <div class="ct-chart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">{{championship.name}}</h4>
-                                    <p class="card-category">{{championship.description}}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i>{{championship.startDate | date: 'MMM d, h a'}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button class="btn btn-primary" (click)="goToPreviousPage(pageablePastChampionships, pastChampionships)" [disabled]="pageablePastChampionships.page === 0">Previous</button>
-                            <button class="btn btn-primary" (click)="goToNextPage(pageablePastChampionships, pastChampionships)" [disabled]="pageablePastChampionships.page === totalPages - 1">Next</button>
-                        </div>
-                    </div>
-                </div>
-        </app-collapsible-section>
+                <app-collapsible-section [sectionTitle]="'Upcoming Championships'" [isOpen]="upcomingChampionshipsOpen"  (toggle)="upcomingChampionshipsOpen = !upcomingChampionshipsOpen">
+                       <app-championship [criteria]="this.criteria" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                </app-collapsible-section>
+            </div>
+            <div class="card">
+                <app-collapsible-section [sectionTitle]="'Past Championships'" [isOpen]="pastChampionshipsOpen" (toggle)="pastChampionshipsOpen = !pastChampionshipsOpen">
+                                <app-championship [criteria]="this.criteria.criteriaFinished()" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                </app-collapsible-section>
+            </div>
+            <div class="card" *ngIf="appContext.isAdmin()">
+                <app-collapsible-section [sectionTitle]="'Disabled'" [isOpen]="disabledChampionshipsOpen" (toggle)="disabledChampionshipsOpen = !disabledChampionshipsOpen">
+                        <app-championship [criteria]="this.criteria.criteriaDisabled()" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                </app-collapsible-section>
             </div>
         </div>
     </div>

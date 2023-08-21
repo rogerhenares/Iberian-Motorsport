@@ -38,7 +38,12 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getIgnorePrematureDisconnects(),
                 championship.getImageContent(),
                 championship.getStartDate(),
-                championship.getRaceList().stream().map(raceDTOMapper).toList()
+                championship.getRaceList().stream().map(raceDTOMapper).toList(),
+                championship.getDisabled(),
+                championship.getCategoryList().stream().map(championshipCategoryDTOMapper).toList(),
+                !Objects.isNull(championship.getCarListForChampionship()) ?
+                        championship.getCarListForChampionship().stream().map(carDTOMapper).toList() :
+                        null
         );
     }
 }

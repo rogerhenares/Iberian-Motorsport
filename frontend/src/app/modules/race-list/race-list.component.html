@@ -1,0 +1,16 @@
+<ng-container *ngIf="selectedChampionship && selectedChampionship.raceList?.length > 0">
+    <table class="table table-hover">
+        <thead class="text-warning">
+        <th>Circuito</th>
+        <th>Día</th>
+        <th>Horario</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let race of selectedChampionship.raceList" [class.selected]="selectedRace.id == race.id" (click)="selectRace(race)">
+            <td>{{race.track}}</td>
+            <td>{{formatDate(race.startDate)}}</td>
+            <td>{{getHour(race.startDate)}}</td>
+        </tr>
+        </tbody>
+    </table>
+</ng-container>

@@ -2,84 +2,89 @@
     <div class="testbox">
         <form id="raceForm" (ngSubmit)="raceSubmit()" [formGroup]="raceForm">
             <div class="item">
-                <div class="name-item">
+                <div class="custom-form">
                     <div>
                         <mat-form-field>
                             <mat-label>Track</mat-label>
-                            <input matInput [(ngModel)]="race.track" formControlName="track"/>
+                            <input style="color: white" matInput formControlName="track"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.track.errors)">Track Name Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Pre Race Waiting Time in Seconds</mat-label>
-                            <input matInput [(ngModel)]="race.preRaceWaitingTimeSeconds" formControlName="preRaceWaitingTimeSeconds"/>
+                            <input style="color: white" matInput formControlName="preRaceWaitingTimeSeconds"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.preRaceWaitingTimeSeconds.errors)">Pre Race Waiting Time Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Session Over Time in Seconds</mat-label>
-                            <input matInput [(ngModel)]="race.sessionOverTimeSeconds" formControlName="sessionOverTimeSeconds"/>
+                            <input style="color: white" matInput formControlName="sessionOverTimeSeconds"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.sessionOverTimeSeconds.errors)">Session Over Time Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Ambient Temperature</mat-label>
-                            <input matInput [(ngModel)]="race.ambientTemp" formControlName="ambientTemp"/>
+                            <input style="color: white" matInput formControlName="ambientTemp"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.ambientTemp.errors)">Ambient Temperature Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Cloud Level</mat-label>
-                            <input matInput [(ngModel)]="race.cloudLevel" formControlName="cloudLevel"/>
+                            <input style="color: white" matInput formControlName="cloudLevel"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.cloudLevel.errors)">Cloud Level Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Rain</mat-label>
-                            <input matInput [(ngModel)]="race.rain" formControlName="rain"/>
+                            <input style="color: white" matInput formControlName="rain"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.rain.errors)">Rain Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Weather Randomness</mat-label>
-                            <input matInput [(ngModel)]="race.weatherRandomness" formControlName="weatherRandomness"/>
+                            <input style="color: white" matInput formControlName="weatherRandomness"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.weatherRandomness.errors)">Weather Randomness Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Post Qualy Time in Seconds</mat-label>
-                            <input matInput [(ngModel)]="race.postQualySeconds" formControlName="postQualySeconds"/>
+                            <input style="color: white" matInput formControlName="postQualySeconds"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.postQualySeconds.errors)">Post Qualy Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Post Race Time in Seconds</mat-label>
-                            <input matInput [(ngModel)]="race.postRaceSeconds" formControlName="postRaceSeconds"/>
+                            <input style="color: white" matInput formControlName="postRaceSeconds"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.postRaceSeconds.errors)">Post Race Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Server Name</mat-label>
-                            <input matInput [(ngModel)]="race.serverName" formControlName="serverName"/>
+                            <input style="color: white" matInput formControlName="serverName"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.serverName.errors)">Server Name Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div >
                         <mat-form-field>
                             <mat-label >Number of Sessions</mat-label>
-                            <input matInput [(ngModel)]="race.sessionCount" formControlName="sessionCount"/>
+                            <input style="color: white" matInput formControlName="sessionCount"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.sessionCount.errors)">Session Count Error</mat-error>
                         </mat-form-field>
                     </div>
+                    <mat-form-field>
+                        <mat-label>Starting Date</mat-label>
+                        <input matInput style="color: white" type="datetime-local" formControlName="startDate"/>
+                        <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.startDate.errors)">Starting Date Error</mat-error>
+                    </mat-form-field>
                 </div>
             </div>
         </form>

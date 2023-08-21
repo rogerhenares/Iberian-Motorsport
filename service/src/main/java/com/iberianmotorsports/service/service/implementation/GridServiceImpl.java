@@ -49,15 +49,17 @@ public class GridServiceImpl  implements GridService {
     @Override
     public List<Grid> getGridForChampionship(Long championshipId) {
         List<Grid> grids = gridRepository.findGridsByChampionshipId(championshipId);
-        grids.stream()
-                .peek(grid -> grid.setPoints(grid.getGridRaceList().stream().mapToDouble(GridRace::getPoints).sum()));
+        grids = grids.stream()
+                .map(grid -> {
+                    grid.setPoints(grid.getGridRaceList().stream().mapToDouble(GridRace::getPoints).sum());
+                    return grid;
+                }).toList();
         return grids;
     }
 
     @Override
     public Grid createGridEntry(@Valid GridDTO gridDTO) {
         Grid grid = gridMapper.apply(gridDTO);
-
         validateGridForChampionship(grid);
         loadDriversForGrid(grid);
         grid.setChampionship(championshipService.findChampionshipById(grid.getChampionship().getId()));

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -13,12 +13,12 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class RaceRulesFormComponent {
 
+    @Input() raceRules: RaceRules;
     @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
-    raceRules: RaceRules = new RaceRules();
 
     raceRulesForm: FormGroup;
     raceRulesFormSubmitted: Boolean;
@@ -31,8 +31,9 @@ export class RaceRulesFormComponent {
     ) {}
 
     ngOnInit() {
-        this.raceRules = new RaceRules();
-        this.raceRulesFormBuilder();
+        this.raceRules !== undefined ?
+            this.raceRulesFormBuilder(this.raceRules) :
+            this.raceRulesFormBuilder(new RaceRules());
     }
 
     raceRulesSubmit() {

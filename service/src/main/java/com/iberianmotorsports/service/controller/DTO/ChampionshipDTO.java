@@ -30,6 +30,9 @@ public record ChampionshipDTO(
         String imageContent,
         @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
         LocalDateTime startDate,
-        List<RaceDTO> raceList
+        List<RaceDTO> raceList,
+        Boolean disabled,
+        List<ChampionshipCategoryDTO> championshipCategoryList,
+        List<CarDTO> carList
 ) {
 }

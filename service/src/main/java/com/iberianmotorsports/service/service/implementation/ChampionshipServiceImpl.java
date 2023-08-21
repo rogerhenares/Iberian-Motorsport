@@ -29,7 +29,9 @@ public class ChampionshipServiceImpl implements ChampionshipService {
 
     @Autowired
     private ChampionshipRepository championshipRepository;
-
+    private ChampionshipCategoryRepository championshipCategoryRepository;
+    private UserService userService;
+    private CarService carService;
     private ChampionshipMapper championshipMapper;
 
 

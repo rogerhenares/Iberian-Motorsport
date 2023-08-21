@@ -1,10 +1,11 @@
 export class Session {
-    id: Number;
-    hourOfDay: Number;
-    dayOfWeekend: Number;
-    timeMultiplier: Number;
-    sessionType: String;
-    sessionDurationMinutes: Number;
+    id: number;
+    hourOfDay: number;
+    dayOfWeekend: number;
+    timeMultiplier: number;
+    sessionType: string;
+    sessionDurationMinutes: number;
+    raceId: number;
 
     constructor() {
         this.id = null;
@@ -13,5 +14,6 @@ export class Session {
         this.timeMultiplier= null;
         this.sessionType= '';
         this.sessionDurationMinutes= null;
+        this.raceId = null;
     }
 }

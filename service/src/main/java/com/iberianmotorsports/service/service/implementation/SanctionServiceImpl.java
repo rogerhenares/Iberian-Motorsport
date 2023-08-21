@@ -2,6 +2,8 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.google.protobuf.ServiceException;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SanctionDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SanctionMapper;
 import com.iberianmotorsports.service.controller.DTO.SanctionDTO;
 import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Sanction;
@@ -22,11 +24,14 @@ public class SanctionServiceImpl implements SanctionService {
 
     GridRaceService gridRaceService;
 
+    SanctionMapper sanctionMapper;
+
+    SanctionDTOMapper sanctionDTOMapper;
+
     @Override
     public Sanction createSanction(SanctionDTO sanctionDTO) {
         GridRace gridRace = gridRaceService.getGridRace(sanctionDTO.gridId(), sanctionDTO.raceId());
-        //TODO apply mapper
-        Sanction sanction = new Sanction();
+        Sanction sanction = sanctionMapper.apply(sanctionDTO);
         sanctionRepository.save(sanction);
         //gridRaceService.calculateGridRace(gridRace.getRace().getId());
         return sanction;

@@ -19,10 +19,13 @@ import {RaceService} from "../../service/race.service";
 import {AppContext} from "../../util/AppContext";
 import {AuthenticationService} from "../../service/authentication.service";
 import {AuthenticationInterceptor} from "../../authentication/authentication.interceptor";
-import {NewRace} from "../new-race/new-race";
 import {DatePipe} from "@angular/common";
 import {TimezoneService} from "../../service/timezone.service";
 import {GridService} from "../../service/grid.service";
+import {GridRaceService} from "../../service/gridrace.service";
+import {SanctionService} from "../../service/sanction.service";
+import {CarService} from "../../service/car.service";
+import {ChampionshipCategoryService} from "../../service/championshipcategory.service";
 
 @NgModule({
   imports: [
@@ -57,7 +60,11 @@ import {GridService} from "../../service/grid.service";
     RaceService,
     DatePipe,
     TimezoneService,
-    GridService
+    GridService,
+    GridRaceService,
+    SanctionService,
+    CarService,
+    ChampionshipCategoryService
   ],
   bootstrap: [AppComponent]
 })

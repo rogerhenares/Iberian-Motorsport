@@ -18,7 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {LoginComponent} from "../../login/login.component";
-import {ChampionshipComponent} from "../../championship/championship.component";
+import {HomeComponent} from "../../home/home.component";
 import {ChampionshipFormComponent} from "../../championship-form/championship-form.component";
 import {RaceRulesFormComponent} from "../../racerules-form/race-rules-form.component";
 import {MatIconModule} from "@angular/material/icon";
@@ -34,6 +34,11 @@ import {ChampionshipDetailsComponent} from "../../championship-details/champions
 import {CollapsibleSectionComponent} from "../../collapsible-section/collapsible-section.component";
 import {RaceInfoComponent} from "../../race-info/race-info.component";
 import {StandingsComponent} from "../../standings/standings.component";
+import {ResultsComponent} from "../../results/results.component";
+import {MatTabsModule} from "@angular/material/tabs";
+import {JoinChampionshipComponent} from "../../join-championship/join-championship.component";
+import {ChampionshipComponent} from "../../championship/championship.component";
+import {RaceListComponent} from "../../race-list/race-list.component";
 
 
 @NgModule({
@@ -53,7 +58,8 @@ import {StandingsComponent} from "../../standings/standings.component";
         SweetAlert2Module,
         TranslateModule,
         MatCheckboxModule,
-        MatStepperModule
+        MatStepperModule,
+        MatTabsModule
     ],
   declarations: [
     LoginComponent,
@@ -66,6 +72,7 @@ import {StandingsComponent} from "../../standings/standings.component";
     NotificationsComponent,
     UpgradeComponent,
     ChampionshipComponent,
+    HomeComponent,
     ChampionshipFormComponent,
     RaceRulesFormComponent,
     SessionFormComponent,
@@ -75,7 +82,10 @@ import {StandingsComponent} from "../../standings/standings.component";
     ChampionshipDetailsComponent,
     CollapsibleSectionComponent,
     RaceInfoComponent,
-    StandingsComponent
+    StandingsComponent,
+    ResultsComponent,
+    JoinChampionshipComponent,
+    RaceListComponent
   ]
 })
 

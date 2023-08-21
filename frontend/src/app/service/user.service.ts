@@ -10,7 +10,7 @@ import {AppContext} from "../util/AppContext";
 @Injectable()
 export class UserService {
 
-    private url: string = environment.apiPath + 'user/';
+    private url: string = environment.apiPath + 'user';
 
     constructor(
         private httpClient: HttpClient,
@@ -19,7 +19,7 @@ export class UserService {
     }
 
     getLoggedUser(errorNotify?: any) {
-        return this.httpClient.get<User>(this.url + 'loggedUser')
+        return this.httpClient.get<User>(this.url + '/' +'loggedUser')
             .pipe(
                 tap(user => console.log('fetched logged user info')),
                 catchError(handleError('UserService -> getLoggedUser', null, errorNotify))
@@ -35,7 +35,7 @@ export class UserService {
     }
 
     getUserBySteamId(steamId: Number, errorNotify?: any) {
-        const url = this.url + steamId;
+        const url = this.url + '/' +steamId;
         return this.httpClient.get<User>(url)
             .pipe(
                 tap(user => console.log('fetched user by userId')),
@@ -65,7 +65,7 @@ export class UserService {
     }
 
     deleteUser(userId: Number, errorNotify?: any) {
-        let url = this.url + userId;
+        let url = this.url + '/' +userId;
         return this.httpClient.delete<User>(url)
             .pipe(
                 tap(response => console.log('delete user')),

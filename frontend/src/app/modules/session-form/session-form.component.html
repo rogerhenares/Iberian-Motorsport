@@ -1,39 +1,39 @@
 <div class="card-body">
     <div class="testbox">
-        <form id="raceRulesForm" (ngSubmit)="sessionSubmit()" [formGroup]="sessionForm">
+        <form id="raceRulesForm" class="custom-form" (ngSubmit)="sessionSubmit()" [formGroup]="sessionForm">
             <div class="item">
                 <div class="name-item">
                     <div>
                         <mat-form-field>
                             <mat-label>Hour Of Day</mat-label>
-                            <input matInput [(ngModel)]="session.hourOfDay" formControlName="hourOfDay"/>
+                            <input style="color: white" matInput  formControlName="hourOfDay"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.hourOfDay.errors)">Hour Of Day Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Day Of The Weekend</mat-label>
-                            <input matInput [(ngModel)]="session.dayOfWeekend" formControlName="dayOfWeekend"/>
+                            <input style="color: white" matInput  formControlName="dayOfWeekend"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.dayOfWeekend.errors)">Day Of The Weekend Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Time Multiplier</mat-label>
-                            <input matInput [(ngModel)]="session.timeMultiplier" formControlName="timeMultiplier"/>
+                            <input style="color: white" matInput  formControlName="timeMultiplier"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.timeMultiplier.errors)">Time Multiplier Error</mat-error>                                            </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Session Type</mat-label>
-                            <input matInput [(ngModel)]="session.sessionType" formControlName="sessionType"/>
+                            <input style="color: white" matInput  formControlName="sessionType"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.sessionType.errors)">Session Type Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Session Duration Minutes</mat-label>
-                            <input matInput [(ngModel)]="session.sessionDurationMinutes" formControlName="sessionDurationMinutes"/>
+                            <input style="color: white" matInput  formControlName="sessionDurationMinutes"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.sessionDurationMinutes.errors)">Max Total Driving Time Error</mat-error>
                         </mat-form-field>
                     </div>

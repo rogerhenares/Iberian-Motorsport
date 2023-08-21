@@ -1,17 +1,18 @@
 export class RaceRules  {
-    id: Number;
-    qualifyStandingType: Number;
-    pitWindowLengthSec: Number;
-    driverStintTimeSec: Number;
-    mandatoryPitstopCount: Number;
-    maxTotalDrivingTime: Number;
-    maxDriversCount: Number;
-    isRefuellingAllowedInRace: Number;
-    isRefuellingTimeFixed: Number;
-    isMandatoryPitstopRefuellingRequired: Number;
-    isMandatoryPitstopTyreChangeRequired: Number;
-    isMandatoryPitstopSwapDriverRequired: Number;
-    tyreSetCount: Number;
+    id: number;
+    qualifyStandingType: number;
+    pitWindowLengthSec: number;
+    driverStintTimeSec: number;
+    mandatoryPitstopCount: number;
+    maxTotalDrivingTime: number;
+    maxDriversCount: number;
+    isRefuellingAllowedInRace: number;
+    isRefuellingTimeFixed: number;
+    isMandatoryPitstopRefuellingRequired: number;
+    isMandatoryPitstopTyreChangeRequired: number;
+    isMandatoryPitstopSwapDriverRequired: number;
+    tyreSetCount: number;
+    raceId: number;
 
     constructor() {
         this.id= null;
@@ -27,5 +28,6 @@ export class RaceRules  {
         this.isMandatoryPitstopTyreChangeRequired= null;
         this.isMandatoryPitstopSwapDriverRequired= null;
         this.tyreSetCount= null;
+        this.raceId = null;
     }
 }

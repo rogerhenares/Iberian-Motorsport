@@ -37,7 +37,6 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
 
     setUser(user: User) {
         this.user = user;
-
         this.save();
         this.emit(this.user);
     }
@@ -52,6 +51,11 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
     getLoggedUser() {
         this.load();
         return this.user;
+    }
+
+    isAdmin() {
+        // console.log("isAdmin ->", this.user);
+        return this.user.roleList.find(value => value === "ADMIN") !== undefined;
     }
 
     canActivate(): boolean {

@@ -9,7 +9,7 @@ import {Observable} from "rxjs";
 @Injectable()
 export class GridService {
 
-    private url: string = environment.apiPath + '/grid';
+    private url: string = environment.apiPath + 'grid';
 
     constructor(
         private httpClient: HttpClient
@@ -32,7 +32,7 @@ export class GridService {
             );
     }
 
-    addDriver(grid: Grid, steamId: Number, errorNotify?: any){
+    addDriver(grid: Grid, steamId: number, errorNotify?: any){
         const url: string = this.url + '/add/' + grid.id;
         const body = { steamId: steamId };
         return this.httpClient.put<Grid>(url, body)

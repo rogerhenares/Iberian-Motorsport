@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -6,6 +6,7 @@ import {SessionService} from "../../service/session.service";
 import {Session} from "../../model/Session";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {TranslateService} from "@ngx-translate/core";
+import {Race} from "../../model/Race";
 
 
 @Component({
@@ -15,13 +16,13 @@ import {TranslateService} from "@ngx-translate/core";
 export class SessionFormComponent {
 
     @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
+    @Input() session: Session;
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
     sessionForm: FormGroup;
     sessionFormSubmitted: Boolean;
-    session: Session = new Session();
 
     constructor(
         private sessionService: SessionService,
@@ -31,8 +32,10 @@ export class SessionFormComponent {
     ) {}
 
     ngOnInit() {
-        this.session = new Session();
-        this.sessionFormBuilder();
+        console.log(this.session)
+        this.session !== undefined ?
+            this.sessionFormBuilder(this.session) :
+            this.sessionFormBuilder(new Session());
     }
 
     sessionSubmit() {
@@ -46,14 +49,14 @@ export class SessionFormComponent {
         }
     }
 
-    sessionFormBuilder() {
+    sessionFormBuilder(session: Session) {
         this.sessionFormSubmitted = false;
         this.sessionForm = this.formBuilder.group({
-            hourOfDay: [null, [Validators.required, Validators.min(0), Validators.max(23)]],
-            dayOfWeekend: [null, [Validators.required, Validators.min(1), Validators.max(3)]],
-            timeMultiplier: [null, [Validators.required, Validators.min(0), Validators.max(24)]],
-            sessionType: [null, [Validators.required]],
-            sessionDurationMinutes: [null, [Validators.required, Validators.min(0)]],
+            hourOfDay: [session.hourOfDay, [Validators.required, Validators.min(0), Validators.max(23), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
+            dayOfWeekend: [session.dayOfWeekend, [Validators.required, Validators.min(1), Validators.max(3), Validators.pattern('[0-3]')]],
+            timeMultiplier: [session.timeMultiplier, [Validators.required, Validators.min(0), Validators.max(24), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
+            sessionType: [session.sessionType, [Validators.required]],
+            sessionDurationMinutes: [session.sessionDurationMinutes, [Validators.required, Validators.min(0), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
         })
     }
 }

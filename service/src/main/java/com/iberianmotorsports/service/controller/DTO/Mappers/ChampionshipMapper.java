@@ -40,6 +40,9 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
         championship.setImageContent(championshipDTO.imageContent());
         championship.setStartDate(championshipDTO.startDate());
         championship.setRaceList(championshipDTO.raceList().stream().map(raceMapper).toList());
+        championship.setDisabled(championshipDTO.disabled());
+        championship.setCategoryList(championshipDTO.championshipCategoryList()
+                .stream().map(championshipCategoryMapper).toList());
         return championship;
     }
 }

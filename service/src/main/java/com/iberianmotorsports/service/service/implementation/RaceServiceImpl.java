@@ -53,12 +53,12 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public Race saveRace(RaceDTO raceDTO) {
+        if (raceDTO.id() != null) {
+            return updateRace(raceDTO);
+        }
         Race race = raceMapper.apply(raceDTO);
-        race.setId(null);
-        race.setRaceRules(null);
         race.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
         Race savedRace = raceRepository.save(race);
-
         if(raceDTO.sessionDTOList() != null) {
             if(!validateSessionForRace(raceDTO.sessionDTOList()))
                 throw new ServiceException(ErrorMessages.RACE_SESSION_TYPE_MISSING.getDescription());
@@ -113,6 +113,7 @@ public class RaceServiceImpl implements RaceService {
         raceToUpdate.setPostRaceSeconds(race.getPostRaceSeconds());
         raceToUpdate.setServerName(race.getServerName());
         raceToUpdate.setStartDate(race.getStartDate());
+        raceToUpdate.setChampionship(race.getChampionship());
         return raceRepository.save(raceToUpdate);
     }
 

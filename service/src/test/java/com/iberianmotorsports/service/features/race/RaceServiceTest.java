@@ -8,6 +8,7 @@ import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.*;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.model.Race;
+import com.iberianmotorsports.service.repository.ChampionshipCategoryRepository;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
@@ -58,6 +59,7 @@ public class RaceServiceTest {
     private RaceRulesMapper raceRulesMapper;
     private RaceRulesDTOMapper raceRulesDTOMapper;
     private RaceRulesService raceRulesService;
+    private ChampionshipCategoryRepository championshipCategoryRepository;
 
 
 
@@ -72,7 +74,7 @@ public class RaceServiceTest {
         championshipMapper = new ChampionshipMapper();
         raceMapper = new RaceMapper(raceRulesMapper, sessionMapper);
         raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper);
-        championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
+        championshipService = new ChampionshipServiceImpl(championshipRepository, championshipCategoryRepository);
         raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService);
     }
 

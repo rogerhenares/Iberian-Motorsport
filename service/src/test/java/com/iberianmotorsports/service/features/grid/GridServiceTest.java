@@ -52,6 +52,8 @@ public class GridServiceTest {
     private UserRepository userRepository;
     @Mock
     private RoleRepository roleRepository;
+    @Mock
+    private SanctionRepository sanctionRepository;
     private CarMapper carMapper;
     private CarDTOMapper carDTOMapper;
     private UserMapper userMapper;
@@ -78,7 +80,7 @@ public class GridServiceTest {
         gridDTOMapper = new GridDTOMapper(championshipDTOMapper, userDTOMapper, carDTOMapper);
         userService = new UserServiceImpl(userRepository, roleRepository, restTemplate, environment);
         championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
-        gridService = new GridServiceImpl(championshipService, userService, carService, gridRepository, gridUserRepository, gridMapper, gridDTOMapper);
+        gridService = new GridServiceImpl(championshipService, userService, carService, gridRepository, gridUserRepository, gridMapper, gridDTOMapper, sanctionRepository);
     }
 
 

@@ -23,27 +23,18 @@ import java.util.stream.Collectors;
 public class GridMapper implements Function<GridDTO, Grid> {
 
     CarMapper carMapper;
-    ChampionshipMapper championshipMapper;
     UserMapper userMapper;
 
     @Override
     public Grid apply(GridDTO gridDTO) {
         Grid grid = new Grid();
-        Car car = new Car();
         Championship championship = new Championship();
-        // ... other code ...
-
-        List<User> drivers = Collections.emptyList();
-        if (gridDTO.driversList() != null) {
-            drivers = gridDTO.driversList().stream()
-                    .map(driverSteamId -> {
-                        User user = new User();
-                        user.setSteamId(driverSteamId);
-                        return user;
-                    })
-                    .toList();
-        }
-        grid.setDrivers(drivers);
+        championship.setId(gridDTO.championshipId());
+        grid.setCarLicense(grid.getCarLicense());
+        grid.setCarNumber(grid.getCarNumber());
+        grid.setChampionship(championship);
+        grid.setCar(carMapper.apply(gridDTO.car()));
+        grid.setDrivers(gridDTO.driversList().stream().map(userMapper).toList());
         return grid;
     }
 }

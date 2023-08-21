@@ -7,27 +7,29 @@
             </div>
             <mat-stepper style="background: #212121">
                 <mat-step [stepControl]="raceForm">
-                    <app-race-form (formSubmitted)="raceSubmit()" [formGroup]="raceForm"></app-race-form>
+                    <app-race-form #raceFormComponent [race]="race"></app-race-form>
                     <div>
                         <button mat-button matStepperPrevious>Back</button>
                         <button mat-button matStepperNext>Next</button>
                     </div>
                 </mat-step>
-                <mat-step [stepControl]="sessionForm">
-                    <app-session-form (formSubmitted)="sessionSubmit()" [formGroup]="sessionForm"></app-session-form>
-                    <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button>
-                    </div>
-                </mat-step>
+                <ng-container *ngFor="let session of sessionList">
+                    <mat-step [stepControl]="sessionForm">
+                        <app-session-form #sessionFormComponent [session]="session"></app-session-form>
+                        <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button (click)="validateSession()">Next</button>
+                        </div>
+                    </mat-step>
+                </ng-container>
                 <mat-step [stepControl]="raceRulesForm">
-                    <app-race-rules-form (formSubmitted)="raceRulesSubmit()" [formGroup]="raceRulesForm"></app-race-rules-form>
+                    <app-race-rules-form #raceRulesFormComponent [raceRules]="raceRules"></app-race-rules-form>
                     <div>
                         <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button>
+                        <button mat-button (click)="validateRaceRules()">Next</button>
                     </div>
                     <div class="btn-block">
-                        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                        <button id="submit" type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
                     </div>
                 </mat-step>
             </mat-stepper>

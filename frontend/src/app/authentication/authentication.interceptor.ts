@@ -9,6 +9,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
     constructor(public appContext: AppContext) { }
 
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const headers = req.headers;
         const headerAuthorization = headers.get('Authorization');
