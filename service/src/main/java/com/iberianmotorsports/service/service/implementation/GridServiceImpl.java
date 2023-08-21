@@ -107,6 +107,17 @@ public class GridServiceImpl  implements GridService {
         return grid;
     }
 
+    @Override
+    public void deleteGrid(Long gridId) {
+        Grid grid = getGrid(gridId);
+        if(grid.getGridRaceList().isEmpty()) {
+            gridRepository.delete(grid);
+        } else {
+            grid.setDisabled(Boolean.TRUE);
+            gridRepository.save(grid);
+        }
+    }
+
     private void validateCarNumberForChampionship(Long championshipId, Integer carNumber){
         Optional<Grid> optionalGrid = gridRepository.findGridByChampionshipIdAndCarNumber(championshipId, carNumber);
         if(optionalGrid.isPresent()) {
@@ -159,6 +170,11 @@ public class GridServiceImpl  implements GridService {
             }
         }
         return Boolean.FALSE;
+    }
+
+    @Override
+    public List<Grid> getGridForUser(User user) {
+        return gridRepository.findGridsByDriversContainsAndDisabledIsFalse(user);
     }
 
     private void setGridManager(Long steamId, Long gridId){

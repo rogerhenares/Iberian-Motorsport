@@ -1,7 +1,6 @@
 package com.iberianmotorsports.service.controller.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.iberianmotorsports.service.model.Race;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -5,12 +5,11 @@ import {catchError, tap} from "rxjs/operators";
 import {handleError} from "../util/Error.handler";
 import {Race} from "../model/Race";
 import {Page} from "../model/Page";
-import {RaceRules} from "../model/RaceRules";
 
 @Injectable()
 export class RaceService {
 
-    private url: string = environment.apiPath + 'race/';
+    private url: string = environment.apiPath + 'race';
 
     constructor(
         private httpClient: HttpClient
@@ -34,7 +33,7 @@ export class RaceService {
     }
 
     getRaceById(raceId: Number, errorNotify?: any) {
-        const url = this.url + raceId;
+        const url = this.url + '/' + raceId;
         return this.httpClient.get<Race>(url)
             .pipe(
                 tap(user => console.log('fetched Race by raceId')),
@@ -64,7 +63,7 @@ export class RaceService {
     }
 
     deleteRace(raceId: Number, errorNotify?: any) {
-        let url = this.url + raceId;
+        let url = this.url + '/' + raceId;
         return this.httpClient.delete<Race>(url)
             .pipe(
                 tap(response => console.log('delete Race')),

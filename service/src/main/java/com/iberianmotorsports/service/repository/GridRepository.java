@@ -13,6 +13,6 @@ public interface GridRepository extends JpaRepository<Grid, Long> {
 
     List<Grid> findGridsByChampionshipId(Long championshipId);
     Optional<Grid> findGridByChampionshipIdAndDriversContains(Long championshipId, User driver);
-
     Optional<Grid> findGridByChampionshipIdAndCarNumber(Long championshipId, Integer carNumber);
+    List<Grid> findGridsByDriversContainsAndDisabledIsFalse(User user);
 }

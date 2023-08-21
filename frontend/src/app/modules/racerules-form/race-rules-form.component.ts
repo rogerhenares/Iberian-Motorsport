@@ -47,21 +47,21 @@ export class RaceRulesFormComponent {
         }
     }
 
-    raceRulesFormBuilder() {
+    raceRulesFormBuilder(raceRules: RaceRules) {
         this.raceRulesFormSubmitted = false;
         this.raceRulesForm = this.formBuilder.group({
-            qualifyStandingType: [null, [Validators.required, Validators.min(1), Validators.max(2)]],
-            pitWindowLengthSec: [null, [Validators.required, Validators.min((-1))]],
-            driverStintTimeSec: [null, [Validators.required, Validators.min((-1))]],
-            mandatoryPitstopCount: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
-            maxTotalDrivingTime: [null, [Validators.required, Validators.min((-1))]],
-            maxDriversCount: [null, [Validators.required, Validators.min(1)]],
-            isRefuellingAllowedInRace: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
-            isRefuellingTimeFixed: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
-            isMandatoryPitstopRefuellingRequired: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
-            isMandatoryPitstopTyreChangeRequired: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
-            isMandatoryPitstopSwapDriverRequired: [null, [Validators.required, Validators.min(0), Validators.max(1)]],
-            tyreSetCount: [null, [Validators.required]]
+            qualifyStandingType: [raceRules.qualifyStandingType, [Validators.required, Validators.min(1), Validators.max(2), Validators.pattern('[0-2]')]],
+            pitWindowLengthSec: [raceRules.pitWindowLengthSec, [Validators.required, Validators.min((-1)), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
+            driverStintTimeSec: [raceRules.driverStintTimeSec, [Validators.required, Validators.min((-1)), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
+            mandatoryPitstopCount: [raceRules.mandatoryPitstopCount, [Validators.required, Validators.min(0), Validators.max(1), Validators.pattern('[0-1]')]],
+            maxTotalDrivingTime: [raceRules.maxTotalDrivingTime, [Validators.required, Validators.min((-1)), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
+            maxDriversCount: [raceRules.maxDriversCount, [Validators.required, Validators.min(1), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
+            isRefuellingAllowedInRace: [raceRules.isRefuellingAllowedInRace || 0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            isRefuellingTimeFixed: [raceRules.isRefuellingTimeFixed || 0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            isMandatoryPitstopRefuellingRequired: [raceRules.isMandatoryPitstopRefuellingRequired || 0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            isMandatoryPitstopTyreChangeRequired: [raceRules.isMandatoryPitstopTyreChangeRequired || 0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            isMandatoryPitstopSwapDriverRequired: [raceRules.isMandatoryPitstopSwapDriverRequired || 0, [Validators.required, Validators.min(0), Validators.max(1)]],
+            tyreSetCount: [raceRules.tyreSetCount, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]]
         })
     }
 }

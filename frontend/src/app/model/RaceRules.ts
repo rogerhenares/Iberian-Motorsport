@@ -1,3 +1,5 @@
+import {Race} from "./Race";
+
 export class RaceRules  {
     id: number;
     qualifyStandingType: number;
@@ -29,5 +31,11 @@ export class RaceRules  {
         this.isMandatoryPitstopSwapDriverRequired= null;
         this.tyreSetCount= null;
         this.raceId = null;
+    }
+
+    static defaultRaceRuleWithValues(): RaceRules {
+        //TODO in the future :D
+        let raceRule = new RaceRules();
+        return raceRule;
     }
 }

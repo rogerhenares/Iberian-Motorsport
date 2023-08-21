@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.service;
 
 import com.iberianmotorsports.service.controller.DTO.GridDTO;
 import com.iberianmotorsports.service.model.Grid;
+import com.iberianmotorsports.service.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface GridService {
 
     List<Grid> getGridForChampionship(Long championshipId);
 
+    List<Grid> getGridForUser(User user);
+
     Grid createGridEntry(GridDTO gridDTO);
 
     Grid updateGridCar(Long gridId , Long carId);
@@ -22,5 +25,7 @@ public interface GridService {
     void addDriver(Long gridId, Long steamId);
 
     void removeDriver(Long gridId, Long steamId);
+
+    void deleteGrid(Long gridId);
 
 }

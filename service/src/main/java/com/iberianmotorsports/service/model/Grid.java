@@ -31,9 +31,12 @@ public class Grid implements Serializable {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "championship_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "championship_id", nullable = false)
     private Championship championship;
+
+    @Column(name = "disabled")
+    private Boolean disabled;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

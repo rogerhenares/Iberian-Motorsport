@@ -5,12 +5,12 @@
                 <h4 class="card-title">New Race</h4>
                 <p class="card-category">Create a new Race</p>
             </div>
-            <mat-stepper style="background: #212121">
+            <mat-stepper style="background: #212121" #stepper>
                 <mat-step [stepControl]="raceForm">
                     <app-race-form #raceFormComponent [race]="race"></app-race-form>
                     <div>
                         <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button>
+                        <button mat-button (click)="validateRace()">Next</button>
                     </div>
                 </mat-step>
                 <ng-container *ngFor="let session of sessionList">

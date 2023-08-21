@@ -39,6 +39,15 @@ public class Championship implements Serializable {
     @Column(name = "car_group")
     private String carGroup;
 
+    @Column(name = "disabled")
+    private Boolean disabled;
+
+    @Column(name = "finished")
+    private Boolean finished;
+
+    @Column(name = "started")
+    private Boolean started;
+
     @NotNull
     @Range(min=0, max=3)
     @Column(name = "track_medals_requirement")
@@ -105,4 +114,14 @@ public class Championship implements Serializable {
     @ToString.Exclude
     private List<Race> raceList;
 
+    @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private List<Grid> gridList;
+
+    @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private List<ChampionshipCategory> categoryList;
+
+    @Transient
+    private List<Car> carListForChampionship;
 }

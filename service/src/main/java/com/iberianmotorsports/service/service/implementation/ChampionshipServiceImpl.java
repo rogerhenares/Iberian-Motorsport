@@ -5,19 +5,27 @@ import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipMapper;
 import com.iberianmotorsports.service.model.Championship;
+import com.iberianmotorsports.service.model.ChampionshipCategory;
+import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.model.criteria.CriteriaChampionship;
+import com.iberianmotorsports.service.repository.ChampionshipCategoryRepository;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
+import com.iberianmotorsports.service.service.CarService;
 import com.iberianmotorsports.service.service.ChampionshipService;
+import com.iberianmotorsports.service.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -25,22 +33,20 @@ import java.util.Optional;
 @Service("ChampionshipService")
 public class ChampionshipServiceImpl implements ChampionshipService {
 
-    //TODO create a list of available cars for championship
-
-    @Autowired
     private ChampionshipRepository championshipRepository;
     private ChampionshipCategoryRepository championshipCategoryRepository;
     private UserService userService;
     private CarService carService;
     private ChampionshipMapper championshipMapper;
 
-
     @Override
     public Championship saveChampionship(ChampionshipDTO championshipDTO) {
         Championship championship = championshipMapper.apply(championshipDTO);
         if (isInDatabase(championship.getName()))
             throw new ServiceException(ErrorMessages.DUPLICATED_CHAMPIONSHIP.getDescription());
-        return championshipRepository.save(championship);
+        Championship createdChampionship = championshipRepository.save(championship);
+        saveChampionshipCategoryForChamp(createdChampionship);
+        return createdChampionship;
     }
 
     @Override
@@ -48,6 +54,10 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         Optional<Championship> championshipOptional = championshipRepository.findById(id);
         if (championshipOptional.isEmpty())
             throw new ServiceException(ErrorMessages.CHAMPIONSHIP_NOT_IN_DB.getDescription());
+        championshipOptional.get().setCarListForChampionship(
+                carService.getCarsByCategories(
+                        getCategoriesForChampionship(championshipOptional.get()))
+        );
         return championshipOptional.orElse(null);
     }
 
@@ -57,6 +67,31 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         if (championshipOptional.isEmpty())
             throw new ServiceException(ErrorMessages.CHAMPIONSHIP_NOT_IN_DB.getDescription());
         return championshipOptional.orElse(null);
+    }
+
+    @Override
+    public Page<Championship> findChampionshipByCriteria(CriteriaChampionship criteriaChampionship, Pageable pageable) {
+        if(criteriaChampionship.getLogged()) {
+            Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedUser = userService.findUserBySteamId(steamId);
+            return championshipRepository.findByLoggedUser(loggedUser, pageable);
+        }
+        return championshipRepository.findByDisabledAndStartedAndFinished(
+                criteriaChampionship.getDisabled(),
+                criteriaChampionship.getStarted(),
+                criteriaChampionship.getFinished(),
+                LocalDateTime.now(),
+                pageable);
+    }
+
+    @Override
+    public Page<Championship> findChampionshipByLoggedUser(Pageable pageable) {
+        Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = userService.findUserBySteamId(steamId);
+
+        Page<Championship> championshipForLoggedUser =
+                championshipRepository.findByLoggedUser(loggedUser, pageable);
+        return championshipForLoggedUser;
     }
 
     @Override
@@ -108,4 +143,29 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         }
     }
 
+    private List<String> getCategoriesForChampionship(Championship championship) {
+        return championship.getCategoryList().stream()
+                .map(ChampionshipCategory::getCategory)
+                .toList();
+    }
+
+    private void saveChampionshipCategoryForChamp(Championship championship) {
+        Integer totalCarsFromCategories = championship.getCategoryList()
+                .stream()
+                .mapToInt(ChampionshipCategory::getMax)
+                .sum();
+        if(!championship.getMaxCarSlots().equals(totalCarsFromCategories)) {
+            throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
+        }
+        List<ChampionshipCategory> championshipCategoryList = championship.getCategoryList().stream()
+                .map(championshipCategory -> {
+                    if(carService.validateCategory(championshipCategory.getCategory())){
+                        throw new ServiceException(ErrorMessages.CATEGORY_NOT_FOUND.getDescription());
+                    }
+                    championshipCategory.setChampionship(championship);
+                    return championshipCategory;
+                })
+                .toList();
+        this.championshipCategoryRepository.saveAll(championshipCategoryList);
+    }
 }

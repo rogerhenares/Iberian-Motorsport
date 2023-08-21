@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
+import com.iberianmotorsports.service.model.ChampionshipCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
 
     @Autowired
     RaceMapper raceMapper;
+
+    @Autowired
+    ChampionshipCategoryMapper championshipCategoryMapper;
 
     @Override
     public Championship apply(ChampionshipDTO championshipDTO) {

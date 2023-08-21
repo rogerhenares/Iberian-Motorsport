@@ -1,4 +1,6 @@
 import {Race} from "./Race";
+import {Car} from "./Car";
+import {ChampionshipCategory} from "./ChampionshipCategory";
 
 export class Championship {
     id: number;
@@ -24,9 +26,13 @@ export class Championship {
     imageContent: string;
     startDate: string;
     raceList: Array<Race>;
+    nextRace: Race;
+    disabled: boolean;
+    championshipCategoryList: Array<ChampionshipCategory>;
+    carList: Array<Car>;
 
     constructor() {
-        this.id = null;
+        this.id = -1;
         this.name= '';
         this.description= '';
         this.adminPassword= '';

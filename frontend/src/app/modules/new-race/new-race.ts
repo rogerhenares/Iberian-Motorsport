@@ -90,4 +90,44 @@ export class NewRace {
         }
     }
 
+    validateRace(): boolean {
+        this.raceFormComponent.raceFormSubmitted = true;
+        let isRaceValid = this.raceFormComponent.raceForm.valid;
+        console.log("isRaceValid -> ", isRaceValid);
+        if(isRaceValid == true) {
+            this.updateSessionList();
+            this.stepper.next();
+        }
+        return isRaceValid;
+    }
+
+    validateSession(){
+        this.sessionFormComponent.sessionFormSubmitted = true;
+        let isSessionValid: boolean = this.sessionFormComponent.sessionForm.valid;
+        if(isSessionValid == true) {
+            this.stepper.next();
+        }
+        return isSessionValid;
+    }
+
+    validateRaceRules() {
+        this.raceRulesFormComponent.raceRulesFormSubmitted = true;
+        let isRaceRulesValid: boolean = this.raceRulesFormComponent.raceRulesForm.valid;
+        if (isRaceRulesValid == true) {
+            this.stepper.next();
+        }
+        return isRaceRulesValid;
+    }
+
+    updateSessionList(): void{
+        const raceData = this.raceFormComponent.raceForm.value;
+        if(this.sessionList.length < raceData.sessionCount) {
+            for (let i = this.sessionList.length ; i < raceData.sessionCount; i++)
+                this.sessionList.push(new Session());
+        }
+        if(this.sessionList.length > raceData.sessionCount) {
+            for (let i = this.sessionList.length - 1 ; i >= raceData.sessionCount; i--)
+                this.sessionList.splice(i, 1);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipDTOMapp
 import com.iberianmotorsports.service.controller.DTO.Mappers.ChampionshipMapper;
 import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.controller.DTO.MessageResponse;
+import com.iberianmotorsports.service.model.criteria.CriteriaChampionship;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -50,9 +51,41 @@ public class ChampionshipController {
         return new ResponseEntity<Object>(foundChampionshipDTO, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping(value = "/all")
     public ResponseEntity<?> getAllChampionships(Pageable pageRequest) throws ServiceException{
         Page<ChampionshipDTO> championshipList = championshipService.findAllChampionships(pageRequest).map(championshipDTOMapper);
+        return new ResponseEntity<Object>(championshipList, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getChampionshipsForLoggedUser(Pageable pageRequest) throws ServiceException{
+        Page<ChampionshipDTO> championshipList = championshipService.findChampionshipByLoggedUser(pageRequest)
+                .map(championshipDTOMapper);
+        return new ResponseEntity<Object>(championshipList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filtered")
+    public ResponseEntity<?> getChampionshipsForLoggedUser(@RequestParam(required = false, defaultValue = "false") Boolean finished,
+                                                           @RequestParam(required = false, defaultValue = "false") Boolean started,
+                                                           @RequestParam(required = false, defaultValue = "false") Boolean logged,
+                                                           Pageable pageRequest) throws ServiceException{
+        Page<ChampionshipDTO> championshipList = championshipService.findChampionshipByCriteria(
+                    new CriteriaChampionship(Boolean.FALSE, finished, started, logged),
+                    pageRequest)
+            .map(championshipDTOMapper);
+        return new ResponseEntity<Object>(championshipList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/admin/filtered")
+    public ResponseEntity<?> getChampionshipDisabled(@RequestParam(required = false, defaultValue = "false") Boolean disabled,
+                                                     @RequestParam(required = false, defaultValue = "false") Boolean finished,
+                                                     @RequestParam(required = false, defaultValue = "false") Boolean started,
+                                                     @RequestParam(required = false, defaultValue = "false") Boolean logged,
+                                                     Pageable pageRequest) throws ServiceException{
+        Page<ChampionshipDTO> championshipList = championshipService.findChampionshipByCriteria(
+                        new CriteriaChampionship(disabled, finished, started, logged),
+                        pageRequest)
+                .map(championshipDTOMapper);
         return new ResponseEntity<Object>(championshipList, HttpStatus.OK);
     }
 

@@ -15,4 +15,6 @@ public interface CarService {
     Car getCarById(Long carId);
 
     Boolean isCarCategory(Long carId, String category);
+
+    Boolean validateCategory(String category);
 }

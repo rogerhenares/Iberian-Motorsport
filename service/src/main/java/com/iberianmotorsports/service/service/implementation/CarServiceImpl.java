@@ -10,6 +10,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -42,5 +43,10 @@ public class CarServiceImpl implements CarService {
     public Boolean isCarCategory(Long carId, String category) {
         Car car = getCarById(carId);
         return car.getCategory().equals(category);
+    }
+
+    @Override
+    public Boolean validateCategory(String category) {
+        return !getCarsByCategories(Collections.singletonList(category)).isEmpty();
     }
 }

@@ -33,6 +33,8 @@ public enum ErrorMessages {
     RACE_SESSION_TYPE_MISSING(29, "Each race must have all session type defined (P, Q, R)"),
     SANCTION_NOT_FOUND(30, "Sanction with id not found"),
     GRID_RACE_NOT_FOUND(31, "Grid for Race not found"),
+    CHAMPIONSHIP_CATEGORY_MAX_CAR_SLOTS(32, "Max car slots for championship must match with Categories max slots"),
+    CATEGORY_NOT_FOUND(33, "Category not found"),
 
     DEFAULT(999, "");
 
