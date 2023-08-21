@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -54,7 +55,11 @@ public class SecurityConfig  {
                 .formLogin()
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new SteamLoginConfiguration());
+                    .authenticationEntryPoint(new SteamLoginConfiguration());
+                //.and()
+                //.apply(new ExceptionHandlingConfigurer<>()) // Add this line
+                //.and()
+                //.csrf().disable();
         return http.build();
     }
 

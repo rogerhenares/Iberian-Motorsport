@@ -24,6 +24,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             retry(0),
             catchError((error: HttpErrorResponse) => {
+                console.log("ERROR INTERCEPTOR -> ", error);
                 if (error instanceof HttpErrorResponse && error.status === 403) {
                     this.appContext.clearUser();
                     window.location.href = error.headers.get("Location");
