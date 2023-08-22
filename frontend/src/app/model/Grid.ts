@@ -5,8 +5,8 @@ import {Car} from "./Car";
 export class Grid {
     id: number;
     carNumber: number;
+    teamName: string;
     carLicense: string;
-    carId: number;
     championshipId: number;
     driversList: Array<User>;
     car: Car;
@@ -16,7 +16,7 @@ export class Grid {
         this.id = null;
         this.carNumber = null;
         this.carLicense = "";
-        this.carId = null;
+        this.teamName = "";
         this.championshipId = null;
         this.driversList = [];
         this.car = null;

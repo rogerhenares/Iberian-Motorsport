@@ -8,10 +8,13 @@ import com.iberianmotorsports.service.controller.DTO.SanctionDTO;
 import com.iberianmotorsports.service.model.Sanction;
 import com.iberianmotorsports.service.service.SanctionService;
 import lombok.RequiredArgsConstructor;
+import org.jose4j.http.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/sanction")
 @RequiredArgsConstructor
@@ -29,6 +32,7 @@ public class SanctionController {
         Sanction savedSanction = sanctionService.createSanction(sanctionDTO);
         return new ResponseEntity<Object>(savedSanction,HttpStatus.OK);
     }
+
 
    @DeleteMapping(value="/delete/{id}")
    public ResponseEntity<?> deleteSanction(@PathVariable("id")Long sanctionId) throws ServiceException {

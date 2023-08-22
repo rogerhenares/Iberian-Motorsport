@@ -24,7 +24,7 @@
                                     <mat-form-field>
                                         <mat-label>Car</mat-label>
                                         <mat-select formControlName="car"  style="color: white">
-                                            <mat-option *ngFor="let car of this.championship.carList" [value]="car.model">
+                                            <mat-option *ngFor="let car of this.championship.carList" [value]="car">
                                                 {{car.manufacturer}} - {{car.model}}
                                             </mat-option>
                                         </mat-select>

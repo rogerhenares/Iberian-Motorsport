@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @Transactional
@@ -28,14 +30,13 @@ public class SanctionServiceImpl implements SanctionService {
 
     SanctionDTOMapper sanctionDTOMapper;
 
+
     @Override
     public Sanction createSanction(SanctionDTO sanctionDTO) {
-        GridRace gridRace = gridRaceService.getGridRace(sanctionDTO.gridId(), sanctionDTO.raceId());
-        Sanction sanction = sanctionMapper.apply(sanctionDTO);
-        sanctionRepository.save(sanction);
-        //gridRaceService.calculateGridRace(gridRace.getRace().getId());
-        return sanction;
+        GridRace gridRace = gridRaceService.getGridRace(sanctionDTO.gridId(), sanctionDTO.raceId());;
+        return sanctionRepository.save(sanctionMapper.apply(sanctionDTO));
     }
+
 
     @Override
     public void deleteSanction(Long sanctionId) throws ServiceException {
