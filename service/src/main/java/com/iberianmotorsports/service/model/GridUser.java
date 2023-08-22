@@ -16,12 +16,4 @@ public class GridUser implements Serializable {
 
     @Column(name = "grid_manager", nullable = false)
     private boolean gridManager;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "grid_id", referencedColumnName = "id")
-    private Grid grid;
 }

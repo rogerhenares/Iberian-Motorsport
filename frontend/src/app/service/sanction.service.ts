@@ -7,7 +7,7 @@ import {handleError} from "../util/Error.handler";
 
 @Injectable()
 export class SanctionService {
-    private url: string = environment.apiPath + '/sanction';
+    private url: string = environment.apiPath + 'sanction';
 
     constructor(
         private httpClient: HttpClient
@@ -19,6 +19,15 @@ export class SanctionService {
             .pipe(
                 tap(sanction => console.log('Saved Sanction')),
                 catchError(handleError('SanctionService -> createSanction', null, errorNotify))
+            )
+    }
+
+    getSanctionList(raceId: Number, gridId: Number, errorNotify?: any){
+        const  url: string= this.url + '/get/' + raceId + '/' + gridId;
+        return this.httpClient.get<Sanction[]>(url)
+            .pipe(
+                tap(sanction => console.log('Sanction retrieved')),
+                catchError(handleError('SanctionService -> getSanctionList', null, errorNotify))
             )
     }
 

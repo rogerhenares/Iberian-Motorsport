@@ -64,9 +64,10 @@ public class GridServiceImpl  implements GridService {
         loadDriversForGrid(grid);
         grid.setChampionship(championshipService.findChampionshipById(grid.getChampionship().getId()));
         grid.setCar(carService.getCarById(grid.getCar().getId()));
-        Grid createdGrid = gridRepository.save(grid);
-        //TODO validate
-        setGridManager(grid.getDrivers().get(0).getSteamId(), createdGrid.getId());
+        grid.setCarLicense("PRO");
+        grid.setDisabled(Boolean.FALSE);
+        Grid createdGrid = gridRepository.saveAndFlush(grid);
+        setGridManager(grid.getDrivers().stream().findFirst().get(), grid);
         return grid;
     }
 
@@ -143,7 +144,7 @@ public class GridServiceImpl  implements GridService {
 
     private User getGridManager(Grid grid) {
         GridUser gridManager = gridUserRepository.findGridUserByPrimaryKeyGridIdAndGridManagerTrue(grid.getId().intValue());
-        return gridManager.getUser();
+        return gridManager.getPrimaryKey().getUser();
     }
 
     private Boolean isDriverOnChampionship(Long steamId, Long championshipId){
@@ -177,8 +178,8 @@ public class GridServiceImpl  implements GridService {
         return gridRepository.findGridsByDriversContainsAndDisabledIsFalse(user);
     }
 
-    private void setGridManager(Long steamId, Long gridId){
-        GridUserPrimaryKey gridUserPrimaryKey = new GridUserPrimaryKey(steamId, gridId.longValue());
+    private void setGridManager (User driver, Grid grid) {
+        GridUserPrimaryKey gridUserPrimaryKey = new GridUserPrimaryKey(driver, grid);
         GridUser gridManager = gridUserRepository.findById(gridUserPrimaryKey).orElseThrow(() ->
                 new ServiceException(ErrorMessages.GRID_USER_NOT_FOUND.getDescription()));
         gridManager.setGridManager(Boolean.TRUE);

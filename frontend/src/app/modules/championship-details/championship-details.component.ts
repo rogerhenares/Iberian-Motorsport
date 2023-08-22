@@ -121,9 +121,9 @@ export class ChampionshipDetailsComponent implements OnInit {
     }
 
     joinChampionship() {
-        let championshipId: number = this.championship.id
-        console.log("ChampionshipId", championshipId)
-        this.router.navigate(['/join'], { state: { championshipId: championshipId} });
+        let championship: Championship = this.championship
+        console.log("Championship", championship)
+        this.router.navigate(['/join'], { state: { championship: championship} });
     }
 
 }

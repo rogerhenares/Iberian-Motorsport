@@ -6,6 +6,7 @@ public record GridDTO(
         Long id,
         Integer carNumber,
         String carLicense,
+        String teamName,
         Long championshipId,
         CarDTO car,
         List<UserDTO> driversList,

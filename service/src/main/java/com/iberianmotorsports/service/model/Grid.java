@@ -23,6 +23,10 @@ public class Grid implements Serializable {
     @Column(name = "car_number")
     private Integer carNumber;
 
+    @NotNull
+    @Column(name = "team_name")
+    private String teamName;
+
     @NotBlank
     @Column(name = "car_license")
     private String carLicense;
@@ -38,7 +42,7 @@ public class Grid implements Serializable {
     @Column(name = "disabled")
     private Boolean disabled;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "GRID_USER",
             joinColumns = @JoinColumn(name = "grid_id"),

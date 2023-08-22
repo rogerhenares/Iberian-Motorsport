@@ -30,9 +30,10 @@ public class GridMapper implements Function<GridDTO, Grid> {
         Grid grid = new Grid();
         Championship championship = new Championship();
         championship.setId(gridDTO.championshipId());
-        grid.setCarLicense(grid.getCarLicense());
-        grid.setCarNumber(grid.getCarNumber());
+        grid.setCarLicense(gridDTO.carLicense());
+        grid.setCarNumber(gridDTO.carNumber());
         grid.setChampionship(championship);
+        grid.setTeamName(gridDTO.teamName());
         grid.setCar(carMapper.apply(gridDTO.car()));
         grid.setDrivers(gridDTO.driversList().stream().map(userMapper).toList());
         return grid;

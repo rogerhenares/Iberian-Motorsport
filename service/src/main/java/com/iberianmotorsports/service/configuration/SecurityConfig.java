@@ -43,23 +43,23 @@ public class SecurityConfig  {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //RequestMatcher adminUrls = new AntPathRequestMatcher("/**/admin/**");
+        RequestMatcher adminUrls = new AntPathRequestMatcher("/**/admin/**");
 
         http
                 .addFilterBefore(new SteamTokenValidation(authService), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
                     .requestMatchers(AUTH_WHITE_LIST).permitAll()
-                    //.requestMatchers(adminUrls).hasAnyAuthority(ADMIN)
+                    .requestMatchers(adminUrls).hasAnyAuthority(ADMIN)
                     .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .and()
                 .exceptionHandling()
-                    .authenticationEntryPoint(new SteamLoginConfiguration());
-                //.and()
-                //.apply(new ExceptionHandlingConfigurer<>()) // Add this line
-                //.and()
-                //.csrf().disable();
+                    .authenticationEntryPoint(new SteamLoginConfiguration())
+                .and()
+                .apply(new ExceptionHandlingConfigurer<>()) // Add this line
+                .and()
+                .csrf().disable();
         return http.build();
     }
 

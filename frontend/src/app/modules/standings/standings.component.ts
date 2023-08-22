@@ -14,6 +14,7 @@ export class StandingsComponent implements OnInit, OnChanges {
     @Input() selectedRace: Race;
     @Input() selectedChampionship: Championship;
     grid: Array<Grid>;
+    selectedGrid: Grid;
 
     constructor(
         private gridService: GridService,
@@ -44,6 +45,7 @@ export class StandingsComponent implements OnInit, OnChanges {
             );
         }
     }
+
 
     isGridFromLoggedUser(grid: Grid): boolean {
         return grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;

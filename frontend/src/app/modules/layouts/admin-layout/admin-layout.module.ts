@@ -39,6 +39,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {JoinChampionshipComponent} from "../../join-championship/join-championship.component";
 import {ChampionshipComponent} from "../../championship/championship.component";
 import {RaceListComponent} from "../../race-list/race-list.component";
+import {SanctionsComponent} from "../../sanctions/sanctions.component";
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import {RaceListComponent} from "../../race-list/race-list.component";
     StandingsComponent,
     ResultsComponent,
     JoinChampionshipComponent,
-    RaceListComponent
+    RaceListComponent,
+    SanctionsComponent
   ]
 })
 
