@@ -6,18 +6,18 @@
         <thead class=" text-primary">
             <th class="teamHeader">TEAM</th>
             <th class="lapHeader">LAP</th>
-            <th class="sectorHeader">SECTOR</th>
-            <th class="timeHeader">TIME</th>
-            <th class="descriptionHeader">DESCRIPTION</th>
+            <th class="penaltyHeader">PENALTY</th>
+            <th class="reasonHeader">REASON</th>
+            <th class="inGameHeader">IN GAME</th>
         </thead>
         <ng-container *ngFor="let sanction of sanctionsList; let i = index">
             <tbody>
                 <tr [ngClass]="{'selected': isSanctionForLoggedUser(sanction)}">
                     <td class="posColumn" style="text-align: left">{{sanction.grid.teamName}}</td>
                     <td class="lapColumn" style="text-align: left">{{sanction.lap}}</td>
-                    <td class="sectorColumn" style="text-align: left">{{sanction.sector}}</td>
-                    <td class="timeColumn" style="text-align: left">{{sanction.time}}</td>
-                    <td class="descriptionColumn" style="text-align: left">{{sanction.description}}</td>
+                    <td class="penaltyColumn" style="text-align: left">{{sanction.penalty}}</td>
+                    <td class="reasonColumn" style="text-align: left">{{sanction.reason}}</td>
+                    <td class="inGameColumn" style="text-align: left">{{sanction.inGame}}</td>
             </tbody>
         </ng-container>
     </ng-container>
