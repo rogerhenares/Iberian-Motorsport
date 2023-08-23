@@ -54,8 +54,6 @@ public class SecurityConfig  {
                 .and()
                 .exceptionHandling()
                     .authenticationEntryPoint(new SteamLoginConfiguration())
-                //.and()
-                //.apply(new ExceptionHandlingConfigurer<>()) // Add this line
                 .and()
                 .csrf().disable();
         return http.build();
