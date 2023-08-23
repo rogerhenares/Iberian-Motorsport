@@ -21,9 +21,9 @@ export class SanctionsComponent implements OnInit, OnChanges {
     gridRace: Array<GridRace>;
 
     constructor(
-        private gridRaceService: GridRaceService,
         private appContext: AppContext,
-        private gridService: GridService
+        private gridService: GridService,
+        private gridRaceService: GridRaceService
     ) {}
 
     ngOnInit(): void {
@@ -65,7 +65,6 @@ export class SanctionsComponent implements OnInit, OnChanges {
                     console.error('Error fetching grid race data:', error);
                 }
             )
-
         }
     }
 
