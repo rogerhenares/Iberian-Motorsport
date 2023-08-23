@@ -1,7 +1,6 @@
 package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.GridRaceDTO;
-import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.GridRace;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class GridRaceMapper implements Function<GridRaceDTO, GridRace> {
         gridRace.setSanctionList(gridRaceDTO.sanctionDTOList()
                         .stream()
                         .map(sanctionMapper).toList());
-        gridRace.setGridRacePrimaryKey(getGridRace(gridRaceDTO.grid(), gridRaceDTO.raceId()).getGridRacePrimaryKey());
+        gridRace.setGridRacePrimaryKey(getGridRace(gridRaceDTO.gridId(), gridRaceDTO.raceId()).getGridRacePrimaryKey());
         return gridRace;
     }
 

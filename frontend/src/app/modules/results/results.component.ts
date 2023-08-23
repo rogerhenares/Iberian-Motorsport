@@ -60,6 +60,7 @@ export class ResultsComponent implements OnInit, OnChanges{
             this.gridRaceService.getGridRaceForRace(this.selectedRace.id).subscribe(
                 (gridRace) => {
                     this.gridRace = gridRace;
+                    console.log("gridRace loadGridRaceForRace -> ", gridRace);
                     this.gridRace.sort((a, b) => b.points - a.points);
                     this.gridRace.forEach(gridRace => {
                         gridRace.grid = this.grid.find(grid => grid.id === gridRace.gridId);
@@ -67,6 +68,7 @@ export class ResultsComponent implements OnInit, OnChanges{
                     this.gridRaceFasterLap = Array.from(this.gridRace).sort((a,b) =>
                         (b.firstSector + b.secondSector + b.thirdSector) -
                         (a.firstSector + a.secondSector + a.thirdSector)).pop();
+                    console.log("gridRace after changes -> ",this.gridRace);
                 },
                 (error) => {
                     console.error('Error fetching grid race data:', error);
@@ -77,7 +79,7 @@ export class ResultsComponent implements OnInit, OnChanges{
     }
 
     isGridRaceForLoggedUser(gridRace: GridRace): boolean {
-        return gridRace.grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
+        return gridRace.grid?.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
     }
 
     isFasterLapGridRace(gridRace: GridRace): boolean {

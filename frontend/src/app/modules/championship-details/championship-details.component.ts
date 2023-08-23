@@ -21,7 +21,7 @@ export class ChampionshipDetailsComponent implements OnInit {
 
     races: Race[];
     selectedRace: Race;
-    upcomingRaces: Race[];
+    upcomingRaces: Race[] = [];
     championshipId: number;
     championship: Championship;
     selectedRaceId: number | null = null;
@@ -44,9 +44,10 @@ export class ChampionshipDetailsComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             const championshipId = +params.get('championshipId');
             this.fetchChampionshipDetails(championshipId);
-            console.log(this.championship)
         });
+    }
 
+    orderRacesForChampionship() {
         this.championship.raceList.forEach(race => {
             if (new Date(race.startDate.toString()) > new Date()) {
                 race.startDate = this.timezoneService.convertDateToUserTimezone(race.startDate.toString());
@@ -55,15 +56,14 @@ export class ChampionshipDetailsComponent implements OnInit {
         });
     }
 
-
     fetchChampionshipDetails(championshipId: number) {
         this.championshipService.getChampionshipById(championshipId)
             .subscribe(
                 (response: any) => {
-                    console.log('API response:', response);
+                    console.log('fetchChampionshipDetails:', response);
                     this.championship = response;
                     this.races = this.championship.raceList;
-                    // Calculate total pages after getting races
+                    this.orderRacesForChampionship();
                     this.totalPages = Math.ceil(this.races.length / this.pageable.size);
 
                     // Select the first race by default
@@ -87,7 +87,7 @@ export class ChampionshipDetailsComponent implements OnInit {
     pagedData(): Race[] {
         const start = this.pageable.page * this.pageable.size;
         const end = start + this.pageable.size;
-        return this.races.slice(start, end);
+        return this.races?.slice(start, end);
     }
 
     nextPage() {

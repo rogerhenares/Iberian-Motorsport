@@ -34,7 +34,7 @@ export class StandingsComponent implements OnInit, OnChanges {
 
 
     loadGridForChampionship(): void {
-        if (this.selectedChampionship.id) {
+        if (this.selectedChampionship?.id) {
             this.gridService.getGridForChampionship(this.selectedChampionship.id).subscribe(
                 (gridData) => {
                     this.grid = gridData;
