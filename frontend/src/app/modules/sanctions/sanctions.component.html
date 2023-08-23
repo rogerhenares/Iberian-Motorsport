@@ -1,5 +1,8 @@
 <table class="table" style="text-align: center; overflow-y: auto; max-height: 400px">
-    <ng-container>
+    <div *ngIf="!sanctionsList?.length" style="width: 100%; color: #00EBB1">
+        <p style="width: 100%;">There are still no results for this race.</p>
+    </div>
+    <ng-container *ngIf="sanctionsList?.length">
         <thead class=" text-primary">
             <th class="teamHeader">TEAM</th>
             <th class="lapHeader">LAP</th>
@@ -7,17 +10,15 @@
             <th class="timeHeader">TIME</th>
             <th class="descriptionHeader">DESCRIPTION</th>
         </thead>
-        <ng-container *ngFor="let gridRace of gridRace; let i = index">
-            <ng-container *ngFor="let sanction of gridRace.sanctionDTOList">
+        <ng-container *ngFor="let sanction of sanctionsList; let i = index">
             <tbody>
-                <tr [ngClass]="{'selected': isGridRaceForLoggedUser(gridRace)}">
-                    <td class="posColumn" style="text-align: left">Team name</td>
+                <tr [ngClass]="{'selected': isSanctionForLoggedUser(sanction)}">
+                    <td class="posColumn" style="text-align: left">{{sanction.grid.teamName}}</td>
                     <td class="lapColumn" style="text-align: left">{{sanction.lap}}</td>
                     <td class="sectorColumn" style="text-align: left">{{sanction.sector}}</td>
                     <td class="timeColumn" style="text-align: left">{{sanction.time}}</td>
                     <td class="descriptionColumn" style="text-align: left">{{sanction.description}}</td>
             </tbody>
-            </ng-container>
         </ng-container>
     </ng-container>
 </table>

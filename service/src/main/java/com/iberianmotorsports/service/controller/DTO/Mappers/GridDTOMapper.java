@@ -1,15 +1,10 @@
 package com.iberianmotorsports.service.controller.DTO.Mappers;
 
-import com.iberianmotorsports.service.controller.DTO.CarDTO;
 import com.iberianmotorsports.service.controller.DTO.GridDTO;
-import com.iberianmotorsports.service.controller.DTO.UserDTO;
 import com.iberianmotorsports.service.model.Grid;
-import com.iberianmotorsports.service.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -24,8 +19,8 @@ public class GridDTOMapper implements Function<Grid, GridDTO> {
         return new GridDTO(
                 grid.getId(),
                 grid.getCarNumber(),
-                grid.getCarLicense(),
                 grid.getTeamName(),
+                grid.getCarLicense(),
                 grid.getChampionship().getId(),
                 grid.getDrivers().stream().map(userDTOMapper).toList(),
                 carDTOMapper.apply(grid.getCar()),

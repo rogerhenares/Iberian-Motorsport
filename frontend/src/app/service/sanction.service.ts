@@ -22,12 +22,12 @@ export class SanctionService {
             )
     }
 
-    getSanctionList(raceId: Number, gridId: Number, errorNotify?: any){
-        const  url: string= this.url + '/get/' + raceId + '/' + gridId;
+    getSanctionList(raceId: Number, errorNotify?: any){
+        const  url: string= this.url + '/race/' + raceId;
         return this.httpClient.get<Sanction[]>(url)
             .pipe(
                 tap(sanction => console.log('Sanction retrieved')),
-                catchError(handleError('SanctionService -> getSanctionList', null, errorNotify))
+                catchError(handleError('SanctionService -> getSanctionByRaceId', null, errorNotify))
             )
     }
 

@@ -1,3 +1,4 @@
+import {Grid} from "./Grid";
 
 
 export class Sanction {
@@ -9,6 +10,7 @@ export class Sanction {
     description: string;
     gridId: number;
     raceId: number;
+    grid: Grid;
 
     constructor() {
         this.id = null;
@@ -19,5 +21,6 @@ export class Sanction {
         this.description = "";
         this.gridId = null;
         this.raceId = null;
+        this.grid = null;
     }
 }

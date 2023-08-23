@@ -11,6 +11,8 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class SanctionDTOMapper implements Function<Sanction, SanctionDTO> {
 
+    GridDTOMapper gridDTOMapper;
+
     @Override
     public SanctionDTO apply(Sanction sanction){
         return new SanctionDTO(
@@ -21,7 +23,8 @@ public class SanctionDTOMapper implements Function<Sanction, SanctionDTO> {
                 sanction.getPenalty(),
                 sanction.getDescription(),
                 sanction.getGridRace().getGridRacePrimaryKey().getRace().getId(),
-                sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId()
+                sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
+                gridDTOMapper.apply(sanction.getGridRace().getGridRacePrimaryKey().getGrid())
         );
     }
 }

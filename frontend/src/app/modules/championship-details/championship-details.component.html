@@ -39,7 +39,6 @@
                         </div>
                     </div>
                     </div>
-
             </div>
         </div>
         <div class="col-lg-12 col-md-12">
@@ -89,7 +88,7 @@
                            <app-results [selectedRace]="selectedRace" [selectedChampionship]="championship" [fullMode]="true"></app-results>
                         </div>
                         <div class="tab-pane" id="sanctions" *ngIf="selectedRace && appContext.isAdmin()">
-                            <app-sanctions [selectedRace]="selectedRace" [selectedChampionship]="championship"></app-sanctions>
+                            <app-sanctions [selectedRace]="selectedRace"></app-sanctions>
                         </div>
                     </div>
                 </div>

@@ -1,11 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from "@angular/core";
-import {Grid} from "../../model/Grid";
 import {Race} from "../../model/Race";
-import {GridRace} from "../../model/GridRace";
-import {GridRaceService} from "../../service/gridrace.service";
 import {AppContext} from "../../util/AppContext";
-import {GridService} from "../../service/grid.service";
-import {Championship} from "../../model/Championship";
+import {SanctionService} from "../../service/sanction.service";
+import {Sanction} from "../../model/Sanction";
 
 @Component({
     selector: 'app-sanctions',
@@ -15,61 +12,41 @@ import {Championship} from "../../model/Championship";
 export class SanctionsComponent implements OnInit, OnChanges {
 
     @Input() selectedRace: Race;
-    @Input() selectedChampionship: Championship;
 
-    grid: Array<Grid>;
-    gridRace: Array<GridRace>;
+    sanctionsList: Array<Sanction>;
 
     constructor(
         private appContext: AppContext,
-        private gridService: GridService,
-        private gridRaceService: GridRaceService
+        private sanctionService: SanctionService
     ) {}
 
     ngOnInit(): void {
-        this.loadGridForChampionship()
+        this.loadSanctionList()
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.selectedRace && !changes.selectedRace.firstChange) {
-            this.loadGridRaceForRace();
-            console.log("GridRace:", this.gridRace)
-        }
-    }
-
-    loadGridForChampionship(): void {
-        if (this.selectedChampionship.id) {
-            this.gridService.getGridForChampionship(this.selectedChampionship.id).subscribe(
-                (gridData) => {
-                    this.grid = gridData;
-                    this.loadGridRaceForRace();
-                },
-                (error) => {
-                    console.error('Error fetching grid data:', error);
-                }
-            );
+            this.loadSanctionList()
         }
     }
 
 
-    loadGridRaceForRace(): void {
+    loadSanctionList(): void {
         if (this.selectedRace.id) {
-            this.gridRaceService.getGridRaceForRace(this.selectedRace.id).subscribe(
-                (gridRace) => {
-                    this.gridRace = gridRace;
-                    this.gridRace.forEach(gridRace => {
-                        gridRace.grid = this.grid.find(grid => grid.id === gridRace.gridId);
-                    });
-                    },
-                (error) => {
-                    console.error('Error fetching grid race data:', error);
+            this.sanctionService.getSanctionList(this.selectedRace.id).subscribe(
+                (sanctionList) => {
+                    this.sanctionsList = sanctionList;
+                    console.log("Race id ->", this.selectedRace.id)
+                    console.log("Response ->", sanctionList)
+                    console.log("Sanction list ->", sanctionList)
                 }
             )
         }
     }
 
-    isGridRaceForLoggedUser(gridRace: GridRace): boolean {
-        return gridRace.grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
+
+    isSanctionForLoggedUser(sanction: Sanction): boolean {
+        return sanction.grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
     }
 
 }

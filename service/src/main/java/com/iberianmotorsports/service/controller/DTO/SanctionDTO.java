@@ -8,6 +8,7 @@ public record SanctionDTO (
     Long penalty,
     String description,
     Long gridId,
-    Long raceId
+    Long raceId,
+    GridDTO grid
     ){
 }
