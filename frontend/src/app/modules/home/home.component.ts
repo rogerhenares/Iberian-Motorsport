@@ -32,14 +32,17 @@ export class HomeComponent implements OnInit{
     ngOnInit(): void {
     }
 
+
     onSelectedChampionship(selectedChampionship: Championship) {
         this.selectChampionship(selectedChampionship);
     }
+
 
     onSelectedRace(selectedRace: Race){
         this.selectedRace = selectedRace;
         this.selectTabInfo('standings')
     }
+
 
     selectChampionship(selectedChampionship: Championship) {
         this.selectedChampionship = selectedChampionship

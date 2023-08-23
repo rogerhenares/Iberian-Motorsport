@@ -89,6 +89,7 @@
                            <app-results [selectedRace]="selectedRace" [selectedChampionship]="championship" [fullMode]="true"></app-results>
                         </div>
                         <div class="tab-pane" id="sanctions" *ngIf="selectedRace && appContext.isAdmin()">
+                            <app-sanctions [selectedRace]="selectedRace" [selectedChampionship]="championship"></app-sanctions>
                         </div>
                     </div>
                 </div>

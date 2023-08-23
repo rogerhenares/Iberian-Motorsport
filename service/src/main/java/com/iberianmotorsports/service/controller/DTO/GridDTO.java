@@ -5,11 +5,11 @@ import java.util.List;
 public record GridDTO(
         Long id,
         Integer carNumber,
-        String carLicense,
         String teamName,
+        String carLicense,
         Long championshipId,
-        CarDTO car,
         List<UserDTO> driversList,
+        CarDTO car,
         Double points
 ) {
 }

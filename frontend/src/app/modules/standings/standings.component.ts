@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { Race } from '../../model/Race';
 import { Grid } from '../../model/Grid';
 import { GridService } from '../../service/grid.service';
@@ -13,6 +13,7 @@ import {AppContext} from "../../util/AppContext";
 export class StandingsComponent implements OnInit, OnChanges {
     @Input() selectedRace: Race;
     @Input() selectedChampionship: Championship;
+
     grid: Array<Grid>;
     selectedGrid: Grid;
 
@@ -30,6 +31,7 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.loadGridForChampionship();
         }
     }
+
 
     loadGridForChampionship(): void {
         if (this.selectedChampionship.id) {

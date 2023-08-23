@@ -36,6 +36,7 @@ public class GridMapper implements Function<GridDTO, Grid> {
         grid.setTeamName(gridDTO.teamName());
         grid.setCar(carMapper.apply(gridDTO.car()));
         grid.setDrivers(gridDTO.driversList().stream().map(userMapper).toList());
+        grid.setPoints(gridDTO.points());
         return grid;
     }
 }

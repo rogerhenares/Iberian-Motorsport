@@ -1,5 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
+import com.iberianmotorsports.service.model.Grid;
+
 import java.util.List;
 
 public record GridRaceDTO(
@@ -11,6 +13,6 @@ public record GridRaceDTO(
         Integer totalLaps,
         List<SanctionDTO> sanctionDTOList,
         Long raceId,
-        Long gridId
+        Long grid
 ) {
 }

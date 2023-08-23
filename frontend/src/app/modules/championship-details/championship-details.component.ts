@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import {ChampionshipService} from "../../service/championship.service";
@@ -10,7 +10,6 @@ import {AppContext} from "../../util/AppContext";
 import {RaceService} from "../../service/race.service";
 import {GridService} from "../../service/grid.service";
 import {Grid} from "../../model/Grid";
-import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-championship-details',
@@ -19,6 +18,7 @@ import {Observable} from "rxjs";
 })
 
 export class ChampionshipDetailsComponent implements OnInit {
+
     races: Race[];
     selectedRace: Race;
     upcomingRaces: Race[];
@@ -77,6 +77,7 @@ export class ChampionshipDetailsComponent implements OnInit {
                 }
             );
     }
+
 
     selectRace(raceId) {
         this.selectedRaceId = raceId;
