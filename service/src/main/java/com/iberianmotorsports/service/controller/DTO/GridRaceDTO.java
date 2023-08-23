@@ -13,6 +13,7 @@ public record GridRaceDTO(
         Integer totalLaps,
         List<SanctionDTO> sanctionDTOList,
         Long raceId,
-        Long gridId
+        Long gridId,
+        GridDTO grid
 ) {
 }

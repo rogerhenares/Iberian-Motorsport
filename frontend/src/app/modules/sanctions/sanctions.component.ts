@@ -53,12 +53,12 @@ export class SanctionsComponent implements OnInit, OnChanges {
         return sanction.grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
     }
 
-    createNewSanction(raceId: number, gridId: number): void {
+    createNewSanction(raceId: number, gridId: number, grid: Grid): void {
         this.router.navigateByUrl("sanction/new", {state: {raceId: raceId, gridId: gridId}});
     }
 
     editSanction(raceId: number, gridId: number, sanction: Sanction): void {
-        this.router.navigateByUrl("sanction/new", {state: {raceId: raceId, gridId: gridId, sanction: Sanction}});
+        this.router.navigateByUrl("sanction/new", {state: {raceId: raceId, gridId: gridId, sanction: sanction}});
     }
 
     deleteSanction(sanctionId: number) {

@@ -7,6 +7,8 @@ import {SanctionService} from "../../service/sanction.service";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {Sanction} from "../../model/Sanction";
+import {GridRace} from "../../model/GridRace";
+import {GridRaceService} from "../../service/gridrace.service";
 
 @Component({
     selector: 'app-sanction-form',
@@ -21,21 +23,23 @@ export class SanctionFormComponent {
 
     sanctionForm: FormGroup;
     sanctionFormSubmitted: Boolean;
-    raceId: number;
-    gridId: number;
+    grid: Grid;
     sanction: Sanction = new Sanction();
+    gridRaceList: Array<GridRace> = [];
 
     constructor(
         private sanctionService: SanctionService,
-        private router: Router,
         private formBuilder: FormBuilder,
-        private translate: TranslateService
+        private gridRaceService: GridRaceService
     ) {
     }
 
     ngOnInit() {
         this.sanction.gridId = history.state.gridId;
         this.sanction.raceId = history.state.raceId;
+        if (this.sanction.raceId) {
+            this.loadGridRacesForRaceId(this.sanction.raceId)
+        }
         if (history.state.sanction) {
             this.sanction = history.state.sanction;
         }
@@ -53,14 +57,23 @@ export class SanctionFormComponent {
             })
         }}
 
+    loadGridRacesForRaceId(raceId: number) {
+        this.gridRaceService.getGridRaceForRace(raceId).subscribe(
+            (gridRaceList) => {
+                this.gridRaceList = gridRaceList
+                console.log("GridRaceList ->", gridRaceList)
+            }
+        )
+    }
+
     sanctionFormBuilder(sanction: Sanction) {
         this.sanctionFormSubmitted = false;
         this.sanctionForm = this.formBuilder.group({
             lap: [sanction.lap, [Validators.required]],
             penalty: [sanction.penalty, [Validators.required]],
             reason: [sanction.reason, [Validators.required]],
-            gridId: [this.gridId, [Validators.required]],
-            raceId: [this.raceId, [Validators.required]]
+            gridId: [this.sanction.gridId, [Validators.required]],
+            raceId: [this.sanction.raceId]
         })
     }
 
