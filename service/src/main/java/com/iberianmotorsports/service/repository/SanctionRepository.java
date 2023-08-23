@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SanctionRepository extends JpaRepository<Sanction, Long> {
 
+    List<Sanction> findSanctionsByGridRace_GridRacePrimaryKey_Race_Id(Long raceId);
+
 }

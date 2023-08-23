@@ -10,6 +10,7 @@ public interface SanctionService {
 
     Sanction createSanction(SanctionDTO sanctionDTO);
 
+    List<Sanction> getSanctionsByRace(Long raceId);
 
     void deleteSanction(Long sanctionId) throws ServiceException;
 }

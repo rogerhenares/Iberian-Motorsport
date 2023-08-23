@@ -37,6 +37,10 @@ public class SanctionServiceImpl implements SanctionService {
         return sanctionRepository.save(sanctionMapper.apply(sanctionDTO));
     }
 
+    @Override
+    public List<Sanction> getSanctionsByRace(Long raceId) {
+        return sanctionRepository.findSanctionsByGridRace_GridRacePrimaryKey_Race_Id(raceId);
+    }
 
     @Override
     public void deleteSanction(Long sanctionId) throws ServiceException {
