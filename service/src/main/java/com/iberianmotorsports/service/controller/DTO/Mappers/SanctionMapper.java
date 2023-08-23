@@ -3,7 +3,6 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 import com.iberianmotorsports.service.controller.DTO.SanctionDTO;
 import com.iberianmotorsports.service.model.Sanction;
 import lombok.AllArgsConstructor;
-
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
@@ -19,13 +18,11 @@ public class SanctionMapper implements Function<SanctionDTO, Sanction> {
         Sanction sanction = new Sanction();
         sanction.setId(sanctionDTO.id());
         sanction.setLap(sanctionDTO.lap());
-        sanction.setSector(sanctionDTO.sector());
-        sanction.setTime(sanctionDTO.time());
         sanction.setPenalty(sanctionDTO.penalty());
-        sanction.setDescription(sanctionDTO.description());
+        sanction.setReason(sanctionDTO.reason());
         sanction.setGridRace(getGridRace(sanctionDTO.gridId(), sanctionDTO.raceId()));
+        sanction.setInGame(sanctionDTO.inGame());
         return sanction;
     }
-
 
 }

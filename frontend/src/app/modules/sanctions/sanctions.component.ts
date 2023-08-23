@@ -37,7 +37,6 @@ export class SanctionsComponent implements OnInit, OnChanges {
                 (sanctionList) => {
                     this.sanctionsList = sanctionList;
                     console.log("Race id ->", this.selectedRace.id)
-                    console.log("Response ->", sanctionList)
                     console.log("Sanction list ->", sanctionList)
                 }
             )

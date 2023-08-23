@@ -3,7 +3,6 @@ package com.iberianmotorsports.service.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 
@@ -18,24 +17,18 @@ public class Sanction implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "time")
-    private Long time;
-
-    @NotNull
     @Column(name = "lap")
     private Integer lap;
 
     @NotNull
-    @Column(name = "sector")
-    @Range(min=1, max=3)
-    private Integer sector;
-
-    @NotNull
     @Column(name = "penalty")
-    private Long penalty;
+    private String penalty;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "reason")
+    private String reason;
+
+    @Column(name = "in_game")
+    private Boolean inGame;
 
     @ManyToOne
     @JoinColumns({

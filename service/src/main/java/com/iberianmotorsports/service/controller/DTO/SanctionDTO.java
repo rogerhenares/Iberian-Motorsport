@@ -2,13 +2,12 @@ package com.iberianmotorsports.service.controller.DTO;
 
 public record SanctionDTO (
     Long id,
-    Long time,
     Integer lap,
-    Integer sector,
-    Long penalty,
-    String description,
+    String penalty,
+    String reason,
     Long gridId,
     Long raceId,
-    GridDTO grid
+    GridDTO grid,
+    Boolean inGame
     ){
 }

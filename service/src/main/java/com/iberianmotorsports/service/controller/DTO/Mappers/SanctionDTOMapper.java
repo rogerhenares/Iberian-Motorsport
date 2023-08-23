@@ -17,14 +17,13 @@ public class SanctionDTOMapper implements Function<Sanction, SanctionDTO> {
     public SanctionDTO apply(Sanction sanction){
         return new SanctionDTO(
                 sanction.getId(),
-                sanction.getTime(),
                 sanction.getLap(),
-                sanction.getSector(),
                 sanction.getPenalty(),
-                sanction.getDescription(),
+                sanction.getReason(),
                 sanction.getGridRace().getGridRacePrimaryKey().getRace().getId(),
                 sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
-                gridDTOMapper.apply(sanction.getGridRace().getGridRacePrimaryKey().getGrid())
+                gridDTOMapper.apply(sanction.getGridRace().getGridRacePrimaryKey().getGrid()),
+                sanction.getInGame()
         );
     }
 }
