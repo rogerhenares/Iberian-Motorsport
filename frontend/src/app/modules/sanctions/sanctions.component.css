@@ -1,20 +1,20 @@
-.posColumn, .posHeader {
+.teamColumn, .teamHeader {
     text-align: left;
 }
 
-.nameColumn, .nameHeader {
+.lapColumn, .lapHeader {
     text-align: left;
 }
 
-.carColumn, .carHeader {
+.penaltyColumn, .penaltyHeader {
     text-align: left;
 }
 
-.pointsColumn, .pointsHeader {
+.reasonColumn, .reasonHeader {
     text-align: left;
 }
 
-.timeHeader, .timeColumn {
+.inGameHeader, .inGameColumn {
     text-align: left;
 }
 

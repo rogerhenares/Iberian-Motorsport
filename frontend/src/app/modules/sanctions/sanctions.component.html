@@ -8,7 +8,7 @@
             <th class="lapHeader">LAP</th>
             <th class="penaltyHeader">PENALTY</th>
             <th class="reasonHeader">REASON</th>
-            <th class="inGameHeader">IN GAME</th>
+            <th *ngIf="appContext.isAdmin()" class="inGameHeader">IN GAME</th>
         </thead>
         <ng-container *ngFor="let sanction of sanctionsList; let i = index">
             <tbody>
@@ -17,7 +17,9 @@
                     <td class="lapColumn" style="text-align: left">{{sanction.lap}}</td>
                     <td class="penaltyColumn" style="text-align: left">{{sanction.penalty}}</td>
                     <td class="reasonColumn" style="text-align: left">{{sanction.reason}}</td>
-                    <td class="inGameColumn" style="text-align: left">{{sanction.inGame}}</td>
+                    <td *ngIf="appContext.isAdmin()" class="inGameColumn" style="text-align: left">
+                        <mat-checkbox [checked]="sanction.inGame" [disabled]="true"></mat-checkbox>
+                    </td>
             </tbody>
         </ng-container>
     </ng-container>

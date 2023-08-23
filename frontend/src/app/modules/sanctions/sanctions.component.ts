@@ -20,9 +20,11 @@ export class SanctionsComponent implements OnInit, OnChanges {
         private sanctionService: SanctionService
     ) {}
 
+
     ngOnInit(): void {
         this.loadSanctionList()
     }
+
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.selectedRace && !changes.selectedRace.firstChange) {
