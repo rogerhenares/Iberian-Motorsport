@@ -1,0 +1,66 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">Create New Sanction</h4>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+                <div class="testbox">
+                    <form id="sanctionForm" (ngSubmit)="sanctionSubmit()" [formGroup]="sanctionForm">
+                        <div class="item">
+                            <div class="custom-form">
+                                <div>
+                                    <mat-form-field>
+                                        <mat-label>Lap</mat-label>
+                                        <input style="color: white" matInput formControlName="lap"/>
+                                        <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.lap.errors)">Lap Error</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-form-field>
+                                        <mat-label>Penalty</mat-label>
+                                        <input style="color: white" matInput formControlName="penalty"/>
+                                        <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.penalty.errors)">Penalty Error</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-form-field>
+                                        <mat-label>reason</mat-label>
+                                        <input style="color: white" matInput formControlName="reason"/>
+                                        <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.reason.errors)">Reason Error</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="btn-block">
+                                <button id="submit" type="submit" class="btn btn-primary" (click)="sanctionSubmit()">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<swal
+    #requestSuccessSwal
+    title=""
+    text=""
+    type="success"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    timer=2000>
+</swal>
+
+<swal
+    #requestFailSwal
+    title="{{'swal-cancelled.title' | translate}}"
+    text="{{'swal-cancelled.text' | translate}}"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    type="error"
+    timer=4000>
+</swal>

@@ -107,8 +107,6 @@ export class ChampionshipDetailsComponent implements OnInit {
     }
 
     createNewRace(championshipId: number) {
-        console.log(this.championship)
-        console.log(championshipId)
         this.router.navigateByUrl("/race/new", {state: {championshipId: championshipId}});
     }
 

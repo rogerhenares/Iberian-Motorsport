@@ -20,6 +20,12 @@
                     <td *ngIf="appContext.isAdmin()" class="inGameColumn" style="text-align: left">
                         <mat-checkbox [checked]="sanction.inGame" [disabled]="true"></mat-checkbox>
                     </td>
+                    <td>
+                        <button *ngIf=appContext.isAdmin() (click)="createNewSanction(selectedRace.id, sanction.gridId)" style="color: black" class="btn btn-primary">New Sanction</button>
+                        <button *ngIf=appContext.isAdmin() (click)="editSanction(sanction.raceId, sanction.gridId, sanction)" style="color: black" class="btn btn-primary">Edit Sanction</button>
+                        <button *ngIf=appContext.isAdmin() (click)="deleteSanction(sanction.id)" style="color: black" class="btn btn-primary">Delete Sanction</button>
+                    </td>
+                </tr>
             </tbody>
         </ng-container>
     </ng-container>
