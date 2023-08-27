@@ -35,6 +35,7 @@ public enum ErrorMessages {
     GRID_RACE_NOT_FOUND(31, "Grid for Race not found"),
     CHAMPIONSHIP_CATEGORY_MAX_CAR_SLOTS(32, "Max car slots for championship must match with Categories max slots"),
     CATEGORY_NOT_FOUND(33, "Category not found"),
+    USER_IS_NOT_LOGGED(34, "User is not logged"),
 
     DEFAULT(999, "");
 

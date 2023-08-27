@@ -8,6 +8,8 @@ public interface AuthService {
 
     String newLoggingRequest(String steamResponseParametersEncoded);
 
+    String loggingUrl();
+
     Boolean validateLoggingToken(String token);
 
     User getLoggedUser(String token);

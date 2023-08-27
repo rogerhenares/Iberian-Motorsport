@@ -25,6 +25,15 @@ import java.util.regex.Pattern;
 @Service
 public class AuthServiceImpl implements AuthService {
 
+    private static final String HOST = "http://localhost:4200/";
+    private static final String REDIRECT_TO = "http://localhost:4200/login";
+    private static final String BASE_LOGIN_URL = "https://steamcommunity.com/openid/login?" +
+            "&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" +
+            "&openid.identity=http://specs.openid.net/auth/2.0/identifier_select" +
+            "&openid.mode=checkid_setup" +
+            "&openid.ns=http://specs.openid.net/auth/2.0" +
+            "&openid.realm=" + HOST +
+            "&openid.return_to=" + REDIRECT_TO;
     private final static String IS_VALID = "is_valid:true";
     private final static String OPENID_MODE_ID_RES = "openid.mode=id_res";
     private final static String OPENID_MODE_CHECK_AUTHENTICATION = "openid.mode=check_authentication";
@@ -60,6 +69,11 @@ public class AuthServiceImpl implements AuthService {
             }
         }
         return token;
+    }
+
+    @Override
+    public String loggingUrl() {
+        return BASE_LOGIN_URL;
     }
 
     @Override

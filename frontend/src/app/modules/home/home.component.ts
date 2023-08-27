@@ -1,5 +1,4 @@
-import {Component, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {ChampionshipService} from "../../service/championship.service";
+import {Component, OnInit} from '@angular/core';
 import {Championship} from "../../model/Championship";
 import {Router} from '@angular/router';
 import {Race} from "../../model/Race";
@@ -20,25 +19,22 @@ export class HomeComponent implements OnInit{
     criteria: CriteriaChampionship = new CriteriaChampionship();
 
     constructor(
-        private championshipService: ChampionshipService,
         public router: Router,
         public appContext : AppContext
     ) {}
 
     ngOnInit(): void {
+        this.appContext.isUserLoggedToNavigate()
     }
-
 
     onSelectedChampionship(selectedChampionship: Championship) {
         this.selectChampionship(selectedChampionship);
     }
 
-
     onSelectedRace(selectedRace: Race){
         this.selectedRace = selectedRace;
         this.selectTabInfo('standings')
     }
-
 
     selectChampionship(selectedChampionship: Championship) {
         this.selectedChampionship = selectedChampionship

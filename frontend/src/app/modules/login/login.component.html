@@ -4,11 +4,40 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title">Edit Profile</h4>
-                        <p class="card-category">Complete your profile</p>
+                        <h4 class="card-title">Login</h4>
+                        <p class="card-category">Login into IML Using steam</p>
                     </div>
                     <div class="card-body">
-                        <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="setLoggedUser()">Update Profile</button>
+                        <ng-container *ngIf="loading === false">
+                            <button mat-raised-button type="submit" style="padding-left: 0px; padding-right: 0px;" (click)="steamLogging()">
+                                <img src="assets/img/steam_login_btn_2.png" alt="Login">
+                            </button>
+                            <hr>
+                            <ng-container>
+                                <div class="alert alert-warning">
+                                    <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                    <span>
+                                    We are on Beta phase and the logging might takes a few attempts
+                                </span>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="invalid === true">
+                                <div class="alert alert-warning">
+                                    <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                    <span>
+                                    Unable to Validate Steam token, please try again
+                                </span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="loading === true">
+                            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                            Validating Steam Token
+                        </ng-container>
                     </div>
                 </div>
             </div>

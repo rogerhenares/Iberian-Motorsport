@@ -26,6 +26,7 @@ import {GridRaceService} from "../../service/gridrace.service";
 import {SanctionService} from "../../service/sanction.service";
 import {CarService} from "../../service/car.service";
 import {ChampionshipCategoryService} from "../../service/championshipcategory.service";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import {ChampionshipCategoryService} from "../../service/championshipcategory.se
     RouterModule,
     AppRoutingModule,
     SweetAlert2Module.forRoot(),
-    LanguageTranslationModule
+    LanguageTranslationModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AppComponent,

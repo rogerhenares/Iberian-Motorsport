@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -72,7 +73,13 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     @Override
     public Page<Championship> findChampionshipByCriteria(CriteriaChampionship criteriaChampionship, Pageable pageable) {
         if(criteriaChampionship.getLogged()) {
-            Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Long steamId;
+            try{
+                steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            } catch (Exception e) {
+                throw new AuthenticationException(ErrorMessages.USER_IS_NOT_LOGGED.getDescription()) {
+                };
+            }
             User loggedUser = userService.findUserBySteamId(steamId);
             return championshipRepository.findByLoggedUser(loggedUser, pageable);
         }

@@ -58,6 +58,16 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
         return this.user.roleList.find(value => value === "ADMIN") !== undefined;
     }
 
+    isUserLoggedToNavigate() : boolean {
+        if(this.loadLoggedUser()) {
+            console.log('user has credentials');
+            return true;
+        } else {
+            console.log('user without credentials');
+            this.router.navigate(['/championship']);
+        }
+    }
+
     canActivate(): boolean {
         if (this.loadLoggedUser()) {
             console.log('Can activate passed');
