@@ -1,13 +1,9 @@
 import {Component, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {ChampionshipService} from "../../service/championship.service";
 import {Championship} from "../../model/Championship";
-import {Pageable} from "../../model/Pageable";
 import {Router} from '@angular/router';
-import {DatePipe} from "@angular/common";
-import {TimezoneService} from "../../service/timezone.service";
 import {Race} from "../../model/Race";
 import {AppContext} from "../../util/AppContext";
-import {element} from "protractor";
 import {CriteriaChampionship} from "../../model/CriteriaChampionship";
 
 

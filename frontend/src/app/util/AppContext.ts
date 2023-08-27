@@ -46,6 +46,7 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
         this.setUser(this.user);
         this.authenticationInfo.remove();
         localStorage.removeItem(this.USER_KEY);
+        this.router.navigate(['/championship']);
     }
 
     getLoggedUser() {
