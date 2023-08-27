@@ -54,25 +54,28 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
     }
 
     isAdmin() {
-        // console.log("isAdmin ->", this.user);
         return this.user.roleList.find(value => value === "ADMIN") !== undefined;
     }
 
     canActivate(): boolean {
-        this.load();
-        console.log('TCL: AppContext -> this.user', this.user);
-        //if (this.user && Role.isAdmin(this.user.roleList) || Role.isUser(this.user.roleList)) {
+        if (this.loadLoggedUser()) {
             console.log('Can activate passed');
+            this.router.navigate(['/dashboard']);
             return true;
-        //} else {
-        //    console.log('Can activate denied');
-        //    this.router.navigate(['/login']);
-        //    return false;
-        //}
+        } else {
+            console.log('Can activate denied');
+            this.router.navigate(['/championship']);
+            return false;
+        }
     }
 
     isLoggedUser(user: User) {
         return this.user.steamId === user.steamId;
+    }
+
+    loadLoggedUser():boolean {
+        this.load();
+        return this.user.steamId !== "";
     }
 
     isLoggedUserActive(){

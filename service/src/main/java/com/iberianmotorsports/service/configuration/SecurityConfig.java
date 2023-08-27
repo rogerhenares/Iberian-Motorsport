@@ -40,11 +40,13 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         RequestMatcher adminUrls = new AntPathRequestMatcher("/**/admin/**");
+        RequestMatcher publicUrls = new AntPathRequestMatcher("/**/public/**");
 
         http
                 .addFilterBefore(new SteamTokenValidation(authService), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
                     .requestMatchers(AUTH_WHITE_LIST).permitAll()
+                    .requestMatchers(publicUrls).permitAll()
                     .requestMatchers(adminUrls).hasAnyAuthority(ADMIN)
                     .anyRequest().authenticated()
                 .and()

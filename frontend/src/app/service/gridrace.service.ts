@@ -6,7 +6,7 @@ import {GridRace} from "../model/GridRace";
 
 @Injectable()
 export class GridRaceService {
-    private url: string= environment.apiPath + '/grid-race';
+    private url: string= environment.apiPath + 'grid-race';
 
     constructor(
         private httpClient: HttpClient
@@ -19,7 +19,8 @@ export class GridRaceService {
     }
 
     getGridRaceForRace(raceId: number): Observable<GridRace[]> {
-        const url = this.url + "/" + raceId;
+        const url = this.url + "/public/" + raceId;
         return this.httpClient.get<GridRace[]>(url);
     }
+
 }

@@ -2,7 +2,6 @@ package com.iberianmotorsports.service.controller;
 
 import com.iberianmotorsports.service.controller.DTO.GridRaceDTO;
 import com.iberianmotorsports.service.controller.DTO.Mappers.GridRaceDTOMapper;
-import com.iberianmotorsports.service.controller.DTO.Mappers.GridRaceMapper;
 import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.service.GridRaceService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +35,7 @@ public class GridRaceController {
         return new ResponseEntity<Object>(gridRaceDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value=("/{raceId}"))
+    @GetMapping(value=("/public/{raceId}"))
     public ResponseEntity<?> getGridRaceForRace(@PathVariable("raceId") Long raceId) throws ServiceException {
         List<GridRace> gridRaceList = gridRaceService.getGridRaceForRace(raceId);
         List<GridRaceDTO> gridRaceDTOList = gridRaceList.stream().map(gridRaceDTOMapper).toList();

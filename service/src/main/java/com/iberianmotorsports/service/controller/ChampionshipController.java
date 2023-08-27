@@ -37,7 +37,7 @@ public class ChampionshipController {
         return new ResponseEntity<Object>(createdChampionshipDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/public/{id}")
     public ResponseEntity<?> getChampionshipById(@PathVariable("id") Long id) throws ServiceException {
         Championship foundChampionship = championshipService.findChampionshipById(id);
         ChampionshipDTO foundChampionshipDTO = championshipDTOMapper.apply(foundChampionship);
@@ -64,7 +64,7 @@ public class ChampionshipController {
         return new ResponseEntity<Object>(championshipList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/filtered")
+    @GetMapping(value = "/public/filtered")
     public ResponseEntity<?> getChampionshipsForLoggedUser(@RequestParam(required = false, defaultValue = "false") Boolean finished,
                                                            @RequestParam(required = false, defaultValue = "false") Boolean started,
                                                            @RequestParam(required = false, defaultValue = "false") Boolean logged,

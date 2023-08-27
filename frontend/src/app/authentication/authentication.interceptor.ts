@@ -14,12 +14,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         const headers = req.headers;
         const headerAuthorization = headers.get('Authorization');
         console.log("appContext -> ", this.appContext.authenticationInfo.authorizationToken);
-        if (headerAuthorization == null) {
-            req = req.clone({
-                setHeaders: {
-                    Authorization: this.appContext.authenticationInfo.authorizationToken
-                }
-            });
+        if(this.appContext.authenticationInfo.authorizationToken) {
+            if (headerAuthorization == null) {
+                req = req.clone({
+                    setHeaders: {
+                        Authorization: this.appContext.authenticationInfo.authorizationToken
+                    }
+                });
+            }
         }
         return next.handle(req).pipe(
             retry(0),

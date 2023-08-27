@@ -36,7 +36,7 @@ export class ChampionshipService {
     }
 
     getChampionshipById(championshipId: Number, errorNotify?: any) {
-        const url = this.url + '/' + championshipId;
+        const url = this.url + '/public/' + championshipId;
         return this.httpClient.get<Championship>(url)
             .pipe(
                 tap(user => console.log('fetched Championship by championshipId')),
@@ -63,7 +63,7 @@ export class ChampionshipService {
     }
 
     getChampionshipByCriteria(criteria: CriteriaChampionship, pageable: Pageable, errorNotify?: any) {
-        let url = this.url + "/filtered" + "?" + "finished=" + criteria.finished + "&started="
+        let url = this.url + "/public/filtered" + "?" + "finished=" + criteria.finished + "&started="
             + criteria.started + "&logged=" + criteria.logged + "&page=" + pageable.page + "&size=" + pageable.size;
         return this.httpClient.get<Page>(url)
             .pipe(

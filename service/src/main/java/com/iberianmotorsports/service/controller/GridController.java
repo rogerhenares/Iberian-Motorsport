@@ -3,7 +3,6 @@ package com.iberianmotorsports.service.controller;
 import com.google.protobuf.ServiceException;
 import com.iberianmotorsports.service.controller.DTO.GridDTO;
 import com.iberianmotorsports.service.controller.DTO.Mappers.GridDTOMapper;
-import com.iberianmotorsports.service.controller.DTO.Mappers.GridMapper;
 import com.iberianmotorsports.service.controller.DTO.MessageResponse;
 import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.service.GridService;
@@ -27,7 +26,7 @@ public class GridController {
     private GridDTOMapper gridDTOMapper;
 
 
-    @GetMapping(value=("/{id}"))
+    @GetMapping(value=("/public/{id}"))
     public ResponseEntity<?> getGridForChampionship(@PathVariable("id") Long championshipId) throws ServiceException {
         List<Grid> gridList = gridService.getGridForChampionship(championshipId);
         List<GridDTO> gridDTOList = gridList.stream().map(gridDTOMapper).toList();
@@ -70,4 +69,5 @@ public class GridController {
         messageResponse.setMessage("Driver removed successfully");
         return new ResponseEntity<Object>(messageResponse, HttpStatus.OK);
     }
+
 }

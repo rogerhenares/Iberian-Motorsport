@@ -55,9 +55,8 @@ export class GridService {
     }
 
     getGridForChampionship(championshipId: Number): Observable<Grid[]> {
-        const url = this.url + "/" + championshipId;
+        const url = this.url + "/public/" + championshipId;
         return this.httpClient.get<Grid[]>(url);
     }
-
 
 }
