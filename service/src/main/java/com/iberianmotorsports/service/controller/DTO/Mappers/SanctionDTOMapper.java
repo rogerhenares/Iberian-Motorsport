@@ -23,7 +23,8 @@ public class SanctionDTOMapper implements Function<Sanction, SanctionDTO> {
                 sanction.getGridRace().getGridRacePrimaryKey().getRace().getId(),
                 sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
                 gridDTOMapper.apply(sanction.getGridRace().getGridRacePrimaryKey().getGrid()),
-                sanction.getInGame()
+                sanction.getInGame(),
+                sanction.getSanctionPoints()
         );
     }
 }

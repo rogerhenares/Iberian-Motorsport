@@ -42,6 +42,9 @@ public class Grid implements Serializable {
     @Column(name = "disabled")
     private Boolean disabled;
 
+    @Column(name = "license_points")
+    private Long licensePoints;
+
     @ManyToMany
     @JoinTable(
             name = "GRID_USER",

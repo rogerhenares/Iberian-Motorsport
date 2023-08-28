@@ -30,6 +30,9 @@ public class Sanction implements Serializable {
     @Column(name = "in_game")
     private Boolean inGame;
 
+    @Column(name = "sanction_points")
+    private Long sanctionPoints;
+
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "race_id", referencedColumnName = "race_id"),

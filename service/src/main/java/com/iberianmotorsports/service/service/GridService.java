@@ -22,6 +22,8 @@ public interface GridService {
 
     Grid updateGridCarNumber(Long gridId, Integer carNumber);
 
+    void updateGridLicensePoints(Long gridId, Long licensePoints, Boolean isApply);
+
     void addDriver(Long gridId, Long steamId);
 
     void removeDriver(Long gridId, Long steamId);

@@ -8,6 +8,7 @@ public record SanctionDTO (
     Long gridId,
     Long raceId,
     GridDTO grid,
-    Boolean inGame
+    Boolean inGame,
+    Long licensePoints
     ){
 }

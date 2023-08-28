@@ -10,6 +10,7 @@ public record GridDTO(
         Long championshipId,
         List<UserDTO> driversList,
         CarDTO car,
-        Double points
+        Double points,
+        Long licensePoints
 ) {
 }

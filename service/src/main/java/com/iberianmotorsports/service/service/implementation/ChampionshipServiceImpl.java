@@ -77,8 +77,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
             try{
                 steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             } catch (Exception e) {
-                throw new AuthenticationException(ErrorMessages.USER_IS_NOT_LOGGED.getDescription()) {
-                };
+                throw new AuthenticationException(ErrorMessages.USER_IS_NOT_LOGGED.getDescription()) {};
             }
             User loggedUser = userService.findUserBySteamId(steamId);
             return championshipRepository.findByLoggedUser(loggedUser, pageable);

@@ -24,7 +24,8 @@ public class GridDTOMapper implements Function<Grid, GridDTO> {
                 grid.getChampionship().getId(),
                 grid.getDrivers().stream().map(userDTOMapper).toList(),
                 carDTOMapper.apply(grid.getCar()),
-                grid.getPoints()
+                grid.getPoints(),
+                grid.getLicensePoints()
         );
     }
 }

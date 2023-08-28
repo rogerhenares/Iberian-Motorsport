@@ -109,6 +109,16 @@ public class GridServiceImpl  implements GridService {
     }
 
     @Override
+    public void updateGridLicensePoints(Long gridId, Long licensePoints, Boolean isApply) {
+        Grid grid = getGridById(gridId);
+        grid.setLicensePoints(isApply ?
+                grid.getLicensePoints() - licensePoints :
+                grid.getLicensePoints() + licensePoints
+        );
+        gridRepository.save(grid);
+    }
+
+    @Override
     public void deleteGrid(Long gridId) {
         Grid grid = getGrid(gridId);
         if(grid.getGridRaceList().isEmpty()) {

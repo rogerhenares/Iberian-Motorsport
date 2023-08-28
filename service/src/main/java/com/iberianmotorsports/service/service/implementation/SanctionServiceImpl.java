@@ -5,10 +5,11 @@ import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SanctionDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SanctionMapper;
 import com.iberianmotorsports.service.controller.DTO.SanctionDTO;
-import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Sanction;
 import com.iberianmotorsports.service.repository.SanctionRepository;
 import com.iberianmotorsports.service.service.GridRaceService;
+import com.iberianmotorsports.service.service.GridService;
+import com.iberianmotorsports.service.service.RaceService;
 import com.iberianmotorsports.service.service.SanctionService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,10 @@ public class SanctionServiceImpl implements SanctionService {
 
     GridRaceService gridRaceService;
 
+    GridService gridService;
+
+    RaceService raceService;
+
     SanctionMapper sanctionMapper;
 
     SanctionDTOMapper sanctionDTOMapper;
@@ -33,8 +38,13 @@ public class SanctionServiceImpl implements SanctionService {
 
     @Override
     public Sanction createSanction(SanctionDTO sanctionDTO) {
-        GridRace gridRace = gridRaceService.getGridRace(sanctionDTO.gridId(), sanctionDTO.raceId());;
-        return sanctionRepository.save(sanctionMapper.apply(sanctionDTO));
+        Sanction sanction = sanctionMapper.apply(sanctionDTO);
+        //TODO should validate if race and grid exists and are valid
+        Sanction sanctionSaved = sanctionRepository.save(sanction);
+        gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
+                sanction.getSanctionPoints(), Boolean.TRUE);
+        gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+        return sanctionSaved;
     }
 
     @Override
@@ -43,10 +53,16 @@ public class SanctionServiceImpl implements SanctionService {
     }
 
     @Override
-    public void deleteSanction(Long sanctionId) throws ServiceException {
-        Sanction sanction = sanctionRepository.findById(sanctionId)
-                .orElseThrow(() -> new ServiceException(ErrorMessages.SANCTION_NOT_FOUND.getDescription()));
+    public void deleteSanction(Long sanctionId) throws ServiceException{
+        Sanction sanction = getSanctionById(sanctionId);
         sanctionRepository.delete(sanction);
-        //gridRaceService.calculateGridRace(sanction.getGridRace().getRace().getId());
+        gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
+                sanction.getSanctionPoints(), Boolean.FALSE);
+        gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+    }
+
+    private Sanction getSanctionById(Long sanctionId) throws ServiceException {
+        return sanctionRepository.findById(sanctionId)
+                .orElseThrow(() -> new ServiceException(ErrorMessages.SANCTION_NOT_FOUND.getDescription()));
     }
 }

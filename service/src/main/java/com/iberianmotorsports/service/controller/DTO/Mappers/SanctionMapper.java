@@ -22,6 +22,7 @@ public class SanctionMapper implements Function<SanctionDTO, Sanction> {
         sanction.setReason(sanctionDTO.reason());
         sanction.setGridRace(getGridRace(sanctionDTO.gridId(), sanctionDTO.raceId()));
         sanction.setInGame(sanctionDTO.inGame());
+        sanction.setSanctionPoints(sanction.getSanctionPoints());
         return sanction;
     }
 
