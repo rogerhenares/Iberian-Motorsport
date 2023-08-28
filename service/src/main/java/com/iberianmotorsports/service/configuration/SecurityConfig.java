@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.configuration;
 
 import com.iberianmotorsports.service.service.AuthService;
+import com.iberianmotorsports.service.utils.RoleType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +20,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
         "com.iberianmotorsports.service.service"})
 public class SecurityConfig  {
 
-    private final static String BASIC_USER = "BASIC_USER";
-    private final static String ADMIN = "ADMIN";
-
     private static final String[] AUTH_WHITE_LIST = {
             "/public/**",
             "/v3/api-docs/**",
@@ -29,6 +27,11 @@ public class SecurityConfig  {
             "/swagger-ui/**",
             "/v2/api-docs/**",
             "/swagger-resources/**"
+    };
+
+    private static final String[] STEWARDS_URL_LIST = {
+            "/sanction",
+            "/sanction/delete/**"
     };
 
     private final AuthService authService;
@@ -47,7 +50,9 @@ public class SecurityConfig  {
                 .authorizeHttpRequests()
                     .requestMatchers(AUTH_WHITE_LIST).permitAll()
                     .requestMatchers(publicUrls).permitAll()
-                    .requestMatchers(adminUrls).hasAnyAuthority(ADMIN)
+                    .requestMatchers(STEWARDS_URL_LIST).hasAnyAuthority(RoleType.ADMIN.getValue(),
+                                                                        RoleType.STEWARD.getValue())
+                    .requestMatchers(adminUrls).hasAnyAuthority(RoleType.ADMIN.getValue())
                     .anyRequest().authenticated()
                 .and()
                 .formLogin()

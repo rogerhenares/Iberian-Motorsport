@@ -58,7 +58,7 @@ public class UserController {
         return new ResponseEntity<Object>(userDTO, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping(value = "/admin")
     public ResponseEntity<?> getAllUsers(Pageable pageRequest) throws ServiceException {
         Page<UserDTO> userList = userService.findAllUsers(pageRequest).map(userDTOMapper);
         return new ResponseEntity<Object>(userList, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class UserController {
         return new ResponseEntity<Object>(updatedUserDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{steamId}")
+    @DeleteMapping(value = "/admin/{steamId}")
     public ResponseEntity<?> deleteUser(@PathVariable("steamId") Long steamId) throws ServiceException{
         userService.deleteUser(steamId);
         MessageResponse messageResponse = new MessageResponse();
