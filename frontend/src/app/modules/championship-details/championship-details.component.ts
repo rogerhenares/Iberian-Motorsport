@@ -57,6 +57,7 @@ export class ChampionshipDetailsComponent implements OnInit {
     }
 
     fetchChampionshipDetails(championshipId: number) {
+        console.log("Championship ID ->", championshipId)
         this.championshipService.getChampionshipById(championshipId)
             .subscribe(
                 (response: any) => {

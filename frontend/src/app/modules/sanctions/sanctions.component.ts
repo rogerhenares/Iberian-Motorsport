@@ -18,7 +18,7 @@ export class SanctionsComponent implements OnInit, OnChanges {
     sanctionsList: Array<Sanction>;
 
     constructor(
-        private appContext: AppContext,
+        public appContext: AppContext,
         private sanctionService: SanctionService,
         public router: Router,
     ) {}
