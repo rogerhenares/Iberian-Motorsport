@@ -2,7 +2,7 @@
     <span style="width: 100%;">There are no sanctions for this race.</span>
 </div>
 <table class="table" style="text-align: center; overflow-y: auto; max-height: 400px">
-    <ng-container>
+    <ng-container *ngIf="sanctionsList?.length">
         <thead class=" text-primary">
             <th class="teamHeader">TEAM</th>
             <th class="lapHeader">LAP</th>
