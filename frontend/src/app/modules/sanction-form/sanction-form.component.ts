@@ -35,7 +35,6 @@ export class SanctionFormComponent {
     }
 
     ngOnInit() {
-        this.sanction.gridId = history.state.gridId;
         this.sanction.raceId = history.state.raceId;
         if (this.sanction.raceId) {
             this.loadGridRacesForRaceId(this.sanction.raceId)

@@ -1,3 +1,6 @@
+<div *ngIf="!sanctionsList?.length" style="width: 100%; color: #00EBB1">
+    <span style="width: 100%;">There are no sanctions for this race.</span>
+</div>
 <table class="table" style="text-align: center; overflow-y: auto; max-height: 400px">
     <ng-container>
         <thead class=" text-primary">
@@ -9,9 +12,6 @@
         </thead>
         <ng-container *ngFor="let sanction of sanctionsList; let i = index">
             <tbody>
-                <tr *ngIf="!sanctionsList?.length" style="width: 100%; color: #00EBB1">
-                    <td style="width: 100%;">There are no sanctions for this race.</td>
-                </tr>
                 <tr [ngClass]="{'selected': isSanctionForLoggedUser(sanction)}">
                     <td class="posColumn" style="text-align: left">{{sanction.grid.teamName}}</td>
                     <td class="lapColumn" style="text-align: left">{{sanction.lap}}</td>
@@ -25,12 +25,12 @@
                         <button *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="deleteSanction(sanction.id)" style="color: black" class="btn btn-primary">Delete Sanction</button>
                     </td>
                 </tr>
-                <td>
-                    <button *ngIf="appContext.isAdmin()" (click)="createNewSanction(selectedRace.id, sanction.gridId, sanction.grid)" style=" align-items: end; color: black" class="btn btn-primary">New Sanction</button>
-                </td>
             </tbody>
         </ng-container>
     </ng-container>
 </table>
+<div>
+    <button *ngIf="appContext.isAdmin()" (click)="createNewSanction(selectedRace.id)" style=" align-items: end; color: black" class="btn btn-primary">New Sanction</button>
+</div>
 
 
