@@ -42,7 +42,7 @@ public class SanctionServiceImpl implements SanctionService {
         //TODO should validate if race and grid exists and are valid
         Sanction sanctionSaved = sanctionRepository.save(sanction);
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
-                sanction.getSanctionPoints(), Boolean.TRUE);
+                sanction.getLicensePoints(), Boolean.TRUE);
         gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
         return sanctionSaved;
     }
@@ -57,7 +57,7 @@ public class SanctionServiceImpl implements SanctionService {
         Sanction sanction = getSanctionById(sanctionId);
         sanctionRepository.delete(sanction);
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
-                sanction.getSanctionPoints(), Boolean.FALSE);
+                sanction.getLicensePoints(), Boolean.FALSE);
         gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
     }
 

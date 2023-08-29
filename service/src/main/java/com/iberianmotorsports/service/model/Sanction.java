@@ -30,8 +30,8 @@ public class Sanction implements Serializable {
     @Column(name = "in_game")
     private Boolean inGame;
 
-    @Column(name = "sanction_points")
-    private Long sanctionPoints;
+    @Column(name = "license_points")
+    private Long licensePoints;
 
     @ManyToOne
     @JoinColumns({
