@@ -14,6 +14,8 @@ public class GridRaceDTOMapper implements Function<GridRace, GridRaceDTO> {
 
     @Autowired
     SanctionDTOMapper sanctionDTOMapper;
+    @Autowired
+    GridDTOMapper gridDTOMapper;
 
     @Override
     public GridRaceDTO apply(GridRace gridRace){
@@ -26,7 +28,8 @@ public class GridRaceDTOMapper implements Function<GridRace, GridRaceDTO> {
                 gridRace.getTotalLaps(),
                 gridRace.getSanctionList().stream().map(sanctionDTOMapper).toList(),
                 gridRace.getGridRacePrimaryKey().getRace().getId(),
-                gridRace.getGridRacePrimaryKey().getGrid().getId()
+                gridRace.getGridRacePrimaryKey().getGrid().getId(),
+                gridDTOMapper.apply(gridRace.getGridRacePrimaryKey().getGrid())
                 );
     }
 }

@@ -1,7 +1,7 @@
+<div *ngIf="!sanctionsList?.length" style="width: 100%; color: #00EBB1">
+    <span style="width: 100%;">There are no sanctions for this race.</span>
+</div>
 <table class="table" style="text-align: center; overflow-y: auto; max-height: 400px">
-    <div *ngIf="!sanctionsList?.length" style="width: 100%; color: #00EBB1">
-        <p style="width: 100%;">There are still no results for this race.</p>
-    </div>
     <ng-container *ngIf="sanctionsList?.length">
         <thead class=" text-primary">
             <th class="teamHeader">TEAM</th>
@@ -20,9 +20,17 @@
                     <td *ngIf="appContext.isAdmin()" class="inGameColumn" style="text-align: left">
                         <mat-checkbox [checked]="sanction.inGame" [disabled]="true"></mat-checkbox>
                     </td>
+                    <td>
+                        <button *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="editSanction(sanction.raceId, sanction.gridId, sanction)" style="color: black" class="btn btn-primary">Edit Sanction</button>
+                        <button *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="deleteSanction(sanction.id)" style="color: black" class="btn btn-primary">Delete Sanction</button>
+                    </td>
+                </tr>
             </tbody>
         </ng-container>
     </ng-container>
 </table>
+<div>
+    <button *ngIf="appContext.isAdmin()" (click)="createNewSanction(selectedRace.id)" style=" align-items: end; color: black" class="btn btn-primary">New Sanction</button>
+</div>
 
 

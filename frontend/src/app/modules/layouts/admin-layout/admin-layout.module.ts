@@ -35,6 +35,7 @@ import {JoinChampionshipComponent} from "../../join-championship/join-championsh
 import {ChampionshipComponent} from "../../championship/championship.component";
 import {RaceListComponent} from "../../race-list/race-list.component";
 import {SanctionsComponent} from "../../sanctions/sanctions.component";
+import {SanctionFormComponent} from "../../sanction-form/sanction-form.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
@@ -79,7 +80,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     ResultsComponent,
     JoinChampionshipComponent,
     RaceListComponent,
-    SanctionsComponent
+    SanctionsComponent,
+    SanctionFormComponent
   ]
 })
 

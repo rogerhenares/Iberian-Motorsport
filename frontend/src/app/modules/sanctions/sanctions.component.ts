@@ -3,6 +3,8 @@ import {Race} from "../../model/Race";
 import {AppContext} from "../../util/AppContext";
 import {SanctionService} from "../../service/sanction.service";
 import {Sanction} from "../../model/Sanction";
+import {Grid} from "../../model/Grid";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-sanctions',
@@ -16,8 +18,9 @@ export class SanctionsComponent implements OnInit, OnChanges {
     sanctionsList: Array<Sanction>;
 
     constructor(
-        private appContext: AppContext,
-        private sanctionService: SanctionService
+        public appContext: AppContext,
+        private sanctionService: SanctionService,
+        public router: Router,
     ) {}
 
 
@@ -48,6 +51,18 @@ export class SanctionsComponent implements OnInit, OnChanges {
 
     isSanctionForLoggedUser(sanction: Sanction): boolean {
         return sanction.grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
+    }
+
+    createNewSanction(raceId: number): void {
+        this.router.navigateByUrl("sanction/new", {state: {raceId: raceId}});
+    }
+
+    editSanction(raceId: number, gridId: number, sanction: Sanction): void {
+        this.router.navigateByUrl("sanction/new", {state: {raceId: raceId, gridId: gridId, sanction: sanction}});
+    }
+
+    deleteSanction(sanctionId: number) {
+       this.sanctionService.deleteSanction(sanctionId).subscribe()
     }
 
 }
