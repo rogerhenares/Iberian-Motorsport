@@ -52,10 +52,10 @@ export class UserService {
             );
     }
 
-    getUserList(page: Number, errorNotify?: any) {
-        let url = this.url + '/list/?';
+    getUserList(page: number, errorNotify?: any) {
+        let url = this.url + '/admin';
         if (page) {
-            url += 'page=' + page;
+            url += '?page=' + page;
         }
         return this.httpClient.get<Page>(url)
             .pipe(
@@ -63,6 +63,7 @@ export class UserService {
                 catchError(handleError('UserService -> getUserList', null, errorNotify))
             );
     }
+
 
     deleteUser(userId: Number, errorNotify?: any) {
         let url = this.url + '/' +userId;

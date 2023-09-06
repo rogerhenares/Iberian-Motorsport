@@ -1,6 +1,7 @@
 package com.iberianmotorsports;
 
 import com.iberianmotorsports.service.model.Championship;
+import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.Race;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ChampionshipFactory {
     public static final Integer formationLapType = 0;
     public static final Integer ignorePrematureDisconnects = 0;
     public static final String imageContent = "testImage";
+    public static final List<Grid> gridList = new ArrayList<>();
 
 
     public static Championship championship() {
@@ -54,6 +56,7 @@ public class ChampionshipFactory {
         championship.setFormationLapType(formationLapType);
         championship.setIgnorePrematureDisconnects(ignorePrematureDisconnects);
         championship.setImageContent(imageContent);
+        championship.setGridList(GridFactory.gridList(2));
         return championship;
     }
 

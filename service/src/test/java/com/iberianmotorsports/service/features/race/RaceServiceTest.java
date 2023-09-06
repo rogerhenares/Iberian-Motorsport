@@ -74,7 +74,7 @@ public class RaceServiceTest {
         championshipMapper = new ChampionshipMapper();
         raceMapper = new RaceMapper(raceRulesMapper, sessionMapper);
         raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper);
-        championshipService = new ChampionshipServiceImpl(championshipRepository, championshipCategoryRepository);
+        //championshipService = new ChampionshipServiceImpl(championshipRepository, championshipCategoryRepository);
         raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService);
     }
 

@@ -1,6 +1,12 @@
 package com.iberianmotorsports;
 
+import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.Race;
+import com.iberianmotorsports.service.model.RaceRules;
+import com.iberianmotorsports.service.model.Session;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RaceFactory {
     public static final Long id = 1L;
@@ -15,6 +21,9 @@ public class RaceFactory {
     public static final Integer postRaceSeconds = 0;
     public static final String serverName = "testServerName";
     public static final Long championshipId = 1L;
+    public static final Championship championship = new Championship();
+    public static final RaceRules raceRules = new RaceRules();
+    public static final List<Session> sessionList = new ArrayList<>();
 
 
     public static Race race() {
@@ -31,6 +40,9 @@ public class RaceFactory {
         race.setSessionOverTimeSeconds(sessionOverTimeSeconds);
         race.setWeatherRandomness(weatherRandomness);
         race.setChampionshipId(championshipId);
+        race.setChampionship(ChampionshipFactory.championship());
+        race.setRaceRules(RaceRulesFactory.raceRules());
+        race.setSessionList(SessionFactory.sessionList());
         return race;
     }
 }

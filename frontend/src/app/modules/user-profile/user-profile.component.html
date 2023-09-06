@@ -40,6 +40,17 @@
                                 </mat-form-field>
                               </div>
                           </div>
+                          <div class="row" *ngIf="appContext.isAdmin()">
+                              <mat-label class="col-md-6" style="color: black">
+                                  Roles
+                              </mat-label>
+                              <div class="col-lg-12">
+                                  <mat-checkbox [checked]="user.roleList.includes('STEWARD')" formControlName="steward">STEWARD</mat-checkbox>
+                              </div>
+                              <div class="col-lg-12">
+                                  <mat-checkbox [checked]="user.roleList.includes('ADMIN')" formControlName="admin">ADMIN</mat-checkbox>
+                              </div>
+                          </div>
                           <button mat-raised-button type="submit" style="color: black" class="btn btn-primary pull-right">Update Profile</button>
                       </form>
                   </div>
@@ -48,3 +59,24 @@
       </div>
   </div>
 </div>
+
+
+<swal
+    #requestSuccessSwal
+    title=""
+    text=""
+    type="success"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    timer=2000>
+</swal>
+
+<swal
+    #requestFailSwal
+    title="{{'swal-cancelled.title' | translate}}"
+    text="{{'swal-cancelled.text' | translate}}"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    type="error"
+    timer=4000>
+</swal>

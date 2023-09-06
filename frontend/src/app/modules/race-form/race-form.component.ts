@@ -41,6 +41,7 @@ export class RaceFormComponent {
     raceSubmit() {
         this.raceFormSubmitted = true;
         if (this.raceForm.valid) {
+            console.log("Race to save -> ", this.race);
             this.raceService.saveRace(this.race).subscribe(response =>{
                 if (response) {
                     this.requestSuccessSwal.fire();

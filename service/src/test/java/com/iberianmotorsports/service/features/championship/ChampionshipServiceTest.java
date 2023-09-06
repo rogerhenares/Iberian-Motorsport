@@ -48,7 +48,7 @@ public class ChampionshipServiceTest {
     public void init() {
         championshipMapper = new ChampionshipMapper();
         championshipDTOMapper = new ChampionshipDTOMapper();
-        service = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
+        //service = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
     }
 
     @Nested

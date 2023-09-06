@@ -1,0 +1,40 @@
+<div class="main-content">
+  <div class="table-responsive" style="text-align: center; overflow-y: auto; max-height: 400px">
+    <div class="container-fluid">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Users</h4>
+          </div>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>SteamID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Short Name</th>
+                <th>Steward</th>
+                <th>Admin</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of userList; let i = index" (click)="selectUser(user)">
+                  <td>{{user.steamId}}</td>
+                  <td>{{user.firstName}}</td>
+                  <td>{{user.lastName}}</td>
+                  <td>{{user.shortName}}</td>
+                  <td>
+                    <mat-checkbox [checked]="user.roleList.includes('STEWARD')" [disabled]="true"></mat-checkbox>
+                  </td>
+                  <td>
+                    <mat-checkbox [checked]="user.roleList.includes('ADMIN')" [disabled]="true"></mat-checkbox>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

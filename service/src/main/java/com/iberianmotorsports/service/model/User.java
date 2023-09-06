@@ -47,4 +47,8 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
+
+    @Transient
+    private List<String> rolesToAdd;
+
 }

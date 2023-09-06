@@ -5,6 +5,7 @@ import com.iberianmotorsports.service.controller.DTO.CarDTO;
 import com.iberianmotorsports.service.controller.DTO.Mappers.CarDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.CarMapper;
 import com.iberianmotorsports.service.model.Car;
+import com.iberianmotorsports.service.model.parsing.Entry;
 import com.iberianmotorsports.service.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

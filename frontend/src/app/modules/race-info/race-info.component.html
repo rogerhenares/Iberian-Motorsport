@@ -2,8 +2,8 @@
 <ul>
     <li>name : <span style="color:#00FFC0">{{selectedRace.serverName}}</span></li>
     <li>password : <span style="color:#00FFC0">{{selectedChampionship.password}}</span></li>
-    <li>spectator password : <span style="color:#00FFC0">{{selectedChampionship.spectatorPassword}}</span></li>
-    <li>admin password : <span style="color:#00FFC0">{{selectedChampionship.adminPassword}}</span> </li>
+    <li *ngIf="appContext.isSteward() || appContext.isAdmin()">spectator password : <span style="color:#00FFC0">{{selectedChampionship.spectatorPassword}}</span></li>
+    <li *ngIf=appContext.isAdmin()>admin password : <span style="color:#00FFC0">{{selectedChampionship.adminPassword}}</span> </li>
 </ul>
 <hr>
 <h3 style="color: #ff9800">Session</h3>

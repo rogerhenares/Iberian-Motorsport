@@ -76,10 +76,10 @@ public class GridServiceTest {
         championshipDTOMapper = new ChampionshipDTOMapper();
         userMapper = new UserMapper();
         userDTOMapper = new UserDTOMapper();
-        gridMapper = new GridMapper(carMapper, championshipMapper, userMapper);
-        gridDTOMapper = new GridDTOMapper(championshipDTOMapper, userDTOMapper, carDTOMapper);
+        //gridMapper = new GridMapper(carMapper, championshipMapper, userMapper);
+        //gridDTOMapper = new GridDTOMapper(championshipDTOMapper, userDTOMapper, carDTOMapper);
         userService = new UserServiceImpl(userRepository, roleRepository, restTemplate, environment);
-        championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
+        //championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
         gridService = new GridServiceImpl(championshipService, userService, carService, gridRepository, gridUserRepository, gridMapper, gridDTOMapper, sanctionRepository);
     }
 

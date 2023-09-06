@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,9 +67,7 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) throws ServiceException{
-        Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userToUpdate = userMapper.apply(userDTO);
-        userToUpdate.setSteamId(steamId);
         User updatedUser = userService.updateUser(userToUpdate);
         UserDTO updatedUserDTO = userDTOMapper.apply(updatedUser);
         return new ResponseEntity<Object>(updatedUserDTO, HttpStatus.OK);

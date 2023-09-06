@@ -26,7 +26,7 @@
                                 </div>
                                 <div>
                                     <mat-form-field>
-                                        <mat-label>reason</mat-label>
+                                        <mat-label>Reason</mat-label>
                                         <input style="color: white" matInput formControlName="reason"/>
                                         <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.reason.errors)">Reason Error</mat-error>
                                     </mat-form-field>
@@ -41,6 +41,13 @@
                                     </mat-select>
                                     <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.gridId.errors)">Grid Error</mat-error>
                                 </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-form-field>
+                                        <mat-label>License Points</mat-label>
+                                        <input style="color: white" matInput formControlName="licensePoints"/>
+                                        <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.licensePoints.errors)">License Points Error</mat-error>
+                                    </mat-form-field>
                                 </div>
                             </div>
                             <div class="btn-block">

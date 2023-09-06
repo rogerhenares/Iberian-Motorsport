@@ -5,8 +5,8 @@ public record SanctionDTO (
     Integer lap,
     String penalty,
     String reason,
-    Long gridId,
     Long raceId,
+    Long gridId,
     GridDTO grid,
     Boolean inGame,
     Long licensePoints

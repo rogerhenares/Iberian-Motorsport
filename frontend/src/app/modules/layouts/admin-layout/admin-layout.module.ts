@@ -37,6 +37,7 @@ import {RaceListComponent} from "../../race-list/race-list.component";
 import {SanctionsComponent} from "../../sanctions/sanctions.component";
 import {SanctionFormComponent} from "../../sanction-form/sanction-form.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {UserListComponent} from "../../user-list/user-list.component";
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     JoinChampionshipComponent,
     RaceListComponent,
     SanctionsComponent,
-    SanctionFormComponent
+    SanctionFormComponent,
+    UserListComponent
   ]
 })
 

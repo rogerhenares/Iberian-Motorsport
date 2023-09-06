@@ -49,12 +49,22 @@ export class SanctionFormComponent {
     sanctionSubmit() {
         this.sanctionFormSubmitted = true;
         if (this.sanctionForm.valid) {
-            this.sanctionService.createSanction(this.sanction).subscribe(response =>{
+
+            this.sanction.lap = this.sanctionForm.value.lap;
+            this.sanction.penalty = this.sanctionForm.value.penalty;
+            this.sanction.reason = this.sanctionForm.value.reason;
+            this.sanction.gridId = this.sanctionForm.value.gridId;
+            this.sanction.licensePoints = this.sanctionForm.value.licensePoints;
+
+            this.sanctionService.createSanction(this.sanction).subscribe(response => {
                 if (response) {
                     this.requestSuccessSwal.fire();
                 }
-            })
-        }}
+            });
+        }
+    }
+
+
 
     loadGridRacesForRaceId(raceId: number) {
         this.gridRaceService.getGridRaceForRace(raceId).subscribe(
@@ -71,8 +81,10 @@ export class SanctionFormComponent {
             lap: [sanction.lap, [Validators.required]],
             penalty: [sanction.penalty, [Validators.required]],
             reason: [sanction.reason, [Validators.required]],
-            gridId: [this.sanction.gridId, [Validators.required]],
-            raceId: [this.sanction.raceId]
+            gridId: [sanction.gridId],
+            raceId: [sanction.raceId],
+            inGame: [sanction.inGame],
+            licensePoints: [sanction.licensePoints, [Validators.required]]
         })
     }
 

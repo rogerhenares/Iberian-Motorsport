@@ -58,6 +58,10 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
         return this.user.roleList.find(value => value === "ADMIN") !== undefined;
     }
 
+    isSteward() {
+        return this.user.roleList.find(value=> value === "STEWARD") !== undefined;
+    }
+
     isUserLoggedToNavigate() : boolean {
         if(this.loadLoggedUser()) {
             console.log('user has credentials');

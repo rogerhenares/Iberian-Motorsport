@@ -6,10 +6,11 @@ export class Sanction {
     lap: number;
     penalty: number;
     reason: string;
-    gridId: number;
     raceId: number;
+    gridId: number;
     grid: Grid;
     inGame: boolean;
+    licensePoints: number;
 
     constructor() {
         this.id = null;
@@ -20,5 +21,6 @@ export class Sanction {
         this.raceId = null;
         this.grid = null;
         this.inGame = null;
+        this.licensePoints = null;
     }
 }

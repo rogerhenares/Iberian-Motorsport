@@ -8,13 +8,15 @@ declare interface RouteInfo {
     icon: string;
     class: string;
     logged: boolean;
+    adminOnly: boolean;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Home',  icon: 'dashboard', class: '', logged: true },
-    { path: '/championship', title: 'Championships',  icon:'content_paste', class: '', logged: false },
-    { path: '/championship', title: 'Championships',  icon:'content_paste', class: '', logged: true },
-    { path: '/user-profile', title: 'Profile',  icon:'person', class: '', logged: true },
-    { path: '/login', title: 'Login', icon:'person', class: '', logged: false}
+    { path: '/dashboard', title: 'Home',  icon: 'dashboard', class: '', logged: true, adminOnly: false },
+    { path: '/championship', title: 'Championships',  icon:'content_paste', class: '', logged: false, adminOnly: false },
+    { path: '/championship', title: 'Championships',  icon:'content_paste', class: '', logged: true, adminOnly: false },
+    { path: '/user-profile', title: 'Profile',  icon:'person', class: '', logged: true, adminOnly: false },
+    { path: '/login', title: 'Login', icon:'person', class: '', logged: false, adminOnly: false},
+    { path: '/user-list', title: 'Users', icon:'perm_contact_calendar', class: '', logged: true, adminOnly: true }
 ];
 
 @Component({
