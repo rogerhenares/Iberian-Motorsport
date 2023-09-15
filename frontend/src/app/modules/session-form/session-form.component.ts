@@ -1,12 +1,6 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-
-import {Router} from "@angular/router";
+import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SessionService} from "../../service/session.service";
 import {Session} from "../../model/Session";
-import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
-import {TranslateService} from "@ngx-translate/core";
-import {Race} from "../../model/Race";
 
 
 @Component({
@@ -15,37 +9,18 @@ import {Race} from "../../model/Race";
 })
 export class SessionFormComponent {
 
-    @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
     @Input() session: Session;
-
-    @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
-    @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
     sessionForm: FormGroup;
     sessionFormSubmitted: Boolean;
+    sessionTypeOptions: string[] = ['Q', 'P', 'R'];
 
-    constructor(
-        private sessionService: SessionService,
-        public router: Router,
-        private formBuilder: FormBuilder,
-        private translate: TranslateService
-    ) {}
+    constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit() {
         this.session !== undefined ?
             this.sessionFormBuilder(this.session) :
             this.sessionFormBuilder(new Session());
-    }
-
-    sessionSubmit() {
-        this.sessionFormSubmitted= true;
-        if (this.sessionForm.valid) {
-            this.sessionService.saveSession(this.session).subscribe(response => {
-                if (response) {
-                    this.requestSuccessSwal.fire()
-                }
-            })
-        }
     }
 
     sessionFormBuilder(session: Session) {

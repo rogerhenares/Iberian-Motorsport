@@ -15,21 +15,11 @@ import {RaceRules} from "../../model/RaceRules";
 export class RaceFormComponent {
 
     @Input() race: Race;
-    @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
-
-    @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
-    @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
     raceForm: FormGroup;
     raceFormSubmitted: Boolean;
 
-    constructor(
-        private raceService: RaceService,
-        private router: Router,
-        private formBuilder: FormBuilder,
-        private translate: TranslateService,
-    ) {
-    }
+    constructor(private formBuilder: FormBuilder) { }
 
     ngOnChanges() {
         this.race !== undefined ?
