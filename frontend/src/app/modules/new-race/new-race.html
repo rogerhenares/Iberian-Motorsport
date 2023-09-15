@@ -36,3 +36,23 @@
         </div>
     </div>
 </div>
+
+<swal
+    #requestSuccessSwal
+    title=""
+    text=""
+    type="success"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    timer=2000>
+</swal>
+
+<swal
+    #requestFailSwal
+    title="{{'swal-cancelled.title' | translate}}"
+    text="{{'swal-cancelled.text' | translate}}"
+    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    cancelButtonText="{{'swal-cancel' | translate}}"
+    type="error"
+    timer=4000>
+</swal>

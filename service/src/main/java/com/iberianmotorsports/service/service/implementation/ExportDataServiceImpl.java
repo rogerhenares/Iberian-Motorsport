@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.iberianmotorsports.service.model.*;
 import com.iberianmotorsports.service.model.parsing.*;
+import com.iberianmotorsports.service.model.parsing.export.*;
+import com.iberianmotorsports.service.model.parsing.imports.Sessions;
 import com.iberianmotorsports.service.model.parsing.properties.EntryListProperties;
 import com.iberianmotorsports.service.model.parsing.properties.EntryProperties;
 import com.iberianmotorsports.service.service.ExportDataService;
@@ -24,7 +26,7 @@ public class ExportDataServiceImpl implements ExportDataService {
     public void exportData(Race race, EntryProperties entryProperties, EntryListProperties entryListProperties) throws Exception {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
-        mapper.writeValue(new File("settings.json"), getSettings(race.getChampionship(), race.getTrack()));
+        mapper.writeValue(new File("settings.json"), getSettings(race.getChampionship(), race));
         mapper.writeValue(new File("event.json"), getEvent(race));
         mapper.writeValue(new File("eventRules.json"), getEventRules(race.getRaceRules()));
 
@@ -36,9 +38,9 @@ public class ExportDataServiceImpl implements ExportDataService {
 
     }
 
-    public Settings getSettings(Championship championship, String raceTrack) {
+    public Settings getSettings(Championship championship, Race race) {
         Settings settings = new Settings();
-        settings.setServerName("IML Iberian Motor Sports | " + championship.getName() + " | " + raceTrack);
+        settings.setServerName("IML Iberian Motor Sports | " + championship.getName() + " | " + race.getTrack() + " | " + "#C" + championship.getId() + "R" + race.getId());
         settings.setAdminPassword(championship.getAdminPassword());
         settings.setCarGroup(championship.getCarGroup());
         settings.setTrackMedalsRequirement(championship.getTrackMedalsRequirement().floatValue());

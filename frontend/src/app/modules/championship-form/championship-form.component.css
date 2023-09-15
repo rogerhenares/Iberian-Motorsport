@@ -6,3 +6,16 @@
     flex-basis: 50%;
     margin-left: 20px;
 }
+
+.myButton {
+    margin-top: 20px;
+}
+
+.white-input .mat-input-element {
+    color: white;
+}
+
+.file-input {
+    display: none;
+}
+

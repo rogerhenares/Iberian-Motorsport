@@ -3,7 +3,6 @@ import {Race} from "../../model/Race";
 import {AppContext} from "../../util/AppContext";
 import {SanctionService} from "../../service/sanction.service";
 import {Sanction} from "../../model/Sanction";
-import {Grid} from "../../model/Grid";
 import {Router} from "@angular/router";
 
 @Component({
@@ -41,8 +40,6 @@ export class SanctionsComponent implements OnInit, OnChanges {
             this.sanctionService.getSanctionList(this.selectedRace.id).subscribe(
                 (sanctionList) => {
                     this.sanctionsList = sanctionList;
-                    console.log("Race id ->", this.selectedRace.id)
-                    console.log("Sanction list ->", sanctionList)
                 }
             )
         }
@@ -62,7 +59,6 @@ export class SanctionsComponent implements OnInit, OnChanges {
     }
 
     deleteSanction(sanctionId: number) {
-       this.sanctionService.deleteSanction(sanctionId).subscribe()
+       this.sanctionService.deleteSanction(sanctionId).subscribe(() => this.loadSanctionList())
     }
-
 }

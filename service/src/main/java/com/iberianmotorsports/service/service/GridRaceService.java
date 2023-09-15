@@ -12,4 +12,6 @@ public interface GridRaceService {
 
     void calculateGridRace(Long raceId);
 
+    GridRace saveGridRace(GridRace gridRace);
+
 }

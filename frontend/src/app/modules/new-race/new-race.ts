@@ -1,4 +1,4 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -25,13 +25,11 @@ export class NewRace {
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
     @ViewChild('raceFormComponent') raceFormComponent: RaceFormComponent;
     @ViewChild('raceRulesFormComponent') raceRulesFormComponent: RaceRulesFormComponent;
-    @ViewChild('sessionFormComponent') sessionFormComponent: SessionFormComponent;
     @ViewChild('stepper') private stepper: MatStepper;
 
+    @ViewChildren('sessionFormComponent') sessionFormComponents: QueryList<SessionFormComponent>;
 
-    raceForm: FormGroup;
-    sessionForm: FormGroup;
-    raceRulesForm: FormGroup;
+
     race: Race = new Race();
     sessionList: Session[] = new Array<Session>;
     raceRules: RaceRules= new RaceRules();
@@ -39,29 +37,17 @@ export class NewRace {
 
     constructor(
         private raceService: RaceService,
-        private sessionService: SessionService,
-        private raceRulesService: RaceRulesService,
-        private router: Router,
-        private formBuilder: FormBuilder,
-        private translate: TranslateService,
-        private route: ActivatedRoute
-    ) {
-        this.raceForm = this.formBuilder.group({})
-        this.sessionForm = this.formBuilder.group({})
-        this.raceRulesForm = this.formBuilder.group({})
-    }
+        private router: Router
+    ) { }
 
     ngOnInit() {
         const navigation = this.router.getCurrentNavigation();
         this.race.championshipId = history.state.championshipId
         if (history.state.race) {
             this.race = history.state.race;
-            console.log("race =>", this.race)
             this.sessionList = history.state.race.sessionDTOList
             this.previousSessionList = history.state.race.sessionDTOList;
-            console.log("session =>", this.sessionList)
             this.raceRules = history.state.race.raceRulesDTO
-            console.log("raceRules =>", this.raceRules)
         }
     }
 
@@ -69,22 +55,25 @@ export class NewRace {
         const raceData = this.raceFormComponent.raceForm.value;
         raceData.id = this.race.id
         raceData.championshipId = this.race.championshipId;
-        const sessionData = this.sessionFormComponent.sessionForm.value;
-        sessionData.raceId = raceData.id
+        const sessionData = this.sessionList;
+        for (let session of sessionData) {
+            session.raceId = raceData.id
+        }
         const raceRulesData = this.raceRulesFormComponent.raceRulesForm.value;
         raceRulesData.raceId = raceData.id
-        console.log("Flag 1")
-        if (this.raceRulesFormComponent.raceRulesForm.valid &&
-            this.sessionFormComponent.sessionForm.valid &&
+        if (this.raceFormComponent.raceForm.valid &&
             this.raceRulesFormComponent.raceRulesForm.valid) {
-            console.log("Flag 2")
+
+            let raceDate = this.raceFormComponent.raceForm.get('startDate').value;
+            raceData.startDate = this.prepareRaceDate(raceDate);
+
             raceData.sessionDTOList = this.sessionList;
-            raceData.raceRulesDTO = raceRulesData;
-            console.log("PEPE ->", raceData);
+            raceData.raceRulesDTO = this.prepareRaceRules(raceRulesData);
+
             this.raceService.saveRace(raceData).subscribe(response => {
-                 if (response) {
-                    console.log("Flag 3")
+                if (response) {
                     this.requestSuccessSwal.fire();
+                    this.router.navigateByUrl("/championship/" + this.race.championshipId);
                 }
             });
         }
@@ -93,7 +82,6 @@ export class NewRace {
     validateRace(): boolean {
         this.raceFormComponent.raceFormSubmitted = true;
         let isRaceValid = this.raceFormComponent.raceForm.valid;
-        console.log("isRaceValid -> ", isRaceValid);
         if(isRaceValid == true) {
             this.updateSessionList();
             this.stepper.next();
@@ -101,16 +89,20 @@ export class NewRace {
         return isRaceValid;
     }
 
-    validateSession(){
-        this.sessionFormComponent.sessionFormSubmitted = true;
-        let isSessionValid: boolean = this.sessionFormComponent.sessionForm.valid;
+    validateSession(index: number){
+        const sessionFormComponent = this.sessionFormComponents.toArray()[index];
+        sessionFormComponent.sessionFormSubmitted = true;
+        let isSessionValid: boolean = sessionFormComponent.sessionForm.valid;
         if(isSessionValid == true) {
+            this.sessionList[index] = sessionFormComponent.sessionForm.value;
             this.stepper.next();
         }
         return isSessionValid;
     }
 
-    validateRaceRules() {
+
+
+validateRaceRules() {
         this.raceRulesFormComponent.raceRulesFormSubmitted = true;
         let isRaceRulesValid: boolean = this.raceRulesFormComponent.raceRulesForm.valid;
         if (isRaceRulesValid == true) {
@@ -130,4 +122,22 @@ export class NewRace {
                 this.sessionList.splice(i, 1);
         }
     }
+
+    prepareRaceRules(raceRulesData: RaceRules) {
+        raceRulesData.isRefuellingAllowedInRace = Number(raceRulesData.isRefuellingAllowedInRace)
+        raceRulesData.isRefuellingTimeFixed = Number(raceRulesData.isRefuellingTimeFixed)
+        raceRulesData.isMandatoryPitstopRefuellingRequired = Number(raceRulesData.isMandatoryPitstopRefuellingRequired)
+        raceRulesData.isMandatoryPitstopTyreChangeRequired = Number(raceRulesData.isMandatoryPitstopTyreChangeRequired)
+        raceRulesData.isMandatoryPitstopSwapDriverRequired = Number(raceRulesData.isMandatoryPitstopSwapDriverRequired)
+        return raceRulesData;
+    }
+
+    prepareRaceDate(raceDate: string) {
+        raceDate = raceDate.replace('T', ' ')
+        if (raceDate.length < 19) {
+            raceDate = raceDate + ':00';
+        }
+        return raceDate;
+    }
+
 }

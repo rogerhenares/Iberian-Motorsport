@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,15 +41,22 @@ public class GridController {
         return new ResponseEntity<Object>(createdGridDTO, HttpStatus.CREATED);
     }
 
+    @PutMapping(value= "/{id}")
+    public ResponseEntity<?> updateGrid(@PathVariable("id") Long id, @RequestBody GridDTO gridDTO) throws ServiceException {
+        Grid updatedGrid = gridService.updateGrid(gridDTO);
+        GridDTO updatedGridDto = gridDTOMapper.apply(updatedGrid);
+        return new ResponseEntity<Object>(updatedGridDto, HttpStatus.OK);
+    }
+
     @PutMapping(value= "/{id}/carNumber/{carNumber}")
-    public ResponseEntity<?> updateGridEntry(@PathVariable("id") Long id, @PathVariable("carNumber") Integer carNumber) throws ServiceException {
+    public ResponseEntity<?> updateGridCarNumber(@PathVariable("id") Long id, @PathVariable("carNumber") Integer carNumber) throws ServiceException {
         Grid updatedGrid = gridService.updateGridCarNumber(id, carNumber);
         GridDTO updatedGridDTO = gridDTOMapper.apply(updatedGrid);
         return new ResponseEntity<Object>(updatedGridDTO, HttpStatus.OK);
     }
 
     @PutMapping(value= "/{id}/car/{carId}")
-    public ResponseEntity<?> updateGridEntry(@PathVariable("id") Long id, @PathVariable("carId") Long carId) throws ServiceException {
+    public ResponseEntity<?> updateGridCarId(@PathVariable("id") Long id, @PathVariable("carId") Long carId) throws ServiceException {
         Grid updatedGrid = gridService.updateGridCar(id, carId);
         GridDTO updatedGridDTO = gridDTOMapper.apply(updatedGrid);
         return new ResponseEntity<Object>(updatedGridDTO, HttpStatus.OK);

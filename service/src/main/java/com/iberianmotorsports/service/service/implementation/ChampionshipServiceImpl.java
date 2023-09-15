@@ -43,8 +43,10 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     @Override
     public Championship saveChampionship(ChampionshipDTO championshipDTO) {
         Championship championship = championshipMapper.apply(championshipDTO);
-        if (isInDatabase(championship.getName()))
-            throw new ServiceException(ErrorMessages.DUPLICATED_CHAMPIONSHIP.getDescription());
+//        if (isInDatabase(championship.getName()))
+//            throw new ServiceException(ErrorMessages.DUPLICATED_CHAMPIONSHIP.getDescription());
+        championship.setFinished(false);
+        championship.setStarted(false);
         Championship createdChampionship = championshipRepository.save(championship);
         saveChampionshipCategoryForChamp(createdChampionship);
         return createdChampionship;
@@ -160,7 +162,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
                 .stream()
                 .mapToInt(ChampionshipCategory::getMax)
                 .sum();
-        if(!championship.getMaxCarSlots().equals(totalCarsFromCategories)) {
+        if(championship.getMaxCarSlots().equals(totalCarsFromCategories)) {
             throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
         }
         List<ChampionshipCategory> championshipCategoryList = championship.getCategoryList().stream()

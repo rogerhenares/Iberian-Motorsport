@@ -29,56 +29,70 @@ export class JoinChampionshipComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private appContext: AppContext,
+        public appContext: AppContext,
         private gridService: GridService,
         private formBuilder: FormBuilder,
-        private carService: CarService
+        private carService: CarService,
     ) {
     }
 
     ngOnInit() {
         const navigation = this.router.getCurrentNavigation();
         this.championship = history.state.championship;
-        this.gridFormBuilder();
+        this.grid = history.state.grid;
         console.log("join-champ -> ", this.championship);
+        console.log("Grid ->", this.grid)
+        this.gridFormBuilder();
+
     }
 
     gridFormBuilder() {
         this.gridSubmitted = false;
         this.gridForm = this.formBuilder.group({
-            carNumber: [null, [Validators.required]],
-            carLicense: [null],
+            carNumber: [this.grid.carNumber, [Validators.required]],
+            carLicense: [this.grid.carLicense],
             championshipId: [this.championship.id],
             driversList: [this.appContext.getLoggedUser()],
-            car: [null, [Validators.required]],
-            teamName: [null, [Validators.required]]
+            car: [this.grid.car, [Validators.required]],
+            teamName: [this.grid.teamName, [Validators.required]],
+            disabled: [this.grid.disabled]
         })
     }
 
 
     join(){
         let grid: Grid = {
-            id: null,
+            id: this.grid.id,
+            car: this.gridForm.value.car,
+            carLicense: this.gridForm.value.carLicense,
             carNumber: this.gridForm.value.carNumber,
-            carLicense: null,
             championshipId: this.championship.id,
             teamName: this.gridForm.value.teamName,
             driversList: [this.appContext.getLoggedUser()],
-            car: this.gridForm.value.car,
-            points: 0,
+            licensePoints: this.grid.licensePoints,
+            points: this.grid.points,
+            disabled: this.grid.disabled
         }
-        console.log("Grid", grid)
+        if (history.state.grid) {
+            this.gridService.updateGridEntry(grid).subscribe(
+                response => {
+                    if (response) {
+                        this.requestSuccessSwal.fire()
+                        this.router.navigateByUrl('/championship/' + this.championship.id)
+                    }
+                }
+            )
+        }
+        else {
         this.gridService.createGridEntry(grid).subscribe(
             response => {
                 if (response) {
-                    console.log("Response", response)
                     this.requestSuccessSwal.fire()
+                    this.router.navigateByUrl('/dashboard');
                 }
             },
             error => {
-                //show error if car number is already on use
-                console.log("unable to create grid")
-            }
-        );
+            });
+        }
     }
 }

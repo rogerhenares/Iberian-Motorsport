@@ -20,6 +20,7 @@ public class GridMapper implements Function<GridDTO, Grid> {
         Grid grid = new Grid();
         Championship championship = new Championship();
         championship.setId(gridDTO.championshipId());
+        grid.setId(gridDTO.id());
         grid.setCarLicense(gridDTO.carLicense());
         grid.setCarNumber(gridDTO.carNumber());
         grid.setChampionship(championship);
@@ -27,6 +28,8 @@ public class GridMapper implements Function<GridDTO, Grid> {
         grid.setCar(carMapper.apply(gridDTO.car()));
         grid.setDrivers(gridDTO.driversList().stream().map(userMapper).toList());
         grid.setPoints(gridDTO.points());
+        grid.setLicensePoints(gridDTO.licensePoints());
+        grid.setDisabled(gridDTO.disabled());
         return grid;
     }
 }

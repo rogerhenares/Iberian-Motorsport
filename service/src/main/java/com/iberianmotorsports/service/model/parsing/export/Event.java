@@ -1,6 +1,6 @@
-package com.iberianmotorsports.service.model.parsing;
+package com.iberianmotorsports.service.model.parsing.export;
 
-import com.iberianmotorsports.service.model.Session;
+import com.iberianmotorsports.service.model.parsing.imports.Sessions;
 import lombok.Data;
 
 import java.util.List;

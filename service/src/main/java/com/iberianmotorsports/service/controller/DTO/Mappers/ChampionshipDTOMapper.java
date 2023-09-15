@@ -48,6 +48,8 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getStartDate(),
                 championship.getRaceList().stream().map(raceDTOMapper).toList(),
                 championship.getDisabled(),
+                championship.getStarted(),
+                championship.getFinished(),
                 championship.getCategoryList().stream().map(championshipCategoryDTOMapper).toList(),
                 !Objects.isNull(championship.getCarListForChampionship()) ?
                         championship.getCarListForChampionship().stream().map(carDTOMapper).toList() :

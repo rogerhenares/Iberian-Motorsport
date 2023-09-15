@@ -25,7 +25,7 @@ export class GridService {
     }
 
     updateGridEntry(grid: Grid, errorNotify?: any) {
-        return this.httpClient.put<Grid>(this.url, grid)
+        return this.httpClient.put<Grid>(this.url + "/" + grid.id, grid)
             .pipe(
                 tap(grid=> console.log('update Grid info')),
                 catchError(handleError('GridService -> updateGridEntry', null, errorNotify))

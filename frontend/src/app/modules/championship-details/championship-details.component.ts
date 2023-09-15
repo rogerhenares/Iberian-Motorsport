@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import {ChampionshipService} from "../../service/championship.service";
 import {Championship} from "../../model/Championship";
 import {Race} from "../../model/Race";
 import {Pageable} from "../../model/Pageable";
-import {TimezoneService} from "../../service/timezone.service";
 import {AppContext} from "../../util/AppContext";
 import {RaceService} from "../../service/race.service";
-import {GridService} from "../../service/grid.service";
+import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
+import Swal from "sweetalert2";
+import {StandingsComponent} from "../standings/standings.component";
 import {Grid} from "../../model/Grid";
 
 @Component({
@@ -19,24 +19,28 @@ import {Grid} from "../../model/Grid";
 
 export class ChampionshipDetailsComponent implements OnInit {
 
+    @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
+    @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
+
+    @ViewChild(StandingsComponent, {static: true}) standings: StandingsComponent;
+
     races: Race[];
     selectedRace: Race;
-    upcomingRaces: Race[] = [];
     championshipId: number;
     championship: Championship;
     selectedRaceId: number | null = null;
     totalPages: number;
     pageable: Pageable = new Pageable(0, 3);
 
+    selectedGrid: Grid;
+    isAlreadyInStandings: boolean;
+
     constructor(
         private route: ActivatedRoute,
-        private http: HttpClient,
         private championshipService: ChampionshipService,
-        private timezoneService: TimezoneService,
         public appContext : AppContext,
         public router: Router,
         public raceService: RaceService,
-        private gridService: GridService,
     ) {
     }
 
@@ -47,24 +51,12 @@ export class ChampionshipDetailsComponent implements OnInit {
         });
     }
 
-    orderRacesForChampionship() {
-        this.championship.raceList.forEach(race => {
-            if (new Date(race.startDate.toString()) > new Date()) {
-                race.startDate = this.timezoneService.convertDateToUserTimezone(race.startDate.toString());
-                this.upcomingRaces.push(race);
-            }
-        });
-    }
-
     fetchChampionshipDetails(championshipId: number) {
-        console.log("Championship ID ->", championshipId)
         this.championshipService.getChampionshipById(championshipId)
             .subscribe(
                 (response: any) => {
-                    console.log('fetchChampionshipDetails:', response);
                     this.championship = response;
                     this.races = this.championship.raceList;
-                    this.orderRacesForChampionship();
                     this.totalPages = Math.ceil(this.races.length / this.pageable.size);
 
                     // Select the first race by default
@@ -116,14 +108,41 @@ export class ChampionshipDetailsComponent implements OnInit {
     }
 
     deleteRace() {
-        console.log("delete race click")
-        this.raceService.deleteRace(this.selectedRaceId).subscribe()
+        this.raceService.deleteRace(this.selectedRaceId).subscribe(() => {
+            window.location.reload();
+        })
     }
+
 
     joinChampionship() {
         let championship: Championship = this.championship
-        console.log("Championship", championship)
         this.router.navigate(['/join'], { state: { championship: championship} });
     }
 
+    editChampionship(championship: Championship) {
+        this.router.navigateByUrl("championship/new", {state: {championship: championship}});
+    }
+
+
+    deleteChampionship() {
+        this.championshipService.deleteChampionship(this.championship.id).subscribe(() => {
+            window.location.reload();
+    })
+    }
+
+    onIsAlreadyInStandingsChange(value: boolean) {
+        this.isAlreadyInStandings = value;
+    }
+
+    onSelectedGridChange(grid: Grid) {
+        this.selectedGrid = grid;
+        console.log("Selected Grid", this.selectedGrid);
+    }
+
+    editGrid(grid: Grid): void {
+        let championship = this.championship;
+        this.router.navigateByUrl("join", {state: {grid: grid, championship: championship}});
+    }
+
 }
+

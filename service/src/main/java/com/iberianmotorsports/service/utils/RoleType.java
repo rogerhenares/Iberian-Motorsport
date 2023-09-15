@@ -1,6 +1,8 @@
 package com.iberianmotorsports.service.utils;
 
 import com.iberianmotorsports.service.model.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public enum RoleType {
     BASIC_USER("BASIC_USER"),
@@ -17,11 +19,22 @@ public enum RoleType {
         return value;
     }
 
-    public Boolean isAdmin(User user) {
+    public static Boolean isAdmin(User user) {
         return user.getRoles().stream().anyMatch(role -> role.getRole().equals(ADMIN.getValue()));
     }
 
-    public Boolean isSteward(User user) {
+    public static Boolean isSteward(User user) {
         return user.getRoles().stream().anyMatch(role -> role.getRole().equals(STEWARD.getValue()));
     }
+
+    public static Boolean isAdminFromAuthentication() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream().anyMatch(role -> role.toString().equals(ADMIN.getValue()));
+    }
+
+    public static Boolean isStewardFromAuthentication() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream().anyMatch(role -> role.toString().equals(STEWARD.getValue()));
+    }
+
 }

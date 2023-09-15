@@ -18,6 +18,8 @@ public interface GridService {
 
     Grid createGridEntry(GridDTO gridDTO);
 
+    Grid updateGrid(GridDTO gridDTO);
+
     Grid updateGridCar(Long gridId , Long carId);
 
     Grid updateGridCarNumber(Long gridId, Integer carNumber);

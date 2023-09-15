@@ -40,6 +40,7 @@ export class UserProfileComponent implements OnInit {
       this.userService.updateUserInfo(this.user).subscribe(response => {
         if(response){
           this.requestSuccessSwal.fire()
+          this.router.navigateByUrl("dashboard")
         }
       });
     }
@@ -54,8 +55,6 @@ export class UserProfileComponent implements OnInit {
       this.user.roleList.push('STEWARD');
     }
   }
-
-
 
   getData() {
     const navigation = this.router.getCurrentNavigation();
@@ -72,7 +71,6 @@ export class UserProfileComponent implements OnInit {
           });
     }
   }
-
 
   profileFormBuilder() {
     this.profileForm = null;

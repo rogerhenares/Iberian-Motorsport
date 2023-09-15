@@ -22,6 +22,11 @@
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
+                                        <mat-label>Car License</mat-label>
+                                            <input style="color: white" matInput formControlName="carLicense" [disabled]="!this.appContext.isAdmin()"/>
+                                            <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carLicense.errors)">Car License Error</mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field>
                                         <mat-label>Car</mat-label>
                                         <mat-select formControlName="car"  style="color: white">
                                             <mat-option *ngFor="let car of this.championship.carList" [value]="car">
@@ -30,11 +35,14 @@
                                         </mat-select>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.car.errors)">Car Error</mat-error>
                                     </mat-form-field>
+                                    <div *ngIf="this.appContext.isAdmin()">
+                                    <mat-checkbox formControlName="disabled" [checked]="this.grid.disabled">Disabled</mat-checkbox>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btn-block">
-                            <button type="submit" class="btn btn-primary">Join</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>

@@ -11,6 +11,7 @@ public record GridDTO(
         List<UserDTO> driversList,
         CarDTO car,
         Double points,
-        Long licensePoints
+        Long licensePoints,
+        Boolean disabled
 ) {
 }

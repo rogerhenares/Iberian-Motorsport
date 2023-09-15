@@ -80,7 +80,6 @@ export class ChampionshipComponent {
         this.championships.sort((a, b) => {
             const aDate = a.nextRace ? new Date(a.nextRace.startDate).getTime() : Infinity;
             const bDate = b.nextRace ? new Date(b.nextRace.startDate).getTime() : Infinity;
-            console.log("sorted Champs", this.championships)
             return aDate - bDate;});
     }
 
@@ -101,7 +100,6 @@ export class ChampionshipComponent {
     selectChampionship(championship: Championship) {
         this.selectedChampionship = championship;
         this.selected.emit(championship);
-        console.log("emitted");
     }
 
     goToPreviousPage() {
@@ -121,5 +119,6 @@ export class ChampionshipComponent {
     createNewChampionship() {
         this.router.navigateByUrl("championship/new");
     }
+
 
 }

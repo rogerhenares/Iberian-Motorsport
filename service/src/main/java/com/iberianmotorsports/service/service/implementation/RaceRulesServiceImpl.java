@@ -2,21 +2,20 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.repository.RaceRulesRepository;
 import com.iberianmotorsports.service.service.RaceRulesService;
-import com.iberianmotorsports.service.service.RaceService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.*;
 import java.io.FileWriter;
@@ -34,9 +33,8 @@ public class RaceRulesServiceImpl implements RaceRulesService {
 
     private RaceRulesMapper raceRulesMapper;
 
-    private RaceRulesDTOMapper raceRulesDTOMapper;
-
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public RaceRules saveRaceRules(RaceRulesDTO raceRulesDTO, Race race) {
         RaceRules raceRules = raceRulesMapper.apply(raceRulesDTO);
         raceRules.setRace(race);

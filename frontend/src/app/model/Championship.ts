@@ -18,7 +18,7 @@ export class Championship {
     isRaceLocked: number;
     randomizeTrackWhenEmpty: number;
     centralEntryListPath: any;
-    allowAutoDQ: number;
+    allowAutoDq: number;
     shortFormationLap: number;
     dumpEntryList: number;
     formationLapType: number;
@@ -28,6 +28,8 @@ export class Championship {
     raceList: Array<Race>;
     nextRace: Race;
     disabled: boolean;
+    started: boolean;
+    finished: boolean;
     championshipCategoryList: Array<ChampionshipCategory>;
     carList: Array<Car>;
 
@@ -47,7 +49,7 @@ export class Championship {
         this.isRaceLocked= 0;
         this.randomizeTrackWhenEmpty= null;
         this.centralEntryListPath= '';
-        this.allowAutoDQ= null;
+        this.allowAutoDq = null;
         this.shortFormationLap= null;
         this.dumpEntryList= null;
         this.formationLapType= null;
@@ -56,6 +58,8 @@ export class Championship {
         this.startDate = null;
         this.raceList = null;
         this.disabled = null;
+        this.started = null;
+        this.finished = null;
         this.nextRace = null;
         this.carList = null;
         this.championshipCategoryList = null;

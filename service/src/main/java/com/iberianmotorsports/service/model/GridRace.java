@@ -36,6 +36,21 @@ public class GridRace implements Serializable {
     @Column(name = "total_laps", nullable = false)
     private Integer totalLaps;
 
+    @Column(name = "qualy_position")
+    private Integer qualyPosition;
+
+    @Column(name = "qualy_time")
+    private Long qualyTime;
+
+    @Column(name = "qualy_first_sector")
+    private Long qualyFirstSector;
+
+    @Column(name = "qualy_second_sector")
+    private Long qualySecondSector;
+
+    @Column(name = "qualy_third_sector")
+    private Long qualyThirdSector;
+
     @OneToMany(mappedBy = "gridRace", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<Sanction> sanctionList;

@@ -15,14 +15,14 @@
                                 <div class="item">
                                     <div class="name-item">
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Name</mat-label>
                                             <input matInput  formControlName="name" placeholder="New Championship"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.name.invalid)">Name error</mat-error>
                                             </mat-form-field>
                                         </div>
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Starting Date</mat-label>
                                             <input matInput type="datetime-local" formControlName="startDate"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.startDate.errors)">Starting Date Error</mat-error>
@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                 <div class="item">
-                                        <mat-form-field>
+                                        <mat-form-field class="white-input">
                                         <mat-label>Description</mat-label>
                                         <input matInput formControlName="description" placeholder="New Description"/>
                                         <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.description.errors)">Description Error</mat-error>
@@ -39,14 +39,14 @@
                                 <div class="item">
                                     <div class="name-item">
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Password</mat-label>
                                             <input matInput formControlName="password" placeholder="Password"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.password.errors)">Password Error</mat-error>
                                             </mat-form-field>
                                         </div>
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Spectator Password</mat-label>
                                             <input matInput formControlName="spectatorPassword" placeholder="Spectator Password"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.spectatorPassword.errors)">Spectator Password Error</mat-error>
@@ -57,7 +57,7 @@
                                 <div class="item">
                                     <div class="name-item">
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label >Admin Password</mat-label>
                                             <input matInput formControlName="adminPassword" placeholder="Admin Password"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.adminPassword.errors)">Admin Password Error</mat-error>
@@ -68,28 +68,28 @@
                                 <div class="item">
                                     <div class="name-item">
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Track Medals Requirement</mat-label>
                                             <input matInput formControlName="trackMedalsRequirement"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.trackMedalsRequirement.errors)">Track Medals Requirement Error</mat-error>
                                             </mat-form-field>
                                         </div>
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Safety Rating Requirement</mat-label>
                                             <input matInput formControlName="safetyRatingRequirement"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.safetyRatingRequirement.errors)">Safety Rating Requirement Error</mat-error>
                                             </mat-form-field>
                                         </div>
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Racecraft Rating Requirement</mat-label>
                                             <input matInput formControlName="racecraftRatingRequirement"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.racecraftRatingRequirement.errors)">Racecraft Rating Requirement Error</mat-error>
                                             </mat-form-field>
                                         </div>
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Car Group</mat-label>
                                             <mat-select formControlName="carGroup">
                                                 <mat-option value="primary">Free for all</mat-option>
@@ -102,21 +102,41 @@
                                             </mat-form-field>
                                         </div>
                                         <div>
-                                            <mat-form-field>
+                                            <mat-form-field class="white-input">
                                             <mat-label>Max Car Slots</mat-label>
                                             <input matInput formControlName="maxCarSlots"/>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.maxCarSlots.errors)">Max Car Slots Error</mat-error>
                                             </mat-form-field>
                                         </div>
-                                        <div class="checkbox-container">
-                                        <div class="checkbox-group">
-                                            <mat-checkbox formControlName="dumpLeaderboards" >Dump Leaderboards</mat-checkbox>
-                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.dumpLeaderboards.errors)">Dump Leaderboards Error</mat-error>
+                                        <div>
+                                            <mat-form-field class="white-input">
+                                                <mat-label>Formation Lap Type</mat-label>
+                                                <mat-select formControlName="formationLapType">
+                                                    <mat-option value="0">0</mat-option>
+                                                    <mat-option value="1">1</mat-option>
+                                                    <mat-option value="3">3</mat-option>
+                                                </mat-select>
+                                                <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.formationLapType.errors)">Formation Lap Type Error</mat-error>
+                                            </mat-form-field>
                                         </div>
+                                        <div>
+                                            <mat-form-field class="white-input">
+                                                <mat-label>Central Entry List Path</mat-label>
+                                                <input matInput formControlName="centralEntryListPath"/>
+                                                <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.centralEntryListPath.errors)">Central Entry List Path Error</mat-label>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="checkbox-container">
                                         <div class="checkbox-group align-right">
                                             <mat-checkbox formControlName="isRaceLocked">Is Race Locked</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.isRaceLocked.errors)">Is Race Locked Error</mat-error>
                                         </div>
+                                            <div class="checkbox-container">
+                                            <div class="checkbox-group">
+                                                <mat-checkbox formControlName="shortFormationLap">Short Formation Lap</mat-checkbox>
+                                                <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.shortFormationLap.errors)">Short Formation Lap Error</mat-error>
+                                            </div>
+                                            </div>
                                         </div>
                                         <div class="checkbox-container">
                                         <div class="checkbox-group">
@@ -124,62 +144,46 @@
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.randomizeTrackWhenEmpty.errors)">Randomize Track When Empty Error</mat-error>
                                         </div>
                                         <div class="checkbox-group align-right">
-                                            <mat-checkbox  formControlName="allowAutoDQ">Allow Auto DQ</mat-checkbox>
-                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.allowAutoDQ.errors)">Allow Auto DQ Error</mat-error>
+                                            <mat-checkbox  formControlName="allowAutoDq">Allow Auto DQ</mat-checkbox>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.allowAutoDq.errors)">Allow Auto DQ Error</mat-error>
                                         </div>
                                         </div>
-                                        <div class="checkbox-container">
-                                        <div class="checkbox-group">
-                                            <mat-checkbox formControlName="shortFormationLap">Short Formation Lap</mat-checkbox>
-                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.shortFormationLap.errors)">Short Formation Lap Error</mat-error>
-                                        </div>
-                                        <div class="checkbox-group align-right">
-                                            <mat-checkbox formControlName="dumpEntryList">Dump Entry List</mat-checkbox>
-                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.dumpEntryList.errors)">Dump Entry List Error</mat-error>
-                                        </div>
-                                        </div>
+
+
                                         <div class="checkbox-container">
                                         <div class="checkbox-group">
                                             <mat-checkbox  formControlName="ignorePrematureDisconnects">Ignore Premature Disconnects</mat-checkbox>
                                             <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.ignorePrematureDisconnects.errors)">Ignore Premature Disconnects Error</mat-error>
                                         </div>
                                         </div>
-                                        <div>
-                                            <mat-form-field>
-                                            <mat-label>Formation Lap Type</mat-label>
-                                            <mat-select formControlName="formationLapType">
-                                                <mat-option value="0">0</mat-option>
-                                                <mat-option value="1">1</mat-option>
-                                                <mat-option value="3">3</mat-option>
-                                            </mat-select>
-                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.formationLapType.errors)">Formation Lap Type Error</mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                        <div>
-                                            <mat-form-field>
-                                            <mat-label>Central Entry List Path</mat-label>
-                                            <input matInput formControlName="centralEntryListPath"/>
-                                            <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.centralEntryListPath.errors)">Central Entry List Path Error</mat-label>
-                                            </mat-form-field>
-                                        </div>
+                                    </div>
+
                                     </div>
                                 </div>
                                 <div class="item">
                                     <div>
                                         <mat-label>Upload Picture</mat-label>
                                         <div>
-                                            <input type="file" class="file-upload"  formControlName="imageContent"/>
+                                            <input type="file"  formControlName="imageContent" id="fileInput" accept="image/*" />
                                             <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.imageContent.errors)">Image Error</mat-label>
                                         </div>
                                     </div>
-                                </div>
-                                    <div class="checkbox-group">
-                                        <mat-checkbox   formControlName="disabled">Disabled</mat-checkbox>
-                                        <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.disabled.errors)">Disabled Error</mat-error>
+                                    <div style="padding-top: 15px">
+                                    <div class="checkbox-container">
+                                        <div class="checkbox-group">
+                                            <mat-checkbox formControlName="disabled">Disabled</mat-checkbox>
+                                        </div>
+                                        <div class="checkbox-group">
+                                            <mat-checkbox formControlName="started">Started</mat-checkbox>
+                                        </div>
+                                        <div class="checkbox-group">
+                                            <mat-checkbox formControlName="finished">Finished</mat-checkbox>
+                                        </div>
                                     </div>
+                                        </div>
                                 </div>
                                 <div class="btn-block">
-                                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                                    <button id="submit" type="submit" class="btn btn-primary myButton">Submit</button>
                                 </div>
                             </form>
                         </div>

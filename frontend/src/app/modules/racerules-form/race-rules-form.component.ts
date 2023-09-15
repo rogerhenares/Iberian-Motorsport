@@ -20,6 +20,7 @@ export class RaceRulesFormComponent {
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
 
+    qualifyStandingTypeOptions: string[] = ['1', '2'];
     raceRulesForm: FormGroup;
     raceRulesFormSubmitted: Boolean;
 

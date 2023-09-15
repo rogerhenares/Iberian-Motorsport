@@ -11,6 +11,8 @@ export class Grid {
     driversList: Array<User>;
     car: Car;
     points: number;
+    licensePoints: number;
+    disabled: boolean
 
     constructor() {
         this.id = null;
@@ -21,5 +23,7 @@ export class Grid {
         this.driversList = [];
         this.car = null;
         this.points = null;
+        this.licensePoints = null;
+        this.disabled = null;
     }
 }

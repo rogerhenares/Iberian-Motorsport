@@ -17,7 +17,7 @@ export class Race {
     sessionCount: number;
     startDate: string;
     raceRulesDTO: RaceRules;
-    sessionDTOList: Array<Session>;
+    sessionDTOList: Session[];
     grid: Grid;
     championshipId: number;
 
@@ -36,7 +36,7 @@ export class Race {
         this.sessionCount= null;
         this.startDate = null;
         this.raceRulesDTO = null;
-        this.sessionDTOList = null;
+        this.sessionDTOList = [];
         this.grid = null;
         this.championshipId = null;
     }

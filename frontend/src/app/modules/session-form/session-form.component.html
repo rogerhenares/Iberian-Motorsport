@@ -6,30 +6,33 @@
                     <div>
                         <mat-form-field>
                             <mat-label>Hour Of Day</mat-label>
-                            <input style="color: white" matInput  formControlName="hourOfDay"/>
+                            <input style="color: white" matInput type="number" formControlName="hourOfDay" min="0" max="23"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.hourOfDay.errors)">Hour Of Day Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Day Of The Weekend</mat-label>
-                            <input style="color: white" matInput  formControlName="dayOfWeekend"/>
+                            <input style="color: white" matInput type="number" formControlName="dayOfWeekend" min="1" max="3"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.dayOfWeekend.errors)">Day Of The Weekend Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Time Multiplier</mat-label>
-                            <input style="color: white" matInput  formControlName="timeMultiplier"/>
+                            <input style="color: white" matInput type="number" formControlName="timeMultiplier" min="1" max="24"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.timeMultiplier.errors)">Time Multiplier Error</mat-error>                                            </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <mat-label>Session Type</mat-label>
-                            <input style="color: white" matInput  formControlName="sessionType"/>
+                            <mat-select formControlName="sessionType" class="custom-form">
+                                <mat-option *ngFor="let option of sessionTypeOptions" [value]="option">{{ option }}</mat-option>
+                            </mat-select>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.sessionType.errors)">Session Type Error</mat-error>
                         </mat-form-field>
                     </div>
+
                     <div>
                         <mat-form-field>
                             <mat-label>Session Duration Minutes</mat-label>

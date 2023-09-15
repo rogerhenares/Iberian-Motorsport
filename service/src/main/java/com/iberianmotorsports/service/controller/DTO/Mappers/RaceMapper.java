@@ -39,7 +39,14 @@ public class RaceMapper implements Function<RaceDTO, Race> {
         race.setServerName(raceDTO.serverName());
         race.setStartDate(raceDTO.startDate());
         race.setRaceRules(raceRulesMapper.apply(raceDTO.raceRulesDTO()));
-        if(raceDTO.sessionDTOList() != null) race.setSessionList(raceDTO.sessionDTOList().stream().map(sessionMapper).toList());
+        race.getRaceRules().setRace(race);
+        if(raceDTO.sessionDTOList() != null) race.setSessionList(raceDTO.sessionDTOList().stream()
+                .map(sessionMapper)
+                .map(session -> {
+                    session.setRace(race);
+                    return session;
+                })
+                .toList());
         return race;
     }
 }

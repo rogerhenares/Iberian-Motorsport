@@ -12,7 +12,7 @@
         </thead>
         <tbody>
         <ng-container *ngFor="let grid of grid; let i = index">
-            <tr [ngClass]="{'selected': isGridFromLoggedUser(grid)}">
+            <tr [ngClass]="{'selected': grid === selectedGrid}" (click)="handleRowClick(grid)">
                 <td class="posColumn" style="text-align: left">{{i + 1}}</td>
                 <td class="nameColumn" style="text-align: left">
                     <ng-container *ngFor="let user of grid.driversList;">
@@ -28,5 +28,9 @@
         </ng-container>
         </tbody>
     </table>
+        <div class="col-md-6">
+        <button *ngIf=appContext.isAdmin() style="color: black" class="btn btn-warning" (click)="editGrid(this.selectedGrid)">Edit Entry</button>
+        <button *ngIf=appContext.isAdmin() style="color: black" class="btn btn-danger">Delete Entry</button>
+        </div>
     </ng-container>
 </div>

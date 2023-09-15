@@ -1,20 +1,14 @@
 package com.iberianmotorsports.service;
 
-import com.iberianmotorsports.CarFactory;
-import com.iberianmotorsports.ChampionshipFactory;
 import com.iberianmotorsports.RaceFactory;
-import com.iberianmotorsports.RaceRulesFactory;
 import com.iberianmotorsports.service.model.Car;
-import com.iberianmotorsports.service.model.parsing.EntryList;
 import com.iberianmotorsports.service.model.parsing.properties.EntryListProperties;
 import com.iberianmotorsports.service.model.parsing.properties.EntryProperties;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.ExportDataService;
 import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.ImportDataService;
-import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
 import com.iberianmotorsports.service.service.implementation.ExportDataServiceImpl;
-import com.iberianmotorsports.service.service.implementation.ImportDataServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

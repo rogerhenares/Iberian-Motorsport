@@ -73,10 +73,10 @@ public class Race {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
 
-    @OneToOne(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
     private RaceRules raceRules;
 
-    @OneToMany(mappedBy = "race", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Session> sessionList;
 
     @Transient

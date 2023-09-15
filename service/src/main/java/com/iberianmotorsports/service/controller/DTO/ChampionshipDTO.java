@@ -31,6 +31,8 @@ public record ChampionshipDTO(
         LocalDateTime startDate,
         List<RaceDTO> raceList,
         Boolean disabled,
+        Boolean started,
+        Boolean finished,
         List<ChampionshipCategoryDTO> championshipCategoryList,
         List<CarDTO> carList
 ) {

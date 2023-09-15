@@ -98,7 +98,7 @@ public class ChampionshipController {
         return new ResponseEntity<Object>(updatedChampionshipDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/admin/{id}")
     public ResponseEntity<?> deleteChampionship(@PathVariable("id") Long id) throws ServiceException{
         championshipService.deleteChampionship(id);
         MessageResponse messageResponse = new MessageResponse();

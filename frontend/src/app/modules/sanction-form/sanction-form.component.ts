@@ -1,14 +1,12 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from "@angular/core";
-import {Race} from "../../model/Race";
 import {Grid} from "../../model/Grid";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SanctionService} from "../../service/sanction.service";
-import {Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
 import {Sanction} from "../../model/Sanction";
 import {GridRace} from "../../model/GridRace";
 import {GridRaceService} from "../../service/gridrace.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-sanction-form',
@@ -26,11 +24,13 @@ export class SanctionFormComponent {
     grid: Grid;
     sanction: Sanction = new Sanction();
     gridRaceList: Array<GridRace> = [];
+    isSendingRequest: boolean = false;
 
     constructor(
         private sanctionService: SanctionService,
         private formBuilder: FormBuilder,
-        private gridRaceService: GridRaceService
+        private gridRaceService: GridRaceService,
+        private router: Router
     ) {
     }
 
@@ -48,18 +48,23 @@ export class SanctionFormComponent {
 
     sanctionSubmit() {
         this.sanctionFormSubmitted = true;
-        if (this.sanctionForm.valid) {
+        if (this.sanctionForm.valid && !this.isSendingRequest) {
 
             this.sanction.lap = this.sanctionForm.value.lap;
             this.sanction.penalty = this.sanctionForm.value.penalty;
             this.sanction.reason = this.sanctionForm.value.reason;
             this.sanction.gridId = this.sanctionForm.value.gridId;
             this.sanction.licensePoints = this.sanctionForm.value.licensePoints;
+            this.sanction.inGame = this.sanctionForm.value.inGame;
+
+            this.isSendingRequest = true
 
             this.sanctionService.createSanction(this.sanction).subscribe(response => {
                 if (response) {
                     this.requestSuccessSwal.fire();
+                    this.router.navigateByUrl("/championship")
                 }
+                this.isSendingRequest = false;
             });
         }
     }
@@ -70,7 +75,6 @@ export class SanctionFormComponent {
         this.gridRaceService.getGridRaceForRace(raceId).subscribe(
             (gridRaceList) => {
                 this.gridRaceList = gridRaceList
-                console.log("GridRaceList ->", gridRaceList)
             }
         )
     }
@@ -83,7 +87,7 @@ export class SanctionFormComponent {
             reason: [sanction.reason, [Validators.required]],
             gridId: [sanction.gridId],
             raceId: [sanction.raceId],
-            inGame: [sanction.inGame],
+            inGame: [sanction.inGame !== null ? sanction.inGame : 0],
             licensePoints: [sanction.licensePoints, [Validators.required]]
         })
     }

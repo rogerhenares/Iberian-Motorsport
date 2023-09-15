@@ -30,6 +30,11 @@ public class GridRaceServiceImpl implements GridRaceService {
     GridRaceRepository gridRaceRepository;
 
     @Override
+    public GridRace saveGridRace(GridRace gridRace){
+        return gridRaceRepository.save(gridRace);
+    }
+
+    @Override
     public GridRace getGridRace(Long gridId, Long raceId) throws ServiceException {
         Race race = raceService.findRaceById(raceId);
         Grid grid = gridService.getGridById(gridId);

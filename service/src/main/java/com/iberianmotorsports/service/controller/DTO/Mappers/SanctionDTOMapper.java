@@ -1,6 +1,8 @@
 package com.iberianmotorsports.service.controller.DTO.Mappers;
 
+import com.iberianmotorsports.service.controller.DTO.GridDTO;
 import com.iberianmotorsports.service.controller.DTO.SanctionDTO;
+import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Sanction;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,12 @@ public class SanctionDTOMapper implements Function<Sanction, SanctionDTO> {
 
     @Override
     public SanctionDTO apply(Sanction sanction){
+        GridDTO gridDTO = null;
+
+        if (sanction.getGridRace().getGridRacePrimaryKey().getGrid().getChampionship() != null){
+            gridDTO = gridDTOMapper.apply(sanction.getGridRace().getGridRacePrimaryKey().getGrid());
+        }
+
         return new SanctionDTO(
                 sanction.getId(),
                 sanction.getLap(),
@@ -22,7 +30,7 @@ public class SanctionDTOMapper implements Function<Sanction, SanctionDTO> {
                 sanction.getReason(),
                 sanction.getGridRace().getGridRacePrimaryKey().getRace().getId(),
                 sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
-                gridDTOMapper.apply(sanction.getGridRace().getGridRacePrimaryKey().getGrid()),
+                gridDTO,
                 sanction.getInGame(),
                 sanction.getLicensePoints()
         );

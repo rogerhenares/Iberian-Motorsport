@@ -45,6 +45,8 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
         championship.setStartDate(championshipDTO.startDate());
         championship.setRaceList(championshipDTO.raceList().stream().map(raceMapper).toList());
         championship.setDisabled(championshipDTO.disabled());
+        championship.setStarted(championshipDTO.started());
+        championship.setFinished(championshipDTO.finished());
         championship.setCategoryList(championshipDTO.championshipCategoryList()
                 .stream().map(championshipCategoryMapper).toList());
         return championship;

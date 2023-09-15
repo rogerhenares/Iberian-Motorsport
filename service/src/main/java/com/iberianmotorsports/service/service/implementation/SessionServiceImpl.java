@@ -8,13 +8,13 @@ import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.SessionRepository;
 import com.iberianmotorsports.service.service.SessionService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.*;
 import java.io.FileWriter;

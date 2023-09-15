@@ -1,4 +1,4 @@
-package com.iberianmotorsports.service.model.parsing;
+package com.iberianmotorsports.service.model.parsing.export;
 
 import lombok.Data;
 

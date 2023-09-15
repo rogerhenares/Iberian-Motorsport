@@ -13,6 +13,7 @@ import com.iberianmotorsports.service.service.CarService;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.UserService;
+import com.iberianmotorsports.service.utils.RoleType;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -68,7 +69,7 @@ public class GridServiceImpl  implements GridService {
         grid.setDisabled(Boolean.FALSE);
         Grid createdGrid = gridRepository.saveAndFlush(grid);
         setGridManager(grid.getDrivers().stream().findFirst().get(), grid);
-        return grid;
+        return createdGrid;
     }
 
     @Override
@@ -88,6 +89,23 @@ public class GridServiceImpl  implements GridService {
         User driverToRemove = userService.findUserBySteamId(steamId);
         grid.getDrivers().remove(driverToRemove);
         gridRepository.save(grid);
+    }
+
+    @Override
+    public Grid updateGrid(GridDTO gridDTO) {
+        Grid grid = gridMapper.apply(gridDTO);
+        Grid gridToUpdate = getGrid(grid.getId());
+        if (!gridToUpdate.getChampionship().getStarted() || RoleType.isAdminFromAuthentication()) {
+            gridToUpdate.setTeamName(grid.getTeamName());
+            gridToUpdate.setCar(grid.getCar());
+            gridToUpdate.setCarNumber(grid.getCarNumber());
+        } else {
+            gridToUpdate.setTeamName(grid.getTeamName());
+        }
+        if (RoleType.isAdminFromAuthentication()) {
+            gridToUpdate.setCarLicense(grid.getCarLicense());
+        }
+        return gridRepository.save(gridToUpdate);
     }
 
     @Override

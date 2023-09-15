@@ -31,11 +31,11 @@ public class Grid implements Serializable {
     @Column(name = "car_license")
     private String carLicense;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "championship_id", nullable = false)
     private Championship championship;
 

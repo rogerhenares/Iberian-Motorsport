@@ -2,33 +2,32 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.controller.DTO.Mappers.RaceDTOMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.RaceMapper;
-import com.iberianmotorsports.service.controller.DTO.Mappers.SessionDTOMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
+import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
-import com.iberianmotorsports.service.controller.DTO.RaceRulesDTO;
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
-import com.iberianmotorsports.service.model.Session;
-import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceRulesService;
 import com.iberianmotorsports.service.service.RaceService;
 import com.iberianmotorsports.service.service.SessionService;
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -37,7 +36,7 @@ import java.util.stream.Collectors;
 @Service("RaceService")
 public class RaceServiceImpl implements RaceService {
 
-    private static final Set<String> SESSION_TYPE_MANDATORY = Set.of("P", "Q", "R");
+    private static final Set<String> SESSION_TYPE_MANDATORY = Set.of("Q", "R");
 
     private ChampionshipService championshipService;
 
@@ -46,11 +45,16 @@ public class RaceServiceImpl implements RaceService {
     private RaceMapper raceMapper;
 
     private SessionService sessionService;
+
     private RaceRulesService raceRulesService;
+
+    private SessionMapper sessionMapper;
+
+    private RaceRulesMapper raceRulesMapper;
 
     @Override
     public Race saveRace(RaceDTO raceDTO) {
-        if (raceDTO.id() != null) {
+        if (raceDTO.id() != -1) {
             return updateRace(raceDTO);
         }
         Race race = raceMapper.apply(raceDTO);
@@ -59,19 +63,15 @@ public class RaceServiceImpl implements RaceService {
         if(raceDTO.sessionDTOList() != null) {
             if(!validateSessionForRace(raceDTO.sessionDTOList()))
                 throw new ServiceException(ErrorMessages.RACE_SESSION_TYPE_MISSING.getDescription());
-
-            race.setSessionList(raceDTO.sessionDTOList()
-                .stream()
-                .map(sessionDTO -> sessionService.saveSession(sessionDTO, savedRace))
-                .toList());
         }
-        race.setRaceRules(raceRulesService.saveRaceRules(raceDTO.raceRulesDTO(), savedRace));
+
         return savedRace;
     }
 
     private Boolean validateSessionForRace(List<SessionDTO> sessionDTOList) {
         Set<String> sessionTypeList = sessionDTOList.stream()
                 .map(SessionDTO::sessionType)
+                .map(String::trim)
                 .collect(Collectors.toSet());
         return sessionTypeList.containsAll(SESSION_TYPE_MANDATORY);
     }
@@ -110,7 +110,7 @@ public class RaceServiceImpl implements RaceService {
         raceToUpdate.setPostRaceSeconds(race.getPostRaceSeconds());
         raceToUpdate.setServerName(race.getServerName());
         raceToUpdate.setStartDate(race.getStartDate());
-        raceToUpdate.setChampionship(race.getChampionship());
+        raceToUpdate.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
         return raceRepository.save(raceToUpdate);
     }
 

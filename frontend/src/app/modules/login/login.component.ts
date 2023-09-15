@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log('LoginComponent initialized')
         this.steamParams = btoa(decodeURIComponent(this.router.url.replace("/login?", "")));
         this.authenticate();
     }
@@ -36,7 +35,6 @@ export class LoginComponent implements OnInit {
         this.authenticationService.authenticate(this.steamParams).subscribe(
             response => {
                 if (response) {
-                    console.log('authenticate -> ', response.token);
                     this.loading = false;
                     if(response.token === this.invalidResponse){
                         console.log("unable to validate steam token");

@@ -84,7 +84,7 @@ export class ChampionshipService {
     }
 
     deleteChampionship(championshipId: Number, errorNotify?: any) {
-        let url = this.url + championshipId;
+        let url = this.url + "/admin/" + championshipId;
         return this.httpClient.delete<Championship>(url)
             .pipe(
                 tap(response => console.log('delete Championship')),

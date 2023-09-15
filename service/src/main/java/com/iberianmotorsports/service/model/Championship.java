@@ -105,7 +105,7 @@ public class Championship implements Serializable {
     @Column(name = "image_content")
     private String imageContent;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "start_date")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;

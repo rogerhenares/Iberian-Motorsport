@@ -1,5 +1,6 @@
-package com.iberianmotorsports.service.model.parsing;
+package com.iberianmotorsports.service.model.parsing.export;
 
+import com.iberianmotorsports.service.model.parsing.Driver;
 import com.iberianmotorsports.service.model.parsing.properties.EntryProperties;
 import lombok.Data;
 
