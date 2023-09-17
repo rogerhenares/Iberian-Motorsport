@@ -36,7 +36,7 @@ public enum ErrorMessages {
     CHAMPIONSHIP_CATEGORY_MAX_CAR_SLOTS(32, "Max car slots for championship must match with Categories max slots"),
     CATEGORY_NOT_FOUND(33, "Category not found"),
     USER_IS_NOT_LOGGED(34, "User is not logged"),
-
+    USER_GRID_REQUIRED_PERMISSION(35, "User is not Admin and doesn't belong to this grid"),
     DEFAULT(999, "");
 
     private final int code;

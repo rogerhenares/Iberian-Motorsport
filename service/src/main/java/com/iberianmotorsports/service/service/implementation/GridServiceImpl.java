@@ -75,6 +75,7 @@ public class GridServiceImpl  implements GridService {
     @Override
     public void addDriver(Long gridId, Long steamId) {
         Grid grid = getGrid(gridId);
+        validateLoggedUserFromGrid(grid);
         driverValidForChampionship(steamId, grid.getChampionship().getId());
         isDriverOrGridManager(steamId, grid);
         User driverToAdd = userService.findUserBySteamId(steamId);
@@ -85,6 +86,7 @@ public class GridServiceImpl  implements GridService {
     @Override
     public void removeDriver(Long gridId, Long steamId) {
         Grid grid = getGrid(gridId);
+        validateLoggedUserFromGrid(grid);
         isDriverOrGridManager(steamId, grid);
         User driverToRemove = userService.findUserBySteamId(steamId);
         grid.getDrivers().remove(driverToRemove);
@@ -94,6 +96,7 @@ public class GridServiceImpl  implements GridService {
     @Override
     public Grid updateGrid(GridDTO gridDTO) {
         Grid grid = gridMapper.apply(gridDTO);
+        validateLoggedUserFromGrid(grid);
         Grid gridToUpdate = getGrid(grid.getId());
         if (!gridToUpdate.getChampionship().getStarted() || RoleType.isAdminFromAuthentication()) {
             gridToUpdate.setTeamName(grid.getTeamName());
@@ -111,6 +114,7 @@ public class GridServiceImpl  implements GridService {
     @Override
     public Grid updateGridCar(Long gridId, Long carId) {
         Grid grid = getGrid(gridId);
+        validateLoggedUserFromGrid(grid);
         Car carToUpdate = carService.getCarById(carId);
         validateCarForGrid(grid);
         grid.setCar(carToUpdate);
@@ -121,6 +125,7 @@ public class GridServiceImpl  implements GridService {
     @Override
     public Grid updateGridCarNumber(Long gridId, Integer carNumber) {
         Grid grid = getGrid(gridId);
+        validateLoggedUserFromGrid(grid);
         validateCarNumberForChampionship(grid.getChampionship().getId(), carNumber);
         grid.setCarNumber(carNumber);
         return grid;
@@ -139,11 +144,21 @@ public class GridServiceImpl  implements GridService {
     @Override
     public void deleteGrid(Long gridId) {
         Grid grid = getGrid(gridId);
-        if(grid.getGridRaceList().isEmpty()) {
-            gridRepository.delete(grid);
-        } else {
+        validateLoggedUserFromGrid(grid);
+
+        if(grid.getChampionship().getStarted()) {
             grid.setDisabled(Boolean.TRUE);
             gridRepository.save(grid);
+        } else {
+            gridRepository.delete(grid);
+        }
+    }
+
+    private void validateLoggedUserFromGrid(Grid grid){
+        Long loggedUserSteamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = userService.findUserBySteamId(loggedUserSteamId);
+        if(!RoleType.isAdminFromAuthentication() && !grid.getDrivers().contains(loggedUser)){
+            throw new ServiceException(ErrorMessages.USER_GRID_REQUIRED_PERMISSION.getDescription());
         }
     }
 

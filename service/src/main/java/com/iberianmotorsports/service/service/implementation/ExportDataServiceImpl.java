@@ -32,7 +32,9 @@ public class ExportDataServiceImpl implements ExportDataService {
 
         List<Entry> entryList = new ArrayList<>();
         for (Grid grid : race.getChampionship().getGridList()) {
-            entryList.add(getEntry(generateDriverList(grid), entryProperties));
+            if(!grid.getDisabled()){
+                entryList.add(getEntry(generateDriverList(grid), entryProperties));
+            }
         }
         mapper.writeValue(new File("entrylist.json"), getEntryList(entryList, entryListProperties));
 
