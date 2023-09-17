@@ -1,11 +1,7 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
+import {Router} from "@angular/router";
 import {RaceService} from "../../service/race.service";
-import {SessionService} from "../../service/session.service";
-import {RaceRulesService} from "../../service/racerules.service";
 import {RaceFormComponent} from "../race-form/race-form.component";
 import {SessionFormComponent} from "../session-form/session-form.component";
 import {RaceRulesFormComponent} from "../racerules-form/race-rules-form.component";

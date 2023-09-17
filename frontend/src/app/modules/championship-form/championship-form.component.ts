@@ -26,7 +26,7 @@ export class ChampionshipFormComponent {
 
     championshipForm: FormGroup;
     championshipFormSubmitted: Boolean;
-    fileName = '';
+    fileBase64: string;
 
     constructor(
         private championshipService: ChampionshipService,
@@ -49,10 +49,8 @@ export class ChampionshipFormComponent {
         if (this.championshipForm.valid) {
 
             this.championship = {...this.championshipForm.value};
-            let date = this.championshipForm.get('startDate').value;
-            let formattedDate = date.replace('T', ' ') + ':00';
-            this.championship.startDate = formattedDate;
-
+            this.championship.startDate = this.prepareChampionshipDate(this.championshipForm.get('startDate').value);
+            this.championship.imageContent = this.fileBase64;
             this.championship.isRaceLocked = Number(this.championship.isRaceLocked)
             this.championship.randomizeTrackWhenEmpty = Number(this.championship.randomizeTrackWhenEmpty)
             this.championship.shortFormationLap = Number(this.championship.shortFormationLap)
@@ -65,14 +63,36 @@ export class ChampionshipFormComponent {
             this.championship.raceList = new Array<Race>;
             this.championship.championshipCategoryList = new Array<ChampionshipCategory>;
             this.championship.carList = new Array<Car>;
-
+            console.log("onSubmit ->", this.championship);
             this.championshipService.saveChampionship(this.championship).subscribe(response => {
                 if (response) {
                     this.requestSuccessSwal.fire()
-                    this.router.navigateByUrl("championship");
+                    //this.router.navigateByUrl("championship");
                 }
             })
         }
+    }
+
+    onFileSelected(event: any) {
+        const selectedFile = event.target.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (e: any) => {
+                this.fileBase64 = 'data:image/jpeg;base64,' + e.target.result.split(',')[1];
+                console.log(this.fileBase64);
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    }
+
+    prepareChampionshipDate(championshipDate: string) {
+        championshipDate = championshipDate.replace('T', ' ')
+        if (championshipDate.length < 19) {
+            championshipDate = championshipDate + ':00';
+        }
+        return championshipDate;
     }
 
     championshipFormBuilder() {

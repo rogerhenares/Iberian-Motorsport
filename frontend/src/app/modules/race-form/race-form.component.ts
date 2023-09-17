@@ -1,11 +1,7 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from "@angular/core";
-import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
+import {Component, Input} from "@angular/core";
 import {Race} from "../../model/Race";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RaceService} from "../../service/race.service";
-import {Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
-import {RaceRules} from "../../model/RaceRules";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+
 
 @Component({
     selector: 'app-race-form',

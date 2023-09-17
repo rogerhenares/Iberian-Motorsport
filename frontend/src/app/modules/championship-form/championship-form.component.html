@@ -164,7 +164,7 @@
                                     <div>
                                         <mat-label>Upload Picture</mat-label>
                                         <div>
-                                            <input type="file"  formControlName="imageContent" id="fileInput" accept="image/*" />
+                                            <input type="file"  (change)="onFileSelected($event)" formControlName="imageContent" id="fileInput" accept="image/*" />
                                             <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.imageContent.errors)">Image Error</mat-label>
                                         </div>
                                     </div>
