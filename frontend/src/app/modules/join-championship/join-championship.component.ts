@@ -53,7 +53,7 @@ export class JoinChampionshipComponent implements OnInit {
             carLicense: [this.grid.carLicense],
             championshipId: [this.championship.id],
             driversList: [this.appContext.getLoggedUser()],
-            car: [this.grid.car, [Validators.required]],
+            car: [this.grid.car , [Validators.required]],
             teamName: [this.grid.teamName, [Validators.required]],
             disabled: [this.grid.disabled]
         })

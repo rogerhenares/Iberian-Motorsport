@@ -119,13 +119,6 @@
                                                 <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.formationLapType.errors)">Formation Lap Type Error</mat-error>
                                             </mat-form-field>
                                         </div>
-                                        <div>
-                                            <mat-form-field class="white-input">
-                                                <mat-label>Central Entry List Path</mat-label>
-                                                <input matInput formControlName="centralEntryListPath"/>
-                                                <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.centralEntryListPath.errors)">Central Entry List Path Error</mat-label>
-                                            </mat-form-field>
-                                        </div>
                                         <div class="checkbox-container">
                                         <div class="checkbox-group align-right">
                                             <mat-checkbox formControlName="isRaceLocked">Is Race Locked</mat-checkbox>
@@ -162,16 +155,20 @@
                                 </div>
                                 <div class="item">
                                     <div>
-                                        <mat-label>Upload Picture</mat-label>
+                                        <img [src]="imageSrc" alt="Current Picture" *ngIf="imageSrc" style="max-width: 200px; max-height: 200px;">
+                                    </div>
+
+                                    <div>
                                         <div>
-                                            <input type="file"  (change)="onFileSelected($event)" formControlName="imageContent" id="fileInput" accept="image/*" />
+                                            <input type="file" (change)="onFileSelected($event)" id="fileInput" accept="image/*" />
                                             <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.imageContent.errors)">Image Error</mat-label>
                                         </div>
                                     </div>
+
                                     <div style="padding-top: 15px">
                                     <div class="checkbox-container">
                                         <div class="checkbox-group">
-                                            <mat-checkbox formControlName="disabled">Disabled</mat-checkbox>
+                                            <mat-checkbox formControlName="disabled" checked="true">Disabled</mat-checkbox>
                                         </div>
                                         <div class="checkbox-group">
                                             <mat-checkbox formControlName="started">Started</mat-checkbox>

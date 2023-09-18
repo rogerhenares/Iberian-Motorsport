@@ -1,9 +1,9 @@
 <div class="card-body table-responsive">
     <div class="row">
         <div class="col-md-4" *ngFor="let championship of championships">
-            <div class="card card-chart" [class.selected]="selectedChampionship?.id == championship.id" (click)="selectChampionship(championship)">
-                <div class="card-header card-header-success">
-                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%; height: auto;">
+            <div class="card card-chart" style="flex: 1 1 300px; max-width: 400px;" [class.selected]="selectedChampionship?.id == championship.id" (click)="selectChampionship(championship)">
+                <div class="card-header card-header-success" style="height: auto">
+                    <img [src]="championship.imageContent" alt="jojojo" style="width: 100%">
                     <div class="ct-chart" id="dailySalesChart"></div>
                 </div>
                 <div class="card-body">

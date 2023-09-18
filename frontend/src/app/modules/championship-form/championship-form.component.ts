@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 
 import {Router} from "@angular/router";
 import {Championship} from "../../model/Championship";
@@ -27,12 +27,15 @@ export class ChampionshipFormComponent {
     championshipForm: FormGroup;
     championshipFormSubmitted: Boolean;
     fileBase64: string;
+    imageSrc: string = this.championship.imageContent;
+
 
     constructor(
         private championshipService: ChampionshipService,
         public router: Router,
         private formBuilder: FormBuilder,
-        private http: HttpClient
+        private http: HttpClient,
+        private cdr: ChangeDetectorRef
     ) {}
 
 
@@ -40,34 +43,46 @@ export class ChampionshipFormComponent {
         const navigation = this.router.getCurrentNavigation();
         if (history.state.championship) {
             this.championship = history.state.championship;
+            this.imageSrc = this.championship.imageContent;
+            console.log(this.championship)
         }
         this.championshipFormBuilder();
     }
 
     onSubmit() {
+        console.log("Flag 1")
         this.championshipFormSubmitted= true;
+        console.log("To Submit ->", this.championshipForm.value);
         if (this.championshipForm.valid) {
 
-            this.championship = {...this.championshipForm.value};
-            this.championship.startDate = this.prepareChampionshipDate(this.championshipForm.get('startDate').value);
-            this.championship.imageContent = this.fileBase64;
-            this.championship.isRaceLocked = Number(this.championship.isRaceLocked)
-            this.championship.randomizeTrackWhenEmpty = Number(this.championship.randomizeTrackWhenEmpty)
-            this.championship.shortFormationLap = Number(this.championship.shortFormationLap)
-            this.championship.ignorePrematureDisconnects = Number(this.championship.ignorePrematureDisconnects)
-            this.championship.dumpLeaderboards = Number(this.championship.dumpLeaderboards)
-            this.championship.allowAutoDq = Number(this.championship.allowAutoDq)
-            this.championship.dumpEntryList = Number(this.championship.dumpEntryList)
+            const champData = {...this.championshipForm.value};
+            champData.id = this.championship.id
+
+            console.log("Flag 2", champData)
+
+            champData.startDate = this.prepareChampionshipDate(this.championshipForm.get('startDate').value);
+
+            if (this.fileBase64) {
+                champData.imageContent = this.fileBase64;
+            }
+
+            champData.isRaceLocked = Number(this.championshipForm.get('isRaceLocked').value)
+            champData.randomizeTrackWhenEmpty = Number(this.championshipForm.get('randomizeTrackWhenEmpty').value)
+            champData.shortFormationLap = Number(this.championshipForm.get('shortFormationLap').value)
+            champData.ignorePrematureDisconnects = Number(this.championshipForm.get('ignorePrematureDisconnects').value)
+            champData.dumpLeaderboards = Number(this.championshipForm.get('dumpLeaderboards').value)
+            champData.allowAutoDq = Number(this.championshipForm.get('allowAutoDq').value)
+            champData.dumpEntryList = Number(this.championshipForm.get('dumpEntryList').value)
 
 
-            this.championship.raceList = new Array<Race>;
-            this.championship.championshipCategoryList = new Array<ChampionshipCategory>;
-            this.championship.carList = new Array<Car>;
-            console.log("onSubmit ->", this.championship);
-            this.championshipService.saveChampionship(this.championship).subscribe(response => {
+            champData.raceList = new Array<Race>;
+            champData.championshipCategoryList = new Array<ChampionshipCategory>;
+            champData.carList = new Array<Car>;
+
+            this.championshipService.saveChampionship(champData).subscribe(response => {
                 if (response) {
                     this.requestSuccessSwal.fire()
-                    //this.router.navigateByUrl("championship");
+                    this.router.navigateByUrl("championship");
                 }
             })
         }
@@ -81,11 +96,13 @@ export class ChampionshipFormComponent {
 
             reader.onload = (e: any) => {
                 this.fileBase64 = 'data:image/jpeg;base64,' + e.target.result.split(',')[1];
-                console.log(this.fileBase64);
+                this.imageSrc = this.fileBase64;
+                this.cdr.detectChanges(); // Force change detection
             };
             reader.readAsDataURL(selectedFile);
         }
     }
+
 
     prepareChampionshipDate(championshipDate: string) {
         championshipDate = championshipDate.replace('T', ' ')
@@ -115,14 +132,14 @@ export class ChampionshipFormComponent {
             allowAutoDq: [this.championship.allowAutoDq, [ Validators.min(0), Validators.max(1)]],
             shortFormationLap: [this.championship.shortFormationLap, [ Validators.min(0), Validators.max(1)]],
             ignorePrematureDisconnects: [this.championship.ignorePrematureDisconnects, [ Validators.min(0), Validators.max(1)]],
-            formationLapType: [this.championship.formationLapType, [Validators.required]],
+            formationLapType: [String(this.championship.formationLapType), [Validators.required]],
             centralEntryListPath: [this.championship.centralEntryListPath],
-            imageContent: [""],
+            imageContent: [this.championship.imageContent],
             dumpLeaderboards: [1, [Validators.min(0), Validators.max(1)]],
             dumpEntryList: [1, [ Validators.min(0), Validators.max(1)]],
-            disabled: [1, Validators.required],
-            started: [0, Validators.required],
-            finished: [0, Validators.required]
+            disabled: [this.championship.disabled, Validators.required],
+            started: [this.championship.started, Validators.required],
+            finished: [this.championship.finished, Validators.required]
         })
     }
 
