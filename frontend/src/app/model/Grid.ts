@@ -15,15 +15,15 @@ export class Grid {
     disabled: boolean
 
     constructor() {
-        this.id = null;
-        this.carNumber = null;
-        this.carLicense = "";
-        this.teamName = "";
-        this.championshipId = null;
-        this.driversList = [];
-        this.car = null;
-        this.points = null;
-        this.licensePoints = null;
-        this.disabled = null;
+        this.id = this.id || null;
+        this.carNumber = this.carNumber || 0;
+        this.carLicense = this.carLicense || "";
+        this.teamName = this.teamName || "";
+        this.championshipId = this.championshipId || null;
+        this.driversList = this.driversList || [];
+        this.car = this.car || null;
+        this.points = this.points || 0;
+        this.licensePoints = this.licensePoints || 0;
+        this.disabled = this.disabled || null;
     }
 }

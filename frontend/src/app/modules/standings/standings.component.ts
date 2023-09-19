@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 export class StandingsComponent implements OnInit, OnChanges {
     @Input() selectedRace: Race;
     @Input() selectedChampionship: Championship;
+    @Input() fullMode: boolean;
 
     @Output() isAlreadyInStandingsChange = new EventEmitter<boolean>();
     @Output() selectedGridChange = new EventEmitter<Grid>();
@@ -71,7 +72,7 @@ export class StandingsComponent implements OnInit, OnChanges {
     }
 
     handleRowClick(selectedGridItem: Grid) {
-        if (this.appContext.isAdmin()) {
+        if (this.appContext.isAdmin() && this.fullMode == true) {
             this.selectedGrid = selectedGridItem;
         } else if (this.isGridFromLoggedUser(selectedGridItem)) {
             this.selectedGrid = selectedGridItem;
@@ -82,6 +83,12 @@ export class StandingsComponent implements OnInit, OnChanges {
     editGrid(grid: Grid) {
         let championship = this.selectedChampionship;
         this.router.navigateByUrl("join", {state: {grid: grid, championship: championship}});
+    }
+
+    deleteGrid() {
+        this.gridService.deleteGrid(this.selectedGrid.id).subscribe(() => {
+            this.router.navigateByUrl("championship")
+        })
     }
 
 }

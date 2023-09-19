@@ -78,4 +78,12 @@ public class GridController {
         return new ResponseEntity<Object>(messageResponse, HttpStatus.OK);
     }
 
+    @DeleteMapping(value="/admin/{id}")
+    public ResponseEntity<?> deleteGrid(@PathVariable("id") Long gridId) {
+        gridService.deleteGrid(gridId);
+        MessageResponse messageResponse = new MessageResponse();
+        messageResponse.setMessage("Entry successfully deleted");
+        return new ResponseEntity<Object>(messageResponse, HttpStatus.OK);
+    }
+
 }

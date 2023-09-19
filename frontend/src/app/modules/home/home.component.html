@@ -50,7 +50,7 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="tab-pane active" id="standingsContent" *ngIf="selectedChampionship && selectedRace">
-                               <app-standings [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-standings>
+                               <app-standings [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship" [fullMode]="false"></app-standings>
                             </div>
                             <div class="tab-pane" id="infoContent"  *ngIf="selectedRace" style="color: #999999">
                                 <app-race-info [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-race-info>

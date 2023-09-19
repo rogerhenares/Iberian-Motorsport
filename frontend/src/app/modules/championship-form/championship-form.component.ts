@@ -23,6 +23,7 @@ export class ChampionshipFormComponent {
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
     championship: Championship = new Championship();
+    championshipCategory: ChampionshipCategory = new ChampionshipCategory();
 
     championshipForm: FormGroup;
     championshipFormSubmitted: Boolean;
@@ -73,6 +74,7 @@ export class ChampionshipFormComponent {
             champData.dumpLeaderboards = Number(this.championshipForm.get('dumpLeaderboards').value)
             champData.allowAutoDq = Number(this.championshipForm.get('allowAutoDq').value)
             champData.dumpEntryList = Number(this.championshipForm.get('dumpEntryList').value)
+
 
 
             champData.raceList = new Array<Race>;

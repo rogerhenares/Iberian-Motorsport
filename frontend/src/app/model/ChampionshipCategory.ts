@@ -5,7 +5,7 @@ export class ChampionshipCategory {
     max: number;
 
     constructor() {
-        this.id = -1;
+        this.id = null;
         this.category = '';
         this.max = 0;
     }

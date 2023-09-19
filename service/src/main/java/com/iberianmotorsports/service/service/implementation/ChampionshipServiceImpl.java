@@ -154,22 +154,26 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     }
 
     private void saveChampionshipCategoryForChamp(Championship championship) {
-        Integer totalCarsFromCategories = championship.getCategoryList()
-                .stream()
-                .mapToInt(ChampionshipCategory::getMax)
-                .sum();
-//        if(championship.getMaxCarSlots().equals(totalCarsFromCategories)) {
-//            throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
-//        }
-        List<ChampionshipCategory> championshipCategoryList = championship.getCategoryList().stream()
-                .map(championshipCategory -> {
-                    if(carService.validateCategory(championshipCategory.getCategory())){
-                        throw new ServiceException(ErrorMessages.CATEGORY_NOT_FOUND.getDescription());
-                    }
-                    championshipCategory.setChampionship(championship);
-                    return championshipCategory;
-                })
-                .toList();
-        this.championshipCategoryRepository.saveAll(championshipCategoryList);
+        if (findChampionshipById(championship.getId())  == null ) {
+            // Create a new ChampionshipCategory and set its properties
+            ChampionshipCategory newChampionshipCategory = new ChampionshipCategory();
+            newChampionshipCategory.setCategory(championship.getCarGroup()); // Assuming carGroup is the category
+            newChampionshipCategory.setMax(championship.getMaxCarSlots());
+            newChampionshipCategory.setChampionship(championship);
+            // Save the new ChampionshipCategory
+            championshipCategoryRepository.save(newChampionshipCategory);
+        } else {
+            List<ChampionshipCategory> championshipCategoryList = championship.getCategoryList().stream()
+                    .map(championshipCategory -> {
+                        if(carService.validateCategory(championshipCategory.getCategory())){
+                            throw new ServiceException(ErrorMessages.CATEGORY_NOT_FOUND.getDescription());
+                        }
+                        championshipCategory.setChampionship(championship);
+                        return championshipCategory;
+                    })
+                    .toList();
+            this.championshipCategoryRepository.saveAll(championshipCategoryList);
+        }
     }
+
 }

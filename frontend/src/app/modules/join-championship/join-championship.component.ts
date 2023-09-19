@@ -39,7 +39,9 @@ export class JoinChampionshipComponent implements OnInit {
     ngOnInit() {
         const navigation = this.router.getCurrentNavigation();
         this.championship = history.state.championship;
-        this.grid = history.state.grid;
+        if (history.state.grid) {
+            this.grid = history.state.grid;
+        }
         console.log("join-champ -> ", this.championship);
         console.log("Grid ->", this.grid)
         this.gridFormBuilder();

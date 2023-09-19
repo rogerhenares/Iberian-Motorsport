@@ -29,8 +29,8 @@
         </tbody>
     </table>
         <div class="col-md-6">
-        <button *ngIf=appContext.isAdmin() style="color: black" class="btn btn-warning" (click)="editGrid(this.selectedGrid)">Edit Entry</button>
-        <button *ngIf=appContext.isAdmin() style="color: black" class="btn btn-danger">Delete Entry</button>
+        <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-warning" (click)="editGrid(this.selectedGrid)">Edit Entry</button>
+        <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-danger" (click)="deleteGrid()">Delete Entry</button>
         </div>
     </ng-container>
 </div>

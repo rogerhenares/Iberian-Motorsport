@@ -5,6 +5,7 @@ import {Grid} from "../model/Grid";
 import {catchError, tap} from "rxjs/operators";
 import {handleError} from "../util/Error.handler";
 import {Observable} from "rxjs";
+import {response} from "express";
 
 @Injectable()
 export class GridService {
@@ -57,6 +58,15 @@ export class GridService {
     getGridForChampionship(championshipId: Number): Observable<Grid[]> {
         const url = this.url + "/public/" + championshipId;
         return this.httpClient.get<Grid[]>(url);
+    }
+
+    deleteGrid(gridId: Number, errorNotify?: any) {
+        let url = this.url + "/admin/" + gridId;
+        return this.httpClient.delete<Grid>(url)
+            .pipe(
+                tap(response => console.log('deleted Grid')),
+                catchError(handleError('GridService -> deleteGrid', null, errorNotify))
+            )
     }
 
 }

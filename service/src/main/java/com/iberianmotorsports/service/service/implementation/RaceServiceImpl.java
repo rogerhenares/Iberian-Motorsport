@@ -9,6 +9,7 @@ import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
+import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceRulesService;
@@ -99,6 +100,8 @@ public class RaceServiceImpl implements RaceService {
     public Race updateRace(RaceDTO raceDTO) {
         Race race = raceMapper.apply(raceDTO);
         Race raceToUpdate = findRaceById(race.getId());
+
+        // Update Race properties
         raceToUpdate.setTrack(race.getTrack());
         raceToUpdate.setPreRaceWaitingTimeSeconds(race.getPreRaceWaitingTimeSeconds());
         raceToUpdate.setSessionOverTimeSeconds(race.getSessionOverTimeSeconds());
@@ -111,8 +114,39 @@ public class RaceServiceImpl implements RaceService {
         raceToUpdate.setServerName(race.getServerName());
         raceToUpdate.setStartDate(race.getStartDate());
         raceToUpdate.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
+
+        // Update RaceRules
+        RaceRules raceRulesToUpdate = raceToUpdate.getRaceRules();
+        RaceRules raceRules = race.getRaceRules();
+        raceRulesToUpdate.setQualifyStandingType(raceRules.getQualifyStandingType());
+        raceRulesToUpdate.setPitWindowLengthSec(raceRules.getPitWindowLengthSec());
+        raceRulesToUpdate.setDriverStintTimeSec(raceRules.getDriverStintTimeSec());
+        raceRulesToUpdate.setMandatoryPitstopCount(raceRules.getMandatoryPitstopCount());
+        raceRulesToUpdate.setMaxTotalDrivingTime(raceRules.getMaxTotalDrivingTime());
+        raceRulesToUpdate.setMaxDriversCount(raceRules.getMaxDriversCount());
+        raceRulesToUpdate.setIsRefuellingAllowedInRace(raceRules.getIsRefuellingAllowedInRace());
+        raceRulesToUpdate.setIsRefuellingTimeFixed(raceRules.getIsRefuellingTimeFixed());
+        raceRulesToUpdate.setIsMandatoryPitstopRefuellingRequired(raceRules.getIsMandatoryPitstopRefuellingRequired());
+        raceRulesToUpdate.setIsMandatoryPitstopTyreChangeRequired(raceRules.getIsMandatoryPitstopTyreChangeRequired());
+        raceRulesToUpdate.setIsMandatoryPitstopSwapDriverRequired(raceRules.getIsMandatoryPitstopSwapDriverRequired());
+        raceRulesToUpdate.setTyreSetCount(raceRules.getTyreSetCount());
+
+        // Update Session
+        List<Session> sessionListToUpdate = raceToUpdate.getSessionList();
+        List<Session> sessionList = race.getSessionList();
+        for (int i = 0; i < sessionList.size(); i++) {
+            Session sessionToUpdate = sessionListToUpdate.get(i);
+            Session session = sessionList.get(i);
+            sessionToUpdate.setHourOfDay(session.getHourOfDay());
+            sessionToUpdate.setDayOfWeekend(session.getDayOfWeekend());
+            sessionToUpdate.setTimeMultiplier(session.getTimeMultiplier());
+            sessionToUpdate.setSessionType(session.getSessionType());
+            sessionToUpdate.setSessionDurationMinutes(session.getSessionDurationMinutes());
+        }
+
         return raceRepository.save(raceToUpdate);
     }
+
 
     @Override
     public void deleteRace(Long id) {

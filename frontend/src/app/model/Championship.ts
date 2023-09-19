@@ -48,7 +48,7 @@ export class Championship {
         this.dumpLeaderboards= 1;
         this.isRaceLocked= 0;
         this.randomizeTrackWhenEmpty= null;
-        this.centralEntryListPath= '';
+        this.centralEntryListPath= null;
         this.allowAutoDq = 0;
         this.shortFormationLap= 0;
         this.dumpEntryList= 1;

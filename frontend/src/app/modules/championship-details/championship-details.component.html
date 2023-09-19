@@ -8,7 +8,7 @@
                 <div class="card-body table-responsive">
                     <div class="row">
                         <div *ngFor="let race of pagedData()" class="col-md-4">
-                            <div class="card card-chart" [class.selected]="selectedRaceId == race.id" (click)="selectRace(race.id)">
+                            <div class="card card-chart" style="flex: 1 1 300px; max-width: 400px;" [class.selected]="selectedRaceId == race.id" (click)="selectRace(race.id)">
                                 <div class="card-header card-header-success">
                                     <img [src]="getImage(race.track)" alt="imagen circuito" style="width: 100%; height: auto;">
                                     <div class="ct-chart" id=""></div>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md-6 text-right align-self-center">
                             <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings" (click)="editGrid(this.selectedGrid)">Edit entry</button>
-                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings">Leave Championship</button>
+                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings" (click)="leaveChampionship()">Leave Championship</button>
                         </div>
                         </div>
                     </div>
@@ -92,7 +92,8 @@
                             <app-standings
                                     (isAlreadyInStandingsChange)="onIsAlreadyInStandingsChange($event)"
                                     (selectedGridChange)="onSelectedGridChange($event)"
-                                    [selectedRace]="selectedRace" [selectedChampionship]="championship"></app-standings>
+                                    [selectedRace]="selectedRace" [selectedChampionship]="championship"
+                                    [fullMode]="true"></app-standings>
                         </div>
                         <div class="tab-pane" id="info"  *ngIf="selectedRace" style="color: #999999">
                             <app-race-info [selectedRace]="selectedRace" [selectedChampionship]="championship"></app-race-info>

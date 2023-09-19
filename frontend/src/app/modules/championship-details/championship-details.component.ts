@@ -10,6 +10,7 @@ import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import Swal from "sweetalert2";
 import {StandingsComponent} from "../standings/standings.component";
 import {Grid} from "../../model/Grid";
+import {GridService} from "../../service/grid.service";
 
 @Component({
     selector: 'app-championship-details',
@@ -41,6 +42,7 @@ export class ChampionshipDetailsComponent implements OnInit {
         public appContext : AppContext,
         public router: Router,
         public raceService: RaceService,
+        public gridService: GridService
     ) {
     }
 
@@ -126,7 +128,7 @@ export class ChampionshipDetailsComponent implements OnInit {
 
     deleteChampionship() {
         this.championshipService.deleteChampionship(this.championship.id).subscribe(() => {
-            window.location.reload();
+            this.router.navigateByUrl("championship");
     })
     }
 
@@ -143,6 +145,12 @@ export class ChampionshipDetailsComponent implements OnInit {
         let championship = this.championship;
         this.router.navigateByUrl("join", {state: {grid: grid, championship: championship}});
     }
+
+    leaveChampionship() {
+            this.gridService.deleteGrid(this.selectedGrid.id).subscribe(() => {
+                this.router.navigateByUrl("championship")
+            })
+        }
 
 }
 
