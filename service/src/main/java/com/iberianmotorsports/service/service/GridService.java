@@ -6,6 +6,7 @@ import com.iberianmotorsports.service.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface GridService {
@@ -15,6 +16,8 @@ public interface GridService {
     List<Grid> getGridForChampionship(Long championshipId);
 
     List<Grid> getGridForUser(User user);
+
+    Grid findGridByPassword(String password);
 
     Grid createGridEntry(GridDTO gridDTO);
 

@@ -13,28 +13,30 @@
                                 <div>
                                     <mat-form-field>
                                         <mat-label>Team Name</mat-label>
-                                        <input style="color: white" matInput formControlName="teamName"/>
+                                        <input style="color: white" matInput formControlName="teamName" [readonly]="!this.isSoloChampionship() && !this.isNewGrid()"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.teamName.errors)">Team Name Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>Car Number</mat-label>
-                                        <input style="color: white" matInput formControlName="carNumber"/>
+                                        <input style="color: white" matInput formControlName="carNumber" [readonly]="this.isTeamChampionship() && !this.isNewGrid()"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>Car License</mat-label>
-                                            <input style="color: white" matInput formControlName="carLicense" [disabled]="!this.appContext.isAdmin()"/>
+                                            <input style="color: white" matInput formControlName="carLicense" [readonly]="!this.appContext.isAdmin()"/>
                                             <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carLicense.errors)">Car License Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>Car</mat-label>
-                                        <mat-select formControlName="car"  style="color: white">
-                                            <mat-option *ngFor="let car of this.championship.carList" [value]="car">
+                                        <mat-select formControlName="car"  style="color: white" [disabled]="this.isTeamChampionship() && !this.isNewGrid()">
+                                            <mat-option *ngFor="let car of this.championship.carList"  [value]="this.selectedCar" (onSelectionChange)="onCarChange($event)">
                                                 {{car.manufacturer}} - {{car.model}}
                                             </mat-option>
                                         </mat-select>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.car.errors)">Car Error</mat-error>
                                     </mat-form-field>
+                                    <mat-label>Password</mat-label>
+                                    <input style="color: white" matInput [value]="grid.password" [readonly] *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"/>
                                     <div *ngIf="this.appContext.isAdmin()">
                                     <mat-checkbox formControlName="disabled" [checked]="this.grid.disabled">Disabled</mat-checkbox>
                                     </div>
@@ -42,7 +44,7 @@
                             </div>
                         </div>
                         <div class="btn-block">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Join</button>
                         </div>
                     </form>
                 </div>

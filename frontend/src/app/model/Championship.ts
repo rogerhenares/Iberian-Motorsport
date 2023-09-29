@@ -25,6 +25,7 @@ export class Championship {
     ignorePrematureDisconnects: number;
     imageContent: string;
     startDate: string;
+    style: string;
     raceList: Array<Race>;
     nextRace: Race;
     disabled: boolean;
@@ -36,17 +37,17 @@ export class Championship {
     constructor() {
         this.id = -1;
         this.name= '';
-        this.description= '';
+        this.description= 'Campeonato de IML';
         this.adminPassword= '';
-        this.carGroup= '';
-        this.trackMedalsRequirement= null;
-        this.safetyRatingRequirement= null;
-        this.racecraftRatingRequirement= null;
-        this.password= '';
-        this.spectatorPassword= '';
-        this.maxCarSlots= null;
+        this.carGroup= 'GT3';
+        this.trackMedalsRequirement= 3;
+        this.safetyRatingRequirement= 70;
+        this.racecraftRatingRequirement= -1;
+        this.password= 'IML2023';
+        this.spectatorPassword= 'IML2023';
+        this.maxCarSlots= 103;
         this.dumpLeaderboards= 1;
-        this.isRaceLocked= 0;
+        this.isRaceLocked= 1;
         this.randomizeTrackWhenEmpty= null;
         this.centralEntryListPath= null;
         this.allowAutoDq = 0;
@@ -56,6 +57,7 @@ export class Championship {
         this.ignorePrematureDisconnects= 0;
         this.imageContent= null;
         this.startDate = null;
+        this.style = null;
         this.raceList = null;
         this.disabled = true;
         this.started = false;

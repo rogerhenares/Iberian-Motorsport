@@ -110,6 +110,9 @@ public class Championship implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
 
+    @Column(name = "style")
+    private String style;
+
     @OneToMany(mappedBy = "championship", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<Race> raceList;

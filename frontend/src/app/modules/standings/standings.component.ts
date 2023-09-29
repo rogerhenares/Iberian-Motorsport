@@ -20,8 +20,10 @@ export class StandingsComponent implements OnInit, OnChanges {
     @Output() selectedGridChange = new EventEmitter<Grid>();
 
     grid: Array<Grid>;
+    filteredGrid: Array<Grid>
     selectedGrid: Grid;
     isAlreadyInStandings: boolean = false;
+    selectedValue: string = "OVERALL";
 
     constructor(
         private gridService: GridService,
@@ -31,7 +33,6 @@ export class StandingsComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGridForChampionship();
-
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -47,6 +48,7 @@ export class StandingsComponent implements OnInit, OnChanges {
                 (gridData) => {
                     this.grid = gridData;
                     this.grid.sort((a, b) => b.points - a.points);
+                    this.filteredGrid = this.grid;
                     for (const grid of this.grid) {
                         this.selectGrid(grid)
                     }
@@ -60,7 +62,9 @@ export class StandingsComponent implements OnInit, OnChanges {
 
 
     isGridFromLoggedUser(grid: Grid): boolean {
-        this.isAlreadyInStandings = true;
+        if (grid.driversList.find(driver => this.appContext.isLoggedUser(driver))) {
+            this.isAlreadyInStandings = true;
+        }
         return grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
     }
 
@@ -89,6 +93,14 @@ export class StandingsComponent implements OnInit, OnChanges {
         this.gridService.deleteGrid(this.selectedGrid.id).subscribe(() => {
             this.router.navigateByUrl("championship")
         })
+    }
+
+    onSelectionChange() {
+        if (this.selectedValue !== "OVERALL") {
+            this.filteredGrid = this.grid.filter(item => item.carLicense === this.selectedValue);
+        } else {
+            this.filteredGrid = this.grid;
+        }
     }
 
 }

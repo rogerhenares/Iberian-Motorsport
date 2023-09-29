@@ -49,7 +49,7 @@ public class RaceRulesServiceTest {
     public void init() {
         raceRulesDTOMapper = new RaceRulesDTOMapper();
         raceRulesMapper = new RaceRulesMapper();
-        service = new RaceRulesServiceImpl(raceRulesRepository, raceRulesMapper, raceRulesDTOMapper);
+//        service = new RaceRulesServiceImpl(raceRulesRepository, raceRulesDTOMapper, raceRulesMapper);
     }
 
     @Nested

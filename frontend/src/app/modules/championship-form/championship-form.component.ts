@@ -120,6 +120,7 @@ export class ChampionshipFormComponent {
         this.championshipForm = this.formBuilder.group({
             name: [this.championship.name, [Validators.required]],
             startDate: [this.championship.startDate, [Validators.required]],
+            style: [this.championship.style, [Validators.required]],
             description: [this.championship.description, [Validators.required]],
             password: [this.championship.password, [Validators.required]],
             spectatorPassword: [this.championship.spectatorPassword, [Validators.required]],

@@ -38,6 +38,7 @@ import {SanctionsComponent} from "../../sanctions/sanctions.component";
 import {SanctionFormComponent} from "../../sanction-form/sanction-form.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {UserListComponent} from "../../user-list/user-list.component";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import {UserListComponent} from "../../user-list/user-list.component";
         MatCheckboxModule,
         MatStepperModule,
         MatTabsModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatButtonToggleModule
     ],
   declarations: [
     LoginComponent,

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RaceFactory {
-    public static final Long id = 1L;
+    public static final Long id = 368L;
     public static final String track = "testTrack";
     public static final Integer preRaceWaitingTimeSeconds = 30;
     public static final Integer sessionOverTimeSeconds = 0;

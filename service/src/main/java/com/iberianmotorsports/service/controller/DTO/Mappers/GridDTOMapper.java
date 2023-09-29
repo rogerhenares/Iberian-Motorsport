@@ -26,6 +26,7 @@ public class GridDTOMapper implements Function<Grid, GridDTO> {
                 carDTOMapper.apply(grid.getCar()),
                 grid.getPoints(),
                 grid.getLicensePoints(),
+                grid.getPassword(),
                 grid.getDisabled()
         );
     }

@@ -9,6 +9,7 @@ import {ChampionshipCategory} from "../../model/ChampionshipCategory";
 import {Championship} from "../../model/Championship";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {response} from "express";
+import {Car} from "../../model/Car";
 
 
 @Component({
@@ -26,6 +27,7 @@ export class JoinChampionshipComponent implements OnInit {
     gridSubmitted: boolean;
     category: ChampionshipCategory;
     championship: Championship;
+    selectedCar: Car;
 
     constructor(
         private router: Router,
@@ -35,17 +37,16 @@ export class JoinChampionshipComponent implements OnInit {
         private carService: CarService,
     ) {
     }
-
     ngOnInit() {
         const navigation = this.router.getCurrentNavigation();
         this.championship = history.state.championship;
         if (history.state.grid) {
             this.grid = history.state.grid;
+            this.selectedCar = this.grid.car;
         }
         console.log("join-champ -> ", this.championship);
         console.log("Grid ->", this.grid)
         this.gridFormBuilder();
-
     }
 
     gridFormBuilder() {
@@ -73,6 +74,7 @@ export class JoinChampionshipComponent implements OnInit {
             driversList: [this.appContext.getLoggedUser()],
             licensePoints: this.grid.licensePoints,
             points: this.grid.points,
+            password: this.grid.password,
             disabled: this.grid.disabled
         }
         if (history.state.grid) {
@@ -97,4 +99,22 @@ export class JoinChampionshipComponent implements OnInit {
             });
         }
     }
+
+    isSoloChampionship() {
+        return this.championship.style === 'SOLO';
+    }
+
+    isTeamChampionship() {
+        return this.championship.style === 'TEAM';
+    }
+
+
+    isNewGrid() {
+        return this.grid.id === -1;
+    }
+
+    onCarChange(event: any) {
+        this.selectedCar = event;
+    }
+
 }

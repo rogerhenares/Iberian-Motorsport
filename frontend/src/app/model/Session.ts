@@ -9,11 +9,14 @@ export class Session {
 
     constructor() {
         this.id = null;
-        this.hourOfDay= null;
+        this.hourOfDay= 14;
         this.dayOfWeekend= null;
         this.timeMultiplier= null;
         this.sessionType= '';
         this.sessionDurationMinutes= null;
         this.raceId = null;
     }
+
+    // TODO P 10 minutos, Q 21 minutos y R 61 minutos
+
 }

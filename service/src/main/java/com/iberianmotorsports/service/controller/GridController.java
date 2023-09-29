@@ -34,6 +34,13 @@ public class GridController {
         return new ResponseEntity<Object>(gridDTOList, HttpStatus.OK);
     }
 
+    @GetMapping(value=("/public/password/{password}"))
+    public ResponseEntity<?> getGridByPassword(@PathVariable("password") String password) throws ServiceException {
+        Grid grid = gridService.findGridByPassword(password);
+        GridDTO gridDTO = gridDTOMapper.apply(grid);
+        return new ResponseEntity<Object>(gridDTO, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> createNewGrid(@RequestBody GridDTO gridDTO) {
         Grid gridCreated = gridService.createGridEntry(gridDTO);

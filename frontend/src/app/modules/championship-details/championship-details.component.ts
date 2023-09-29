@@ -50,6 +50,7 @@ export class ChampionshipDetailsComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             const championshipId = +params.get('championshipId');
             this.fetchChampionshipDetails(championshipId);
+            console.log("Championship ->" ,this.championship)
         });
     }
 
@@ -151,6 +152,14 @@ export class ChampionshipDetailsComponent implements OnInit {
                 this.router.navigateByUrl("championship")
             })
         }
+
+    joinTeam(password: string) {
+        let championship = this.championship
+        this.gridService.getGridByPassword(password).subscribe((grid: Grid) => {
+            this.router.navigateByUrl("join", {state: {grid: grid, championship: championship}});
+
+        })
+    }
 
 }
 

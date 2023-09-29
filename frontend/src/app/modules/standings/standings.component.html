@@ -3,6 +3,13 @@
         <p style="width: 100%;">There is no available info for this championship.</p>
     </div>
     <ng-container *ngIf="grid?.length">
+        <div>
+        <mat-button-toggle-group [(ngModel)]="selectedValue" (change)="onSelectionChange()">
+            <mat-button-toggle value="OVERALL" class="small-toggle">Overall</mat-button-toggle>
+            <mat-button-toggle value="PRO" class="small-toggle">Pro</mat-button-toggle>
+            <mat-button-toggle value="SILVER" class="small-toggle">Silver</mat-button-toggle>
+        </mat-button-toggle-group>
+        </div>
     <table class="table">
         <thead class=" text-primary">
         <th class="posHeader">POS</th>
@@ -11,7 +18,7 @@
         <th class="pointsHeader">POINTS</th>
         </thead>
         <tbody>
-        <ng-container *ngFor="let grid of grid; let i = index">
+        <ng-container *ngFor="let grid of filteredGrid; let i = index">
             <tr [ngClass]="{'selected': grid === selectedGrid}" (click)="handleRowClick(grid)">
                 <td class="posColumn" style="text-align: left">{{i + 1}}</td>
                 <td class="nameColumn" style="text-align: left">
@@ -28,7 +35,7 @@
         </ng-container>
         </tbody>
     </table>
-        <div class="col-md-6">
+        <div>
         <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-warning" (click)="editGrid(this.selectedGrid)">Edit Entry</button>
         <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-danger" (click)="deleteGrid()">Delete Entry</button>
         </div>

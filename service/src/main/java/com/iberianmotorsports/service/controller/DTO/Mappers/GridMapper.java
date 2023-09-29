@@ -29,6 +29,7 @@ public class GridMapper implements Function<GridDTO, Grid> {
         grid.setDrivers(gridDTO.driversList().stream().map(userMapper).toList());
         grid.setPoints(gridDTO.points());
         grid.setLicensePoints(gridDTO.licensePoints());
+        grid.setPassword(gridDTO.password());
         grid.setDisabled(gridDTO.disabled());
         return grid;
     }

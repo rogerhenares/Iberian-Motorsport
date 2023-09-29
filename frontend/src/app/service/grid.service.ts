@@ -60,6 +60,11 @@ export class GridService {
         return this.httpClient.get<Grid[]>(url);
     }
 
+    getGridByPassword(password: String): Observable<Grid> {
+        const url = this.url + "/public/password/" + password;
+        return this.httpClient.get<Grid>(url);
+    }
+
     deleteGrid(gridId: Number, errorNotify?: any) {
         let url = this.url + "/admin/" + gridId;
         return this.httpClient.delete<Grid>(url)

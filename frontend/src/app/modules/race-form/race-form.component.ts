@@ -27,7 +27,7 @@ export class RaceFormComponent {
         this.raceFormSubmitted = false;
         this.raceForm = this.formBuilder.group({
             track: [race.track, [Validators.required]],
-            preRaceWaitingTimeSeconds: [race.preRaceWaitingTimeSeconds, [Validators.required, Validators.pattern(/^-?(30|[3-9]\d*)(\.\d+)?$/)]],
+            preRaceWaitingTimeSeconds: [race.preRaceWaitingTimeSeconds, [Validators.required, Validators.pattern(/^-?(30|[1-9]\d*)(\.\d+)?$/)]],
             sessionOverTimeSeconds: [race.sessionOverTimeSeconds, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
             ambientTemp: [race.ambientTemp, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
             cloudLevel: [race.cloudLevel, [Validators.required, Validators.min(0), Validators.max(1), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],

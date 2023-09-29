@@ -24,16 +24,16 @@ export class Race {
     constructor() {
         this.id= -1;
         this.track= '';
-        this.preRaceWaitingTimeSeconds= null;
-        this.sessionOverTimeSeconds= null;
-        this.ambientTemp= null;
-        this.cloudLevel= null;
-        this.rain= null;
-        this.weatherRandomness= null;
-        this.postQualySeconds= null;
-        this.postRaceSeconds= null;
+        this.preRaceWaitingTimeSeconds= 150;
+        this.sessionOverTimeSeconds= 150;
+        this.ambientTemp= 19;
+        this.cloudLevel= 0.35;
+        this.rain=0.1;
+        this.weatherRandomness= 2;
+        this.postQualySeconds= 150;
+        this.postRaceSeconds= 180;
         this.serverName= '';
-        this.sessionCount= null;
+        this.sessionCount= 3;
         this.startDate = null;
         this.raceRulesDTO = null;
         this.sessionDTOList = [];

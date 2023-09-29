@@ -100,6 +100,7 @@ export class ChampionshipComponent {
     selectChampionship(championship: Championship) {
         this.selectedChampionship = championship;
         this.selected.emit(championship);
+        console.log("Championship ->", championship)
     }
 
     goToPreviousPage() {

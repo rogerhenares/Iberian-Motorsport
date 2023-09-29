@@ -44,6 +44,7 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
         if (championshipDTO.imageContent() != null) {
         championship.setImageContent(championshipDTO.imageContent()); }
         championship.setStartDate(championshipDTO.startDate());
+        championship.setStyle(championshipDTO.style().toUpperCase());
         championship.setRaceList(championshipDTO.raceList().stream().map(raceMapper).toList());
         championship.setDisabled(championshipDTO.disabled());
         championship.setStarted(championshipDTO.started());

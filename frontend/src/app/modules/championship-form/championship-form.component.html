@@ -29,6 +29,17 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
+                                    <div class="item">
+                                        <mat-form-field class="white-input">
+                                            <mat-label>Championship Type</mat-label>
+                                            <mat-select formControlName="style">
+                                                <mat-option value="SOLO">Solo</mat-option>
+                                                <mat-option value="TEAM-SOLO">Team-Solo</mat-option>
+                                                <mat-option value="TEAM">Team</mat-option>
+                                            </mat-select>
+                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.style.errors)">Style Error</mat-error>
+                                        </mat-form-field>
+                                    </div>
                                 <div class="item">
                                         <mat-form-field class="white-input">
                                         <mat-label>Description</mat-label>

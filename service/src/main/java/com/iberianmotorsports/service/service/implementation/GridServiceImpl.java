@@ -13,10 +13,12 @@ import com.iberianmotorsports.service.service.CarService;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.UserService;
+import com.iberianmotorsports.service.utils.ChampionshipStyleType;
 import com.iberianmotorsports.service.utils.RoleType;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,6 +61,11 @@ public class GridServiceImpl  implements GridService {
     }
 
     @Override
+    public Grid findGridByPassword(String password) {
+        return gridRepository.findGridByPassword(password);
+    }
+
+    @Override
     public Grid createGridEntry(@Valid GridDTO gridDTO) {
         Grid grid = gridMapper.apply(gridDTO);
         validateGridForChampionship(grid);
@@ -67,8 +74,18 @@ public class GridServiceImpl  implements GridService {
         grid.setCar(carService.getCarById(grid.getCar().getId()));
         grid.setCarLicense("PRO");
         grid.setDisabled(Boolean.FALSE);
+
+        if (!ChampionshipStyleType.SOLO.getValue().equals(grid.getChampionship().getStyle())) {
+            String generatedString = RandomStringUtils.random(5, true, true);
+            while (findGridByPassword(generatedString) != null) {
+                generatedString = RandomStringUtils.random(5, true, true);
+            }
+            grid.setPassword(generatedString);
+        }
+
         Grid createdGrid = gridRepository.saveAndFlush(grid);
         setGridManager(grid.getDrivers().stream().findFirst().get(), grid);
+
         return createdGrid;
     }
 

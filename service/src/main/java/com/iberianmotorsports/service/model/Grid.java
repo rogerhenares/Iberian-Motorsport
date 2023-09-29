@@ -45,6 +45,9 @@ public class Grid implements Serializable {
     @Column(name = "license_points")
     private Long licensePoints;
 
+    @Column(name = "password")
+    private String password;
+
     @ManyToMany
     @JoinTable(
             name = "GRID_USER",

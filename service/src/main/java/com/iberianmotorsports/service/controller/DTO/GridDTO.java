@@ -12,6 +12,7 @@ public record GridDTO(
         CarDTO car,
         Double points,
         Long licensePoints,
+        String password,
         Boolean disabled
 ) {
 }
