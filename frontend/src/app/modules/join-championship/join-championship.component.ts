@@ -4,12 +4,9 @@ import {Grid} from "../../model/Grid";
 import {AppContext} from "../../util/AppContext";
 import {GridService} from "../../service/grid.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CarService} from "../../service/car.service";
 import {ChampionshipCategory} from "../../model/ChampionshipCategory";
 import {Championship} from "../../model/Championship";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
-import {response} from "express";
-import {Car} from "../../model/Car";
 
 
 @Component({
@@ -27,14 +24,12 @@ export class JoinChampionshipComponent implements OnInit {
     gridSubmitted: boolean;
     category: ChampionshipCategory;
     championship: Championship;
-    selectedCar: Car;
 
     constructor(
         private router: Router,
         public appContext: AppContext,
         private gridService: GridService,
-        private formBuilder: FormBuilder,
-        private carService: CarService,
+        private formBuilder: FormBuilder
     ) {
     }
     ngOnInit() {
@@ -42,7 +37,6 @@ export class JoinChampionshipComponent implements OnInit {
         this.championship = history.state.championship;
         if (history.state.grid) {
             this.grid = history.state.grid;
-            this.selectedCar = this.grid.car;
         }
         console.log("join-champ -> ", this.championship);
         console.log("Grid ->", this.grid)
@@ -56,7 +50,7 @@ export class JoinChampionshipComponent implements OnInit {
             carLicense: [this.grid.carLicense],
             championshipId: [this.championship.id],
             driversList: [this.appContext.getLoggedUser()],
-            car: [this.grid.car , [Validators.required]],
+            car: [this.championship.carList.find(c => c.id === this.grid?.car?.id) , [Validators.required]],
             teamName: [this.grid.teamName, [Validators.required]],
             disabled: [this.grid.disabled]
         })
@@ -108,13 +102,8 @@ export class JoinChampionshipComponent implements OnInit {
         return this.championship.style === 'TEAM';
     }
 
-
     isNewGrid() {
         return this.grid.id === -1;
-    }
-
-    onCarChange(event: any) {
-        this.selectedCar = event;
     }
 
 }

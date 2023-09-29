@@ -28,15 +28,17 @@
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>Car</mat-label>
-                                        <mat-select formControlName="car"  style="color: white" [disabled]="this.isTeamChampionship() && !this.isNewGrid()">
-                                            <mat-option *ngFor="let car of this.championship.carList"  [value]="this.selectedCar" (onSelectionChange)="onCarChange($event)">
+                                        <mat-select formControlName="car" style="color: white" [disabled]="this.isTeamChampionship() && !this.isNewGrid()">
+                                            <mat-option *ngFor="let car of this.championship.carList" [value]="car">
                                                 {{car.manufacturer}} - {{car.model}}
                                             </mat-option>
                                         </mat-select>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.car.errors)">Car Error</mat-error>
                                     </mat-form-field>
-                                    <mat-label>Password</mat-label>
-                                    <input style="color: white" matInput [value]="grid.password" [readonly] *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"/>
+                                    <ng-container *ngIf="grid?.password">
+                                        <mat-label>Password</mat-label>
+                                        <input style="color: white" matInput [value]="grid.password" [readonly] *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"/>
+                                    </ng-container>
                                     <div *ngIf="this.appContext.isAdmin()">
                                     <mat-checkbox formControlName="disabled" [checked]="this.grid.disabled">Disabled</mat-checkbox>
                                     </div>
