@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,13 +77,12 @@ public class ChampionshipServiceImpl implements ChampionshipService {
                 throw new AuthenticationException(ErrorMessages.USER_IS_NOT_LOGGED.getDescription()) {};
             }
             User loggedUser = userService.findUserBySteamId(steamId);
-            return championshipRepository.findByLoggedUser(loggedUser, LocalDateTime.now(), pageable);
+            return championshipRepository.findByLoggedUser(loggedUser, pageable);
         }
         return championshipRepository.findByDisabledAndStartedAndFinished(
                 criteriaChampionship.getDisabled(),
                 criteriaChampionship.getStarted(),
                 criteriaChampionship.getFinished(),
-                LocalDateTime.now(),
                 pageable);
     }
 
@@ -93,8 +91,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         Long steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedUser = userService.findUserBySteamId(steamId);
 
-        Page<Championship> championshipForLoggedUser =
-                championshipRepository.findByLoggedUser(loggedUser, LocalDateTime.now(), pageable);
+        Page<Championship> championshipForLoggedUser = championshipRepository.findByLoggedUser(loggedUser, pageable);
         return championshipForLoggedUser;
     }
 
