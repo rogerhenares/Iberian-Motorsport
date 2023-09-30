@@ -13,12 +13,12 @@
                                 <div>
                                     <mat-form-field>
                                         <mat-label>Team Name</mat-label>
-                                        <input style="color: white" matInput formControlName="teamName" [readonly]="!this.isSoloChampionship() && !this.isNewGrid()"/>
+                                        <input style="color: white" matInput formControlName="teamName" [readonly]="!this.isSoloChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.teamName.errors)">Team Name Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>Car Number</mat-label>
-                                        <input style="color: white" matInput formControlName="carNumber" [readonly]="this.isTeamChampionship() && !this.isNewGrid()"/>
+                                        <input style="color: white" matInput formControlName="carNumber" [readonly]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
@@ -28,7 +28,7 @@
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>Car</mat-label>
-                                        <mat-select formControlName="car" style="color: white" [disabled]="this.isTeamChampionship() && !this.isNewGrid()">
+                                        <mat-select formControlName="car" style="color: white" [disabled]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()">
                                             <mat-option *ngFor="let car of this.championship.carList" [value]="car">
                                                 {{car.manufacturer}} - {{car.model}}
                                             </mat-option>
@@ -37,7 +37,7 @@
                                     </mat-form-field>
                                     <ng-container *ngIf="grid?.password">
                                         <mat-label>Password</mat-label>
-                                        <input style="color: white" matInput [value]="grid.password" [readonly] *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"/>
+                                        <input style="color: white" matInput [value]="grid.password" *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"  [readonly]="true"/>
                                     </ng-container>
                                     <div *ngIf="this.appContext.isAdmin()">
                                     <mat-checkbox formControlName="disabled" [checked]="this.grid.disabled">Disabled</mat-checkbox>

@@ -27,6 +27,7 @@ public class GridMapper implements Function<GridDTO, Grid> {
         grid.setTeamName(gridDTO.teamName());
         grid.setCar(carMapper.apply(gridDTO.car()));
         grid.setDrivers(gridDTO.driversList().stream().map(userMapper).toList());
+        grid.setManagerId(gridDTO.managerId());
         grid.setPoints(gridDTO.points());
         grid.setLicensePoints(gridDTO.licensePoints());
         grid.setPassword(gridDTO.password());

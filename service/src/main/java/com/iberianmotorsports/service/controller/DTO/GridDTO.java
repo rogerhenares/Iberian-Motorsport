@@ -9,6 +9,7 @@ public record GridDTO(
         String carLicense,
         Long championshipId,
         List<UserDTO> driversList,
+        Long managerId,
         CarDTO car,
         Double points,
         Long licensePoints,

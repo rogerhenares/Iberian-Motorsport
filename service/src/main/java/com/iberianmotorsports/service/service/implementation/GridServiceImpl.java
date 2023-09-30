@@ -15,6 +15,7 @@ import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.UserService;
 import com.iberianmotorsports.service.utils.ChampionshipStyleType;
 import com.iberianmotorsports.service.utils.RoleType;
+import jakarta.persistence.EmbeddedId;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -45,8 +46,10 @@ public class GridServiceImpl  implements GridService {
 
     @Override
     public Grid getGridById(Long gridId) {
-        return gridRepository.findById(gridId)
+        Grid gridToReturn = gridRepository.findById(gridId)
                 .orElseThrow(() -> new ServiceException(ErrorMessages.GRID_ID_NOT_FOUND.getDescription()));
+        gridToReturn.setManagerId(getGridManager(gridToReturn).getUserId());
+        return gridToReturn;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class GridServiceImpl  implements GridService {
         grids = grids.stream()
                 .map(grid -> {
                     grid.setPoints(grid.getGridRaceList().stream().mapToDouble(GridRace::getPoints).sum());
+                    grid.setManagerId(getGridManager(grid).getUserId());
                     return grid;
                 }).toList();
         return grids;
@@ -84,37 +88,42 @@ public class GridServiceImpl  implements GridService {
         }
 
         Grid createdGrid = gridRepository.saveAndFlush(grid);
-        setGridManager(grid.getDrivers().stream().findFirst().get(), grid);
+        setGridManager(createdGrid.getDrivers().stream().findFirst().get(), createdGrid);
 
         return createdGrid;
     }
 
     @Override
     public void addDriver(Long gridId, Long steamId) {
-        Grid grid = getGrid(gridId);
+        Grid grid = getGridById(gridId);
         validateLoggedUserFromGrid(grid);
         driverValidForChampionship(steamId, grid.getChampionship().getId());
         isDriverOrGridManager(steamId, grid);
         User driverToAdd = userService.findUserBySteamId(steamId);
-        grid.getDrivers().add(driverToAdd);
-        gridRepository.save(grid);
+        addGridUserToGrid(grid, driverToAdd);
     }
 
     @Override
     public void removeDriver(Long gridId, Long steamId) {
-        Grid grid = getGrid(gridId);
+        Grid grid = getGridById(gridId);
+        User manager = getGridManager(grid);
         validateLoggedUserFromGrid(grid);
         isDriverOrGridManager(steamId, grid);
         User driverToRemove = userService.findUserBySteamId(steamId);
-        grid.getDrivers().remove(driverToRemove);
-        gridRepository.save(grid);
+        if(grid.getDrivers().size() == 1) {
+            throw new ServiceException(ErrorMessages.GRID_DRIVERS_CAN_NOT_BE_EMPTY.getDescription());
+        }
+        if(driverToRemove.equals(manager)){
+            setGridManager(grid.getDrivers().stream().filter(driver -> !driver.equals(manager)).toList().get(0), grid);
+        }
+        gridUserRepository.deleteById(new GridUserPrimaryKey(driverToRemove, grid));
     }
 
     @Override
     public Grid updateGrid(GridDTO gridDTO) {
         Grid grid = gridMapper.apply(gridDTO);
         validateLoggedUserFromGrid(grid);
-        Grid gridToUpdate = getGrid(grid.getId());
+        Grid gridToUpdate = getGridById(grid.getId());
         if (!gridToUpdate.getChampionship().getStarted() || RoleType.isAdminFromAuthentication()) {
             gridToUpdate.setTeamName(grid.getTeamName());
             gridToUpdate.setCar(grid.getCar());
@@ -130,7 +139,7 @@ public class GridServiceImpl  implements GridService {
 
     @Override
     public Grid updateGridCar(Long gridId, Long carId) {
-        Grid grid = getGrid(gridId);
+        Grid grid = getGridById(gridId);
         validateLoggedUserFromGrid(grid);
         Car carToUpdate = carService.getCarById(carId);
         validateCarForGrid(grid);
@@ -141,7 +150,7 @@ public class GridServiceImpl  implements GridService {
 
     @Override
     public Grid updateGridCarNumber(Long gridId, Integer carNumber) {
-        Grid grid = getGrid(gridId);
+        Grid grid = getGridById(gridId);
         validateLoggedUserFromGrid(grid);
         validateCarNumberForChampionship(grid.getChampionship().getId(), carNumber);
         grid.setCarNumber(carNumber);
@@ -160,7 +169,7 @@ public class GridServiceImpl  implements GridService {
 
     @Override
     public void deleteGrid(Long gridId) {
-        Grid grid = getGrid(gridId);
+        Grid grid = getGridById(gridId);
         validateLoggedUserFromGrid(grid);
 
         if(grid.getChampionship().getStarted()) {
@@ -186,14 +195,9 @@ public class GridServiceImpl  implements GridService {
         }
     }
 
-    private Grid getGrid(Long gridId) {
-        return gridRepository.findById(gridId).orElseThrow(() ->
-                new ServiceException(ErrorMessages.GRID_ID_NOT_FOUND.getDescription()));
-    }
-
     private void isDriverOrGridManager(Long driverSteamId, Grid grid){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long loggedSteamId = Long.valueOf((String) authentication.getPrincipal());
+        Long loggedSteamId = Long.valueOf(authentication.getPrincipal().toString());
 
         if(!driverSteamId.equals(loggedSteamId) &&
             !getGridManager(grid).getSteamId().equals(loggedSteamId)){
@@ -205,6 +209,14 @@ public class GridServiceImpl  implements GridService {
     private User getGridManager(Grid grid) {
         GridUser gridManager = gridUserRepository.findGridUserByPrimaryKeyGridIdAndGridManagerTrue(grid.getId().intValue());
         return gridManager.getPrimaryKey().getUser();
+    }
+
+    private void addGridUserToGrid(Grid grid, User user) {
+        GridUserPrimaryKey pk = new GridUserPrimaryKey(user, grid);
+        GridUser gridUser = new GridUser();
+        gridUser.setPrimaryKey(pk);
+        gridUser.setGridManager(Boolean.FALSE);
+        gridUserRepository.save(gridUser);
     }
 
     private Boolean isDriverOnChampionship(Long steamId, Long championshipId){
@@ -226,7 +238,7 @@ public class GridServiceImpl  implements GridService {
     private Boolean isChampionshipGridFull(Long championshipId){
         List<Grid> championshipGrid = getGridForChampionship(championshipId);
         if(!championshipGrid.isEmpty()){
-            if(championshipGrid.get(0).getChampionship().getMaxCarSlots() >= championshipGrid.size()){
+            if(championshipGrid.get(0).getChampionship().getMaxCarSlots() <= championshipGrid.size()){
                 return Boolean.TRUE;
             }
         }

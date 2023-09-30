@@ -33,22 +33,18 @@ export class GridService {
             );
     }
 
-    addDriver(grid: Grid, steamId: number, errorNotify?: any){
-        const url: string = this.url + '/add/' + grid.id;
-        const body = { steamId: steamId };
-        return this.httpClient.put<Grid>(url, body)
+    addDriver(grid: Grid, steamId: string, errorNotify?: any){
+        const url: string = this.url + '/add/' + grid.id + '/driver/' + steamId;
+        return this.httpClient.put<Grid>(url, grid)
             .pipe(
                 tap( grid=> console.log('added driver')),
                 catchError(handleError('GridService -> addDriver', null, errorNotify))
         )
     }
 
-    removeDriver(grid: Grid, steamId: Number, errorNotify?: any){
-        const url: string = this.url + '/remove/' + grid.id;
-        const options = {
-            params: new HttpParams().set('steamId', steamId.toString())
-        };
-        return this.httpClient.delete<Grid>(url, options)
+    removeDriver(grid: Grid, steamId: string, errorNotify?: any){
+        const url: string = this.url + '/remove/' + grid.id + '/driver/' + steamId;
+        return this.httpClient.delete<Grid>(url)
             .pipe(
                 tap( grid=> console.log('removed driver')),
                 catchError(handleError('GridService -> removeDriver', null, errorNotify))

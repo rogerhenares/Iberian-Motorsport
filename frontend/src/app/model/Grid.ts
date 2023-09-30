@@ -13,6 +13,7 @@ export class Grid {
     points: number;
     licensePoints: number;
     password: string;
+    managerId: number;
     disabled: boolean
 
     constructor() {
@@ -26,6 +27,7 @@ export class Grid {
         this.points = this.points || 0;
         this.licensePoints = this.licensePoints || 0;
         this.password = this.password || "";
+        this.managerId = this.managerId || null;
         this.disabled = this.disabled || null;
     }
 }

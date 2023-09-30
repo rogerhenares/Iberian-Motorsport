@@ -148,9 +148,16 @@ export class ChampionshipDetailsComponent implements OnInit {
     }
 
     leaveChampionship() {
-            this.gridService.deleteGrid(this.selectedGrid.id).subscribe(() => {
+        if (this.championship.style == 'TEAM') {
+            this.gridService.removeDriver(this.selectedGrid, this.appContext.getLoggedUser().steamId).subscribe(() => {
                 this.router.navigateByUrl("championship")
             })
+        }
+        else {
+            this.gridService.deleteGrid(this.selectedGrid.id).subscribe(() => {
+                this.router.navigateByUrl("championship")
+                })
+            }
         }
 
     joinTeam(password: string) {
@@ -159,6 +166,10 @@ export class ChampionshipDetailsComponent implements OnInit {
             this.router.navigateByUrl("join", {state: {grid: grid, championship: championship}});
 
         })
+    }
+
+    isGridManager(grid: Grid) {
+        return grid.managerId === this.appContext.getLoggedUser().userId;
     }
 
 }

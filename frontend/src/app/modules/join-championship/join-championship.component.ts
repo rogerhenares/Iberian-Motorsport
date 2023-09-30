@@ -8,7 +8,6 @@ import {ChampionshipCategory} from "../../model/ChampionshipCategory";
 import {Championship} from "../../model/Championship";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 
-
 @Component({
     selector: 'app-join-championship',
     templateUrl: './join-championship.component.html',
@@ -49,7 +48,7 @@ export class JoinChampionshipComponent implements OnInit {
             carNumber: [this.grid.carNumber, [Validators.required]],
             carLicense: [this.grid.carLicense],
             championshipId: [this.championship.id],
-            driversList: [this.appContext.getLoggedUser()],
+            driversList: [this.grid.driversList],
             car: [this.championship.carList.find(c => c.id === this.grid?.car?.id) , [Validators.required]],
             teamName: [this.grid.teamName, [Validators.required]],
             disabled: [this.grid.disabled]
@@ -58,6 +57,7 @@ export class JoinChampionshipComponent implements OnInit {
 
 
     join(){
+        this.grid.driversList.push(this.appContext.getLoggedUser())
         let grid: Grid = {
             id: this.grid.id,
             car: this.gridForm.value.car,
@@ -65,34 +65,50 @@ export class JoinChampionshipComponent implements OnInit {
             carNumber: this.gridForm.value.carNumber,
             championshipId: this.championship.id,
             teamName: this.gridForm.value.teamName,
-            driversList: [this.appContext.getLoggedUser()],
+            driversList: this.grid.driversList,
             licensePoints: this.grid.licensePoints,
             points: this.grid.points,
+            managerId: this.grid.managerId,
             password: this.grid.password,
             disabled: this.grid.disabled
         }
         if (history.state.grid) {
-            this.gridService.updateGridEntry(grid).subscribe(
+            if (this.isTeamChampionship()){
+                console.log("Grid to update ->", this.grid)
+                console.log("SteamId ->", this.appContext.getLoggedUser().steamId)
+                this.gridService.addDriver(grid, this.appContext.getLoggedUser().steamId).subscribe(
+                    response => {
+                        if (response) {
+                            this.requestSuccessSwal.fire()
+                            this.router.navigateByUrl('/championship/' + this.championship.id)
+                        }
+                    }
+                )
+            }
+            else {
+                    console.log("Grid to update ->", this.grid)
+                    this.gridService.updateGridEntry(grid).subscribe(
+                        response => {
+                            if (response) {
+                                this.requestSuccessSwal.fire()
+                                this.router.navigateByUrl('/championship/' + this.championship.id)
+                            }
+                        }
+                    )
+                }
+            }
+        else {
+            this.gridService.createGridEntry(grid).subscribe(
                 response => {
                     if (response) {
                         this.requestSuccessSwal.fire()
-                        this.router.navigateByUrl('/championship/' + this.championship.id)
+                        this.router.navigateByUrl('/dashboard');
                     }
-                }
-            )
+                },
+                error => {
+                });
+            }
         }
-        else {
-        this.gridService.createGridEntry(grid).subscribe(
-            response => {
-                if (response) {
-                    this.requestSuccessSwal.fire()
-                    this.router.navigateByUrl('/dashboard');
-                }
-            },
-            error => {
-            });
-        }
-    }
 
     isSoloChampionship() {
         return this.championship.style === 'SOLO';
@@ -104,6 +120,10 @@ export class JoinChampionshipComponent implements OnInit {
 
     isNewGrid() {
         return this.grid.id === -1;
+    }
+
+    isGridManager() {
+        return this.grid.managerId === this.appContext.getLoggedUser().userId;
     }
 
 }

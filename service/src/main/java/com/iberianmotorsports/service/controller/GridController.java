@@ -69,17 +69,17 @@ public class GridController {
         return new ResponseEntity<Object>(updatedGridDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/add/{id}")
-    public ResponseEntity<?> addDriver(@PathVariable("id") Long gridId, Long steamId) {
-        gridService.addDriver(gridId, steamId);
+    @PutMapping("/add/{id}/driver/{steamId}")
+    public ResponseEntity<?> addDriver(@PathVariable("id") Long gridId, @PathVariable("steamId") String steamId) {
+        gridService.addDriver(gridId, Long.valueOf(steamId));
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Driver added successfully");
         return new ResponseEntity<Object>(messageResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping(value="/remove/{id}")
-    public ResponseEntity<?> removeDriver(@PathVariable("id") Long gridId, @RequestParam("steamId") Long steamId) {
-        gridService.removeDriver(gridId, steamId);
+    @DeleteMapping(value="/remove/{id}/driver/{steamId}")
+    public ResponseEntity<?> removeDriver(@PathVariable("id") Long gridId, @PathVariable("steamId") String steamId) {
+        gridService.removeDriver(gridId, Long.valueOf(steamId));
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Driver removed successfully");
         return new ResponseEntity<Object>(messageResponse, HttpStatus.OK);
