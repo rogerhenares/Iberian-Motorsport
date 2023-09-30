@@ -96,10 +96,20 @@ export class ChampionshipDetailsComponent implements OnInit {
         }
     }
 
-    getImage(trackName: string) {
-        const trimmedTrackName = trackName.trim();
+    getImage(race: Race) {
+        const trimmedTrackName = race.track.trim().toLowerCase();
         const sanitizedTrackName = trimmedTrackName.replace(/\s+/g, "");
-        return "assets/img/" + sanitizedTrackName + ".png";
+        if(race.sessionDTOList.find(session => session.sessionType === "R")?.hourOfDay > 20) {
+            return "assets/circuit/" + sanitizedTrackName + "_night.png";
+        }
+        if(race.rain > 0.3) {
+            return "assets/circuit/" + sanitizedTrackName + "_wet.png";
+        }
+        if(race.cloudLevel > 0.5) {
+            return "assets/circuit/" + sanitizedTrackName + "_cloud.png";
+        }
+        const defaultConfig =  sanitizedTrackName + "_sunny";
+        return "assets/circuit/" + defaultConfig + ".png";
     }
 
     createNewRace(championshipId: number) {

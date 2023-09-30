@@ -155,40 +155,37 @@
 
 
                                         <div class="checkbox-container">
-                                        <div class="checkbox-group">
-                                            <mat-checkbox  formControlName="ignorePrematureDisconnects">Ignore Premature Disconnects</mat-checkbox>
-                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.ignorePrematureDisconnects.errors)">Ignore Premature Disconnects Error</mat-error>
+                                            <div class="checkbox-group">
+                                                <mat-checkbox  formControlName="ignorePrematureDisconnects">Ignore Premature Disconnects</mat-checkbox>
+                                                <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.ignorePrematureDisconnects.errors)">Ignore Premature Disconnects Error</mat-error>
+                                            </div>
                                         </div>
+
+                                        <div style="padding-top: 15px">
+                                            <mat-label>Championship Status</mat-label>
+                                            <div class="checkbox-container">
+                                                <mat-checkbox style="margin-left: 15px;" formControlName="disabled" checked="true">Disabled</mat-checkbox>
+                                                <mat-checkbox style="margin-left: 15px;" formControlName="started">Started</mat-checkbox>
+                                                <mat-checkbox style="margin-left: 15px;" formControlName="finished">Finished</mat-checkbox>
+                                            </div>
                                         </div>
                                     </div>
-
                                     </div>
                                 </div>
+                                <br>
                                 <div class="item">
-                                    <div>
-                                        <img [src]="imageSrc" alt="Current Picture" *ngIf="imageSrc" style="max-width: 200px; max-height: 200px;">
-                                    </div>
-
+                                    <ng-container *ngIf="imageSrc">
+                                        <div class="card-header card-header-success" style="max-width: 360px; max-height: 270px; overflow: hidden; aspect-ratio: auto 4 / 3;">
+                                            <img [src]="imageSrc" alt="Current Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                    </ng-container>
+                                    <br>
                                     <div>
                                         <div>
                                             <input type="file" (change)="onFileSelected($event)" id="fileInput" accept="image/*" />
                                             <mat-label [hidden]="!(championshipFormSubmitted && championshipForm.controls.imageContent.errors)">Image Error</mat-label>
                                         </div>
                                     </div>
-
-                                    <div style="padding-top: 15px">
-                                    <div class="checkbox-container">
-                                        <div class="checkbox-group">
-                                            <mat-checkbox formControlName="disabled" checked="true">Disabled</mat-checkbox>
-                                        </div>
-                                        <div class="checkbox-group">
-                                            <mat-checkbox formControlName="started">Started</mat-checkbox>
-                                        </div>
-                                        <div class="checkbox-group">
-                                            <mat-checkbox formControlName="finished">Finished</mat-checkbox>
-                                        </div>
-                                    </div>
-                                        </div>
                                 </div>
                                 <div class="btn-block">
                                     <button id="submit" type="submit" class="btn btn-primary myButton">Submit</button>
