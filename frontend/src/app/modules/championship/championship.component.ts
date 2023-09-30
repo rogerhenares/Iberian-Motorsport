@@ -3,7 +3,6 @@ import {Championship} from "../../model/Championship";
 import {ChampionshipService} from "../../service/championship.service";
 import {Pageable} from "../../model/Pageable";
 import {Race} from "../../model/Race";
-import * as events from "events";
 import {CriteriaChampionship} from "../../model/CriteriaChampionship";
 import {Router} from "@angular/router";
 import {AppContext} from "../../util/AppContext";
@@ -25,7 +24,6 @@ export class ChampionshipComponent {
     selectedChampionship: Championship;
     totalPages: number = 0;
     selectedRace: Race = new Race();
-    closestRace: Race = new Race();
 
     constructor(
         private championshipService: ChampionshipService,
@@ -86,8 +84,9 @@ export class ChampionshipComponent {
 
     getClosestRace(championship: any): Race {
         const date = new Date();
+        const lastRace = championship.raceList.at(-1);
         let filter = championship.raceList.filter(race => new Date(race.startDate) > date);
-        return filter.length > 0 ? filter.pop() : null;
+        return filter.length > 0 ? filter.pop() : lastRace;
     }
 
 

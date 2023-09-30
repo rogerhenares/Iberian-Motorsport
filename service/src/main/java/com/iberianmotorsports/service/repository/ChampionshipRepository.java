@@ -21,18 +21,24 @@ public interface ChampionshipRepository extends JpaRepository<Championship, Long
         SELECT c FROM Championship c
             JOIN c.gridList g
             JOIN g.drivers gu
-        WHERE c.disabled = false AND gu = :driver
+            LEFT JOIN c.raceList r
+        WHERE c.disabled = false AND c.finished = false AND gu = :driver
+        GROUP BY c
+        ORDER BY TIMESTAMPDIFF(SECOND, :now, MIN(r.startDate)) ASC
     """)
-    Page<Championship> findByLoggedUser(@Param("driver") User loggedUser, Pageable pageable);
+    Page<Championship> findByLoggedUser(@Param("driver") User loggedUser,
+                                        @Param("now") LocalDateTime now,
+                                        Pageable pageable);
 
     @Query("""
            SELECT c FROM Championship c LEFT JOIN c.raceList r
            WHERE c.disabled = :disabled AND c.started = :started AND c.finished = :finished
-              AND (c.finished = true OR c.disabled = true OR (c.finished = false AND r.startDate >= :now))
            GROUP BY c
            ORDER BY TIMESTAMPDIFF(SECOND, :now, MIN(r.startDate)) ASC
     """)
-    Page<Championship> findByDisabledAndStartedAndFinished(Boolean disabled, Boolean started,
-                                                           Boolean finished, LocalDateTime now,
+    Page<Championship> findByDisabledAndStartedAndFinished(@Param("disabled") Boolean disabled,
+                                                           @Param("started") Boolean started,
+                                                           @Param("finished") Boolean finished,
+                                                           @Param("now") LocalDateTime now,
                                                            Pageable pageable);
 }

@@ -78,7 +78,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
                 throw new AuthenticationException(ErrorMessages.USER_IS_NOT_LOGGED.getDescription()) {};
             }
             User loggedUser = userService.findUserBySteamId(steamId);
-            return championshipRepository.findByLoggedUser(loggedUser, pageable);
+            return championshipRepository.findByLoggedUser(loggedUser, LocalDateTime.now(), pageable);
         }
         return championshipRepository.findByDisabledAndStartedAndFinished(
                 criteriaChampionship.getDisabled(),
@@ -94,7 +94,7 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         User loggedUser = userService.findUserBySteamId(steamId);
 
         Page<Championship> championshipForLoggedUser =
-                championshipRepository.findByLoggedUser(loggedUser, pageable);
+                championshipRepository.findByLoggedUser(loggedUser, LocalDateTime.now(), pageable);
         return championshipForLoggedUser;
     }
 
