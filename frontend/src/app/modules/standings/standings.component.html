@@ -8,6 +8,7 @@
             <mat-button-toggle value="OVERALL" class="small-toggle">Overall</mat-button-toggle>
             <mat-button-toggle value="PRO" class="small-toggle">Pro</mat-button-toggle>
             <mat-button-toggle value="SILVER" class="small-toggle">Silver</mat-button-toggle>
+            <mat-button-toggle value="TEAM" class="small-toggle" *ngIf="this.selectedChampionship.style === 'TEAM-SOLO'">Team</mat-button-toggle>
         </mat-button-toggle-group>
         </div>
     <table class="table">
@@ -18,18 +19,41 @@
         <th class="pointsHeader">POINTS</th>
         </thead>
         <tbody>
-        <ng-container *ngFor="let grid of filteredGrid; let i = index">
+        <ng-container *ngFor="let grid of this.selectedValue === 'TEAM' ? teamGrid : filteredGrid; let i = index">
             <tr [ngClass]="{'selected': grid === selectedGrid}" (click)="handleRowClick(grid)">
                 <td class="posColumn" style="text-align: left">{{i + 1}}</td>
                 <td class="nameColumn" style="text-align: left">
-                    <ng-container *ngFor="let user of grid.driversList;">
-                    <span>
-                        {{user.firstName}} {{user.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">
-                    </span>
-                    <br>
+                    <ng-container *ngIf="this.selectedValue !== 'TEAM'">
+                        <ng-container *ngFor="let user of grid.driversList;">
+                            <span>{{user.firstName}} {{user.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"></span>
+                            <br>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="this.selectedValue === 'TEAM'">
+                        <mat-expansion-panel class="mat-elevation-z0" style="background: transparent; color: white; padding-top: 0px; margin-bottom: 1px; padding-right: 0px;" >
+                            <mat-expansion-panel-header>
+                                <span>{{grid.teamName}}</span>
+                            </mat-expansion-panel-header>
+                            <ng-template matExpansionPanelContent>
+                                <ng-container *ngFor="let user of grid.driversList;">
+                                    <span style="padding-left: 10px;">{{user.firstName}} {{user.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"></span>
+                                    <br>
+                                </ng-container>
+                            </ng-template>
+                        </mat-expansion-panel>
                     </ng-container>
                 </td>
-                <td class="carColumn" style="text-align: left"><img style="height: 30px" src="assets/car-logo/{{grid.car.manufacturer}}.png">{{grid.car.model}}</td>
+                <td class="carColumn" style="text-align: left">
+                    <ng-container *ngIf="this.selectedValue === 'TEAM'">
+                        <ng-container *ngFor="let car of grid.carList;">
+                            <span><img style="height: 30px" src="assets/car-logo/{{car.manufacturer}}.png">{{car.model}}</span>
+                            <br>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="this.selectedValue !== 'TEAM'">
+                        <span><img style="height: 30px" src="assets/car-logo/{{grid.car.manufacturer}}.png">{{grid.car.model}}</span>
+                    </ng-container>
+                </td>
                 <td class="pointsColumn" style="text-align: left">{{grid.points}}</td>
             </tr>
         </ng-container>
@@ -37,7 +61,18 @@
     </table>
         <div>
         <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-warning" (click)="editGrid(this.selectedGrid)">Edit Entry</button>
-        <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-danger" (click)="deleteGrid()">Delete Entry</button>
+        <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-danger" (click)="deleteSwalEntry.fire()">Delete Entry</button>
         </div>
     </ng-container>
 </div>
+
+<swal
+    #deleteSwalEntry
+    title="Delete {{selectedGrid.driversList[0].firstName}} {{selectedGrid.driversList[0].lastName}} entry?"
+    text="This cannot be undone"
+    icon="question"
+    [showCancelButton]="true"
+    [focusCancel]="true"
+    (confirm)="deleteGrid()">
+</swal>
+

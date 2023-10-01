@@ -5,6 +5,9 @@ import { GridService } from '../../service/grid.service';
 import { Championship } from '../../model/Championship';
 import {AppContext} from "../../util/AppContext";
 import {Router} from "@angular/router";
+import {Car} from "../../model/Car";
+import {User} from "../../model/User";
+import {any} from "codelyzer/util/function";
 
 @Component({
     selector: 'app-standings',
@@ -20,7 +23,8 @@ export class StandingsComponent implements OnInit, OnChanges {
     @Output() selectedGridChange = new EventEmitter<Grid>();
 
     grid: Array<Grid>;
-    filteredGrid: Array<Grid>
+    filteredGrid: Array<Grid>;
+    teamGrid: Array<any>;
     selectedGrid: Grid;
     isAlreadyInStandings: boolean = false;
     selectedValue: string = "OVERALL";
@@ -96,11 +100,41 @@ export class StandingsComponent implements OnInit, OnChanges {
     }
 
     onSelectionChange() {
-        if (this.selectedValue !== "OVERALL") {
+        if (this.selectedValue === "PRO" || this.selectedValue === "SILVER") {
             this.filteredGrid = this.grid.filter(item => item.carLicense === this.selectedValue);
+        } else if (this.selectedValue === 'TEAM') {
+            let teamNameList = [];
+            this.teamGrid = [];
+            this.grid.forEach(grid => {
+               if(!teamNameList.find(teamName => teamName === grid.teamName)){
+                   teamNameList.push(grid.teamName);
+               }
+            });
+            teamNameList.forEach(teamName => {
+                let teamGridSplit = this.grid.filter(grid => grid.teamName === teamName);
+                let teamPoints = 0;
+                let teamCars = [];
+                let teamDrivers = [];
+                teamGridSplit.forEach(gridForTeam => {
+                    teamPoints += gridForTeam.points;
+                    if (!teamCars.find(car => car.id === gridForTeam.car.id)) {
+                        teamCars.push(gridForTeam.car);
+                    }
+                    teamDrivers = [].concat(teamDrivers, gridForTeam.driversList);
+                });
+                let teamGridToAdd = {
+                    teamName: teamName,
+                    points: teamPoints,
+                    carList : teamCars,
+                    driversList: teamDrivers
+                }
+                this.teamGrid.push(teamGridToAdd);
+            });
+            console.log("ME CAGO EN DIOS -> {} ", this.teamGrid);
         } else {
-            this.filteredGrid = this.grid;
+            this.filteredGrid = [...this.grid];
         }
     }
+
 
 }

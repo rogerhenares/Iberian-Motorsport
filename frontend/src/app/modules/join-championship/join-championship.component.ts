@@ -23,6 +23,7 @@ export class JoinChampionshipComponent implements OnInit {
     gridSubmitted: boolean;
     category: ChampionshipCategory;
     championship: Championship;
+    teamSoloJoin: boolean = false;
 
     constructor(
         private router: Router,
@@ -36,6 +37,7 @@ export class JoinChampionshipComponent implements OnInit {
         this.championship = history.state.championship;
         if (history.state.grid) {
             this.grid = history.state.grid;
+            this.teamSoloJoin = history.state.teamSoloJoin;
         }
         console.log("join-champ -> ", this.championship);
         console.log("Grid ->", this.grid)
@@ -45,10 +47,10 @@ export class JoinChampionshipComponent implements OnInit {
     gridFormBuilder() {
         this.gridSubmitted = false;
         this.gridForm = this.formBuilder.group({
-            carNumber: [this.grid.carNumber, [Validators.required]],
-            carLicense: [this.grid.carLicense],
+            carNumber: [this.teamSoloJoin === true? null : this.grid.carNumber, [Validators.required]],
+            carLicense: [this.teamSoloJoin === true? null : this.grid.carLicense],
             championshipId: [this.championship.id],
-            driversList: [this.grid.driversList],
+            driversList: [this.teamSoloJoin === true? null : this.grid.driversList],
             car: [this.championship.carList.find(c => c.id === this.grid?.car?.id) , [Validators.required]],
             teamName: [this.grid.teamName, [Validators.required]],
             disabled: [this.grid.disabled]
@@ -58,7 +60,7 @@ export class JoinChampionshipComponent implements OnInit {
 
     join(){
         this.grid.driversList.push(this.appContext.getLoggedUser())
-        let grid: Grid = {
+        let gridToSave: Grid = {
             id: this.grid.id,
             car: this.gridForm.value.car,
             carLicense: this.gridForm.value.carLicense,
@@ -76,7 +78,7 @@ export class JoinChampionshipComponent implements OnInit {
             if (this.isTeamChampionship()){
                 console.log("Grid to update ->", this.grid)
                 console.log("SteamId ->", this.appContext.getLoggedUser().steamId)
-                this.gridService.addDriver(grid, this.appContext.getLoggedUser().steamId).subscribe(
+                this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId).subscribe(
                     response => {
                         if (response) {
                             this.requestSuccessSwal.fire()
@@ -85,9 +87,26 @@ export class JoinChampionshipComponent implements OnInit {
                     }
                 )
             }
+            else if (this.teamSoloJoin === true) {
+                gridToSave.driversList = [this.appContext.getLoggedUser()]
+                gridToSave.id = null
+                gridToSave.licensePoints = 0
+                gridToSave.points = 0
+                gridToSave.password = null
+                console.log("Grid to save ->", gridToSave)
+                this.gridService.createGridEntry(gridToSave).subscribe(
+                    response => {
+                        if (response) {
+                            this.requestSuccessSwal.fire()
+                            this.router.navigateByUrl('/championship/' + this.championship.id)
+                        }
+                    }
+                )
+            }
+
             else {
                     console.log("Grid to update ->", this.grid)
-                    this.gridService.updateGridEntry(grid).subscribe(
+                    this.gridService.updateGridEntry(gridToSave).subscribe(
                         response => {
                             if (response) {
                                 this.requestSuccessSwal.fire()
@@ -98,7 +117,7 @@ export class JoinChampionshipComponent implements OnInit {
                 }
             }
         else {
-            this.gridService.createGridEntry(grid).subscribe(
+            this.gridService.createGridEntry(gridToSave).subscribe(
                 response => {
                     if (response) {
                         this.requestSuccessSwal.fire()

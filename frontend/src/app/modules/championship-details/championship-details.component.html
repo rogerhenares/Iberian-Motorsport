@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-md-6 text-right align-self-center">
                             <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings" (click)="editGrid(this.selectedGrid)">Edit entry</button>
-                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings" (click)="leaveChampionship()">Leave Championship</button>
+                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings" (click)="leaveChampionshipSwal.fire()">Leave Championship</button>
                         </div>
                         </div>
                     </div>
@@ -159,4 +159,14 @@
     [showCancelButton]="true"
     [focusCancel]="true"
     (confirm)="joinTeam($event)">
+</swal>
+
+<swal
+    #leaveChampionshipSwal
+    title="Leaving {{championship.name}}"
+    text="Are you sure you want to leave?"
+    icon="question"
+    [showCancelButton]="true"
+    [focusCancel]="true"
+    (confirm)="leaveChampionship()">
 </swal>

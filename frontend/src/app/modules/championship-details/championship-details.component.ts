@@ -158,7 +158,7 @@ export class ChampionshipDetailsComponent implements OnInit {
     }
 
     leaveChampionship() {
-        if (this.championship.style == 'TEAM') {
+        if (this.championship.style === 'TEAM') {
             this.gridService.removeDriver(this.selectedGrid, this.appContext.getLoggedUser().steamId).subscribe(() => {
                 this.router.navigateByUrl("championship")
             })
@@ -171,10 +171,9 @@ export class ChampionshipDetailsComponent implements OnInit {
         }
 
     joinTeam(password: string) {
-        let championship = this.championship
+        let teamSoloJoin: boolean = this.championship.style === 'TEAM-SOLO'
         this.gridService.getGridByPassword(password).subscribe((grid: Grid) => {
-            this.router.navigateByUrl("join", {state: {grid: grid, championship: championship}});
-
+            this.router.navigateByUrl("join", {state: {grid: grid, championship: this.championship, teamSoloJoin: teamSoloJoin}});
         })
     }
 
