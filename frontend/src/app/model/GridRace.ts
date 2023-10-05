@@ -9,6 +9,7 @@ export class GridRace {
     thirdSector: number;
     finalTime: number;
     totalLaps: number;
+    sanctionTime: number;
     sanctionDTOList: Array<Sanction>;
     raceId: number;
     gridId: number;
@@ -21,6 +22,7 @@ export class GridRace {
         this.thirdSector = null;
         this.finalTime = null;
         this.totalLaps = null;
+        this.sanctionTime = null;
         this.sanctionDTOList= [];
         this.raceId = null;
         this.gridId = null;

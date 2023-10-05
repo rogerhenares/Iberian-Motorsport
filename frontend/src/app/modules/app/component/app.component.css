@@ -6,3 +6,15 @@
     font-family: raceSport;
     src: url(assets/font/raceSport.ttf) format("opentype");
 }
+
+.custom-swal {
+    color: white !important;
+}
+
+.custom-swal-content {
+    color: white !important;
+}
+
+.custom-swal-popup {
+    color: white !important;
+}

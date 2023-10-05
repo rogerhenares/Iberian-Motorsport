@@ -43,6 +43,9 @@ public class SanctionServiceImpl implements SanctionService {
         Sanction sanctionSaved = sanctionRepository.save(sanction);
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
                 sanction.getLicensePoints(), Boolean.TRUE);
+        sanctionSaved.setGridRace(gridRaceService.getGridRace(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(), sanction.getGridRace().getGridRacePrimaryKey().getRace().getId()));
+        sanctionSaved.getGridRace().setSanctionTime(sanction.getGridRace().getSanctionTime() + Integer.parseInt(sanction.getPenalty()));
+        sanctionSaved.getGridRace().setFinalTime(sanction.getGridRace().getFinalTime() + sanction.getGridRace().getSanctionTime());
         gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
         return sanctionSaved;
     }
@@ -58,6 +61,8 @@ public class SanctionServiceImpl implements SanctionService {
         sanctionRepository.delete(sanction);
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
                 sanction.getLicensePoints(), Boolean.FALSE);
+        sanction.getGridRace().setSanctionTime(sanction.getGridRace().getSanctionTime() - Integer.parseInt(sanction.getPenalty()));
+        sanction.getGridRace().setFinalTime(sanction.getGridRace().getFinalTime() - sanction.getGridRace().getSanctionTime());
         gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
     }
 
@@ -65,4 +70,5 @@ public class SanctionServiceImpl implements SanctionService {
         return sanctionRepository.findById(sanctionId)
                 .orElseThrow(() -> new ServiceException(ErrorMessages.SANCTION_NOT_FOUND.getDescription()));
     }
+
 }

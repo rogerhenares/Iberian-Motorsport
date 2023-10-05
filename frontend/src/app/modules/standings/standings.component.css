@@ -10,6 +10,10 @@
     text-align: left;
 }
 
+.categoryHeader, .categoryColumn {
+    text-align: left;
+}
+
 .pointsColumn, .pointsHeader {
     text-align: left;
 }
@@ -110,4 +114,15 @@
 .small-toggle {
     font-size: 10px;
     padding: 1px 1px;
+    background-color: #00FFC0;
+    color: black;
 }
+
+.small-toggle.mat-button-toggle-checked {
+    background-color: #00EBB3;
+}
+
+.custom-swal {
+    color: white !important;
+}
+

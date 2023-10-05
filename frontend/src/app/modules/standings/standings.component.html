@@ -4,7 +4,7 @@
     </div>
     <ng-container *ngIf="grid?.length">
         <div>
-        <mat-button-toggle-group [(ngModel)]="selectedValue" (change)="onSelectionChange()">
+        <mat-button-toggle-group [(ngModel)]="selectedValue" (change)="onSelectionChange()" *ngIf="fullMode" >
             <mat-button-toggle value="OVERALL" class="small-toggle">Overall</mat-button-toggle>
             <mat-button-toggle value="PRO" class="small-toggle">Pro</mat-button-toggle>
             <mat-button-toggle value="SILVER" class="small-toggle">Silver</mat-button-toggle>
@@ -16,6 +16,7 @@
         <th class="posHeader">POS</th>
         <th class="nameHeader">NAME</th>
         <th class="carHeader">CAR</th>
+        <th class="categoryHeader" *ngIf="fullMode">CATEGORY</th>
         <th class="pointsHeader">POINTS</th>
         </thead>
         <tbody>
@@ -54,6 +55,7 @@
                         <span><img style="height: 30px" src="assets/car-logo/{{grid.car.manufacturer}}.png">{{grid.car.model}}</span>
                     </ng-container>
                 </td>
+                <td class="categoryColumn" style="text-align: left" *ngIf="fullMode">{{grid.carLicense}}</td>
                 <td class="pointsColumn" style="text-align: left">{{grid.points}}</td>
             </tr>
         </ng-container>
@@ -68,7 +70,7 @@
 
 <swal
     #deleteSwalEntry
-    title="Delete {{selectedGrid.driversList[0].firstName}} {{selectedGrid.driversList[0].lastName}} entry?"
+    title="Delete {{selectedGrid?.driversList[0]?.firstName}} {{selectedGrid?.driversList[0]?.lastName}} entry?"
     text="This cannot be undone"
     icon="question"
     [showCancelButton]="true"

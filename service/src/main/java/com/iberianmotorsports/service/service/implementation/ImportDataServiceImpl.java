@@ -53,6 +53,7 @@ public class ImportDataServiceImpl implements ImportDataService {
 
     @Override
     public void importData() throws Exception {
+
         ObjectMapper objectMapper = new ObjectMapper();
         String filePath = "230902_220657_Q.json";
 

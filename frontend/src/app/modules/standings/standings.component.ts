@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {Car} from "../../model/Car";
 import {User} from "../../model/User";
 import {any} from "codelyzer/util/function";
+import {SanctionService} from "../../service/sanction.service";
 
 @Component({
     selector: 'app-standings',
@@ -130,11 +131,8 @@ export class StandingsComponent implements OnInit, OnChanges {
                 }
                 this.teamGrid.push(teamGridToAdd);
             });
-            console.log("ME CAGO EN DIOS -> {} ", this.teamGrid);
         } else {
             this.filteredGrid = [...this.grid];
         }
     }
-
-
 }

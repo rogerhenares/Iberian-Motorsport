@@ -12,9 +12,12 @@ import com.iberianmotorsports.service.service.RaceService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Transactional
@@ -28,6 +31,9 @@ public class GridRaceServiceImpl implements GridRaceService {
     GridService gridService;
 
     GridRaceRepository gridRaceRepository;
+
+    @Value("${pointsSystem}")
+    private List<Integer> pointsSystem;
 
     @Override
     public GridRace saveGridRace(GridRace gridRace){
@@ -49,9 +55,20 @@ public class GridRaceServiceImpl implements GridRaceService {
         return gridRaceRepository.findGridRacesByGridRacePrimaryKey_Race(race);
     }
 
-    @Override
     //TODO calculate points including sanctions
+    //TODO call gridRace.sanctionTime and add it to total time, and then order the list by time, and then recalculate points
+    @Override
     public void calculateGridRace(Long raceId) {
+
+        List<GridRace> filteredList = getGridRaceForRace(raceId).stream()
+                .filter(gridRace -> gridRace.getFinalTime() != null)
+                .sorted(Comparator.comparing(GridRace::getFinalTime))
+                .toList();
+
+        for (GridRace gridRace : filteredList) {
+            gridRace.setPoints(pointsSystem.get(filteredList.indexOf(gridRace)).longValue());
+            gridRaceRepository.save(gridRace);
+        }
 
     }
 }

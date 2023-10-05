@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import {StandingsComponent} from "../standings/standings.component";
 import {Grid} from "../../model/Grid";
 import {GridService} from "../../service/grid.service";
+import {UserService} from "../../service/user.service";
 
 @Component({
     selector: 'app-championship-details',
@@ -42,7 +43,8 @@ export class ChampionshipDetailsComponent implements OnInit {
         public appContext : AppContext,
         public router: Router,
         public raceService: RaceService,
-        public gridService: GridService
+        public gridService: GridService,
+        public userService: UserService
     ) {
     }
 
@@ -180,6 +182,15 @@ export class ChampionshipDetailsComponent implements OnInit {
     isGridManager(grid: Grid) {
         return grid.managerId === this.appContext.getLoggedUser().userId;
     }
+
+    isInChampionship() {
+        let loggedUser = this.appContext.getLoggedUser();
+        if (this.selectedGrid) {
+            return this.selectedGrid?.driversList[0]?.steamId ===(loggedUser.steamId);
+        }
+    }
+
+
 
 }
 

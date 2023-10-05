@@ -63,7 +63,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
         MatTabsModule,
         MatProgressSpinnerModule,
         MatButtonToggleModule,
-        MatExpansionModule
+        MatExpansionModule,
     ],
   declarations: [
     LoginComponent,

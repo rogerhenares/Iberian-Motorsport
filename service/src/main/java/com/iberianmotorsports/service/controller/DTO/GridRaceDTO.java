@@ -11,6 +11,7 @@ public record GridRaceDTO(
         Long thirdSector,
         Long finalTime,
         Integer totalLaps,
+        Integer sanctionTime,
         List<SanctionDTO> sanctionDTOList,
         Long raceId,
         Long gridId,

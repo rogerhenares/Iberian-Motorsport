@@ -20,9 +20,9 @@
                     <td *ngIf="appContext.isAdmin()" class="inGameColumn" style="text-align: left">
                         <mat-checkbox [checked]="sanction.inGame" [disabled]="true"></mat-checkbox>
                     </td>
-                    <td>
-                        <button *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="editSanction(sanction.raceId, sanction.gridId, sanction)" style="color: black" class="btn btn-primary">Edit Sanction</button>
-                        <button *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="deleteSanction(sanction.id)" style="color: black" class="btn btn-primary">Delete Sanction</button>
+                    <td class="text-right">
+                        <button class="btn btn-warning btn-sm" *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="editSanction(sanction.raceId, sanction.gridId, sanction)" style="color: black">Edit</button>
+                        <button class="btn btn-danger btn-sm" *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="setSanctionId(sanction.id); deleteSanctionSwal.fire()" style="color: black">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -54,3 +54,12 @@
     timer=4000>
 </swal>
 
+<swal
+    #deleteSanctionSwal
+    title="Delete Sanction?"
+    text="This cannot be undone"
+    icon="question"
+    [showCancelButton]="true"
+    [focusCancel]="true"
+    (confirm)="deleteSanction()">
+</swal>

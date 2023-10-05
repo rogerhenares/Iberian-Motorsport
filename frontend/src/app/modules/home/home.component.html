@@ -5,7 +5,9 @@
                 <div class="card-header card-header-danger">
                     <h4 class="card-title">My championships</h4>
                 </div>
-            <app-championship [criteria]="this.criteria.criteriaLogged()" [isCreation]="false" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                <div class="card-body table-responsive">
+                    <app-championship [criteria]="this.criteria.criteriaLogged()" [isCreation]="false" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                </div>
             </div>
         <div class="row" style="padding-left: 15px; padding-right: 15px">
             <div class="col-lg-6 col-md-12">

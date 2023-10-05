@@ -63,6 +63,7 @@ export class SanctionFormComponent {
                 if (response) {
                     this.requestSuccessSwal.fire();
                     this.router.navigateByUrl("/championship")
+                    console.log("Sanction ->", this.sanction)
                 }
                 this.isSendingRequest = false;
             });

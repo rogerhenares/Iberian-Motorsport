@@ -34,7 +34,7 @@
                                 <div>
                                 <mat-form-field>
                                     <mat-label>Penalty to</mat-label>
-                                    <mat-select formControlName="gridId"  style="color: white">
+                                    <mat-select formControlName="gridId" style="color: white">
                                         <mat-option *ngFor="let gridRace of gridRaceList" [value]="gridRace.gridId">
                                             {{gridRace.grid.carNumber}} - {{gridRace.grid.teamName}} - {{gridRace.grid.car.manufacturer}} {{gridRace.grid.car.model}}
                                         </mat-option>

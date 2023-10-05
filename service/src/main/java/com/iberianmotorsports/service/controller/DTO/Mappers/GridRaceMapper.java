@@ -26,6 +26,7 @@ public class GridRaceMapper implements Function<GridRaceDTO, GridRace> {
         gridRace.setSecondSector(gridRaceDTO.secondSector());
         gridRace.setThirdSector(gridRaceDTO.thirdSector());
         gridRace.setTotalLaps(gridRaceDTO.totalLaps());
+        gridRace.setSanctionTime(gridRaceDTO.sanctionTime());
         gridRace.setSanctionList(gridRaceDTO.sanctionDTOList()
                         .stream()
                         .map(sanctionMapper).toList());

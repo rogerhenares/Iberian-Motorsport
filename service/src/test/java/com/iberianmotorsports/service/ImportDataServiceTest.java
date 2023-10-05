@@ -66,11 +66,14 @@ public class ImportDataServiceTest {
     @Value("#{'${qualyPoints}'}")
     private List<Integer> qualyPoints;
 
+    @Value("${assettocorsa.folder.import.filepath}")
+    private String filePath;
+
 
     @BeforeEach
     public void init() {
         raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
-        importDataService = new ImportDataServiceImpl(championshipService, raceService, gridRaceService, sanctionRepository, pointsSystem, qualyPoints);
+        importDataService = new ImportDataServiceImpl(championshipService, raceService, gridRaceService, sanctionRepository, pointsSystem, qualyPoints, filePath);
     }
 
     @Nested

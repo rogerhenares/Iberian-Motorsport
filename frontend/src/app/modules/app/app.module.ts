@@ -37,7 +37,17 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
-    SweetAlert2Module.forRoot(),
+    SweetAlert2Module.forRoot({provideSwal: () => import('sweetalert2').then(({default: swal}) => swal.mixin({
+        background: "#333333",
+        cancelButtonColor: "#00FFC0",
+        confirmButtonColor: "red",
+        customClass: {
+          container: 'custom-swal-container',
+          popup: 'custom-swal-popup',
+          title: 'custom-swal-title',
+          content: 'custom-swal-content',
+        }
+      }))}),
     LanguageTranslationModule,
     MatProgressSpinnerModule
   ],

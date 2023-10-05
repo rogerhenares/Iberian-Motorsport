@@ -9,8 +9,10 @@ import java.util.List;
 
 @Data
 public class Entry extends EntryProperties {
+
     private List<Driver> drivers;
     private Float raceNumber;
     private Float overrideDriverInfo;
     private Float isServerAdmin;
+
 }

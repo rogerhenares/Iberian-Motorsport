@@ -39,19 +39,22 @@
                         </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                <div class="card-body table-responsive">
+
+                <div class="row justify-content-md-center">
+                        <div class="col-md-auto">
                             <button *ngIf=appContext.isAdmin() (click)="createNewRace(this.championship.id)" style="color: black" class="btn btn-primary">Add Race</button>
                             <button *ngIf=appContext.isAdmin() (click)="editRace(this.championship.id, selectedRace)" style="color: black" class="btn btn-warning">Edit Race</button>
                             <button *ngIf=appContext.isAdmin() (click)="deleteSwalRace.fire()" style="color: black" class="btn btn-danger">Delete Race</button>
                         </div>
-                        <div class="col-md-6 text-right align-self-center">
+                        <div class="col-md-auto">
                             <button *ngIf=appContext.isAdmin() (click)="editChampionship(this.championship)" style="color: black" class="btn btn-warning">Edit Championship</button>
                             <button *ngIf=appContext.isAdmin() (click)="deleteSwalChampionship.fire()" style="color: black" class="btn btn-danger">Delete Championship</button>
                         </div>
                     </div>
                     </div>
                 </div>
+            </div>
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-header card-header-tabs card-header-danger">
@@ -102,7 +105,7 @@
                         <div class="tab-pane" id="results" *ngIf="selectedRace">
                            <app-results [selectedRace]="selectedRace" [selectedChampionship]="championship" [fullMode]="true"></app-results>
                         </div>
-                        <div class="tab-pane" id="sanctions" *ngIf="selectedRace">
+                        <div class="tab-pane" id="sanctions">
                             <app-sanctions [selectedRace]="selectedRace"></app-sanctions>
                         </div>
                     </div>
@@ -158,15 +161,17 @@
     input="text"
     [showCancelButton]="true"
     [focusCancel]="true"
-    (confirm)="joinTeam($event)">
+    (confirm)="joinTeam($event)"
+    >
 </swal>
 
 <swal
     #leaveChampionshipSwal
-    title="Leaving {{championship.name}}"
+    title="Leaving {{championship?.name}}"
     text="Are you sure you want to leave?"
     icon="question"
     [showCancelButton]="true"
     [focusCancel]="true"
-    (confirm)="leaveChampionship()">
+    (confirm)="leaveChampionship()"
+>
 </swal>

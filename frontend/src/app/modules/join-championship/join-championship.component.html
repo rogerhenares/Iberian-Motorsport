@@ -21,7 +21,7 @@
                                         <input style="color: white" matInput formControlName="carNumber" [readonly]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
-                                    <mat-form-field>
+                                    <mat-form-field *ngIf="grid.carLicense != null || this.appContext.isAdmin()">
                                         <mat-label>Car License</mat-label>
                                             <input style="color: white" matInput formControlName="carLicense" [readonly]="!this.appContext.isAdmin()"/>
                                             <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carLicense.errors)">Car License Error</mat-error>
@@ -35,6 +35,19 @@
                                         </mat-select>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.car.errors)">Car Error</mat-error>
                                     </mat-form-field>
+                                    <ng-container *ngIf="this.isTeamChampionship() && !this.isNewGrid()">
+                                        <mat-expansion-panel class="mat-elevation-z0" style="background: transparent; color: white; padding-top: 0px; margin-bottom: 1px; padding-right: 0px;" >
+                                            <mat-expansion-panel-header>
+                                                <span>Team: {{grid?.teamName}}</span>
+                                            </mat-expansion-panel-header>
+                                            <ng-template matExpansionPanelContent>
+                                                <ng-container *ngFor="let user of grid?.driversList;">
+                                                    <span style="padding-left: 10px;">{{user?.firstName}} {{user?.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"></span>
+                                                    <br>
+                                                </ng-container>
+                                            </ng-template>
+                                        </mat-expansion-panel>
+                                    </ng-container>
                                     <ng-container *ngIf="grid?.password">
                                         <mat-label>Password</mat-label>
                                         <input style="color: white" matInput [value]="grid.password" *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"  [readonly]="true"/>
@@ -63,7 +76,9 @@
     type="success"
     confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
     cancelButtonText="{{'swal-cancel' | translate}}"
-    timer=2000>
+    timer=2000,
+    className="custom-swal">
+>
 </swal>
 
 <swal
@@ -73,5 +88,7 @@
     confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
     cancelButtonText="{{'swal-cancel' | translate}}"
     type="error"
-    timer=4000>
+    timer=4000
+    className="custom-swal"
+>
 </swal>
