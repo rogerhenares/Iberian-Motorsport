@@ -7,6 +7,7 @@
             <th class="posHeader">POS</th>
             <th class="nameHeader">NAME</th>
             <th class="carHeader">CAR</th>
+            <th class="finalTimeHeader">TOTAL TIME</th>
             <th class="timeHeader">BEST TIME</th>
             <th class="pointsHeader">POINTS</th>
         </thead>
@@ -26,6 +27,10 @@
                     <td class="carColumn" style="text-align: left">
                         <img style="height: 30px" src="assets/car-logo/{{gridRace.grid.car.manufacturer}}.png">{{gridRace.grid.car.model}}
                     </td>
+                    <td class="text-primary" style="text-align: left">
+                        <p class="h4">
+                            {{formatTime(gridRace.finalTime)}} <span class="penalty-text"> +{{formatTime(gridRace.sanctionTime)}}</span>
+                        </p>
                     <td class="text-primary" style="text-align: left">
                         <p class="h4" [ngClass]="{'fasterLap' : isFasterLapGridRace(gridRace)}">
                             {{formatTime(gridRace.firstSector + gridRace.secondSector + gridRace.thirdSector) }}

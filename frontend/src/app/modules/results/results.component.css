@@ -18,10 +18,19 @@
     text-align: left;
 }
 
+.finalTimeHeader {
+    text-align: left;
+}
+
 .selected {
     background-color: #00FFC030;
 }
 
 .fasterLap {
     color: purple;
+}
+
+.penalty-text {
+    color: red;
+    font-size: small;
 }

@@ -55,20 +55,16 @@ public class GridRaceServiceImpl implements GridRaceService {
         return gridRaceRepository.findGridRacesByGridRacePrimaryKey_Race(race);
     }
 
-    //TODO calculate points including sanctions
-    //TODO call gridRace.sanctionTime and add it to total time, and then order the list by time, and then recalculate points
     @Override
     public void calculateGridRace(Long raceId) {
-
         List<GridRace> filteredList = getGridRaceForRace(raceId).stream()
                 .filter(gridRace -> gridRace.getFinalTime() != null)
-                .sorted(Comparator.comparing(GridRace::getFinalTime))
+                .sorted(Comparator.comparing(gridRace -> gridRace.getFinalTime() + gridRace.getSanctionTime()))
                 .toList();
 
         for (GridRace gridRace : filteredList) {
             gridRace.setPoints(pointsSystem.get(filteredList.indexOf(gridRace)).longValue());
             gridRaceRepository.save(gridRace);
         }
-
     }
 }
