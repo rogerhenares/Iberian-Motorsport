@@ -3,6 +3,7 @@ package com.iberianmotorsports.service.service.implementation;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.User;
 import com.iberianmotorsports.service.model.UserAuth;
+import com.iberianmotorsports.service.model.parsing.properties.SteamClientProperties;
 import com.iberianmotorsports.service.repository.UserAuthRepository;
 import com.iberianmotorsports.service.service.AuthService;
 import com.iberianmotorsports.service.service.UserService;
@@ -25,22 +26,24 @@ import java.util.regex.Pattern;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private static final String HOST = "http://localhost:4200/";
-    private static final String REDIRECT_TO = "http://localhost:4200/login";
-    private static final String BASE_LOGIN_URL = "https://steamcommunity.com/openid/login?" +
+    private static final String HOST_PARAM = "$HOST";
+    private static final String REDIRECT_TO_PARAM = "$REDIREC_TO";
+    private static String BASE_LOGIN_URL = "https://steamcommunity.com/openid/login?" +
             "&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" +
             "&openid.identity=http://specs.openid.net/auth/2.0/identifier_select" +
             "&openid.mode=checkid_setup" +
             "&openid.ns=http://specs.openid.net/auth/2.0" +
-            "&openid.realm=" + HOST +
-            "&openid.return_to=" + REDIRECT_TO;
+            "&openid.realm=" + HOST_PARAM +
+            "&openid.return_to=" + REDIRECT_TO_PARAM;
     private final static String IS_VALID = "is_valid:true";
+    private final static String DEFAULT_TOKEN="invalid";
     private final static String OPENID_MODE_ID_RES = "openid.mode=id_res";
     private final static String OPENID_MODE_CHECK_AUTHENTICATION = "openid.mode=check_authentication";
     private final static String STEAM_LOGIN_URL = "https://steamcommunity.com/openid/login?";
     private final static String OPENID_RESPONSE_NONCE_PATTERN = "openid.response_nonce=([^&]*)";
 
     private UserAuthRepository userAuthRepository;
+    private SteamClientProperties steamClientProperties;
     private UserService userService;
     private RestTemplate restTemplate;
 
@@ -53,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
         ResponseEntity<String> response = restTemplate.exchange(validateTokenURL, HttpMethod.GET, null, String.class);
         String responseBody = response.getBody();
 
-        String token = "invalid";
+        String token = DEFAULT_TOKEN;
         assert responseBody != null;
         if (responseBody.contains(IS_VALID)) {
             Long steamId = extractSteamID(authDecoded);
@@ -73,7 +76,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String loggingUrl() {
-        return BASE_LOGIN_URL;
+        String loginUrl = BASE_LOGIN_URL;
+        loginUrl = loginUrl.replace(HOST_PARAM, steamClientProperties.getHost());
+        loginUrl = loginUrl.replace(REDIRECT_TO_PARAM, steamClientProperties.getHost()+"/login");
+        return loginUrl;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.iberianmotorsports.service.features.user;
 import com.iberianmotorsports.UserFactory;
 import com.iberianmotorsports.service.ErrorMessages;
 import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.model.parsing.properties.SteamClientProperties;
 import com.iberianmotorsports.service.repository.RoleRepository;
 import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
@@ -21,7 +22,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
-import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -48,14 +48,14 @@ public class UserServiceTest {
     RestTemplate restTemplate;
 
     @Mock
-    Environment environment;
+    SteamClientProperties steamClientProperties;
 
     @Captor
     ArgumentCaptor<User> userCaptor;
 
     @BeforeEach
     public void init() {
-        service = new UserServiceImpl(userRepository, roleRepository, restTemplate, environment);
+        service = new UserServiceImpl(userRepository, roleRepository, restTemplate, steamClientProperties);
     }
 
     @Nested

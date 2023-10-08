@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.model.Role;
 import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.model.parsing.properties.SteamClientProperties;
 import com.iberianmotorsports.service.repository.RoleRepository;
 import com.iberianmotorsports.service.repository.UserRepository;
 import com.iberianmotorsports.service.service.UserService;
@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -38,7 +37,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private RestTemplate restTemplate;
-    private Environment env;
+    private SteamClientProperties steamClientProperties;
 
     @Override
     public User saveUser(Long steamId) {
@@ -51,8 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getPlayerSummary(String steamId) {
 
-        String apiKey = env.getProperty("steam.client.id");
-        String url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/" + "?key=" + apiKey + "&steamids=" + steamId;
+        String url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/" + "?key=" + steamClientProperties.getToken() + "&steamids=" + steamId;
 
         String response = restTemplate.getForObject(url, String.class);
 

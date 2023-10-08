@@ -3,20 +3,19 @@ package com.iberianmotorsports.service.features.grid;
 import com.iberianmotorsports.GridFactory;
 import com.iberianmotorsports.UserFactory;
 import com.iberianmotorsports.service.controller.DTO.Mappers.*;
-import com.iberianmotorsports.service.controller.DTO.UserDTO;
 import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.User;
+import com.iberianmotorsports.service.model.parsing.properties.SteamClientProperties;
 import com.iberianmotorsports.service.repository.*;
 import com.iberianmotorsports.service.service.CarService;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.UserService;
-import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
 import com.iberianmotorsports.service.service.implementation.GridServiceImpl;
 import com.iberianmotorsports.service.service.implementation.UserServiceImpl;
-import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -24,16 +23,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.core.env.Environment;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GridServiceTest {
@@ -54,6 +52,8 @@ public class GridServiceTest {
     private RoleRepository roleRepository;
     @Mock
     private SanctionRepository sanctionRepository;
+    @Mock
+    private SteamClientProperties steamClientProperties;
     private CarMapper carMapper;
     private CarDTOMapper carDTOMapper;
     private UserMapper userMapper;
@@ -78,7 +78,7 @@ public class GridServiceTest {
         userDTOMapper = new UserDTOMapper();
         //gridMapper = new GridMapper(carMapper, championshipMapper, userMapper);
         //gridDTOMapper = new GridDTOMapper(championshipDTOMapper, userDTOMapper, carDTOMapper);
-        userService = new UserServiceImpl(userRepository, roleRepository, restTemplate, environment);
+        userService = new UserServiceImpl(userRepository, roleRepository, restTemplate, steamClientProperties);
         //championshipService = new ChampionshipServiceImpl(championshipRepository, championshipMapper);
         gridService = new GridServiceImpl(championshipService, userService, carService, gridRepository, gridUserRepository, gridMapper, gridDTOMapper, sanctionRepository);
     }

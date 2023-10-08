@@ -27,7 +27,6 @@ import org.springframework.test.context.TestPropertySource;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -73,7 +72,7 @@ public class ImportDataServiceTest {
     @BeforeEach
     public void init() {
         raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
-        importDataService = new ImportDataServiceImpl(championshipService, raceService, gridRaceService, sanctionRepository, pointsSystem, qualyPoints, filePath);
+        importDataService = new ImportDataServiceImpl(championshipService, raceService, gridRaceService, sanctionRepository, pointsSystem, qualyPoints);
     }
 
     @Nested
