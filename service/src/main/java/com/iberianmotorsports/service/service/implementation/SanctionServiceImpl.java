@@ -44,7 +44,8 @@ public class SanctionServiceImpl implements SanctionService {
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
                 sanction.getLicensePoints(), Boolean.TRUE);
         sanctionSaved.setGridRace(gridRaceService.getGridRace(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(), sanction.getGridRace().getGridRacePrimaryKey().getRace().getId()));
-        sanctionSaved.getGridRace().setSanctionTime(sanction.getGridRace().getSanctionTime() + Integer.parseInt(sanction.getPenalty()));
+        int totalPenalty = sanctionSaved.getGridRace().getSanctionList().stream().mapToInt(s -> Integer.parseInt(s.getPenalty())).sum();
+        sanctionSaved.getGridRace().setSanctionTime(totalPenalty);
         gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
         return sanctionSaved;
     }

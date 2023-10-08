@@ -22,6 +22,7 @@ export class SanctionFormComponent {
     sanctionForm: FormGroup;
     sanctionFormSubmitted: Boolean;
     grid: Grid;
+    championshipId: number;
     sanction: Sanction = new Sanction();
     gridRaceList: Array<GridRace> = [];
     isSendingRequest: boolean = false;
@@ -36,6 +37,7 @@ export class SanctionFormComponent {
 
     ngOnInit() {
         this.sanction.raceId = history.state.raceId;
+        this.championshipId = history.state.championshipId;
         if (this.sanction.raceId) {
             this.loadGridRacesForRaceId(this.sanction.raceId)
         }
@@ -62,7 +64,7 @@ export class SanctionFormComponent {
             this.sanctionService.createSanction(this.sanction).subscribe(response => {
                 if (response) {
                     this.requestSuccessSwal.fire();
-                    this.router.navigateByUrl("/championship")
+                    this.router.navigateByUrl("/championship/" + this.championshipId)
                     console.log("Sanction ->", this.sanction)
                 }
                 this.isSendingRequest = false;

@@ -25,8 +25,8 @@
                 <td class="posColumn" style="text-align: left">{{i + 1}}</td>
                 <td class="nameColumn" style="text-align: left">
                     <ng-container *ngIf="this.selectedValue !== 'TEAM'">
-                        <ng-container *ngFor="let user of grid.driversList;">
-                            <span>{{user.firstName}} {{user.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"></span>
+                        <ng-container *ngFor="let user of grid?.driversList;">
+                            <span> <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
                             <br>
                         </ng-container>
                     </ng-container>
@@ -37,7 +37,7 @@
                             </mat-expansion-panel-header>
                             <ng-template matExpansionPanelContent>
                                 <ng-container *ngFor="let user of grid.driversList;">
-                                    <span style="padding-left: 10px;">{{user.firstName}} {{user.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"></span>
+                                    <span style="padding-left: 10px;"><img style="height: 15px;" src="assets/flags/{{user?.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
                                     <br>
                                 </ng-container>
                             </ng-template>

@@ -43,8 +43,7 @@ export class ChampionshipDetailsComponent implements OnInit {
         public appContext : AppContext,
         public router: Router,
         public raceService: RaceService,
-        public gridService: GridService,
-        public userService: UserService
+        public gridService: GridService
     ) {
     }
 
@@ -185,12 +184,8 @@ export class ChampionshipDetailsComponent implements OnInit {
 
     isInChampionship() {
         let loggedUser = this.appContext.getLoggedUser();
-        if (this.selectedGrid) {
-            return this.selectedGrid?.driversList[0]?.steamId ===(loggedUser.steamId);
+        return this.selectedGrid?.driversList.find(driver => driver.userId === loggedUser.userId);
         }
-    }
-
-
 
 }
 

@@ -59,7 +59,7 @@ public class GridRaceServiceImpl implements GridRaceService {
     public void calculateGridRace(Long raceId) {
         List<GridRace> filteredList = getGridRaceForRace(raceId).stream()
                 .filter(gridRace -> gridRace.getFinalTime() != null)
-                .sorted(Comparator.comparing(gridRace -> gridRace.getFinalTime() + gridRace.getSanctionTime()))
+                .sorted(Comparator.comparing(gridRace -> gridRace.getFinalTime() + (gridRace.getSanctionTime() * 1000)))
                 .toList();
 
         for (GridRace gridRace : filteredList) {

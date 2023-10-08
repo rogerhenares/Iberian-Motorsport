@@ -6,7 +6,6 @@ import {GridService} from "../../service/grid.service";
 import {GridRaceService} from "../../service/gridrace.service";
 import {GridRace} from "../../model/GridRace";
 import {AppContext} from "../../util/AppContext";
-import {sum} from "chartist";
 
 @Component({
     selector: 'app-results',
@@ -26,7 +25,7 @@ export class ResultsComponent implements OnInit, OnChanges{
     constructor(
         private gridService: GridService,
         private gridRaceService: GridRaceService,
-        private appContext: AppContext
+        public appContext: AppContext
     ) {
     }
 
@@ -91,6 +90,15 @@ export class ResultsComponent implements OnInit, OnChanges{
         const minutes = Math.floor(totalSeconds / 60);
 
         return `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+    }
+
+    isOnChampionship() {
+        let loggedUser = this.appContext.getLoggedUser()
+        return this.grid.find(grid => grid.driversList.find(driver => driver.userId === loggedUser.userId));
+    }
+
+    addSanctionToTotalTime(gridRace: GridRace) {
+        return gridRace.finalTime + (gridRace.sanctionTime * 1000);
     }
 
 }

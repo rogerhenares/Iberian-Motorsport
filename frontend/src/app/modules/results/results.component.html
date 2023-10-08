@@ -19,7 +19,7 @@
                     <td class="nameColumn" style="text-align: left">
                         <ng-container *ngFor="let user of gridRace.grid.driversList">
                         <span>
-                          {{user.firstName}} {{user.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">
+                           <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}
                         </span>
                             <br>
                         </ng-container>
@@ -28,9 +28,13 @@
                         <img style="height: 30px" src="assets/car-logo/{{gridRace.grid.car.manufacturer}}.png">{{gridRace.grid.car.model}}
                     </td>
                     <td class="text-primary" style="text-align: left">
-                        <p class="h4">
-                            {{formatTime(gridRace.finalTime)}} <span class="penalty-text"> +{{formatTime(gridRace.sanctionTime)}}</span>
+                        <p class="h4" *ngIf="isOnChampionship() || this.appContext.isAdmin()">
+                            {{formatTime(gridRace.finalTime)}} <span class="penalty-text"> +{{gridRace.sanctionTime}}</span>
                         </p>
+                        <p class="h4" *ngIf="!isOnChampionship()">
+                            {{formatTime(addSanctionToTotalTime(gridRace))}}
+                        </p>
+                    </td>
                     <td class="text-primary" style="text-align: left">
                         <p class="h4" [ngClass]="{'fasterLap' : isFasterLapGridRace(gridRace)}">
                             {{formatTime(gridRace.firstSector + gridRace.secondSector + gridRace.thirdSector) }}

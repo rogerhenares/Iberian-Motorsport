@@ -7,3 +7,23 @@ body {
 .custom-swal {
     color: white !important;
 }
+
+.custom-swal-container {
+    color: white;
+}
+
+.custom-swal-popup {
+    color: white
+}
+
+.custom-swal-content {
+    color: white;
+}
+
+.swal2-title {
+    color: white;
+}
+
+.custom-swal-title {
+    color: white;
+}

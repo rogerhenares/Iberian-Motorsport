@@ -4,7 +4,7 @@
 <table class="table" style="text-align: center; overflow-y: auto; max-height: 400px">
     <ng-container *ngIf="sanctionsList?.length">
         <thead class=" text-primary">
-            <th class="teamHeader">TEAM</th>
+            <th class="teamHeader">NAME</th>
             <th class="lapHeader">LAP</th>
             <th class="penaltyHeader">PENALTY</th>
             <th class="reasonHeader">REASON</th>
@@ -13,7 +13,8 @@
         <ng-container *ngFor="let sanction of sanctionsList; let i = index">
             <tbody>
                 <tr [ngClass]="{'selected': isSanctionForLoggedUser(sanction)}">
-                    <td class="posColumn" style="text-align: left">{{sanction.grid.teamName}}</td>
+                    <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style === 'TEAM'">{{sanction.grid.teamName}}</td>
+                    <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style != 'TEAM'"><img style="height: 15px;" src="assets/flags/{{sanction?.grid.driversList[0].nationality.toLowerCase()}}.svg"> {{sanction.grid.driversList[0].firstName}} {{sanction.grid.driversList[0].lastName}}</td>
                     <td class="lapColumn" style="text-align: left">{{sanction.lap}}</td>
                     <td class="penaltyColumn" style="text-align: left">{{sanction.penalty}}</td>
                     <td class="reasonColumn" style="text-align: left">{{sanction.reason}}</td>
@@ -30,7 +31,7 @@
     </ng-container>
 </table>
 <div>
-    <button *ngIf="appContext.isAdmin()" (click)="createNewSanction(selectedRace.id)" style=" align-items: end; color: black" class="btn btn-primary">New Sanction</button>
+    <button *ngIf="appContext.isAdmin()" (click)="createNewSanction(selectedRace.id, selectedChampionship.id)" style=" align-items: end; color: black" class="btn btn-primary">New Sanction</button>
 </div>
 
 

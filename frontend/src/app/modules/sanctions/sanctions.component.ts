@@ -4,6 +4,7 @@ import {AppContext} from "../../util/AppContext";
 import {SanctionService} from "../../service/sanction.service";
 import {Sanction} from "../../model/Sanction";
 import {Router} from "@angular/router";
+import {Championship} from "../../model/Championship";
 
 @Component({
     selector: 'app-sanctions',
@@ -13,6 +14,7 @@ import {Router} from "@angular/router";
 export class SanctionsComponent implements OnInit, OnChanges {
 
     @Input() selectedRace: Race;
+    @Input() selectedChampionship: Championship;
 
     sanctionsList: Array<Sanction>;
     currentSanctionId: number;
@@ -49,8 +51,8 @@ export class SanctionsComponent implements OnInit, OnChanges {
         return sanction.grid.driversList.find(driver => this.appContext.isLoggedUser(driver)) !== undefined;
     }
 
-    createNewSanction(raceId: number): void {
-        this.router.navigateByUrl("sanction/new", {state: {raceId: raceId}});
+    createNewSanction(raceId: number, championshipId: number): void {
+        this.router.navigateByUrl("sanction/new", {state: {raceId: raceId, championshipId: championshipId}});
     }
 
     setSanctionId(id: number) {
@@ -62,7 +64,8 @@ export class SanctionsComponent implements OnInit, OnChanges {
     }
 
     deleteSanction() {
-       this.sanctionService.deleteSanction(this.currentSanctionId).subscribe(() => this.loadSanctionList())
+        this.sanctionService.deleteSanction(this.currentSanctionId).subscribe(() => this.loadSanctionList())
+        window.location.reload();
     }
 }
 
