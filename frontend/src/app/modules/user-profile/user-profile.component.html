@@ -8,6 +8,14 @@
                       <p class="card-category">Complete your profile</p>
                   </div>
                   <div class="card-body">
+                      <div class="alert alert-warning" *ngIf="!this.appContext.isLoggedUserActive()">
+                          <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <i class="material-icons">close</i>
+                          </button>
+                          <span style="color: black">
+                                    Please, complete your profile in order to use the application.
+                                </span>
+                      </div>
                       <form (ngSubmit)="onSubmit()" [formGroup]="profileForm" >
                           <div class="row">
                               <div class="col-md-5">
@@ -31,13 +39,17 @@
                           <div class="row">
                               <div class="col-md-6">
                                 <mat-form-field>
-                                  <input style="color: #999999" matInput placeholder="shortName" [(ngModel)]="user.shortName" formControlName="shortName" type="text">
+                                  <input style="color: #999999" matInput placeholder="shortName" [(ngModel)]="user.shortName" formControlName="shortName" minlength="3" maxlength="3" type="text">
                                 </mat-form-field>
                               </div>
                               <div class="col-md-6">
-                                <mat-form-field>
-                                  <input style="color: #999999" matInput placeholder="Nationality" [(ngModel)]="user.nationality" formControlName="nationality" type="text">
-                                </mat-form-field>
+                                  <mat-form-field>
+                                      <mat-label>Country</mat-label>
+                                      <mat-select formControlName="nationality">
+                                          <mat-option *ngFor="let country of countries" [value]="country.code">{{country.name}}</mat-option>
+                                      </mat-select>
+                                  </mat-form-field>
+
                               </div>
                           </div>
                           <div class="row" *ngIf="appContext.isAdmin()">
@@ -45,13 +57,16 @@
                                   Roles
                               </mat-label>
                               <div class="col-lg-12">
-                                  <mat-checkbox [checked]="user.roleList.includes('STEWARD')" formControlName="steward">STEWARD</mat-checkbox>
+                                  <mat-checkbox [checked]="user?.roleList.includes('STEWARD')" formControlName="steward">STEWARD</mat-checkbox>
                               </div>
                               <div class="col-lg-12">
-                                  <mat-checkbox [checked]="user.roleList.includes('ADMIN')" formControlName="admin">ADMIN</mat-checkbox>
+                                  <mat-checkbox [checked]="user?.roleList.includes('ADMIN')" formControlName="admin">ADMIN</mat-checkbox>
                               </div>
                           </div>
-                          <button mat-raised-button type="submit" style="color: black" class="btn btn-primary pull-right">Update Profile</button>
+                          <div>
+                          <button mat-raised-button style="color: black" class="btn btn-danger pull-right" (click)="logout(this.appContext.getLoggedUser())">Logout</button>
+                          <button mat-raised-button type="submit" style="color: black; margin-right: 5px" class="btn btn-primary pull-right">Update Profile</button>
+                          </div>
                       </form>
                   </div>
               </div>
@@ -66,7 +81,8 @@
     title=""
     text=""
     type="success"
-    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    confirmButtonText="{{'swal-confirm' | translate}}"
+    confirmButtonColor="#00FFC0"
     cancelButtonText="{{'swal-cancel' | translate}}"
     timer=2000>
 </swal>
@@ -75,8 +91,19 @@
     #requestFailSwal
     title="{{'swal-cancelled.title' | translate}}"
     text="{{'swal-cancelled.text' | translate}}"
-    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    confirmButtonText="{{'swal-confirm' | translate}}"
+    confirmButtonColor="#00FFC0"
     cancelButtonText="{{'swal-cancel' | translate}}"
     type="error"
+    timer=4000>
+</swal>
+
+<swal
+    #profileNotCompletedSwal
+    title= "{{'swal-profile-not-completed.title' | translate}}"
+    text= "{{'swal-profile-not-completed.text' | translate}}"
+    confirmButtonText= "{{'swal-confirm' | translate}}"
+    confirmButtonColor= "#00FFC0"
+    type= "error"
     timer=4000>
 </swal>

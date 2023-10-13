@@ -1,0 +1,26 @@
+export const tracks = [
+    {name: 'Monza', code: 'monza'},
+    {name: 'Zolder', code: 'zolder'},
+    {name: 'Brands Hatch', code: 'brands_hatch'},
+    {name: 'Silverstone', code: 'silverstone'},
+    {name: 'Paul Ricard', code: 'paul_ricard'},
+    {name: 'Misano', code: 'misano'},
+    {name: 'Spa', code: 'spa'},
+    {name: 'Nurburging', code: 'nurburging'},
+    {name: 'Barcelona', code: 'barcelona'},
+    {name: 'Hungaroring', code: 'hungaroring'},
+    {name: 'Zandvoort', code: 'zandvoort'},
+    {name: 'Kyalami', code: 'kyalami'},
+    {name: 'Mount Panorama', code: 'mount_panorama'},
+    {name: 'Suzuka', code: 'suzuka'},
+    {name: 'Laguna Seca', code: 'laguna_seca'},
+    {name: 'Imola', code: 'imola'},
+    {name: 'Oulton Park', code: 'oulton_park'},
+    {name: 'Donington', code: 'donington'},
+    {name: 'Snetterton', code: 'snetterton'},
+    {name: 'Cota', code: 'cota'},
+    {name: 'Indianapolis', code: 'indianapolis'},
+    {name: 'Watkins Glen', code: 'waktins_glen'},
+    {name: 'Valencia', code: 'valencia'}
+
+]

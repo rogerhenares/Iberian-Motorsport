@@ -128,6 +128,7 @@ validateRaceRules() {
         return raceRulesData;
     }
 
+
     prepareRaceDate(raceDate: string) {
         raceDate = raceDate.replace('T', ' ')
         if (raceDate.length < 19) {

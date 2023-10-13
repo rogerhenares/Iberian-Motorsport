@@ -4,15 +4,6 @@
             <div class="item">
                 <div class="custom-form">
                     <div>
-                        <mat-form-field>
-                            <mat-label>Qualify Standing Type</mat-label>
-                            <mat-select formControlName="qualifyStandingType">
-                                <mat-option *ngFor="let option of qualifyStandingTypeOptions" [value]="option">{{ option }}</mat-option>
-                            </mat-select>
-                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.qualifyStandingType.errors)">Qualify Standing Type Error</mat-error>
-                        </mat-form-field>
-                    </div>
-
                     <div>
                         <mat-form-field>
                         <mat-label>Pit Window Length Seconds</mat-label>
@@ -76,6 +67,7 @@
                         </mat-form-field>
                     </div>
                 </div>
+            </div>
             </div>
         </form>
     </div>

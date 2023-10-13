@@ -62,7 +62,7 @@ export class GridService {
     }
 
     deleteGrid(gridId: Number, errorNotify?: any) {
-        let url = this.url + "/admin/" + gridId;
+        let url = this.url + "/delete/" + gridId;
         return this.httpClient.delete<Grid>(url)
             .pipe(
                 tap(response => console.log('deleted Grid')),

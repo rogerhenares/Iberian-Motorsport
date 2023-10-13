@@ -54,7 +54,8 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getCategoryList().stream().map(championshipCategoryDTOMapper).toList(),
                 !Objects.isNull(championship.getCarListForChampionship()) ?
                         championship.getCarListForChampionship().stream().map(carDTOMapper).toList() :
-                        null
-        );
+                       null,
+                championship.getIsLoggedUserInChampionship()
+                );
     }
 }

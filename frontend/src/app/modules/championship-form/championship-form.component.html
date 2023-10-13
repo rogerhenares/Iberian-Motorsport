@@ -22,10 +22,10 @@
                                             </mat-form-field>
                                         </div>
                                         <div>
-                                            <mat-form-field class="white-input">
-                                            <mat-label>Starting Date</mat-label>
-                                            <input matInput type="datetime-local" formControlName="startDate"/>
-                                            <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.startDate.errors)">Starting Date Error</mat-error>
+                                            <mat-form-field class="white-input" (click)="showPicker()">
+                                                <mat-label>Starting Date</mat-label>
+                                                <input matInput type="datetime-local" formControlName="startDate" id="datePicker"/>
+                                                <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.startDate.errors)">Starting Date Error</mat-error>
                                             </mat-form-field>
                                         </div>
                                     </div>

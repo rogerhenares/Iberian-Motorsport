@@ -14,7 +14,7 @@
                                     <div class="ct-chart" id=""></div>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-category" style="color: #ff9800">{{race.track}}</p>
+                                    <p class="card-category" style="color: #ff9800">{{ formattedRace(race.track) }}</p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
@@ -30,12 +30,12 @@
                             <button class="btn btn-primary" style="color: black" [disabled]="this.pageable.page === totalPages -1" (click)="nextPage()">Next</button>
                         </div>
                         <div class="col-md-6 text-right align-self-center" *ngIf="!this.standings.isAlreadyInStandings">
-                            <button (click)="joinChampionship()" style="color: black" class="btn btn-primary">Join Championship</button>
-                            <button (click)="joinTeamSwal.fire()" *ngIf="this.championship?.style != 'Solo'" style="color: black" class="btn btn-primary">Join Team</button>
+                            <button (click)="joinChampionship()" style="color: black" class="btn btn-primary" *ngIf="this.appContext.isUserLoggedIn()">Join Championship</button>
+                            <button (click)="joinTeamSwal.fire()" *ngIf="this.championship?.style != 'Solo' && this.appContext.isUserLoggedIn()" style="color: black" class="btn btn-primary">Join Team</button>
                         </div>
                         <div class="col-md-6 text-right align-self-center">
-                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings" (click)="editGrid(this.selectedGrid)">Edit entry</button>
-                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings" (click)="leaveChampionshipSwal.fire()">Leave Championship</button>
+                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings && !this.isGridDisbled() && !this.appContext.isAdmin()" (click)="editGrid(this.selectedGrid)">Edit entry</button>
+                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings && !this.isGridDisbled() && !this.appContext.isAdmin()" (click)="leaveChampionshipSwal.fire()">Leave Championship</button>
                         </div>
                         </div>
                     </div>
@@ -174,4 +174,14 @@
     [focusCancel]="true"
     (confirm)="leaveChampionship()"
 >
+</swal>
+
+<swal
+    #profileNotCompletedSwal
+    title= "{{'swal-profile-not-completed.title' | translate}}"
+    text= "{{'swal-profile-not-completed.text' | translate}}"
+    confirmButtonText= "{{'swal-confirm' | translate}}"
+    confirmButtonColor= "#00FFC0"
+    type= "error"
+    timer=4000>
 </swal>

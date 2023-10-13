@@ -6,8 +6,9 @@
                     <div>
                         <mat-form-field>
                             <mat-label>Track</mat-label>
-                            <input style="color: white" type="string" matInput formControlName="track"/>
-                            <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.track.errors)">Track Name Error</mat-error>
+                            <mat-select formControlName="track">
+                                <mat-option *ngFor="let track of tracks" [value]="track.code">{{track.name}}</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div>
@@ -80,9 +81,9 @@
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.sessionCount.errors)">Session Count Error</mat-error>
                         </mat-form-field>
                     </div>
-                    <mat-form-field>
+                    <mat-form-field (click)="showPicker()">
                         <mat-label>Starting Date</mat-label>
-                        <input matInput style="color: white" type="datetime-local" formControlName="startDate"/>
+                        <input matInput style="color: white" type="datetime-local" formControlName="startDate" id="datePicker">
                         <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.startDate.errors)">Starting Date Error</mat-error>
                     </mat-form-field>
                 </div>

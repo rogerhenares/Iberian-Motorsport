@@ -34,4 +34,12 @@ export class AuthenticationService {
         authenticationInfo.save();
     }
 
+    public logout(steamId: number) {
+        const url = environment.apiPath + 'logout/' + steamId;
+        return this.httpClient.get(url).pipe(
+            tap(url => console.log('Logged out')),
+            catchError(handleError('AuthenticationService -> logout', null, null))
+        )
+    }
+
 }

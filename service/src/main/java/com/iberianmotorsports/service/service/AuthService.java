@@ -14,4 +14,6 @@ public interface AuthService {
 
     User getLoggedUser(String token);
 
+    void logout(Long steamId);
+
 }

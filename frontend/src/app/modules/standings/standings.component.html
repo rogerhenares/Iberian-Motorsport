@@ -26,7 +26,13 @@
                 <td class="nameColumn" style="text-align: left">
                     <ng-container *ngIf="this.selectedValue !== 'TEAM'">
                         <ng-container *ngFor="let user of grid?.driversList;">
-                            <span> <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
+                            <span> <img style="height: 15px; margin-right: 3px" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
+                            <span *ngIf="this.isDaniSanto(user)" style="margin-left: 3px">
+                                <mat-icon style="position: absolute; float: right; margin-left: 5px">accessible_forward</mat-icon>
+                            </span>
+                            <span *ngIf="this.isGridDisbled()" style="margin-left: 3px">
+                                <mat-icon style="position: absolute; float: right; margin-left: 5px">cancel</mat-icon>
+                            </span>
                             <br>
                         </ng-container>
                     </ng-container>
@@ -37,7 +43,7 @@
                             </mat-expansion-panel-header>
                             <ng-template matExpansionPanelContent>
                                 <ng-container *ngFor="let user of grid.driversList;">
-                                    <span style="padding-left: 10px;"><img style="height: 15px;" src="assets/flags/{{user?.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
+                                    <span style="padding-left: 10px;"><img style="height: 15px; margin-right: 3px" src="assets/flags/{{user?.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
                                     <br>
                                 </ng-container>
                             </ng-template>
@@ -47,12 +53,12 @@
                 <td class="carColumn" style="text-align: left">
                     <ng-container *ngIf="this.selectedValue === 'TEAM'">
                         <ng-container *ngFor="let car of grid.carList;">
-                            <span><img style="height: 30px" src="assets/car-logo/{{car.manufacturer}}.png">{{car.model}}</span>
+                            <span><img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{car.manufacturer}}.png">{{car.model}}</span>
                             <br>
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf="this.selectedValue !== 'TEAM'">
-                        <span><img style="height: 30px" src="assets/car-logo/{{grid.car.manufacturer}}.png">{{grid.car.model}}</span>
+                        <span><img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{grid.car.manufacturer}}.png">{{grid.car.model}}</span>
                     </ng-container>
                 </td>
                 <td class="categoryColumn" style="text-align: left" *ngIf="fullMode">{{grid.carLicense}}</td>

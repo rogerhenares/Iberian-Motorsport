@@ -6,66 +6,75 @@
                     <h4 class="card-title">My championships</h4>
                 </div>
                 <div class="card-body table-responsive">
-                    <app-championship [criteria]="this.criteria.criteriaLogged()" [isCreation]="false" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                    <ng-container *ngIf="!selectedChampionship">
+                        <div class="alert alert-warning">
+                            <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button>
+                            <span style="color: black">It seems like you are not enrolled in any championship.<br>Why don't you join one?</span>
+                        </div>
+                    </ng-container>
+                    <app-championship [isCreation]="false" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
                 </div>
             </div>
-        <div class="row" style="padding-left: 15px; padding-right: 15px">
-            <div class="col-lg-6 col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">RACES</h4>
-                    </div>
-                    <div class="card-body table-responsive" style="overflow-y: auto; max-height: 400px">
-                    <app-race-list [selectedChampionship]="selectedChampionship" [selectedRace]="selectedRace" (selected)="onSelectedRace($event)"></app-race-list>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="card" >
-                    <div class="card-header card-header-tabs card-header-danger">
-                        <div class="nav-tabs-navigation">
-                            <div class="nav-tabs-wrapper">
-                                <span class="nav-tabs-title">Info:</span>
-                                <ul class="nav nav-tabs" data-tabs="tabs">
-                                    <li class="nav-item">
-                                        <a mat-button class="nav-link active" href="#standingsContent" data-toggle="tab" id="standingsHeader">
-                                            <i class="material-icons">content_paste</i> Standings
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a mat-button class="nav-link" href="#infoContent" data-toggle="tab" id="infoHeader">
-                                            <i class="material-icons">code</i> Info
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a mat-button class="nav-link" href="#resultsContent" data-toggle="tab" id="resultsHeader">
-                                            <i class="material-icons">cloud</i> Results
-                                            <div class="ripple-container"></div>
-                                        </a>
-                                    </li>
-                                </ul>
+            <ng-container *ngIf="selectedChampionship">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-danger">
+                                <h4 class="card-title">RACES</h4>
+                            </div>
+                            <div class="card-body table-responsive" style="overflow-y: auto; max-height: 400px">
+                                <app-race-list [selectedChampionship]="selectedChampionship" [selectedRace]="selectedRace" (selected)="onSelectedRace($event)"></app-race-list>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="standingsContent" *ngIf="selectedChampionship && selectedRace">
-                               <app-standings [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship" [fullMode]="false"></app-standings>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="card" >
+                            <div class="card-header card-header-tabs card-header-danger">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">Info:</span>
+                                        <ul class="nav nav-tabs" data-tabs="tabs">
+                                            <li class="nav-item">
+                                                <a mat-button class="nav-link active" href="#standingsContent" data-toggle="tab" id="standingsHeader">
+                                                    <i class="material-icons">content_paste</i> Standings
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a mat-button class="nav-link" href="#infoContent" data-toggle="tab" id="infoHeader">
+                                                    <i class="material-icons">code</i> Info
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a mat-button class="nav-link" href="#resultsContent" data-toggle="tab" id="resultsHeader">
+                                                    <i class="material-icons">cloud</i> Results
+                                                    <div class="ripple-container"></div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="tab-pane" id="infoContent"  *ngIf="selectedRace" style="color: #999999">
-                                <app-race-info [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-race-info>
-                            </div>
-                                <div class="tab-pane" id="resultsContent" *ngIf="selectedRace">
-                                <app-results [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship" [fullMode]="false"></app-results>
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="standingsContent" *ngIf="selectedChampionship && selectedRace">
+                                        <app-standings [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship" [fullMode]="false"></app-standings>
+                                    </div>
+                                    <div class="tab-pane" id="infoContent"  *ngIf="selectedRace" style="color: #999999">
+                                        <app-race-info [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship"></app-race-info>
+                                    </div>
+                                    <div class="tab-pane" id="resultsContent" *ngIf="selectedRace">
+                                        <app-results [selectedRace]="selectedRace" [selectedChampionship]="selectedChampionship" [fullMode]="false"></app-results>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
         </div>
     </div>
-    </div>
 </div>
-

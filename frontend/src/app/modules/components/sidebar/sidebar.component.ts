@@ -11,7 +11,7 @@ declare interface RouteInfo {
     adminOnly: boolean;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Home',  icon: 'dashboard', class: '', logged: true, adminOnly: false },
+    { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', logged: true, adminOnly: false },
     { path: '/championship', title: 'Championships',  icon:'content_paste', class: '', logged: false, adminOnly: false },
     { path: '/championship', title: 'Championships',  icon:'content_paste', class: '', logged: true, adminOnly: false },
     { path: '/user-profile', title: 'Profile',  icon:'person', class: '', logged: true, adminOnly: false },

@@ -22,7 +22,7 @@ export class RaceRules  {
         this.pitWindowLengthSec= 3660;
         this.driverStintTimeSec= -1;
         this.mandatoryPitstopCount= 1;
-        this.maxTotalDrivingTime= -1;
+        this.maxTotalDrivingTime= 0;
         this.maxDriversCount= 1;
         this.isRefuellingAllowedInRace= 1;
         this.isRefuellingTimeFixed= 0;
