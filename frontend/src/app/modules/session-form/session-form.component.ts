@@ -13,7 +13,7 @@ export class SessionFormComponent {
 
     sessionForm: FormGroup;
     sessionFormSubmitted: Boolean;
-    sessionTypeOptions: string[] = ['Q', 'P', 'R'];
+    sessionTypeOptions: string[] = ['Qualy', 'Practice', 'Race'];
 
     constructor(private formBuilder: FormBuilder) {}
 
@@ -29,7 +29,7 @@ export class SessionFormComponent {
             hourOfDay: [session.hourOfDay, [Validators.required, Validators.min(0), Validators.max(23), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
             dayOfWeekend: [session.dayOfWeekend, [Validators.required, Validators.min(1), Validators.max(3), Validators.pattern('[0-3]')]],
             timeMultiplier: [session.timeMultiplier, [Validators.required, Validators.min(0), Validators.max(24), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
-            sessionType: [session.sessionType, [Validators.required, Validators.pattern(/^[qprQPR]$/)]],
+            sessionType: [session.sessionType, [Validators.required]],
             sessionDurationMinutes: [session.sessionDurationMinutes, [Validators.required, Validators.min(0), Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
         })
     }

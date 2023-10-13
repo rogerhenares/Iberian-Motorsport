@@ -13,7 +13,11 @@
                     <div>
                         <mat-form-field>
                             <mat-label>Day Of The Weekend</mat-label>
-                            <input style="color: white" matInput type="number" formControlName="dayOfWeekend" min="1" max="3"/>
+                            <mat-select formControlName="dayOfWeekend" class="custom-form">
+                                <mat-option value="1">Friday</mat-option>
+                                <mat-option value="2">Saturday</mat-option>
+                                <mat-option value="3">Sunday</mat-option>
+                            </mat-select>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.dayOfWeekend.errors)">Day Of The Weekend Error</mat-error>
                         </mat-form-field>
                     </div>
@@ -27,12 +31,13 @@
                         <mat-form-field>
                             <mat-label>Session Type</mat-label>
                             <mat-select formControlName="sessionType" class="custom-form">
-                                <mat-option *ngFor="let option of sessionTypeOptions" [value]="option">{{ option }}</mat-option>
+                                <mat-option value="Q">Qualy</mat-option>
+                                <mat-option value="P">Practice</mat-option>
+                                <mat-option value="R">Race</mat-option>
                             </mat-select>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.sessionType.errors)">Session Type Error</mat-error>
                         </mat-form-field>
                     </div>
-
                     <div>
                         <mat-form-field>
                             <mat-label>Session Duration Minutes</mat-label>

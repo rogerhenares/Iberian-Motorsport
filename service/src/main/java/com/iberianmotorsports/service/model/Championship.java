@@ -127,4 +127,7 @@ public class Championship implements Serializable {
 
     @Transient
     private List<Car> carListForChampionship;
+
+    @Transient
+    private Boolean isLoggedUserInChampionship;
 }

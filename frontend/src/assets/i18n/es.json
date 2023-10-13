@@ -162,6 +162,9 @@
     "swal-google-places-key-replace.text":"Introduzca la credencial que se va a utilizar",
     "swal-google-places-key-replace.success.title":"La Credencial de Google Places se ha actualizado correctamente.",
     "swal-google-places-key-replace.success.text":"",
+    "swal-profile-not-completed.title":"Perfil no completado",
+    "swal-profile-not-completed.text":"Por favor, complete su perfil para usar la aplicación de forma correcta.",
+    "swal-profile-not-completed.success.title":"Perfil completado",
     
     "timeline-process.list.empty":"No se ha iniciado el proceso de entrenamiento del modelo.",
     "timeline-title.file.load":"Ficheros cargados",

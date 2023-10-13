@@ -18,7 +18,6 @@ export class ChampionshipComponent {
     @Input() isCreation: boolean;
     @Output() selected = new EventEmitter<Championship>();
 
-
     pageable: Pageable = new Pageable(0, 3)
     championships: Championship[];
     selectedChampionship: Championship;
@@ -32,10 +31,12 @@ export class ChampionshipComponent {
     ){}
 
     ngOnInit(): void {
+        console.log("Criterial for champ home page -> {}", this.criteria );
         this.getChampionshipList(this.pageable.page, this.criteria);
     }
 
     getChampionshipList(page: number, criteria?: CriteriaChampionship) {
+        console.log("***Criterial for champ home page -> {}", this.criteria );
         if (!criteria) {
             this.pageable.page = page;
             this.championshipService.getChampionshipList(this.pageable).subscribe(
@@ -43,23 +44,29 @@ export class ChampionshipComponent {
                     this.championships = response.content;
                     this.totalPages = response.totalPages.valueOf() - 1;
                     this.loadChampionshipNextRaceDate(this.championships);
-                    this.sortChampionships(this.championships)
+                    if(!this.isCreation){
+                        this.selectChampionship(this.championships[0])
+                    }
+                    //this.sortChampionships(this.championships);
                 }
             )
-        }
-        if (this.appContext.isAdmin()) {
+        } else if (this.appContext.isAdmin()) {
+            console.log("FLAG 2")
             this.pageable.page = page;
             this.championshipService.getChampionshipByCriteriaAdmin(this.criteria, this.pageable).subscribe(
                 (response: any) => {
                     this.championships = response.content;
                     this.totalPages = response.totalPages.valueOf() - 1;
                     this.loadChampionshipNextRaceDate(this.championships);
-                    this.sortChampionships(this.championships)
+                    if(!this.isCreation){
+                        this.selectChampionship(this.championships[0])
+                    }
+                    //this.sortChampionships(this.championships)
                 }
             )
-        }
-        else
+        } else
             {
+                console.log("FLAG 3")
                 this.pageable.page = page;
                 this.championshipService.getChampionshipByCriteria(this.criteria, this.pageable).subscribe(
                     (response: any) => {
@@ -74,7 +81,8 @@ export class ChampionshipComponent {
 
 
 
-    sortChampionships(championships) {
+
+    sortChampionships(championships: any) {
         this.championships.sort((a, b) => {
             const aDate = a.nextRace ? new Date(a.nextRace.startDate).getTime() : Infinity;
             const bDate = b.nextRace ? new Date(b.nextRace.startDate).getTime() : Infinity;
@@ -120,5 +128,10 @@ export class ChampionshipComponent {
         this.router.navigateByUrl("championship/new");
     }
 
+    championshipTest() {
+        for (let championship of this.championships) {
+
+        }
+    }
 
 }

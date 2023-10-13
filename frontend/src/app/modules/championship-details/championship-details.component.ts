@@ -23,6 +23,7 @@ export class ChampionshipDetailsComponent implements OnInit {
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
+    @ViewChild('profileNotCompletedSwal', {static: true}) profileNotCompletedSwal: SwalComponent;
 
     @ViewChild(StandingsComponent, {static: true}) standings: StandingsComponent;
 
@@ -129,8 +130,13 @@ export class ChampionshipDetailsComponent implements OnInit {
 
 
     joinChampionship() {
-        let championship: Championship = this.championship
-        this.router.navigate(['/join'], { state: { championship: championship} });
+        if(this.appContext.isLoggedUserActive()) {
+            let championship: Championship = this.championship
+            this.router.navigate(['/join'], { state: { championship: championship} });
+        }
+        else {
+            this.profileNotCompletedSwal.fire();
+        }
     }
 
     editChampionship(championship: Championship) {
@@ -172,10 +178,15 @@ export class ChampionshipDetailsComponent implements OnInit {
         }
 
     joinTeam(password: string) {
+        if (this.appContext.isLoggedUserActive()) {
         let teamSoloJoin: boolean = this.championship.style === 'TEAM-SOLO'
         this.gridService.getGridByPassword(password).subscribe((grid: Grid) => {
             this.router.navigateByUrl("join", {state: {grid: grid, championship: this.championship, teamSoloJoin: teamSoloJoin}});
         })
+        }
+        else {
+            this.profileNotCompletedSwal.fire();
+        }
     }
 
     isGridManager(grid: Grid) {
@@ -185,7 +196,18 @@ export class ChampionshipDetailsComponent implements OnInit {
     isInChampionship() {
         let loggedUser = this.appContext.getLoggedUser();
         return this.selectedGrid?.driversList.find(driver => driver.userId === loggedUser.userId);
+    }
+
+    formattedRace(trackName: string) {
+        return trackName.replace(/_/g, ' ');
+    }
+
+    isGridDisbled() {
+        if (this.selectedGrid != undefined) {
+            return this.selectedGrid.disabled;
         }
+        return false;
+    }
 
 }
 

@@ -33,7 +33,7 @@ export class Race {
         this.postQualySeconds= 150;
         this.postRaceSeconds= 180;
         this.serverName= '';
-        this.sessionCount= 3;
+        this.sessionCount= null;
         this.startDate = null;
         this.raceRulesDTO = null;
         this.sessionDTOList = [];

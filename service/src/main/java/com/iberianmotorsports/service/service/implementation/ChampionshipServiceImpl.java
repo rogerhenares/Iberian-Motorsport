@@ -69,21 +69,33 @@ public class ChampionshipServiceImpl implements ChampionshipService {
 
     @Override
     public Page<Championship> findChampionshipByCriteria(CriteriaChampionship criteriaChampionship, Pageable pageable) {
+        Long steamId = null;
+        try{
+            steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e){ }
+
         if(criteriaChampionship.getLogged()) {
-            Long steamId;
-            try{
-                steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            } catch (Exception e) {
+            if(steamId == null){
                 throw new AuthenticationException(ErrorMessages.USER_IS_NOT_LOGGED.getDescription()) {};
             }
             User loggedUser = userService.findUserBySteamId(steamId);
             return championshipRepository.findByLoggedUser(loggedUser, pageable);
         }
-        return championshipRepository.findByDisabledAndStartedAndFinished(
+        Page<Championship> championshipPage = championshipRepository.findByDisabledAndStartedAndFinished(
                 criteriaChampionship.getDisabled(),
                 criteriaChampionship.getStarted(),
                 criteriaChampionship.getFinished(),
                 pageable);
+        if (steamId != null) {
+            Long finalSteamId = steamId;
+            championshipPage.stream().map(championship -> {
+                championship.setIsLoggedUserInChampionship(championship.getGridList().stream()
+                        .anyMatch(grid -> grid.getDrivers().stream()
+                                .anyMatch(user -> user.getSteamId().equals(finalSteamId))));
+                return championship;
+            }).toList();
+        }
+        return championshipPage;
     }
 
     @Override

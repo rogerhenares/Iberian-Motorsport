@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Championship} from "../../model/Championship";
 import {Router} from '@angular/router';
 import {Race} from "../../model/Race";
 import {AppContext} from "../../util/AppContext";
 import {CriteriaChampionship} from "../../model/CriteriaChampionship";
+import {ChampionshipComponent} from "../championship/championship.component";
 
 
 @Component({
@@ -11,12 +12,13 @@ import {CriteriaChampionship} from "../../model/CriteriaChampionship";
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
     selectedChampionship: Championship;
     selectedRace: Race;
     totalPages: number = 0;
     criteria: CriteriaChampionship = new CriteriaChampionship();
+
 
     constructor(
         public router: Router,
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit{
     ngOnInit(): void {
         this.appContext.isUserLoggedToNavigate()
     }
+
 
     onSelectedChampionship(selectedChampionship: Championship) {
         this.selectChampionship(selectedChampionship);
@@ -59,6 +62,5 @@ export class HomeComponent implements OnInit{
         elementHeader.classList.add('active');
         elementTab.classList.add('active');
     }
-
 }
 

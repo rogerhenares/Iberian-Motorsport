@@ -1,19 +1,27 @@
 import {Component, Input} from "@angular/core";
 import {Race} from "../../model/Race";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-
+import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {tracks} from "../../util/tracks";
 
 @Component({
     selector: 'app-race-form',
     templateUrl: './race-form.component.html',
+    providers: [
+        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+    ]
 })
 
 export class RaceFormComponent {
 
     @Input() race: Race;
 
+    protected readonly tracks = tracks;
+
     raceForm: FormGroup;
-    raceFormSubmitted: Boolean;
+    raceFormSubmitted: Boolean
+
+    defaultSessionCount: number = 2;
 
     constructor(private formBuilder: FormBuilder) { }
 
@@ -36,11 +44,17 @@ export class RaceFormComponent {
             postQualySeconds: [race.postQualySeconds, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
             postRaceSeconds: [race.postRaceSeconds, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)(\.\d+)?$/)]],
             serverName: [race.serverName, [Validators.required]],
-            sessionCount: [race.sessionDTOList !== null ?
-                    race.sessionDTOList.length : 1, [Validators.required, Validators.min(1), Validators.pattern('[1-5]')]],
+            sessionCount: [race.sessionDTOList !== null && race.sessionDTOList.length > 0 ? race.sessionDTOList.length : this.defaultSessionCount,
+                [Validators.required, Validators.min(1), Validators.pattern('[1-5]')]],
             startDate: [race.startDate, [Validators.required]]
         });
     }
 
+    showPicker(): void {
+        const datePicker = document.getElementById('datePicker') as any;
+        if (datePicker && datePicker.showPicker) {
+            datePicker.showPicker();
+        }
+    }
 }
 

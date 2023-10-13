@@ -146,5 +146,12 @@ export class ChampionshipFormComponent {
         })
     }
 
+    showPicker(): void {
+        const datePicker = document.getElementById('datePicker') as any;
+        if (datePicker && datePicker.showPicker) {
+            datePicker.showPicker();
+        }
+    }
+
 }
 

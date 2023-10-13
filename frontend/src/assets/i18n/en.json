@@ -162,8 +162,10 @@
     "swal-google-places-key-replace.text":"Enter the credential",
     "swal-google-places-key-replace.success.title":"Google Places API Key has been updated",
     "swal-google-places-key-replace.success.text":"",
+    "swal-profile-not-completed.title": "Profile not completed",
+    "swal-profile-not-completed.text": "Please, complete your profile to use the application properly",
     
-    "timeline-process.list.empty":"Training model process has not started.",
+    "timeline-process.list.empty",:"Training model process has not started.",
     "timeline-title.file.load":"Files loaded",
     "timeline-title.google.maps":"Google Maps Processing",
     "timeline-title.file.extra":"Additional files",

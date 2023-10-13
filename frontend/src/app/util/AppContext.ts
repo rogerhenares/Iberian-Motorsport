@@ -72,6 +72,16 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
         }
     }
 
+    isUserLoggedIn() : boolean {
+        if(this.loadLoggedUser()) {
+            console.log('user has credentials');
+            return true;
+        } else {
+            console.log('user without credentials');
+            return false;
+        }
+    }
+
     canActivate(): boolean {
         if (this.loadLoggedUser()) {
             console.log('Can activate passed');
@@ -94,10 +104,11 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
     }
 
     isLoggedUserActive(){
-        return this.user.steamId !== undefined &&
-            this.user.firstName !== undefined &&
-            this.user.lastName !== undefined &&
-            this.user.nationality !== undefined &&
-            this.user.shortName !== undefined;
+        return this.user.steamId &&
+            this.user.firstName &&
+            this.user.lastName &&
+            this.user.nationality &&
+            this.user.shortName;
     }
+
 }

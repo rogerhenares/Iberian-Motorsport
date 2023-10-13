@@ -1,6 +1,7 @@
 package com.iberianmotorsports.service.controller.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.iberianmotorsports.service.model.Grid;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,6 +36,7 @@ public record ChampionshipDTO(
         Boolean started,
         Boolean finished,
         List<ChampionshipCategoryDTO> championshipCategoryList,
-        List<CarDTO> carList
+        List<CarDTO> carList,
+        Boolean isLoggedUserInChampionship
 ) {
 }

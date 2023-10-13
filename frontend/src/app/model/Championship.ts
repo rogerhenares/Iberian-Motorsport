@@ -33,6 +33,7 @@ export class Championship {
     finished: boolean;
     championshipCategoryList: Array<ChampionshipCategory>;
     carList: Array<Car>;
+    isLoggedUserInChampionship: boolean;
 
     constructor() {
         this.id = -1;
@@ -65,5 +66,6 @@ export class Championship {
         this.nextRace = null;
         this.carList = null;
         this.championshipCategoryList = null;
+        this.isLoggedUserInChampionship = false;
     }
 }

@@ -21,7 +21,8 @@ public interface ChampionshipRepository extends JpaRepository<Championship, Long
             JOIN c.gridList g
             JOIN g.drivers gu
             LEFT JOIN c.raceList r
-        WHERE c.disabled = false AND c.finished = false AND gu = :driver
+        WHERE c.disabled = false AND c.finished = false AND gu = :driver AND g.disabled = false
+            AND TIMESTAMPADD(HOUR, 24, r.startDate) > current_timestamp
         GROUP BY c
         ORDER BY TIMESTAMPDIFF(SECOND, current_timestamp, MIN(r.startDate)) ASC
     """)

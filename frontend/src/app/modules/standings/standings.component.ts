@@ -135,4 +135,16 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.filteredGrid = [...this.grid];
         }
     }
+
+    isGridDisbled() {
+        if (this.selectedGrid != undefined) {
+            return this.selectedGrid.disabled;
+        }
+        return false;
+    }
+
+    isDaniSanto(user: User) {
+       return user.steamId == '76561199142804733';
+    }
+
 }

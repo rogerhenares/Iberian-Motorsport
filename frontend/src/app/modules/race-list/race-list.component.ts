@@ -41,4 +41,8 @@ export class RaceListComponent {
     getHour(date: string): string {
         return this.datePipe.transform(new Date(date), "HH:mm");
     }
+
+    formattedRace(trackName: string) {
+        return trackName.replace(/_/g, ' ');
+    }
 }
