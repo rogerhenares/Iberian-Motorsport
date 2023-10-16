@@ -4,12 +4,12 @@
     </div>
     <ng-container *ngIf="grid?.length">
         <div>
-        <mat-button-toggle-group [(ngModel)]="selectedValue" (change)="onSelectionChange()" *ngIf="fullMode" >
-            <mat-button-toggle value="OVERALL" class="small-toggle">Overall</mat-button-toggle>
-            <mat-button-toggle value="PRO" class="small-toggle">Pro</mat-button-toggle>
-            <mat-button-toggle value="SILVER" class="small-toggle">Silver</mat-button-toggle>
-            <mat-button-toggle value="TEAM" class="small-toggle" *ngIf="this.selectedChampionship.style === 'TEAM-SOLO'">Team</mat-button-toggle>
-        </mat-button-toggle-group>
+        <mat-tab-group (selectedTabChange)="onSelectionChange($event)">
+            <mat-tab label="OVERALL"> <ng-container *ngTemplateOutlet="tabContainer"></ng-container> </mat-tab>
+            <mat-tab label="PRO"> <ng-container *ngTemplateOutlet="tabContainer"></ng-container> </mat-tab>
+            <mat-tab label="SILVER"> <ng-container *ngTemplateOutlet="tabContainer"></ng-container> </mat-tab>
+            <mat-tab label="TEAM" *ngIf="this.selectedChampionship.style === 'TEAM-SOLO'"> <ng-container *ngTemplateOutlet="tabContainer"></ng-container> </mat-tab>
+        </mat-tab-group>
         </div>
     <table class="table">
         <thead class=" text-primary">
@@ -72,7 +72,85 @@
         <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-danger" (click)="deleteSwalEntry.fire()">Delete Entry</button>
         </div>
     </ng-container>
+    <div>
+        <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-warning" (click)="editGrid(this.selectedGrid)">Edit Entry</button>
+        <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-danger" (click)="deleteSwalEntry.fire()">Delete Entry</button>
+    </div>
 </div>
+
+<ng-template #tabContainer>
+    <table class="table" >
+        <thead class=" text-primary">
+        <th class="posHeader">POS</th>
+        <th class="nameHeader" *ngIf="!isTeamStandings()">DRIVER</th>
+        <th class="nameHeader" *ngIf="isTeamStandings()">TEAM</th>
+        <th class="carHeader">CAR</th>
+        <th class="categoryHeader" *ngIf="fullMode && this.selectedValue !== 'TEAM'">CATEGORY</th>
+        <th class="categoryHeader" *ngIf="fullMode && this.selectedValue === 'TEAM'">DRIVERS</th>
+        <th class="pointsHeader">POINTS</th>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let grid of this.selectedValue === 'TEAM' ? teamGrid : filteredGrid; let i = index">
+            <tr [ngClass]="{'selected': grid === selectedGrid || grid?.isTeamForLoggedUser === true}" (click)="handleRowClick(grid)">
+                <td class="posColumn" style="text-align: left">{{i + 1}}</td>
+                <td class="nameColumn" style="text-align: left">
+                    <ng-container *ngIf="this.selectedValue !== 'TEAM' && this.selectedChampionship.style !=='TEAM'">
+                        <ng-container *ngFor="let user of grid?.driversList;">
+                            <span> <img style="height: 15px; margin-right: 3px" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
+                            <span *ngIf="this.isDaniSanto(user)" style="margin-left: 3px">
+                                <mat-icon style="position: absolute; float: right; margin-left: 5px">accessible_forward</mat-icon>
+                            </span>
+                            <span *ngIf="this.isGridDisbled(grid)" style="margin-left: 3px">
+                                <mat-icon style="position: absolute; float: right; margin-left: 5px">cancel</mat-icon>
+                            </span>
+                            <br>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="isTeamStandings()">
+                        <ng-container *ngIf="selectedChampionship.style !== 'TEAM'">
+                            <span>{{grid.teamName}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="isTeamStandings()">
+                            <mat-expansion-panel class="mat-elevation-z0" style="background: transparent; color: #999999; padding-top: 0px; margin-bottom: 1px; padding-right: 0px;" >
+                                <mat-expansion-panel-header>
+                                    <span>{{grid.teamName}}</span>
+                                </mat-expansion-panel-header>
+                                <ng-template matExpansionPanelContent>
+                                    <ng-container *ngFor="let user of grid.driversList;">
+                                        <span style="padding-left: 10px;"><img style="height: 15px; margin-right: 3px" src="assets/flags/{{user?.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
+                                        <br>
+                                    </ng-container>
+                                </ng-template>
+                            </mat-expansion-panel>
+                        </ng-container>
+                    </ng-container>
+                </td>
+                <td class="carColumn" style="text-align: left">
+                    <ng-container *ngIf="this.selectedValue === 'TEAM'">
+                        <ng-container *ngFor="let car of grid.carList;">
+                            <span><img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{car.manufacturer}}.png">{{car.model}}</span>
+                            <br>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="this.selectedValue !== 'TEAM'">
+                        <span><img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{grid.car.manufacturer}}.png">{{grid.car.model}}</span>
+                    </ng-container>
+                </td>
+                <td class="categoryColumn" style="text-align: left" *ngIf="fullMode">
+                    <ng-container *ngIf="this.selectedValue !== 'TEAM'">{{grid.carLicense}}</ng-container>
+                    <ng-container *ngIf="this.selectedValue === 'TEAM'">
+                        <ng-container *ngFor="let user of grid.driversList;">
+                            <span style="padding-left: 10px;"><img style="height: 15px; margin-right: 3px" src="assets/flags/{{user?.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}</span>
+                            <br>
+                        </ng-container>
+                    </ng-container>
+                </td>
+                <td class="pointsColumn" style="text-align: left">{{grid.points}}</td>
+            </tr>
+        </ng-container>
+        </tbody>
+    </table>
+</ng-template>
 
 <swal
     #deleteSwalEntry

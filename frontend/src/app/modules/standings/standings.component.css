@@ -126,3 +126,16 @@
     color: white !important;
 }
 
+::ng-deep .mat-ink-bar {
+    background-color: #00FFC0 !important;
+    color: #00FFC0 !important;
+}
+
+::ng-deep .mat-tab-group .mat-tab-label .mat-tab-label-content {
+    color: #999999;
+}
+
+::ng-deep .mat-tab-group .mat-tab-label.mat-tab-label-active .mat-tab-label-content {
+    color: #00FFC0 !important;
+}
+

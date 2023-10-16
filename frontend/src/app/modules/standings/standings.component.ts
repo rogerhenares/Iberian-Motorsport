@@ -9,6 +9,7 @@ import {Car} from "../../model/Car";
 import {User} from "../../model/User";
 import {any} from "codelyzer/util/function";
 import {SanctionService} from "../../service/sanction.service";
+import {drive} from "googleapis/build/src/apis/drive";
 
 @Component({
     selector: 'app-standings',
@@ -100,8 +101,10 @@ export class StandingsComponent implements OnInit, OnChanges {
         })
     }
 
-    onSelectionChange() {
+    onSelectionChange(event: any) {
+        this.selectedValue = event.tab.textLabel;
         if (this.selectedValue === "PRO" || this.selectedValue === "SILVER") {
+            console.log("filtering");
             this.filteredGrid = this.grid.filter(item => item.carLicense === this.selectedValue);
         } else if (this.selectedValue === 'TEAM') {
             let teamNameList = [];
@@ -127,7 +130,8 @@ export class StandingsComponent implements OnInit, OnChanges {
                     teamName: teamName,
                     points: teamPoints,
                     carList : teamCars,
-                    driversList: teamDrivers
+                    driversList: teamDrivers,
+                    isTeamForLoggedUser: teamDrivers.findIndex(drive => drive.steamId === this.appContext.user.steamId) !== -1
                 }
                 this.teamGrid.push(teamGridToAdd);
             });
@@ -145,6 +149,11 @@ export class StandingsComponent implements OnInit, OnChanges {
 
     isDaniSanto(user: User) {
        return user.steamId == '76561199142804733';
+    }
+
+    isTeamStandings() {
+        return this.selectedValue === "TEAM" ||
+            this.selectedChampionship.style === "TEAM";
     }
 
 }
