@@ -1,0 +1,7 @@
+::ng-deep .mat-select-value-text {
+     color: #999999;
+}
+
+::ng-deep .mat-label {
+     color: white;
+}

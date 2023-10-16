@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     selectedRace: Race;
     totalPages: number = 0;
     criteria: CriteriaChampionship = new CriteriaChampionship();
+    loading: boolean = true;
 
 
     constructor(

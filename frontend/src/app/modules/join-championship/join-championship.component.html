@@ -28,7 +28,7 @@
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label>Car</mat-label>
-                                        <mat-select formControlName="car" style="color: white" [disabled]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()">
+                                        <mat-select formControlName="car" [disabled]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()">
                                             <mat-option *ngFor="let car of this.championship.carList" [value]="car">
                                                 {{car.manufacturer}} - {{car.model}}
                                             </mat-option>
