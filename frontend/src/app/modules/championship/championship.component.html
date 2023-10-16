@@ -6,7 +6,7 @@
                     <img [src]="championship.imageContent" alt="IML Championship" style="width: 100%; height: 100%; object-fit: cover;">
                     <div class="ct-chart" id="dailySalesChart"></div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="overflow-y: hidden !important;">
                     <h4 class="card-title" style="color: #ff9800; position: relative; z-index: 1;">
                         {{championship.name}}
                         <span *ngIf="championship.isLoggedUserInChampionship && isCreation == true" class="icon-container">
@@ -34,7 +34,7 @@
 <div class="row">
     <div class="col-md-6">
         <button class="btn btn-primary" style="color: black" (click)="goToPreviousPage()" [disabled]="this.pageable.page === 0">Previous</button>
-        <button class="btn btn-primary" style="color: black" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages">Next</button>
+        <button class="btn btn-primary" style="color: black" (click)="goToNextPage()" [disabled]="this.pageable.page === totalPages || totalPages <= 0">Next</button>
     </div>
     <div *ngIf="isCreation && this.appContext.isAdmin()" class="col-md-6 text-right align-self-center">
         <button class="btn btn-primary" style="color: black" (click)="createNewChampionship()">Add Championship</button>

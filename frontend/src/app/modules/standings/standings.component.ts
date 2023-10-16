@@ -136,9 +136,9 @@ export class StandingsComponent implements OnInit, OnChanges {
         }
     }
 
-    isGridDisbled() {
+    isGridDisbled(grid: Grid) {
         if (this.selectedGrid != undefined) {
-            return this.selectedGrid.disabled;
+            return grid.disabled;
         }
         return false;
     }

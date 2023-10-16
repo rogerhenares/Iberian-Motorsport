@@ -6,7 +6,7 @@
                     <h4 class="card-title">My championships</h4>
                 </div>
                 <div class="card-body table-responsive">
-                    <ng-container *ngIf="!selectedChampionship">
+                    <ng-container *ngIf="!selectedChampionship && loading === false">
                         <div class="alert alert-warning">
                             <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <i class="material-icons">close</i>
@@ -14,7 +14,7 @@
                             <span style="color: black">It seems like you are not enrolled in any championship.<br>Why don't you join one?</span>
                         </div>
                     </ng-container>
-                    <app-championship [isCreation]="false" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                    <app-championship [isCreation]="false" [isExpandible]="false" (loadingChange)="loading = $event" (selected)=onSelectedChampionship($event)></app-championship>
                 </div>
             </div>
             <ng-container *ngIf="selectedChampionship">

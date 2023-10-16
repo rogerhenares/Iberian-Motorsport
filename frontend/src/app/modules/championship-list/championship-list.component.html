@@ -3,17 +3,17 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <app-collapsible-section [sectionTitle]="'Current Championships'" [isOpen]="currentChampionshipsOpen "  (toggle)="currentChampionshipsOpen = !currentChampionshipsOpen">
-                            <app-championship [criteria]="this.criteria.criteriaStarted()" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                    <app-championship [criteria]="this.criteria.criteriaStarted()" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
                 </app-collapsible-section>
             </div>
             <div class="card">
                 <app-collapsible-section [sectionTitle]="'Upcoming Championships'" [isOpen]="upcomingChampionshipsOpen"  (toggle)="upcomingChampionshipsOpen = !upcomingChampionshipsOpen">
-                       <app-championship [criteria]="this.criteria" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                   <app-championship [criteria]="this.criteria" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
                 </app-collapsible-section>
             </div>
             <div class="card">
                 <app-collapsible-section [sectionTitle]="'Past Championships'" [isOpen]="pastChampionshipsOpen" (toggle)="pastChampionshipsOpen = !pastChampionshipsOpen">
-                                <app-championship [criteria]="this.criteria.criteriaFinished()" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
+                    <app-championship [criteria]="this.criteria.criteriaFinished()" [isCreation]="true" [isExpandible]="false" (selected)=onSelectedChampionship($event)></app-championship>
                 </app-collapsible-section>
             </div>
             <div class="card" *ngIf="appContext.isAdmin()">
