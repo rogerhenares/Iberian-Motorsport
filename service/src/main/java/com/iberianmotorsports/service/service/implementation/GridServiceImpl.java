@@ -26,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.iberianmotorsports.service.ErrorMessages.GRID_DRIVER_NOT_ALLOWED;
@@ -111,7 +112,8 @@ public class GridServiceImpl  implements GridService {
         isDriverOrGridManager(steamId, grid);
         User driverToRemove = userService.findUserBySteamId(steamId);
         if(grid.getDrivers().size() == 1) {
-            throw new ServiceException(ErrorMessages.GRID_DRIVERS_CAN_NOT_BE_EMPTY.getDescription());
+            deleteGrid(gridId);
+            return;
         }
         if(driverToRemove.equals(manager)){
             setGridManager(grid.getDrivers().stream().filter(driver -> !driver.equals(manager)).toList().get(0), grid);
@@ -183,7 +185,7 @@ public class GridServiceImpl  implements GridService {
     private void validateLoggedUserFromGrid(Grid grid){
         Long loggedUserSteamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedUser = userService.findUserBySteamId(loggedUserSteamId);
-        if(!RoleType.isAdminFromAuthentication() && !grid.getDrivers().contains(loggedUser)){
+        if(!RoleType.isAdminFromAuthentication() || !grid.getDrivers().contains(loggedUser)){
             throw new ServiceException(ErrorMessages.USER_GRID_REQUIRED_PERMISSION.getDescription());
         }
     }

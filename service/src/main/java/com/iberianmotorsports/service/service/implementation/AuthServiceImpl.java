@@ -140,7 +140,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void logout(Long steamId) {
-        userAuthRepository.findById(steamId).ifPresent(userAuthRepository::delete);
+        Optional<UserAuth> userAuth = userAuthRepository.findById(steamId);
+        userAuth.ifPresent(auth -> auth.setToken(null));
     }
 
 }

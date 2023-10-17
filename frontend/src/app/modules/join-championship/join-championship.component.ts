@@ -59,7 +59,10 @@ export class JoinChampionshipComponent implements OnInit {
 
 
     join(){
-        this.grid.driversList.push(this.appContext.getLoggedUser())
+        if (!this.grid.driversList.some(driver => driver.steamId === this.appContext.getLoggedUser().steamId)) {
+            let newUser = {...this.appContext.getLoggedUser()};
+            this.grid.driversList.push(newUser);
+        }
         let gridToSave: Grid = {
             id: this.grid.id,
             car: this.gridForm.value.car,
