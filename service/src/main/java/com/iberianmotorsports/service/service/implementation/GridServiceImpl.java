@@ -15,7 +15,6 @@ import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.UserService;
 import com.iberianmotorsports.service.utils.ChampionshipStyleType;
 import com.iberianmotorsports.service.utils.RoleType;
-import jakarta.persistence.EmbeddedId;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static com.iberianmotorsports.service.ErrorMessages.GRID_DRIVER_NOT_ALLOWED;
@@ -124,19 +122,48 @@ public class GridServiceImpl  implements GridService {
     @Override
     public Grid updateGrid(GridDTO gridDTO) {
         Grid grid = gridMapper.apply(gridDTO);
-        validateLoggedUserFromGrid(grid);
         Grid gridToUpdate = getGridById(grid.getId());
+        Car carToUpdate = carService.getCarById(grid.getCar().getId());
+        List<Grid> gridTeamSolo = List.of();
+        validateLoggedUserFromGrid(gridToUpdate);
+        boolean isTeamSoloChampionship = ChampionshipStyleType.TEAM_SOLO.getValue().equals(gridToUpdate.getChampionship().getStyle());
+        if (isTeamSoloChampionship) {
+            gridTeamSolo = gridRepository.findGridsByChampionshipIdAndTeamName(
+                    gridToUpdate.getChampionship().getId(),
+                    gridToUpdate.getTeamName());
+        }
         if (!gridToUpdate.getChampionship().getStarted() || RoleType.isAdminFromAuthentication()) {
-            gridToUpdate.setTeamName(grid.getTeamName());
-            gridToUpdate.setCar(grid.getCar());
+            if(isTeamSoloChampionship) {
+                gridTeamSolo = gridTeamSolo.stream().map(gridTeam -> {
+                    gridTeam.setTeamName(grid.getTeamName());
+                    gridTeam.setCar(carToUpdate);
+                    return gridTeam;
+                }).toList();
+            }else {
+                gridToUpdate.setTeamName(grid.getTeamName());
+                gridToUpdate.setCar(grid.getCar());
+            }
             gridToUpdate.setCarNumber(grid.getCarNumber());
         } else {
+            if(isTeamSoloChampionship) {
+                gridTeamSolo = gridTeamSolo.stream().map(gridTeam -> {
+                    gridTeam.setCar(carToUpdate);
+                    return gridTeam;
+                }).toList();
+            }else {
+                gridToUpdate.setTeamName(grid.getTeamName());
+            }
             gridToUpdate.setTeamName(grid.getTeamName());
         }
         if (RoleType.isAdminFromAuthentication()) {
             gridToUpdate.setCarLicense(grid.getCarLicense());
         }
-        return gridRepository.save(gridToUpdate);
+        if(isTeamSoloChampionship) {
+            gridRepository.saveAll(gridTeamSolo);
+        } else {
+            gridRepository.save(gridToUpdate);
+        }
+        return gridToUpdate;
     }
 
     @Override
@@ -185,9 +212,15 @@ public class GridServiceImpl  implements GridService {
     private void validateLoggedUserFromGrid(Grid grid){
         Long loggedUserSteamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedUser = userService.findUserBySteamId(loggedUserSteamId);
-        if(!RoleType.isAdminFromAuthentication() || !grid.getDrivers().contains(loggedUser)){
-            throw new ServiceException(ErrorMessages.USER_GRID_REQUIRED_PERMISSION.getDescription());
+        if(!grid.getDrivers().stream()
+                .filter(user -> loggedUser.getSteamId().equals(user.getSteamId()))
+                .toList().isEmpty()){
+            return;
         }
+        if(RoleType.isAdminFromAuthentication()){
+            return;
+        }
+        throw new ServiceException(ErrorMessages.USER_GRID_REQUIRED_PERMISSION.getDescription());
     }
 
     private void validateCarNumberForChampionship(Long championshipId, Integer carNumber){

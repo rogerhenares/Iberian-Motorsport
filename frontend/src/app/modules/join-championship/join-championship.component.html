@@ -12,22 +12,22 @@
                             <div class="custom-form">
                                 <div>
                                     <mat-form-field>
-                                        <mat-label>Team Name</mat-label>
-                                        <input style="color: white" matInput formControlName="teamName" [readonly]="!this.isSoloChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
+                                        <mat-label style="color: #00FFC0">Team Name</mat-label>
+                                        <input style="color: #999999" matInput formControlName="teamName" [readonly]="!this.isSoloChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.teamName.errors)">Team Name Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
-                                        <mat-label>Car Number</mat-label>
-                                        <input style="color: white" matInput formControlName="carNumber" [readonly]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
+                                        <mat-label style="color: #00FFC0">Car Number</mat-label>
+                                        <input style="color: #999999" matInput formControlName="carNumber" [readonly]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field *ngIf="grid.carLicense != null || this.appContext.isAdmin()">
-                                        <mat-label>Car License</mat-label>
-                                            <input style="color: white" matInput formControlName="carLicense" [readonly]="!this.appContext.isAdmin()"/>
+                                        <mat-label style="color: #00FFC0">Car License</mat-label>
+                                            <input style="color: #999999" matInput formControlName="carLicense" [readonly]="!this.appContext.isAdmin()"/>
                                             <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carLicense.errors)">Car License Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
-                                        <mat-label>Car</mat-label>
+                                        <mat-label style="color: #00FFC0">Car</mat-label>
                                         <mat-select formControlName="car" [disabled]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()">
                                             <mat-option *ngFor="let car of this.championship.carList" [value]="car">
                                                 {{car.manufacturer}} - {{car.model}}
@@ -35,22 +35,20 @@
                                         </mat-select>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.car.errors)">Car Error</mat-error>
                                     </mat-form-field>
+                                    <mat-form-field *ngIf="grid?.password">
+                                        <mat-label style="color: #00FFC0">Password</mat-label>
+                                        <input style="color: #999999" matInput [value]="grid.password" *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"  [readonly]="true"/>
+                                    </mat-form-field>
                                     <ng-container *ngIf="this.isTeamChampionship() && !this.isNewGrid()">
-                                        <mat-expansion-panel class="mat-elevation-z0" style="background: transparent; color: white; padding-top: 0px; margin-bottom: 1px; padding-right: 0px;" >
-                                            <mat-expansion-panel-header>
-                                                <span>Team: {{grid?.teamName}}</span>
-                                            </mat-expansion-panel-header>
-                                            <ng-template matExpansionPanelContent>
-                                                <ng-container *ngFor="let user of grid?.driversList;">
-                                                    <span style="padding-left: 10px;">{{user?.firstName}} {{user?.lastName}} <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"></span>
-                                                    <br>
-                                                </ng-container>
-                                            </ng-template>
-                                        </mat-expansion-panel>
-                                    </ng-container>
-                                    <ng-container *ngIf="grid?.password">
-                                        <mat-label>Password</mat-label>
-                                        <input style="color: white" matInput [value]="grid.password" *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"  [readonly]="true"/>
+                                        <mat-label style="color: #00FFC0">Drivers</mat-label>
+                                        <br>
+                                        <ng-container *ngFor="let user of grid?.driversList;">
+                                            <span style="padding-left: 10px; color: #999999">
+                                                <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">
+                                                {{user?.firstName}} {{user?.lastName}} - {{user?.shortName}} - {{user?.steamId}}
+                                            </span>
+                                            <br>
+                                        </ng-container>
                                     </ng-container>
                                     <div *ngIf="this.appContext.isAdmin()">
                                     <mat-checkbox formControlName="disabled" [checked]="this.grid.disabled">Disabled</mat-checkbox>
@@ -58,8 +56,9 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <div class="btn-block">
-                            <button type="submit" class="btn btn-primary">Join</button>
+                            <button type="submit" class="btn btn-primary" style="color: black">Join</button>
                         </div>
                     </form>
                 </div>
