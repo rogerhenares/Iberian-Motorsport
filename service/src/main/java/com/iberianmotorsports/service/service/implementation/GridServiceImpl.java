@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.iberianmotorsports.service.ErrorMessages.GRID_DRIVER_NOT_ALLOWED;
+import static com.iberianmotorsports.service.ErrorMessages.GRID_PASSWORD_INCORRECT;
 
 @AllArgsConstructor
 @Transactional
@@ -93,13 +94,18 @@ public class GridServiceImpl  implements GridService {
     }
 
     @Override
-    public void addDriver(Long gridId, Long steamId) {
+    public void addDriver(Long gridId, Long steamId, String password) {
         Grid grid = getGridById(gridId);
         validateLoggedUserFromGrid(grid);
         driverValidForChampionship(steamId, grid.getChampionship().getId());
         isDriverOrGridManager(steamId, grid);
-        User driverToAdd = userService.findUserBySteamId(steamId);
-        addGridUserToGrid(grid, driverToAdd);
+        if (isPasswordCorrect(password, grid)) {
+            User driverToAdd = userService.findUserBySteamId(steamId);
+            addGridUserToGrid(grid, driverToAdd);
+        }
+        else {
+            throw new ServiceException(GRID_PASSWORD_INCORRECT.getDescription());
+        }
     }
 
     @Override
@@ -316,4 +322,9 @@ public class GridServiceImpl  implements GridService {
                 .map(driver -> userService.findUserBySteamId(driver.getSteamId()))
                 .toList());
     }
+
+    private boolean isPasswordCorrect(String password, Grid grid){
+        return password.equals(grid.getPassword());
+    }
+
 }

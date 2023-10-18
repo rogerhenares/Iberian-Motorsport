@@ -33,8 +33,8 @@ export class GridService {
             );
     }
 
-    addDriver(grid: Grid, steamId: string, errorNotify?: any){
-        const url: string = this.url + '/add/' + grid.id + '/driver/' + steamId;
+    addDriver(grid: Grid, steamId: string, password: string, errorNotify?: any){
+        const url: string = this.url + '/add/' + grid.id + '/driver/' + steamId + '/password/' + password;
         return this.httpClient.put<Grid>(url, grid)
             .pipe(
                 tap( grid=> console.log('added driver')),

@@ -5,11 +5,7 @@ import { GridService } from '../../service/grid.service';
 import { Championship } from '../../model/Championship';
 import {AppContext} from "../../util/AppContext";
 import {Router} from "@angular/router";
-import {Car} from "../../model/Car";
 import {User} from "../../model/User";
-import {any} from "codelyzer/util/function";
-import {SanctionService} from "../../service/sanction.service";
-import {drive} from "googleapis/build/src/apis/drive";
 
 @Component({
     selector: 'app-standings',

@@ -181,7 +181,7 @@ export class ChampionshipDetailsComponent implements OnInit {
         if (this.appContext.isLoggedUserActive()) {
         let teamSoloJoin: boolean = this.championship.style === 'TEAM-SOLO'
         this.gridService.getGridByPassword(password).subscribe((grid: Grid) => {
-            this.router.navigateByUrl("join", {state: {grid: grid, championship: this.championship, teamSoloJoin: teamSoloJoin}});
+            this.router.navigateByUrl("join", {state: {grid: grid, championship: this.championship, teamSoloJoin: teamSoloJoin, password: password}});
         })
         }
         else {

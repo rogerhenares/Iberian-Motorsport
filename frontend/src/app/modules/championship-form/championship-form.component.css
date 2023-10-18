@@ -19,3 +19,11 @@
     display: none;
 }
 
+::ng-deep .mat-select-value-text {
+    color: white;
+}
+
+::ng-deep .mat-label {
+    color: white;
+}
+

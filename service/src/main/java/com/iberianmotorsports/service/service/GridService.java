@@ -29,7 +29,7 @@ public interface GridService {
 
     void updateGridLicensePoints(Long gridId, Long licensePoints, Boolean isApply);
 
-    void addDriver(Long gridId, Long steamId);
+    void addDriver(Long gridId, Long steamId, String password);
 
     void removeDriver(Long gridId, Long steamId);
 

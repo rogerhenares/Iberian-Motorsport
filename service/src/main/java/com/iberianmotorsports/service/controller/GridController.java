@@ -69,9 +69,9 @@ public class GridController {
         return new ResponseEntity<Object>(updatedGridDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/add/{id}/driver/{steamId}")
-    public ResponseEntity<?> addDriver(@PathVariable("id") Long gridId, @PathVariable("steamId") String steamId) {
-        gridService.addDriver(gridId, Long.valueOf(steamId));
+    @PutMapping("/add/{id}/driver/{steamId}/password/{password}")
+    public ResponseEntity<?> addDriver(@PathVariable("id") Long gridId, @PathVariable("steamId") String steamId, @PathVariable("password") String password) {
+        gridService.addDriver(gridId, Long.valueOf(steamId), password);
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Driver added successfully");
         return new ResponseEntity<Object>(messageResponse, HttpStatus.OK);

@@ -108,12 +108,13 @@ public class GridServiceTest {
         public void addDriver() {
             User user = UserFactory.user();
             Grid grid = GridFactory.grid();
+            String password = "";
             givenGridRepositorySave();
             givenUserRepositorySave();
             when(gridRepository.findById(grid.getId())).thenReturn(Optional.of(GridFactory.grid()));
             when(userRepository.findBySteamId(anyLong())).thenReturn(Optional.of(UserFactory.user()));
 
-            gridService.addDriver(grid.getId(), user.getSteamId());
+            gridService.addDriver(grid.getId(), user.getSteamId(), password);
             verify(gridRepository).save(gridCaptor.capture());
         }
     }

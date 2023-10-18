@@ -24,6 +24,7 @@ export class JoinChampionshipComponent implements OnInit {
     category: ChampionshipCategory;
     championship: Championship;
     teamSoloJoin: boolean = false;
+    inputtedPassword: string;
 
     constructor(
         private router: Router,
@@ -38,6 +39,7 @@ export class JoinChampionshipComponent implements OnInit {
         if (history.state.grid) {
             this.grid = history.state.grid;
             this.teamSoloJoin = history.state.teamSoloJoin;
+            this.inputtedPassword = history.state.password;
         }
         console.log("join-champ -> ", this.championship);
         console.log("Grid ->", this.grid)
@@ -79,9 +81,18 @@ export class JoinChampionshipComponent implements OnInit {
         }
         if (history.state.grid) {
             if (this.isTeamChampionship()){
-                console.log("Grid to update ->", this.grid)
-                console.log("SteamId ->", this.appContext.getLoggedUser().steamId)
-                this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId).subscribe(
+                if(this.grid.driversList.find(driver => driver.steamId === this.appContext.getLoggedUser().steamId)){
+                    this.gridService.updateGridEntry(gridToSave).subscribe(
+                        response => {
+                            if (response) {
+                                this.requestSuccessSwal.fire()
+                                this.router.navigateByUrl('/championship/' + this.championship.id)
+                            }
+                        }
+                    )
+                }
+                else {
+                    this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId, this.inputtedPassword).subscribe(
                     response => {
                         if (response) {
                             this.requestSuccessSwal.fire()
@@ -89,6 +100,7 @@ export class JoinChampionshipComponent implements OnInit {
                         }
                     }
                 )
+            }
             }
             else if (this.teamSoloJoin === true) {
                 gridToSave.driversList = [this.appContext.getLoggedUser()]
