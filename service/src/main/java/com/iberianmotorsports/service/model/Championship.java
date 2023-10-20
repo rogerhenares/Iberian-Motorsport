@@ -3,7 +3,6 @@ package com.iberianmotorsports.service.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
@@ -39,6 +38,9 @@ public class Championship implements Serializable {
     @Column(name = "car_group")
     private String carGroup;
 
+    @Column(name = "sub_car_category")
+    private String subCarGroup;
+
     @Column(name = "disabled")
     private Boolean disabled;
 
@@ -72,6 +74,9 @@ public class Championship implements Serializable {
     @NotNull
     @Column(name = "max_car_slots")
     private Integer maxCarSlots;
+
+    @Column(name = "max_sub_car_slots")
+    private Integer maxSubCarSlots;
 
     @NotNull
     @Column(name = "dump_leaderboards")

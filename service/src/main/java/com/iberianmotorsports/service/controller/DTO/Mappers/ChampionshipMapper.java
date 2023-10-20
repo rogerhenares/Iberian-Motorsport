@@ -2,9 +2,7 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
-import com.iberianmotorsports.service.model.ChampionshipCategory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
@@ -26,12 +24,14 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
         championship.setDescription(championshipDTO.description());
         championship.setAdminPassword(championshipDTO.adminPassword());
         championship.setCarGroup(championshipDTO.carGroup());
+        championship.setSubCarGroup(championshipDTO.subCarGroup().isBlank() ? null : championship.getSubCarGroup());
         championship.setTrackMedalsRequirement(championshipDTO.trackMedalsRequirement());
         championship.setSafetyRatingRequirement(championshipDTO.safetyRatingRequirement());
         championship.setRacecraftRatingRequirement(championshipDTO.racecraftRatingRequirement());
         championship.setPassword(championshipDTO.password());
         championship.setSpectatorPassword(championshipDTO.spectatorPassword());
         championship.setMaxCarSlots(championshipDTO.maxCarSlots());
+        championship.setMaxSubCarSlots(championshipDTO.subCarGroup().isBlank() ? null : championshipDTO.maxSubCarSlots());
         championship.setDumpLeaderboards(championshipDTO.dumpLeaderboards());
         championship.setIsRaceLocked(championshipDTO.isRaceLocked());
         championship.setRandomizeTrackWhenEmpty(championshipDTO.randomizeTrackWhenEmpty());

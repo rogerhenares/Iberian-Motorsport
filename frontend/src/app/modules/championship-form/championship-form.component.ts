@@ -129,6 +129,8 @@ export class ChampionshipFormComponent {
             racecraftRatingRequirement: [this.championship.racecraftRatingRequirement, [Validators.required, Validators.min((-1)), Validators.max(99)]],
             carGroup: [this.championship.carGroup, [Validators.required]],
             maxCarSlots: [this.championship.maxCarSlots, [Validators.required, Validators.min(1)]],
+            subCarGroup: [this.championship.subCarGroup],
+            maxSubCarSlots: [this.championship.maxSubCarSlots],
             isRaceLocked: [this.championship.isRaceLocked, [ Validators.min(0), Validators.max(1)]],
             randomizeTrackWhenEmpty: [this.championship.randomizeTrackWhenEmpty, [ Validators.min(0), Validators.max(1)]],
             allowAutoDq: [this.championship.allowAutoDq, [ Validators.min(0), Validators.max(1)]],

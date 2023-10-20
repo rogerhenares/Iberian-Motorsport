@@ -1,7 +1,6 @@
 package com.iberianmotorsports.service.controller.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.iberianmotorsports.service.model.Grid;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,12 +11,14 @@ public record ChampionshipDTO(
         String description,
         String adminPassword,
         String carGroup,
+        String subCarGroup,
         Integer trackMedalsRequirement,
         Integer safetyRatingRequirement,
         Integer racecraftRatingRequirement,
         String password,
         String spectatorPassword,
         Integer maxCarSlots,
+        Integer maxSubCarSlots,
         Integer dumpLeaderboards,
         Integer isRaceLocked,
         Integer randomizeTrackWhenEmpty,

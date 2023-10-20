@@ -14,9 +14,10 @@ public class ChampionshipCategoryServiceImpl implements ChampionshipCategoryServ
 
     private ChampionshipCategoryRepository championshipCategoryRepository;
 
+    //TODO review
     @Override
     public ChampionshipCategory findCategoryByChampionshipId(Long id) {
-        ChampionshipCategory category = championshipCategoryRepository.findCategoryByChampionship_Id(id);
+        ChampionshipCategory category = championshipCategoryRepository.findChampionshipCategoriesByChampionship_id(id).get(0);
         return category;
     }
 
