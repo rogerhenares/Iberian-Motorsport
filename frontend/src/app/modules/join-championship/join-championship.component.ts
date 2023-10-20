@@ -81,15 +81,14 @@ export class JoinChampionshipComponent implements OnInit {
         }
         if (history.state.grid) {
             if (this.isTeamChampionship()){
-                if(this.grid.driversList.find(driver => driver.steamId === this.appContext.getLoggedUser().steamId)){
+                if(this.isGridManager() || this.appContext.isAdmin()) {
                     this.gridService.updateGridEntry(gridToSave).subscribe(
                         response => {
                             if (response) {
                                 this.requestSuccessSwal.fire()
                                 this.router.navigateByUrl('/championship/' + this.championship.id)
                             }
-                        }
-                    )
+                        });
                 }
                 else {
                     this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId, this.inputtedPassword).subscribe(
@@ -98,9 +97,8 @@ export class JoinChampionshipComponent implements OnInit {
                             this.requestSuccessSwal.fire()
                             this.router.navigateByUrl('/championship/' + this.championship.id)
                         }
-                    }
-                )
-            }
+                    });
+                }
             }
             else if (this.teamSoloJoin === true) {
                 gridToSave.driversList = [this.appContext.getLoggedUser()]
@@ -158,6 +156,10 @@ export class JoinChampionshipComponent implements OnInit {
 
     isGridManager() {
         return this.grid.managerId === this.appContext.getLoggedUser().userId;
+    }
+
+    isDriver() {
+        return this.grid.driversList.find(driver => driver.steamId === this.appContext.getLoggedUser().steamId) != undefined;
     }
 
 }

@@ -13,12 +13,12 @@
                                 <div>
                                     <mat-form-field>
                                         <mat-label style="color: #00FFC0">Team Name</mat-label>
-                                        <input style="color: #999999" matInput formControlName="teamName" [readonly]="!this.isSoloChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
+                                        <input style="color: #999999" matInput formControlName="teamName" [readonly]="!this.isSoloChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin())"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.teamName.errors)">Team Name Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label style="color: #00FFC0">Car Number</mat-label>
-                                        <input style="color: #999999" matInput formControlName="carNumber" [readonly]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()"/>
+                                        <input style="color: #999999" matInput formControlName="carNumber" [readonly]="(this.isTeamChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin()))"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field *ngIf="grid.carLicense != null || this.appContext.isAdmin()">
@@ -28,7 +28,7 @@
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label style="color: #00FFC0">Car</mat-label>
-                                        <mat-select formControlName="car" [disabled]="this.isTeamChampionship() && !this.isNewGrid() && !this.isGridManager()">
+                                        <mat-select formControlName="car" [disabled]="(this.isTeamChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin()))">
                                             <mat-option *ngFor="let car of this.championship.carList" [value]="car">
                                                 {{car.manufacturer}} - {{car.model}}
                                             </mat-option>
@@ -57,9 +57,11 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="btn-block">
-                            <button type="submit" class="btn btn-primary" style="color: black">Join</button>
-                        </div>
+                        <ng-container *ngIf="(isDriver() && isGridManager()) || !isDriver() || this.appContext.isAdmin()">
+                            <div class="btn-block">
+                                <button type="submit" class="btn btn-primary" style="color: black">Join</button>
+                            </div>
+                        </ng-container>
                     </form>
                 </div>
             </div>
