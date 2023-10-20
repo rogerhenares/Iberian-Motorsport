@@ -7,6 +7,7 @@ import {tracks} from "../../util/tracks";
 @Component({
     selector: 'app-race-form',
     templateUrl: './race-form.component.html',
+    styleUrls: ['./race-form.component.css'],
     providers: [
         {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
     ]
@@ -20,8 +21,7 @@ export class RaceFormComponent {
 
     raceForm: FormGroup;
     raceFormSubmitted: Boolean
-
-    defaultSessionCount: number = 2;
+    defaultSessionCount: number = 3;
 
     constructor(private formBuilder: FormBuilder) { }
 
@@ -46,7 +46,7 @@ export class RaceFormComponent {
             serverName: [race.serverName, [Validators.required]],
             sessionCount: [race.sessionDTOList !== null && race.sessionDTOList.length > 0 ? race.sessionDTOList.length : this.defaultSessionCount,
                 [Validators.required, Validators.min(1), Validators.pattern('[1-5]')]],
-            startDate: [race.startDate, [Validators.required]]
+            startDate: [race.startDate]
         });
     }
 

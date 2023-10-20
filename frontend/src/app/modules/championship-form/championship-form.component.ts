@@ -5,7 +5,6 @@ import {Championship} from "../../model/Championship";
 import {ChampionshipService} from "../../service/championship.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
-import {TranslateService} from "@ngx-translate/core";
 import {Race} from "../../model/Race";
 import {ChampionshipCategory} from "../../model/ChampionshipCategory";
 import {Car} from "../../model/Car";

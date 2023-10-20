@@ -12,7 +12,8 @@ import {MatStepper} from "@angular/material/stepper";
 
 @Component({
     selector: 'app-new-race',
-    templateUrl: 'new-race.html'
+    templateUrl: 'new-race.html',
+    styleUrls: ['new-race.css']
 })
 
 export class NewRace {
@@ -44,6 +45,8 @@ export class NewRace {
             this.sessionList = history.state.race.sessionDTOList
             this.previousSessionList = history.state.race.sessionDTOList;
             this.raceRules = history.state.race.raceRulesDTO
+        } else {
+            this.sessionList = [Session.defaultPractice(), Session.defaultQualy(), Session.defaultRace()];
         }
     }
 

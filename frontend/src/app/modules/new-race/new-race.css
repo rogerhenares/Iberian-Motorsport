@@ -1,3 +1,7 @@
 .custom-form {
     color: white;
 }
+
+::ng-deep .mat-step-text-label {
+    color: #00FFC0;
+}

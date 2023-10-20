@@ -10,7 +10,8 @@ import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-sanction-form',
-    templateUrl: './sanction-form.component.html'
+    templateUrl: './sanction-form.component.html',
+    styleUrls: ['./sanction-form.component.css']
 })
 export class SanctionFormComponent {
 

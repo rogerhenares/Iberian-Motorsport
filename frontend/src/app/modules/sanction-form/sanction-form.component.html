@@ -12,29 +12,29 @@
                             <div class="custom-form">
                                 <div>
                                     <mat-form-field>
-                                        <mat-label>Lap</mat-label>
-                                        <input style="color: white" matInput formControlName="lap"/>
+                                        <mat-label style="color: #00FFC0">Lap</mat-label>
+                                        <input style="color: #999999" matInput formControlName="lap"/>
                                         <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.lap.errors)">Lap Error</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div>
                                     <mat-form-field>
-                                        <mat-label>Penalty</mat-label>
-                                        <input style="color: white" matInput formControlName="penalty"/>
+                                        <mat-label style="color: #00FFC0">Penalty</mat-label>
+                                        <input style="color: #999999" matInput formControlName="penalty"/>
                                         <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.penalty.errors)">Penalty Error</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div>
                                     <mat-form-field>
-                                        <mat-label>Reason</mat-label>
-                                        <input style="color: white" matInput formControlName="reason"/>
+                                        <mat-label style="color: #00FFC0">Reason</mat-label>
+                                        <input style="color: #999999" matInput formControlName="reason"/>
                                         <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.reason.errors)">Reason Error</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div>
                                 <mat-form-field>
-                                    <mat-label>Penalty to</mat-label>
-                                    <mat-select formControlName="gridId" style="color: white">
+                                    <mat-label style="color: #00FFC0">Penalty to</mat-label>
+                                    <mat-select formControlName="gridId" style="color: #999999">
                                         <mat-option *ngFor="let gridRace of gridRaceList" [value]="gridRace.gridId">
                                             {{gridRace.grid.carNumber}} - {{gridRace.grid.teamName}} - {{gridRace.grid.car.manufacturer}} {{gridRace.grid.car.model}}
                                         </mat-option>
@@ -44,8 +44,8 @@
                                 </div>
                                 <div>
                                     <mat-form-field>
-                                        <mat-label>License Points</mat-label>
-                                        <input style="color: white" matInput formControlName="licensePoints"/>
+                                        <mat-label style="color: #00FFC0">License Points</mat-label>
+                                        <input style="color: #999999" matInput formControlName="licensePoints"/>
                                         <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.licensePoints.errors)">License Points Error</mat-error>
                                     </mat-form-field>
                                 </div>

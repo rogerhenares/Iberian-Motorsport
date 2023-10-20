@@ -1,42 +1,51 @@
 <div class="card-body">
     <div class="testbox">
         <form id="raceRulesForm" (ngSubmit)="raceRulesSubmit()" [formGroup]="raceRulesForm">
+            <h4 style="color: #FF9800"> PIT STOP RULES </h4>
+            <br>
             <div class="item">
                 <div class="custom-form">
                     <div>
                     <div>
                         <mat-form-field>
-                        <mat-label>Pit Window Length Seconds</mat-label>
-                        <input style="color: white" matInput formControlName="pitWindowLengthSec"/>
+                        <mat-label style="color: #00FFC0">Pit Window Length Seconds</mat-label>
+                        <input style="color: #999999" matInput formControlName="pitWindowLengthSec"/>
                         <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.pitWindowLengthSec.errors)">Pit Window Length Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                        <mat-label>Driver Stint Time Seconds</mat-label>
-                        <input style="color: white" matInput formControlName="driverStintTimeSec"/>
+                        <mat-label style="color: #00FFC0">Driver Stint Time Seconds</mat-label>
+                        <input style="color: #999999" matInput formControlName="driverStintTimeSec"/>
                         <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.driverStintTimeSec.errors)">Driver Stint Time Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                        <mat-label>Mandatory Pitstop Count</mat-label>
-                        <input style="color: white" matInput formControlName="mandatoryPitstopCount"/>
+                        <mat-label style="color: #00FFC0">Mandatory Pitstop Count</mat-label>
+                        <input style="color: #999999" matInput formControlName="mandatoryPitstopCount"/>
                         <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.mandatoryPitstopCount.errors)">Mandatory Pitstop Count Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                        <mat-label>Max Total Driving Time</mat-label>
-                        <input style="color: white" matInput formControlName="maxTotalDrivingTime"/>
+                        <mat-label style="color: #00FFC0">Max Total Driving Time</mat-label>
+                        <input style="color: #999999" matInput formControlName="maxTotalDrivingTime"/>
                         <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.maxTotalDrivingTime.errors)">Max Total Driving Time Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                        <mat-label>Max Total Driving Time</mat-label>
-                        <input style="color: white" matInput formControlName="maxDriversCount"/>
+                        <mat-label style="color: #00FFC0">Max Total Driving Time</mat-label>
+                        <input style="color: #999999" matInput formControlName="maxDriversCount"/>
                         <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.maxDriversCount.errors)">Max Drivers Count Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0" formControlName="tyre-set-count">Tyre Set Count</mat-label>
+                            <input style="color: #999999" matInput formControlName="tyreSetCount"/>
+                            <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.tyreSetCount.errors)">Tyre Set Count Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
@@ -58,13 +67,6 @@
                     <div>
                         <mat-checkbox formControlName="isMandatoryPitstopSwapDriverRequired">Is Mandatory Pitstop Swap Driver Required</mat-checkbox>
                         <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.isMandatoryPitstopSwapDriverRequired.errors)">Is Mandatory Pitstop Swap Driver Required Error</mat-error>
-                    </div>
-                    <div>
-                        <mat-form-field>
-                        <mat-label for="tyre-set-count">Tyre Set Count</mat-label>
-                        <input style="color: white" matInput formControlName="tyreSetCount"/>
-                        <mat-error [hidden]="!(raceRulesFormSubmitted && raceRulesForm.controls.tyreSetCount.errors)">Tyre Set Count Error</mat-error>
-                        </mat-form-field>
                     </div>
                 </div>
             </div>

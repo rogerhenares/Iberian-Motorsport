@@ -7,6 +7,7 @@
             </div>
             <mat-stepper style="background: #212121" #stepper>
                 <mat-step>
+                    <ng-template matStepLabel style="color: #00FFC0">RACE INFO</ng-template>
                     <app-race-form #raceFormComponent [race]="race"></app-race-form>
                     <div>
                         <button mat-button matStepperPrevious>Back</button>
@@ -16,6 +17,7 @@
                 <ng-container *ngFor="let session of sessionList; let i = index">
                     <mat-step>
                         <app-session-form #sessionFormComponent [session]="session"></app-session-form>
+                        <ng-template matStepLabel>Session {{session.sessionType}}</ng-template>
                         <div>
                             <button mat-button matStepperPrevious>Back</button>
                             <button mat-button (click)="validateSession(i)">Next</button>
@@ -24,6 +26,7 @@
                 </ng-container>
                 <mat-step>
                     <app-race-rules-form #raceRulesFormComponent [raceRules]="raceRules"></app-race-rules-form>
+                    <ng-template matStepLabel>Pit Rules</ng-template>
                     <div>
                         <button mat-button matStepperPrevious>Back</button>
                         <button mat-button (click)="validateRaceRules()">Next</button>

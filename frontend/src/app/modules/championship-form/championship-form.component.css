@@ -12,7 +12,7 @@
 }
 
 .white-input .mat-input-element {
-    color: white;
+    color: #999999;
 }
 
 .file-input {
@@ -20,10 +20,10 @@
 }
 
 ::ng-deep .mat-select-value-text {
-    color: white;
+    color: #999999;
 }
 
 ::ng-deep .mat-label {
-    color: white;
+    color: #999999;
 }
 

@@ -55,7 +55,7 @@ export class Championship {
         this.shortFormationLap= 0;
         this.dumpEntryList= 1;
         this.formationLapType= 0;
-        this.ignorePrematureDisconnects= 0;
+        this.ignorePrematureDisconnects= 1;
         this.imageContent= null;
         this.startDate = null;
         this.style = null;

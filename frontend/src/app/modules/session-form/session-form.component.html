@@ -1,35 +1,13 @@
 <div class="card-body">
     <div class="testbox">
         <form id="sessionForm" class="custom-form" [formGroup]="sessionForm">
+            <h4 style="color: #FF9800"> Session </h4>
+            <br>
             <div class="item">
                 <div class="name-item">
                     <div>
                         <mat-form-field>
-                            <mat-label>Hour Of Day</mat-label>
-                            <input style="color: white" matInput type="number" formControlName="hourOfDay" min="0" max="23"/>
-                            <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.hourOfDay.errors)">Hour Of Day Error</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div>
-                        <mat-form-field>
-                            <mat-label>Day Of The Weekend</mat-label>
-                            <mat-select formControlName="dayOfWeekend" class="custom-form">
-                                <mat-option value="1">Friday</mat-option>
-                                <mat-option value="2">Saturday</mat-option>
-                                <mat-option value="3">Sunday</mat-option>
-                            </mat-select>
-                            <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.dayOfWeekend.errors)">Day Of The Weekend Error</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div>
-                        <mat-form-field>
-                            <mat-label>Time Multiplier</mat-label>
-                            <input style="color: white" matInput type="number" formControlName="timeMultiplier" min="1" max="24"/>
-                            <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.timeMultiplier.errors)">Time Multiplier Error</mat-error>                                            </mat-form-field>
-                    </div>
-                    <div>
-                        <mat-form-field>
-                            <mat-label>Session Type</mat-label>
+                            <mat-label style="color: #00FFC0">Session Type</mat-label>
                             <mat-select formControlName="sessionType" class="custom-form">
                                 <mat-option value="Q">Qualy</mat-option>
                                 <mat-option value="P">Practice</mat-option>
@@ -40,10 +18,34 @@
                     </div>
                     <div>
                         <mat-form-field>
-                            <mat-label>Session Duration Minutes</mat-label>
-                            <input style="color: white" matInput  formControlName="sessionDurationMinutes"/>
+                            <mat-label style="color: #00FFC0">Session Duration Minutes</mat-label>
+                            <input style="color: #999999" matInput  formControlName="sessionDurationMinutes"/>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.sessionDurationMinutes.errors)">Max Total Driving Time Error</mat-error>
                         </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0">Day Of The Weekend</mat-label>
+                            <mat-select formControlName="dayOfWeekend" class="custom-form">
+                                <mat-option value=1>Friday</mat-option>
+                                <mat-option value=2>Saturday</mat-option>
+                                <mat-option value=3>Sunday</mat-option>
+                            </mat-select>
+                            <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.dayOfWeekend.errors)">Day Of The Weekend Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0">Hour Of Day</mat-label>
+                            <input style="color: #999999" matInput type="number" formControlName="hourOfDay" min="0" max="23"/>
+                            <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.hourOfDay.errors)">Hour Of Day Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0">Time Multiplier</mat-label>
+                            <input style="color: #999999" matInput type="number" formControlName="timeMultiplier" min="1" max="24"/>
+                            <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.timeMultiplier.errors)">Time Multiplier Error</mat-error>                                            </mat-form-field>
                     </div>
                 </div>
             </div>

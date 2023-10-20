@@ -5,7 +5,8 @@ import {Session} from "../../model/Session";
 
 @Component({
     selector: 'app-session-form',
-    templateUrl: './session-form.component.html'
+    templateUrl: './session-form.component.html',
+    styleUrls: ['./session-form.component.css']
 })
 export class SessionFormComponent {
 
@@ -13,7 +14,6 @@ export class SessionFormComponent {
 
     sessionForm: FormGroup;
     sessionFormSubmitted: Boolean;
-    sessionTypeOptions: string[] = ['Qualy', 'Practice', 'Race'];
 
     constructor(private formBuilder: FormBuilder) {}
 

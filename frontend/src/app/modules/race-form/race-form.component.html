@@ -1,91 +1,99 @@
 <div class="card-body">
     <div class="testbox">
         <form id="raceForm" [formGroup]="raceForm">
+            <h4 style="color: #FF9800"> RACE INFO </h4>
+            <br>
             <div class="item">
                 <div class="custom-form">
                     <div>
                         <mat-form-field>
-                            <mat-label>Track</mat-label>
+                            <mat-label style="color: #00FFC0">Track</mat-label>
                             <mat-select formControlName="track">
                                 <mat-option *ngFor="let track of tracks" [value]="track.code">{{track.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
+                    <mat-form-field (click)="showPicker()">
+                        <mat-label style="color: #00FFC0">Starting Date</mat-label>
+                        <input matInput style="color: #999999" type="datetime-local" formControlName="startDate" id="datePicker">
+                        <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.startDate.errors)">Starting Date Error</mat-error>
+                    </mat-form-field>
                     <div>
                         <mat-form-field>
-                            <mat-label>Pre Race Waiting Time in Seconds</mat-label>
-                            <input style="color: white" type="number" matInput formControlName="preRaceWaitingTimeSeconds" min="30"/>
-                            <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.preRaceWaitingTimeSeconds.errors)">Pre Race Waiting Time Seconds Error</mat-error>
+                            <mat-label style="color: #00FFC0">Server Name</mat-label>
+                            <input style="color: #999999" matInput formControlName="serverName"/>
+                            <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.serverName.errors)">Server Name Error</mat-error>
                         </mat-form-field>
                     </div>
+                    <hr>
+                    <h4 style="color: #FF9800"> Weather </h4>
+                    <br>
                     <div>
                         <mat-form-field>
-                            <mat-label>Session Over Time in Seconds</mat-label>
-                            <input style="color: white" matInput formControlName="sessionOverTimeSeconds"/>
-                            <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.sessionOverTimeSeconds.errors)">Session Over Time Seconds Error</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div>
-                        <mat-form-field>
-                            <mat-label>Ambient Temperature</mat-label>
-                            <input style="color: white" matInput formControlName="ambientTemp"/>
+                            <mat-label style="color: #00FFC0">Ambient Temperature</mat-label>
+                            <input style="color: #999999" matInput formControlName="ambientTemp"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.ambientTemp.errors)">Ambient Temperature Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                            <mat-label>Cloud Level</mat-label>
-                            <input style="color: white" matInput type="number" formControlName="cloudLevel" min="0" max="1" step="0.01"/>
+                            <mat-label style="color: #00FFC0">Cloud Level</mat-label>
+                            <input style="color: #999999" matInput type="number" formControlName="cloudLevel" min="0" max="1" step="0.01"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.cloudLevel.errors)">Cloud Level Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                            <mat-label>Rain</mat-label>
-                            <input style="color: white" matInput type="number" formControlName="rain" min="0" max="1" step="0.01"/>
+                            <mat-label style="color: #00FFC0">Rain</mat-label>
+                            <input style="color: #999999" matInput type="number" formControlName="rain" min="0" max="1" step="0.01"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.rain.errors)">Rain Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                            <mat-label>Weather Randomness</mat-label>
-                            <input style="color: white" matInput type="number" formControlName="weatherRandomness" min="0" max="7"/>
+                            <mat-label style="color: #00FFC0">Weather Randomness</mat-label>
+                            <input style="color: #999999" matInput type="number" formControlName="weatherRandomness" min="0" max="7"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.weatherRandomness.errors)">Weather Randomness Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <hr>
+                    <h4 style="color: #FF9800"> Timeouts </h4>
+                    <br>
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0">Pre Race Waiting Time in Seconds</mat-label>
+                            <input style="color: #999999" type="number" matInput formControlName="preRaceWaitingTimeSeconds" min="30"/>
+                            <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.preRaceWaitingTimeSeconds.errors)">Pre Race Waiting Time Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                            <mat-label>Post Qualy Time in Seconds</mat-label>
-                            <input style="color: white" matInput formControlName="postQualySeconds"/>
+                            <mat-label style="color: #00FFC0">Session Over Time in Seconds</mat-label>
+                            <input style="color: #999999" matInput formControlName="sessionOverTimeSeconds"/>
+                            <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.sessionOverTimeSeconds.errors)">Session Over Time Seconds Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0">Post Qualy Time in Seconds</mat-label>
+                            <input style="color: #999999" matInput formControlName="postQualySeconds"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.postQualySeconds.errors)">Post Qualy Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
-                            <mat-label>Post Race Time in Seconds</mat-label>
-                            <input style="color: white" matInput formControlName="postRaceSeconds"/>
+                            <mat-label style="color: #00FFC0">Post Race Time in Seconds</mat-label>
+                            <input style="color: #999999" matInput formControlName="postRaceSeconds"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.postRaceSeconds.errors)">Post Race Seconds Error</mat-error>
                         </mat-form-field>
                     </div>
-                    <div>
+                    <div [hidden]="true">
                         <mat-form-field>
-                            <mat-label>Server Name</mat-label>
-                            <input style="color: white" matInput formControlName="serverName"/>
-                            <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.serverName.errors)">Server Name Error</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div >
-                        <mat-form-field>
-                            <mat-label >Number of Sessions</mat-label>
-                            <input style="color: white" matInput formControlName="sessionCount"/>
+                            <mat-label style="color: #00FFC0">Number of Sessions</mat-label>
+                            <input style="color: #999999" matInput formControlName="sessionCount"/>
                             <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.sessionCount.errors)">Session Count Error</mat-error>
                         </mat-form-field>
                     </div>
-                    <mat-form-field (click)="showPicker()">
-                        <mat-label>Starting Date</mat-label>
-                        <input matInput style="color: white" type="datetime-local" formControlName="startDate" id="datePicker">
-                        <mat-error [hidden]="!(raceFormSubmitted && raceForm.controls.startDate.errors)">Starting Date Error</mat-error>
-                    </mat-form-field>
                 </div>
             </div>
         </form>
