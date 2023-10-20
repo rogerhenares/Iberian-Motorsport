@@ -39,6 +39,7 @@ public enum ErrorMessages {
     USER_GRID_REQUIRED_PERMISSION(35, "User is not Admin and doesn't belong to this grid"),
     GRID_DRIVERS_CAN_NOT_BE_EMPTY(36, "Grid Drivers can not be empty"),
     GRID_PASSWORD_INCORRECT(37, "Grid password is incorrect"),
+    BOP_NOT_FOUND(38, "Bop not found"),
     DEFAULT(999, "");
 
     private final int code;

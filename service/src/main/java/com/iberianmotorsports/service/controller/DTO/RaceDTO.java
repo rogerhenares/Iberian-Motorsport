@@ -21,6 +21,7 @@ public record RaceDTO (
         @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
         LocalDateTime startDate,
         RaceRulesDTO raceRulesDTO,
-        List<SessionDTO> sessionDTOList
+        List<SessionDTO> sessionDTOList,
+        List<BopDTO> bopDTOList
 ) {
 }

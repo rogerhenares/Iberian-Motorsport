@@ -79,6 +79,9 @@ public class Race {
     @OneToMany(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Session> sessionList;
 
+    @OneToMany(mappedBy = "bopPrimaryKey.race", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bop> bopList;
+
     @Transient
     private Long championshipId;
 }
