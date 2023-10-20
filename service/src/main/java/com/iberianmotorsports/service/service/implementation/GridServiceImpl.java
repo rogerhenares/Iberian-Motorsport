@@ -96,9 +96,7 @@ public class GridServiceImpl  implements GridService {
     @Override
     public void addDriver(Long gridId, Long steamId, String password) {
         Grid grid = getGridById(gridId);
-        validateLoggedUserFromGrid(grid);
         driverValidForChampionship(steamId, grid.getChampionship().getId());
-        isDriverOrGridManager(steamId, grid);
         if (isPasswordCorrect(password, grid)) {
             User driverToAdd = userService.findUserBySteamId(steamId);
             addGridUserToGrid(grid, driverToAdd);
