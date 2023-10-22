@@ -8,7 +8,7 @@ export class Bop {
 
     constructor() {
         this.raceId = null;
-        this.car = null;
+        this.car = new Car();
         this.ballastKg = 0;
         this.restrictor = 0;
     }
