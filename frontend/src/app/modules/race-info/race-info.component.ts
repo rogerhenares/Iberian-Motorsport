@@ -1,7 +1,4 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Championship} from "../../model/Championship";
-import {Pageable} from "../../model/Pageable";
-import {Race} from "../../model/Race";
 import {AppContext} from "../../util/AppContext";
 
 @Component({

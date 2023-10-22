@@ -47,3 +47,11 @@
     <li>Rain: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.rain)}} %</span></li>
     <li>Weather randomness: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.weatherRandomness)}} % </span></li>
 </ul>
+<ng-container *ngIf="selectedRace.bopDTOList?.length > 0">
+<h3 style="color: #ff9800">BALANCE OF PERFORMANCE</h3>
+        <ul>
+            <ng-container *ngFor="let bop of selectedRace.bopDTOList">
+            <li><span style="color:#00FFC0">{{bop.car.manufacturer}} {{bop.car.model}}</span> Ballast: <span style="color:#00FFC0">{{bop.ballastKg}} Kg</span> <span *ngIf="bop.restrictor != 0"> Restrictor: <span style="color:#00FFC0">{{bop.restrictor}}</span> </span> </li>
+            </ng-container>
+        </ul>
+</ng-container>
