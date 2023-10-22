@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "RACE")
 public class Race {
 
@@ -79,7 +82,7 @@ public class Race {
     @OneToMany(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Session> sessionList;
 
-    @OneToMany(mappedBy = "bopPrimaryKey.race", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bopPrimaryKey.race", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Bop> bopList;
 
     @Transient

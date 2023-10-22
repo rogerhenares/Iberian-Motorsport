@@ -13,7 +13,6 @@ import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.*;
-
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
@@ -24,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -63,11 +63,13 @@ public class RaceServiceImpl implements RaceService {
         }
         Race race = raceMapper.apply(raceDTO);
         race.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
-        race.getBopList().stream().map(bop -> {
-            bop.getBopPrimaryKey().setCar(carService.getCarById(bop.getBopPrimaryKey().getCar().getId()));
-            return bop;
-        });
+        race.setBopList(new ArrayList<>());
         Race savedRace = raceRepository.save(race);
+        savedRace.getBopList().addAll(raceMapper.apply(raceDTO).getBopList().stream()
+            .map(bop -> {
+                bop.getBopPrimaryKey().setRace(savedRace);
+                return bop;
+            }).toList());
         return raceRepository.save(savedRace);
     }
 
@@ -146,10 +148,13 @@ public class RaceServiceImpl implements RaceService {
             sessionToUpdate.setSessionDurationMinutes(session.getSessionDurationMinutes());
         }
 
-        raceToUpdate.getBopList().removeAll(raceToUpdate.getBopList());
-        raceToUpdate.getBopList().addAll(race.getBopList());
-        Race re = raceRepository.save(raceToUpdate);
-        return re;
+        raceToUpdate.getBopList().clear();
+        for(Bop bop: race.getBopList()){
+            bop.getBopPrimaryKey().setRace(raceToUpdate);
+            raceToUpdate.getBopList().add(bop);
+        }
+
+        return raceRepository.save(raceToUpdate);
     }
 
 
