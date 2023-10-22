@@ -11,7 +11,6 @@ import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.repository.SanctionRepository;
 import com.iberianmotorsports.service.service.*;
 import com.iberianmotorsports.service.service.implementation.ImportDataServiceImpl;
-import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -71,7 +70,7 @@ public class ImportDataServiceTest {
 
     @BeforeEach
     public void init() {
-        raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
+        //raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
         importDataService = new ImportDataServiceImpl(championshipService, raceService, gridRaceService, sanctionRepository, pointsSystem, qualyPoints);
     }
 

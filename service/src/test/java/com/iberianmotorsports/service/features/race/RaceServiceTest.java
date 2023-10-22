@@ -15,8 +15,6 @@ import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.RaceRulesService;
 import com.iberianmotorsports.service.service.RaceService;
 import com.iberianmotorsports.service.service.SessionService;
-import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
-import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -72,10 +70,10 @@ public class RaceServiceTest {
         raceRulesMapper = new RaceRulesMapper();
         raceRulesDTOMapper = new RaceRulesDTOMapper();
         championshipMapper = new ChampionshipMapper();
-        raceMapper = new RaceMapper(raceRulesMapper, sessionMapper);
-        raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper);
+        raceMapper = new RaceMapper(raceRulesMapper, sessionMapper, null, null);
+        raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper, null);
         //championshipService = new ChampionshipServiceImpl(championshipRepository, championshipCategoryRepository);
-        raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
+        //raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper, null);
     }
 
     @Nested
