@@ -13,6 +13,7 @@ import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.service.CarService;
 import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.UserService;
+import com.iberianmotorsports.service.utils.CarCategory;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -163,23 +164,23 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     }
 
     private void saveChampionshipCategoryForChamp(Championship championship) {
-        if (championship.getCategoryList().isEmpty()) {
+        List<ChampionshipCategory> previousList = championshipCategoryRepository.findChampionshipCategoriesByChampionship_id(championship.getId());
+        championshipCategoryRepository.deleteAll(previousList);
+        for (String category: CarCategory.valueOf(championship.getCarGroup()).getValue()) {
             ChampionshipCategory newChampionshipCategory = new ChampionshipCategory();
-            newChampionshipCategory.setCategory(championship.getCarGroup());
+            newChampionshipCategory.setCategory(category);
             newChampionshipCategory.setMax(championship.getMaxCarSlots());
             newChampionshipCategory.setChampionship(championship);
             championshipCategoryRepository.save(newChampionshipCategory);
-        } else {
-            List<ChampionshipCategory> championshipCategoryList = championship.getCategoryList().stream()
-                    .map(championshipCategory -> {
-                        if(carService.validateCategory(championshipCategory.getCategory())){
-                            throw new ServiceException(ErrorMessages.CATEGORY_NOT_FOUND.getDescription());
-                        }
-                        championshipCategory.setChampionship(championship);
-                        return championshipCategory;
-                    })
-                    .toList();
-            this.championshipCategoryRepository.saveAll(championshipCategoryList);
+        }
+        if(championship.getMaxSubCarSlots() != null  && championship.getSubCarGroup() != null) {
+            for (String category: CarCategory.valueOf(championship.getSubCarGroup()).getValue()) {
+                ChampionshipCategory newChampionshipCategory = new ChampionshipCategory();
+                newChampionshipCategory.setCategory(category);
+                newChampionshipCategory.setMax(championship.getMaxSubCarSlots());
+                newChampionshipCategory.setChampionship(championship);
+                championshipCategoryRepository.save(newChampionshipCategory);
+            }
         }
     }
 

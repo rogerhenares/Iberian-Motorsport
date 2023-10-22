@@ -1,6 +1,5 @@
 package com.iberianmotorsports.service.controller.DTO.Mappers;
 
-import com.iberianmotorsports.service.controller.DTO.ChampionshipCategoryDTO;
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +28,14 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getDescription(),
                 championship.getAdminPassword(),
                 championship.getCarGroup(),
+                championship.getSubCarGroup(),
                 championship.getTrackMedalsRequirement(),
                 championship.getSafetyRatingRequirement(),
                 championship.getRacecraftRatingRequirement(),
                 championship.getPassword(),
                 championship.getSpectatorPassword(),
                 championship.getMaxCarSlots(),
+                championship.getMaxSubCarSlots(),
                 championship.getDumpLeaderboards(),
                 championship.getIsRaceLocked(),
                 championship.getRandomizeTrackWhenEmpty(),
