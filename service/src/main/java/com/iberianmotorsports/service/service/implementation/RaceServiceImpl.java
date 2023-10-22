@@ -7,14 +7,12 @@ import com.iberianmotorsports.service.controller.DTO.Mappers.RaceRulesMapper;
 import com.iberianmotorsports.service.controller.DTO.Mappers.SessionMapper;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
 import com.iberianmotorsports.service.controller.DTO.SessionDTO;
+import com.iberianmotorsports.service.model.Bop;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.RaceRepository;
-import com.iberianmotorsports.service.service.ChampionshipService;
-import com.iberianmotorsports.service.service.RaceRulesService;
-import com.iberianmotorsports.service.service.RaceService;
-import com.iberianmotorsports.service.service.SessionService;
+import com.iberianmotorsports.service.service.*;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -42,6 +40,7 @@ public class RaceServiceImpl implements RaceService {
     private ChampionshipService championshipService;
 
     private RaceRepository raceRepository;
+    private CarService carService;
 
     private RaceMapper raceMapper;
 
@@ -55,18 +54,21 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public Race saveRace(RaceDTO raceDTO) {
+        if(raceDTO.sessionDTOList() != null) {
+            if(!validateSessionForRace(raceDTO.sessionDTOList()))
+                throw new ServiceException(ErrorMessages.RACE_SESSION_TYPE_MISSING.getDescription());
+        }
         if (raceDTO.id() != -1) {
             return updateRace(raceDTO);
         }
         Race race = raceMapper.apply(raceDTO);
         race.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
+        race.getBopList().stream().map(bop -> {
+            bop.getBopPrimaryKey().setCar(carService.getCarById(bop.getBopPrimaryKey().getCar().getId()));
+            return bop;
+        });
         Race savedRace = raceRepository.save(race);
-        if(raceDTO.sessionDTOList() != null) {
-            if(!validateSessionForRace(raceDTO.sessionDTOList()))
-                throw new ServiceException(ErrorMessages.RACE_SESSION_TYPE_MISSING.getDescription());
-        }
-
-        return savedRace;
+        return raceRepository.save(savedRace);
     }
 
     private Boolean validateSessionForRace(List<SessionDTO> sessionDTOList) {
@@ -144,7 +146,10 @@ public class RaceServiceImpl implements RaceService {
             sessionToUpdate.setSessionDurationMinutes(session.getSessionDurationMinutes());
         }
 
-        return raceRepository.save(raceToUpdate);
+        raceToUpdate.getBopList().removeAll(raceToUpdate.getBopList());
+        raceToUpdate.getBopList().addAll(race.getBopList());
+        Race re = raceRepository.save(raceToUpdate);
+        return re;
     }
 
 

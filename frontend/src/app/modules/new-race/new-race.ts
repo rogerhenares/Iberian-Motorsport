@@ -9,6 +9,9 @@ import {Race} from "../../model/Race";
 import {RaceRules} from "../../model/RaceRules";
 import {Session} from "../../model/Session";
 import {MatStepper} from "@angular/material/stepper";
+import {BopFormComponent} from "../bop-form/bop-form.component";
+import {Bop} from "../../model/Bop";
+import {Car} from "../../model/Car";
 
 @Component({
     selector: 'app-new-race',
@@ -22,6 +25,7 @@ export class NewRace {
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
     @ViewChild('raceFormComponent') raceFormComponent: RaceFormComponent;
     @ViewChild('raceRulesFormComponent') raceRulesFormComponent: RaceRulesFormComponent;
+    @ViewChild('bopFormComponent') bopFormComponent: BopFormComponent;
     @ViewChild('stepper') private stepper: MatStepper;
 
     @ViewChildren('sessionFormComponent') sessionFormComponents: QueryList<SessionFormComponent>;
@@ -31,6 +35,10 @@ export class NewRace {
     sessionList: Session[] = new Array<Session>;
     raceRules: RaceRules= new RaceRules();
     previousSessionList: Session[];
+    carList = new Array<Car>();
+    selectedBopIndex : number = -1;
+    selectedBop: Bop = new Bop();
+    action: string;
 
     constructor(
         private raceService: RaceService,
@@ -39,7 +47,8 @@ export class NewRace {
 
     ngOnInit() {
         const navigation = this.router.getCurrentNavigation();
-        this.race.championshipId = history.state.championshipId
+        this.race.championshipId = history.state.championshipId;
+        this.carList = history.state.championshipCarList;
         if (history.state.race) {
             this.race = history.state.race;
             this.sessionList = history.state.race.sessionDTOList
@@ -68,6 +77,7 @@ export class NewRace {
 
             raceData.sessionDTOList = this.sessionList;
             raceData.raceRulesDTO = this.prepareRaceRules(raceRulesData);
+            raceData.bopDTOList = this.race.bopDTOList;
 
             this.raceService.saveRace(raceData).subscribe(response => {
                 if (response) {
@@ -101,7 +111,7 @@ export class NewRace {
 
 
 
-validateRaceRules() {
+    validateRaceRules() {
         this.raceRulesFormComponent.raceRulesFormSubmitted = true;
         let isRaceRulesValid: boolean = this.raceRulesFormComponent.raceRulesForm.valid;
         if (isRaceRulesValid == true) {
@@ -138,6 +148,39 @@ validateRaceRules() {
             raceDate = raceDate + ':00';
         }
         return raceDate;
+    }
+
+    addBop() {
+        this.bopFormComponent.bopFormSubmitted = true;
+        let isBopValid = this.bopFormComponent.bopForm.valid;
+        if(isBopValid == true) {
+            let newBop = this.bopFormComponent.bopForm.value
+            console.log("bop modify ->", newBop);
+            const index = this.race.bopDTOList.findIndex(bop => bop.car.id === newBop.car.id);
+            if(index === -1) {
+                this.race.bopDTOList.push(newBop);
+            } else {
+                this.race.bopDTOList.splice(index, 1);
+                this.race.bopDTOList.push(newBop);
+            }
+        }
+        return isBopValid;
+    }
+
+    newBOP() {
+        console.log("BOP LIST -> {}", this.race.bopDTOList);
+        console.log("BOP selected -> {}", this.selectedBop);
+        this.selectedBop = new Bop();
+    }
+
+    deleteBop(index: number) {
+        this.race.bopDTOList.splice(index, 1);
+    }
+
+    bopSelected(bop: Bop, index: number) {
+        console.log("bop selected -> {}",bop);
+        this.selectedBopIndex = index;
+        this.selectedBop = bop;
     }
 
 }

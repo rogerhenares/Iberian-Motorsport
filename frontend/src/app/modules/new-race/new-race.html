@@ -9,36 +9,79 @@
                 <mat-step>
                     <ng-template matStepLabel style="color: #00FFC0">RACE INFO</ng-template>
                     <app-race-form #raceFormComponent [race]="race"></app-race-form>
+                    <hr>
                     <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="validateRace()">Next</button>
+                        <button mat-button class="btn btn-primary" style="color: black" matStepperPrevious>Back</button>
+                        <button mat-button class="btn btn-primary" style="color: black" (click)="validateRace()">Next</button>
                     </div>
                 </mat-step>
                 <ng-container *ngFor="let session of sessionList; let i = index">
                     <mat-step>
                         <app-session-form #sessionFormComponent [session]="session"></app-session-form>
                         <ng-template matStepLabel>Session {{session.sessionType}}</ng-template>
+                        <hr>
                         <div>
-                            <button mat-button matStepperPrevious>Back</button>
-                            <button mat-button (click)="validateSession(i)">Next</button>
+                            <button mat-button class="btn btn-primary" style="color: black" matStepperPrevious>Back</button>
+                            <button mat-button class="btn btn-primary" style="color: black" (click)="validateSession(i)">Next</button>
                         </div>
                     </mat-step>
                 </ng-container>
                 <mat-step>
+                    <ng-template matStepLabel>BOP</ng-template>
+                    <ng-container *ngTemplateOutlet="BopList"></ng-container>
+                    <app-bop-form #bopFormComponent [championshipCarList]="carList" [bop]="selectedBop"></app-bop-form>
+                    <div>
+                        <button (click)="addBop()" class="btn btn-primary" style="color: black">ADD BOP</button>
+                    </div>
+                    <hr>
+                    <div>
+                        <button mat-button class="btn btn-primary" style="color: black" matStepperPrevious>Back</button>
+                        <button mat-button class="btn btn-primary" style="color: black" matStepperNext>Next</button>
+                    </div>
+                </mat-step>
+                <mat-step>
                     <app-race-rules-form #raceRulesFormComponent [raceRules]="raceRules"></app-race-rules-form>
                     <ng-template matStepLabel>Pit Rules</ng-template>
+                    <hr>
                     <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="validateRaceRules()">Next</button>
-                    </div>
-                    <div class="btn-block">
-                        <button id="submit" type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                        <button class="btn btn-primary" mat-button class="btn btn-primary" style="color: black" matStepperPrevious style="color: black;">Back</button>
+                        <button mat-button id="submit" type="submit" class="btn btn-primary" style="color: black" (click)="onSubmit()">Submit</button>
                     </div>
                 </mat-step>
             </mat-stepper>
         </div>
     </div>
 </div>
+
+<ng-template #BopList>
+    <h4 style="color: #FF9800"> BOP LIST </h4>
+    <br>
+    <div *ngIf="!race.bopDTOList?.length" style="width: 100%; color: #00EBB1">
+        <span style="width: 100%;">There are no BOPs for this race.</span>
+    </div>
+    <table class="table" style="text-align: center; overflow-y: auto; max-height: 400px">
+        <ng-container *ngIf="race.bopDTOList?.length">
+            <thead class=" text-primary">
+            <th class="car">CAR</th>
+            <th class="ballast">BALLAST</th>
+            <th class="restrictor">RESTRICTOR</th>
+            <th class="options">OPTIONS</th>
+            </thead>
+            <ng-container *ngFor="let bop of race?.bopDTOList; let i = index">
+                <tbody>
+                <tr [ngClass]="{'selected': selectedBopIndex === i}"  (click)="bopSelected(bop, i)">
+                    <td class="car" style="text-align: left"><img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{bop.car?.manufacturer}}.png">{{bop.car?.model}}</td>
+                    <td class="ballast" style="text-align: left">{{bop.ballastKg}}</td>
+                    <td class="restrictor" style="text-align: left">{{bop.restrictor}}</td>
+                    <td class="text-right">
+                        <button class="btn btn-danger btn-sm" (click)="deleteBop(i);" style="color: black">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </ng-container>
+        </ng-container>
+    </table>
+</ng-template>
 
 <swal
     #requestSuccessSwal

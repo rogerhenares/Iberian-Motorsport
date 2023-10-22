@@ -1,6 +1,7 @@
 import {RaceRules} from "./RaceRules";
 import {Session} from "./Session";
 import {Grid} from "./Grid";
+import {Bop} from "./Bop";
 
 export class Race {
     id: number;
@@ -18,6 +19,7 @@ export class Race {
     startDate: string;
     raceRulesDTO: RaceRules;
     sessionDTOList: Session[];
+    bopDTOList: Bop[];
     grid: Grid;
     championshipId: number;
 
@@ -37,6 +39,7 @@ export class Race {
         this.startDate = null;
         this.raceRulesDTO = null;
         this.sessionDTOList = [];
+        this.bopDTOList = [];
         this.grid = null;
         this.championshipId = null;
     }

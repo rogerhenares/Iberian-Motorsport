@@ -64,10 +64,8 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
 
     isUserLoggedToNavigate() : boolean {
         if(this.loadLoggedUser()) {
-            console.log('user has credentials');
             return true;
         } else {
-            console.log('user without credentials');
             this.router.navigate(['/championship']);
         }
     }

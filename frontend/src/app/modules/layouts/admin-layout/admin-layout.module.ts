@@ -42,6 +42,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BopFormComponent} from "../../bop-form/bop-form.component";
 
 
 @NgModule({
@@ -92,7 +93,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     RaceListComponent,
     SanctionsComponent,
     SanctionFormComponent,
-    UserListComponent
+    UserListComponent,
+    BopFormComponent
   ]
 })
 

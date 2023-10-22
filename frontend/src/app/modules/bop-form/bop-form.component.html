@@ -1,0 +1,33 @@
+<div class="card-body">
+    <div class="testbox">
+        <form id="raceForm" [formGroup]="bopForm">
+            <h4 style="color: #FF9800"> BOP EDIT </h4>
+            <br>
+            <div class="item">
+                <div class="custom-form">
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0">Car</mat-label>
+                            <mat-select formControlName="car">
+                                <mat-option *ngFor="let car of championshipCarList" [value]="car">{{car.model}}</mat-option>
+                                <mat-error [hidden]="!(bopFormSubmitted && bopForm.controls.car.errors)">Car Error</mat-error>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field>
+                        <mat-label style="color: #00FFC0">Ballast KG</mat-label>
+                        <input style="color: #999999" matInput formControlName="ballastKg">
+                        <mat-error [hidden]="!(bopFormSubmitted && bopForm.controls.ballastKg.errors)">Starting Date Error</mat-error>
+                    </mat-form-field>
+                    <div>
+                        <mat-form-field>
+                            <mat-label style="color: #00FFC0">Restrictor</mat-label>
+                            <input style="color: #999999" matInput formControlName="restrictor"/>
+                            <mat-error [hidden]="!(bopFormSubmitted && bopForm.controls.restrictor.errors)">Server Name Error</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

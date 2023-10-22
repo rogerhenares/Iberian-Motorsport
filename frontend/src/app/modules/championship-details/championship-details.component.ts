@@ -52,7 +52,6 @@ export class ChampionshipDetailsComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             const championshipId = +params.get('championshipId');
             this.fetchChampionshipDetails(championshipId);
-            console.log("Championship ->" ,this.championship)
         });
     }
 
@@ -69,6 +68,7 @@ export class ChampionshipDetailsComponent implements OnInit {
                         this.selectedRaceId = this.races[0].id;
                         this.selectedRace = this.races[0]
                     }
+                    console.log("Championship ->" ,this.championship)
                 },
                 (error: any) => {
                     console.error('Error fetching championship details:', error);
@@ -114,12 +114,12 @@ export class ChampionshipDetailsComponent implements OnInit {
         return "assets/circuit/" + defaultConfig + ".png";
     }
 
-    createNewRace(championshipId: number) {
-        this.router.navigateByUrl("/race/new", {state: {championshipId: championshipId}});
+    createNewRace(championship: Championship) {
+        this.router.navigateByUrl("/race/new", {state: {championshipId: championship?.id, championshipCarList: championship?.carList}});
     }
 
-    editRace(championshipId: number, race: Race) {
-        this.router.navigateByUrl("/race/new", { state: { championshipId: championshipId, race: race } });
+    editRace(championship: Championship, race: Race) {
+        this.router.navigateByUrl("/race/new", { state: { championshipId: championship?.id, race: race, championshipCarList: championship?.carList } });
     }
 
     deleteRace() {

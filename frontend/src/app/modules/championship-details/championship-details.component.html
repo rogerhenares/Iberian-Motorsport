@@ -43,8 +43,8 @@
 
                 <div class="row justify-content-md-center">
                         <div class="col-md-auto">
-                            <button *ngIf=appContext.isAdmin() (click)="createNewRace(this.championship.id)" style="color: black" class="btn btn-primary">Add Race</button>
-                            <button *ngIf=appContext.isAdmin() (click)="editRace(this.championship.id, selectedRace)" style="color: black" class="btn btn-warning">Edit Race</button>
+                            <button *ngIf=appContext.isAdmin() (click)="createNewRace(this.championship)" style="color: black" class="btn btn-primary">Add Race</button>
+                            <button *ngIf=appContext.isAdmin() (click)="editRace(this.championship, selectedRace)" style="color: black" class="btn btn-warning">Edit Race</button>
                             <button *ngIf=appContext.isAdmin() (click)="deleteSwalRace.fire()" style="color: black" class="btn btn-danger">Delete Race</button>
                         </div>
                         <div class="col-md-auto">
