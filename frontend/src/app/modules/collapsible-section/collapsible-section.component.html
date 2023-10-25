@@ -1,6 +1,8 @@
 <div class="card" style="margin-bottom: 5px; margin-top: 0px;" [ngStyle]="{'padding-bottom: ': isOpen ? '0px;' : '100px'}" [@collapse]="isOpen.toString()">
   <div class="card-header card-header-danger" (click)="onToggle()">
-    <h4 class="card-title">{{ sectionTitle }}</h4>
+    <h4 class="card-title">{{ sectionTitle }}
+      <span class="expand-collapse-icon" [ngClass]="{'expand-icon': !isOpen, 'collapse-icon': isOpen}"></span>
+    </h4>
   </div>
   <div class="card-body table-responsive" *ngIf="isOpen" style="overflow-y: hidden !important;">
     <ng-content></ng-content>

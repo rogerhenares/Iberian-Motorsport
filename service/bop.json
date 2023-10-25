@@ -1,0 +1,8 @@
+{
+  "entries" : [ {
+    "track" : "testTrack",
+    "carModel" : null,
+    "ballastKg" : 10,
+    "restrictor" : 0
+  } ]
+}

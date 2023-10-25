@@ -45,6 +45,7 @@ public class ImportDataServiceTest {
     private GridRaceRepository gridRaceRepository;
     @Mock
     private RaceRepository raceRepository;
+    @Mock
     private RaceMapper raceMapper;
     @Mock
     private SessionService sessionService;
@@ -57,6 +58,8 @@ public class ImportDataServiceTest {
     @Mock
     private GridRaceService gridRaceService;
     @Mock
+    private CarService carService;
+    @Mock
     private SanctionRepository sanctionRepository;
 
     @Value("#{'${pointsSystem}'}")
@@ -65,13 +68,13 @@ public class ImportDataServiceTest {
     @Value("#{'${qualyPoints}'}")
     private List<Integer> qualyPoints;
 
-    @Value("${assettocorsa.folder.import.filepath}")
-    private String filePath;
+//    @Value("${assettocorsa.folder.import.filepath}")
+//    private String filePath;
 
 
     @BeforeEach
     public void init() {
-        raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
+        raceService = new RaceServiceImpl(championshipService, raceRepository, carService, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
         importDataService = new ImportDataServiceImpl(championshipService, raceService, gridRaceService, sanctionRepository, pointsSystem, qualyPoints);
     }
 
@@ -89,7 +92,6 @@ public class ImportDataServiceTest {
             importDataService.importData();
 
             verify(gridRaceService, times(2)).saveGridRace(gridRaceCaptor.capture());
-
 
             List<GridRace> capturedGridRaces = gridRaceCaptor.getAllValues();
 

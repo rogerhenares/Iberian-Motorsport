@@ -8,12 +8,12 @@ import java.util.List;
 @Data
 public class Event {
     private String track;
-    private Float preRaceWaitingTimeSeconds;
-    private Float sessionOverTimeSeconds;
-    private Float ambientTemp;
+    private Integer preRaceWaitingTimeSeconds;
+    private Integer sessionOverTimeSeconds;
+    private Integer ambientTemp;
     private Float cloudLevel;
     private Float rain;
-    private Float weatherRandomness;
+    private Integer weatherRandomness;
     private Float configVersion;
     private List<Sessions> sessions;
 }

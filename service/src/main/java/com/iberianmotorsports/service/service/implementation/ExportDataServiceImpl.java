@@ -26,6 +26,7 @@ public class ExportDataServiceImpl implements ExportDataService {
     public void exportData(Race race, EntryProperties entryProperties, EntryListProperties entryListProperties) throws Exception {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
+        mapper.writeValue(new File("bop.json"), getBopEntries(race.getBopList(), race.getTrack()));
         mapper.writeValue(new File("settings.json"), getSettings(race.getChampionship(), race));
         mapper.writeValue(new File("event.json"), getEvent(race));
         mapper.writeValue(new File("eventRules.json"), getEventRules(race.getRaceRules()));
@@ -33,7 +34,7 @@ public class ExportDataServiceImpl implements ExportDataService {
         List<Entry> entryList = new ArrayList<>();
         for (Grid grid : race.getChampionship().getGridList()) {
             if(!grid.getDisabled()){
-                entryList.add(getEntry(generateDriverList(grid), entryProperties));
+                entryList.add(getEntry(generateDriverList(grid), entryProperties, grid));
             }
         }
         mapper.writeValue(new File("entrylist.json"), getEntryList(entryList, entryListProperties));
@@ -44,21 +45,21 @@ public class ExportDataServiceImpl implements ExportDataService {
         Settings settings = new Settings();
         settings.setServerName("IML Iberian Motor Sports | " + championship.getName() + " | " + race.getTrack() + " | " + "#C" + championship.getId() + "R" + race.getId());
         settings.setAdminPassword(championship.getAdminPassword());
-        settings.setCarGroup(championship.getCarGroup());
-        settings.setTrackMedalsRequirement(championship.getTrackMedalsRequirement().floatValue());
-        settings.setSafetyRatingRequirement(championship.getSafetyRatingRequirement().floatValue());
-        settings.setRacecraftRatingRequirement(championship.getRacecraftRatingRequirement().floatValue());
+        settings.setCarGroup("FreeForAll");
+        settings.setTrackMedalsRequirement(championship.getTrackMedalsRequirement());
+        settings.setSafetyRatingRequirement(championship.getSafetyRatingRequirement());
+        settings.setRacecraftRatingRequirement(championship.getRacecraftRatingRequirement());
         settings.setPassword(championship.getPassword());
         settings.setSpectatorPassword(championship.getSpectatorPassword());
-        settings.setMaxCarSlots(championship.getMaxCarSlots().floatValue());
-        settings.setDumpLeaderboards(championship.getDumpLeaderboards().floatValue());
-        settings.setIsRaceLocked(championship.getIsRaceLocked().floatValue());
-        settings.setRandomizeTrackWhenEmpty(championship.getRandomizeTrackWhenEmpty().floatValue());
+        settings.setMaxCarSlots(championship.getMaxCarSlots());
+        settings.setDumpLeaderboards(championship.getDumpLeaderboards());
+        settings.setIsRaceLocked(championship.getIsRaceLocked());
+        settings.setRandomizeTrackWhenEmpty(championship.getRandomizeTrackWhenEmpty());
         settings.setCentralEntryListPath(championship.getCentralEntryListPath());
-        settings.setAllowAutoDq(championship.getAllowAutoDq().floatValue());
-        settings.setShortFormationLap(championship.getFormationLapType().floatValue());
-        settings.setDumpEntryList(championship.getDumpEntryList().floatValue());
-        settings.setFormationLapType(championship.getFormationLapType().floatValue());
+        settings.setAllowAutoDq(championship.getAllowAutoDq());
+        settings.setShortFormationLap(championship.getFormationLapType());
+        settings.setDumpEntryList(championship.getDumpEntryList());
+        settings.setFormationLapType(championship.getFormationLapType());
         return settings;
     }
 
@@ -75,30 +76,30 @@ public class ExportDataServiceImpl implements ExportDataService {
     public Event getEvent(Race race) {
         Event event = new Event();
         event.setTrack(race.getTrack());
-        event.setPreRaceWaitingTimeSeconds(race.getPreRaceWaitingTimeSeconds().floatValue());
-        event.setSessionOverTimeSeconds(race.getSessionOverTimeSeconds().floatValue());
-        event.setAmbientTemp(race.getAmbientTemp().floatValue());
+        event.setPreRaceWaitingTimeSeconds(race.getPreRaceWaitingTimeSeconds());
+        event.setSessionOverTimeSeconds(race.getSessionOverTimeSeconds());
+        event.setAmbientTemp(race.getAmbientTemp());
         event.setCloudLevel(race.getCloudLevel());
         event.setRain(race.getRain());
-        event.setWeatherRandomness(race.getWeatherRandomness().floatValue());
+        event.setWeatherRandomness(race.getWeatherRandomness());
         event.setSessions(race.getSessionList().stream().map(this::getSessions).toList());
         return event;
     }
 
     public EventRules getEventRules(RaceRules raceRules) {
         EventRules eventRules = new EventRules();
-        eventRules.setQualifyStandingType(raceRules.getQualifyStandingType().floatValue());
-        eventRules.setPitWindowLengthSec(raceRules.getPitWindowLengthSec().floatValue());
-        eventRules.setDriverStintTimeSec(raceRules.getDriverStintTimeSec().floatValue());
-        eventRules.setMandatoryPitstopCount(raceRules.getMandatoryPitstopCount().floatValue());
-        eventRules.setMaxTotalDrivingTime(raceRules.getMaxTotalDrivingTime().floatValue());
-        eventRules.setMaxDriversCount(raceRules.getMaxDriversCount().floatValue());
+        eventRules.setQualifyStandingType(raceRules.getQualifyStandingType());
+        eventRules.setPitWindowLengthSec(raceRules.getPitWindowLengthSec());
+        eventRules.setDriverStintTimeSec(raceRules.getDriverStintTimeSec());
+        eventRules.setMandatoryPitstopCount(raceRules.getMandatoryPitstopCount());
+        eventRules.setMaxTotalDrivingTime(raceRules.getMaxTotalDrivingTime());
+        eventRules.setMaxDriversCount(raceRules.getMaxDriversCount());
         eventRules.setIsRefuellingAllowedInRace(raceRules.getIsRefuellingAllowedInRace() == 1);
         eventRules.setIsRefuellingTimeFixed(raceRules.getIsRefuellingTimeFixed() == 1);
         eventRules.setIsMandatoryPitstopRefuellingRequired(raceRules.getIsMandatoryPitstopRefuellingRequired() == 1);
         eventRules.setIsMandatoryPitstopTyreChangeRequired(raceRules.getIsMandatoryPitstopTyreChangeRequired() == 1);
         eventRules.setIsMandatoryPitstopSwapDriverRequired(raceRules.getIsMandatoryPitstopSwapDriverRequired() == 1);
-        eventRules.setTyreSetCount(raceRules.getTyreSetCount().floatValue());
+        eventRules.setTyreSetCount(raceRules.getTyreSetCount());
         return eventRules;
     }
 
@@ -121,10 +122,17 @@ public class ExportDataServiceImpl implements ExportDataService {
     }
 
 
-    public Entry getEntry(List<Driver> driverList, EntryProperties entryProperties) {
+    public Entry getEntry(List<Driver> driverList, EntryProperties entryProperties, Grid grid) {
         Entry entry = new Entry();
         entry.setDrivers(driverList);
+        entry.setRaceNumber(grid.getCarNumber());
+        entry.setForcedCarModel(entryProperties.getForceCarModel());
         entry.setOverrideDriverInfo(entryProperties.getOverrideDriverInfo());
+        entry.setDefaultGridPosition(entryProperties.getDefaultGridPosition());
+        entry.setBallastKg(entryProperties.getBallastKg());
+        entry.setRestrictor(entryProperties.getRestrictor());
+        entry.setCustomCar(entryProperties.getCustomCar());
+        entry.setOverrideCarModelForCustomCar(entryProperties.getOverrideCarModelForCustomCar());
         entry.setIsServerAdmin(entryProperties.getIsServerAdmin());
         return entry;
     }
@@ -135,6 +143,19 @@ public class ExportDataServiceImpl implements ExportDataService {
         entryList.setEntries(entries);
         entryList.setForceEntryList(entryListProperties.getForceEntryList());
         return entryList;
+    }
+
+    public Entries getBopEntries(List<Bop> bopList, String raceTrack) {
+        Entries entries = new Entries();
+        for(Bop bop : bopList) {
+            BopEntry bopEntry = new BopEntry();
+            bopEntry.setTrack(raceTrack);
+            bopEntry.setCarModel(bop.getBopPrimaryKey().getCar().getModelId());
+            bopEntry.setBallastKg(bop.getBallastKg());
+            bopEntry.setRestrictor(bop.getRestrictor());
+            entries.getEntries().add(bopEntry);
+        }
+        return entries;
     }
 
 }

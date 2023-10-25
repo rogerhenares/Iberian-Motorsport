@@ -4,16 +4,16 @@ import lombok.Data;
 
 @Data
 public class EventRules {
-    private Float qualifyStandingType;
-    private Float pitWindowLengthSec;
-    private Float driverStintTimeSec;
-    private Float mandatoryPitstopCount;
-    private Float maxTotalDrivingTime;
-    private Float maxDriversCount;
+    private Long qualifyStandingType;
+    private Integer pitWindowLengthSec;
+    private Integer driverStintTimeSec;
+    private Integer mandatoryPitstopCount;
+    private Integer maxTotalDrivingTime;
+    private Integer maxDriversCount;
     private Boolean isRefuellingAllowedInRace;
     private Boolean isRefuellingTimeFixed;
     private Boolean isMandatoryPitstopRefuellingRequired;
     private Boolean isMandatoryPitstopTyreChangeRequired;
     private Boolean isMandatoryPitstopSwapDriverRequired;
-    private Float tyreSetCount;
+    private Integer tyreSetCount;
 }

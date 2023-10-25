@@ -1,0 +1,19 @@
+{
+  "serverName" : "IML Iberian Motor Sports | testName | testTrack | #C1R368",
+  "adminPassword" : "testAdminPassword",
+  "carGroup" : "testCarGroup",
+  "trackMedalsRequirement" : 0.0,
+  "safetyRatingRequirement" : 0.0,
+  "racecraftRatingRequirement" : 0.0,
+  "password" : "testPassword",
+  "spectatorPassword" : "testSpectatorPassword",
+  "maxCarSlots" : 0.0,
+  "dumpLeaderboards" : 1.0,
+  "isRaceLocked" : 0.0,
+  "randomizeTrackWhenEmpty" : 0.0,
+  "centralEntryListPath" : "testCentralEntryListPath",
+  "allowAutoDq" : 0.0,
+  "shortFormationLap" : 0.0,
+  "dumpEntryList" : 0.0,
+  "formationLapType" : 0.0
+}

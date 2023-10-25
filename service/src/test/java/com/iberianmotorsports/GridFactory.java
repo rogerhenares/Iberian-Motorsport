@@ -17,6 +17,7 @@ public class GridFactory {
 
     public static final Championship championship = ChampionshipFactory.championship();
     public static final List<User> drivers = UserFactory.userList(5);
+    public static final Boolean disabled = false;
 
     public static Grid grid() {
         Grid grid = new Grid();
@@ -26,6 +27,7 @@ public class GridFactory {
         grid.setCar(car);
         grid.setChampionship(championship);
         grid.setDrivers(drivers);
+        grid.setDisabled(disabled);
         return grid;
     }
 

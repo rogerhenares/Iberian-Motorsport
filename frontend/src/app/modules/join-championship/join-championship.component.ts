@@ -49,7 +49,7 @@ export class JoinChampionshipComponent implements OnInit {
     gridFormBuilder() {
         this.gridSubmitted = false;
         this.gridForm = this.formBuilder.group({
-            carNumber: [this.teamSoloJoin === true? null : this.grid.carNumber, [Validators.required]],
+            carNumber: [this.teamSoloJoin === true? null : this.grid.carNumber, [Validators.required, Validators.pattern('^[0-9]{1,3}$')]],
             carLicense: [this.teamSoloJoin === true? null : this.grid.carLicense],
             championshipId: [this.championship.id],
             driversList: [this.teamSoloJoin === true? null : this.grid.driversList],
@@ -162,4 +162,5 @@ export class JoinChampionshipComponent implements OnInit {
         return this.grid.driversList.find(driver => driver.steamId === this.appContext.getLoggedUser().steamId) != undefined;
     }
 
+    protected readonly history = history;
 }

@@ -8,19 +8,19 @@ public class Settings {
     private String serverName;
     private String adminPassword;
     private String carGroup;
-    private Float trackMedalsRequirement;
-    private Float safetyRatingRequirement;
-    private Float racecraftRatingRequirement;
+    private Integer trackMedalsRequirement;
+    private Integer safetyRatingRequirement;
+    private Integer racecraftRatingRequirement;
     private String password;
     private String spectatorPassword;
-    private Float maxCarSlots;
-    private Float dumpLeaderboards;
-    private Float isRaceLocked;
-    private Float randomizeTrackWhenEmpty;
+    private Integer maxCarSlots;
+    private Integer dumpLeaderboards;
+    private Integer isRaceLocked;
+    private Integer randomizeTrackWhenEmpty;
     private String centralEntryListPath;
-    private Float allowAutoDq;
-    private Float shortFormationLap;
-    private Float dumpEntryList;
-    private Float formationLapType;
+    private Integer allowAutoDq;
+    private Integer shortFormationLap;
+    private Integer dumpEntryList;
+    private Integer formationLapType;
 
 }

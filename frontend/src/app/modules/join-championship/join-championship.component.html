@@ -18,7 +18,7 @@
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label style="color: #00FFC0">Car Number</mat-label>
-                                        <input style="color: #999999" matInput formControlName="carNumber" [readonly]="(this.isTeamChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin()))"/>
+                                        <input style="color: #999999" matInput formControlName="carNumber" [readonly]="(this.isTeamChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin()))" minlength="1" maxlength="3"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field *ngIf="grid.carLicense != null || this.appContext.isAdmin()">
@@ -58,8 +58,11 @@
                         </div>
                         <hr>
                         <ng-container *ngIf="(isDriver() && isGridManager()) || !isDriver() || this.appContext.isAdmin()">
-                            <div class="btn-block">
+                            <div class="btn-block" *ngIf="!history.state.grid">
                                 <button type="submit" class="btn btn-primary" style="color: black">Join</button>
+                            </div>
+                            <div class="btn-block" *ngIf="history.state.grid">
+                                <button type="submit" class="btn btn-primary" style="color: black">Edit</button>
                             </div>
                         </ng-container>
                     </form>

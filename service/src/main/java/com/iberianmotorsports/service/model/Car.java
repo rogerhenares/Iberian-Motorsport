@@ -27,4 +27,8 @@ public class Car implements Serializable {
     @NotBlank
     @Column(name = "category")
     private String category;
+
+    @NotBlank
+    @Column(name = "model_id")
+    private Integer modelId;
 }

@@ -15,6 +15,7 @@ import com.iberianmotorsports.service.service.GridRaceService;
 import com.iberianmotorsports.service.service.ImportDataService;
 import com.iberianmotorsports.service.service.RaceService;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class ImportDataServiceImpl implements ImportDataService {
     public void importData() throws Exception {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String filePath = "230902_220657_Q.json";
+        String filePath = "231004_223754_Q.json";
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
              InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_16LE)) {

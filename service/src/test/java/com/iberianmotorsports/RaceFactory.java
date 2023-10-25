@@ -1,9 +1,6 @@
 package com.iberianmotorsports;
 
-import com.iberianmotorsports.service.model.Championship;
-import com.iberianmotorsports.service.model.Race;
-import com.iberianmotorsports.service.model.RaceRules;
-import com.iberianmotorsports.service.model.Session;
+import com.iberianmotorsports.service.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +21,7 @@ public class RaceFactory {
     public static final Championship championship = new Championship();
     public static final RaceRules raceRules = new RaceRules();
     public static final List<Session> sessionList = new ArrayList<>();
+    public static final List<Bop> bopList = new ArrayList<>();
 
 
     public static Race race() {
@@ -43,6 +41,7 @@ public class RaceFactory {
         race.setChampionship(ChampionshipFactory.championship());
         race.setRaceRules(RaceRulesFactory.raceRules());
         race.setSessionList(SessionFactory.sessionList());
+        race.setBopList(BopFactory.bopList());
         return race;
     }
 }

@@ -4,3 +4,15 @@
     padding-bottom: 10px;
     padding-top: 10px;
 }
+
+.expand-collapse-icon {
+    float: right;
+}
+
+.expand-icon::before {
+    content: '+';
+}
+
+.collapse-icon::before {
+    content: '-';
+}

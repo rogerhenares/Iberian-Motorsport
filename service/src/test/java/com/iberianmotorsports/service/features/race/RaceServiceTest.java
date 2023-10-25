@@ -5,16 +5,15 @@ import com.iberianmotorsports.RaceFactory;
 import com.iberianmotorsports.RaceRulesFactory;
 import com.iberianmotorsports.SessionFactory;
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.controller.DTO.CarDTO;
 import com.iberianmotorsports.service.controller.DTO.Mappers.*;
 import com.iberianmotorsports.service.controller.DTO.RaceDTO;
+import com.iberianmotorsports.service.model.Bop;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.repository.ChampionshipCategoryRepository;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
-import com.iberianmotorsports.service.service.ChampionshipService;
-import com.iberianmotorsports.service.service.RaceRulesService;
-import com.iberianmotorsports.service.service.RaceService;
-import com.iberianmotorsports.service.service.SessionService;
+import com.iberianmotorsports.service.service.*;
 import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
 import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.hibernate.service.spi.ServiceException;
@@ -58,6 +57,11 @@ public class RaceServiceTest {
     private SessionService sessionService;
     private RaceRulesMapper raceRulesMapper;
     private RaceRulesDTOMapper raceRulesDTOMapper;
+    private BopMapper bopMapper;
+    private BopDTOMapper bopDTOMapper;
+    private CarMapper carMapper;
+    private CarDTOMapper carDTOMapper;
+    private CarService carService;
     private RaceRulesService raceRulesService;
     private ChampionshipCategoryRepository championshipCategoryRepository;
 
@@ -72,10 +76,13 @@ public class RaceServiceTest {
         raceRulesMapper = new RaceRulesMapper();
         raceRulesDTOMapper = new RaceRulesDTOMapper();
         championshipMapper = new ChampionshipMapper();
-        raceMapper = new RaceMapper(raceRulesMapper, sessionMapper);
-        raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper);
+        bopMapper = new BopMapper();
+        carDTOMapper = new CarDTOMapper();
+        bopDTOMapper = new BopDTOMapper(carDTOMapper);
+        raceMapper = new RaceMapper(raceRulesMapper, sessionMapper, bopMapper, carMapper);
+        raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper, bopDTOMapper);
         //championshipService = new ChampionshipServiceImpl(championshipRepository, championshipCategoryRepository);
-        raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
+        raceService = new RaceServiceImpl(championshipService, raceRepository, carService, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
     }
 
     @Nested

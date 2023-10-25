@@ -11,8 +11,14 @@ import java.util.List;
 public class Entry extends EntryProperties {
 
     private List<Driver> drivers;
-    private Float raceNumber;
+    private Integer raceNumber;
+    private Integer forcedCarModel;
     private Float overrideDriverInfo;
+    private Integer defaultGridPosition;
+    private Integer ballastKg;
+    private Integer restrictor;
+    private String customCar;
+    private Integer overrideCarModelForCustomCar;
     private Float isServerAdmin;
 
 }
