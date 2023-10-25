@@ -19,7 +19,12 @@
 </div>
 
 <ng-template #tabContainer>
-    <table class="table" >
+    <ng-container *ngIf="(this.selectedValue === 'TEAM' && teamGrid?.length === 0) || filteredGrid.length === 0">
+        <div style="width: 100%; color: #00EBB1">
+            <p style="width: 100%;">There are no drivers for this category.</p>
+        </div>
+    </ng-container>
+    <table class="table" *ngIf="!(this.selectedValue === 'TEAM' && teamGrid?.length === 0) && !(filteredGrid.length === 0)">
         <thead class=" text-primary">
         <th class="posHeader">POS</th>
         <th class="nameHeader" *ngIf="!isTeamStandings()">DRIVER</th>

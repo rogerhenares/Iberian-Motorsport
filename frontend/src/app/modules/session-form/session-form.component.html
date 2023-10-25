@@ -26,10 +26,10 @@
                     <div>
                         <mat-form-field>
                             <mat-label style="color: #00FFC0">Day Of The Weekend</mat-label>
-                            <mat-select formControlName="dayOfWeekend" class="custom-form">
-                                <mat-option value=1>Friday</mat-option>
-                                <mat-option value=2>Saturday</mat-option>
-                                <mat-option value=3>Sunday</mat-option>
+                            <mat-select formControlName="dayOfWeekend" class="custom-form" [(value)]="session.dayOfWeekend">
+                                <mat-option [value]=1>Friday</mat-option>
+                                <mat-option [value]=2>Saturday</mat-option>
+                                <mat-option [value]=3>Sunday</mat-option>
                             </mat-select>
                             <mat-error [hidden]="!(sessionFormSubmitted && sessionForm.controls.dayOfWeekend.errors)">Day Of The Weekend Error</mat-error>
                         </mat-form-field>

@@ -5,7 +5,7 @@ export class Car{
     category: string;
 
     constructor() {
-        this.id = null;
+        this.id = -1;
         this.manufacturer = null;
         this.model = null;
         this.category = null;

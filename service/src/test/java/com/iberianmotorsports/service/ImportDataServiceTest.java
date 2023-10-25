@@ -11,7 +11,6 @@ import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.repository.SanctionRepository;
 import com.iberianmotorsports.service.service.*;
 import com.iberianmotorsports.service.service.implementation.ImportDataServiceImpl;
-import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,7 +44,6 @@ public class ImportDataServiceTest {
     private GridRaceRepository gridRaceRepository;
     @Mock
     private RaceRepository raceRepository;
-    @Mock
     private RaceMapper raceMapper;
     @Mock
     private SessionService sessionService;
@@ -58,8 +56,6 @@ public class ImportDataServiceTest {
     @Mock
     private GridRaceService gridRaceService;
     @Mock
-    private CarService carService;
-    @Mock
     private SanctionRepository sanctionRepository;
 
     @Value("#{'${pointsSystem}'}")
@@ -68,13 +64,13 @@ public class ImportDataServiceTest {
     @Value("#{'${qualyPoints}'}")
     private List<Integer> qualyPoints;
 
-//    @Value("${assettocorsa.folder.import.filepath}")
-//    private String filePath;
+    @Value("${assettocorsa.folder.import.filepath}")
+    private String filePath;
 
 
     @BeforeEach
     public void init() {
-        raceService = new RaceServiceImpl(championshipService, raceRepository, carService, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
+        //raceService = new RaceServiceImpl(championshipService, raceRepository, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
         importDataService = new ImportDataServiceImpl(championshipService, raceService, gridRaceService, sanctionRepository, pointsSystem, qualyPoints);
     }
 

@@ -70,10 +70,10 @@
             <ng-container *ngFor="let bop of race?.bopDTOList; let i = index">
                 <tbody>
                 <tr [ngClass]="{'selected': selectedBopIndex === i}"  (click)="bopSelected(bop, i)">
-                    <td class="car" style="text-align: left"><img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{bop.car?.manufacturer}}.png">{{bop.car?.model}}</td>
-                    <td class="ballast" style="text-align: left">{{bop.ballastKg}}</td>
-                    <td class="restrictor" style="text-align: left">{{bop.restrictor}}</td>
-                    <td class="text-right">
+                    <td class="car" style="text-align: center"><img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{bop.car?.manufacturer}}.png">{{bop.car?.model}}</td>
+                    <td class="ballast" style="text-align: center">{{bop.ballastKg}}</td>
+                    <td class="restrictor" style="text-align: center">{{bop.restrictor}}</td>
+                    <td class="text-center">
                         <button class="btn btn-danger btn-sm" (click)="deleteBop(i);" style="color: black">Delete</button>
                     </td>
                 </tr>

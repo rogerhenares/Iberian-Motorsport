@@ -155,7 +155,7 @@ export class NewRace {
         let isBopValid = this.bopFormComponent.bopForm.valid;
         if(isBopValid == true) {
             let newBop = this.bopFormComponent.bopForm.value
-            console.log("bop modify ->", newBop);
+            newBop.car = this.carList.find(car => car.id === newBop.car);
             const index = this.race.bopDTOList.findIndex(bop => bop.car.id === newBop.car.id);
             if(index === -1) {
                 this.race.bopDTOList.push(newBop);

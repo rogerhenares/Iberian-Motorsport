@@ -14,8 +14,6 @@ import com.iberianmotorsports.service.repository.ChampionshipCategoryRepository;
 import com.iberianmotorsports.service.repository.ChampionshipRepository;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.*;
-import com.iberianmotorsports.service.service.implementation.ChampionshipServiceImpl;
-import com.iberianmotorsports.service.service.implementation.RaceServiceImpl;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;

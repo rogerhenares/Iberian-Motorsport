@@ -24,7 +24,7 @@ public class ChampionshipMapper implements Function<ChampionshipDTO, Championshi
         championship.setDescription(championshipDTO.description());
         championship.setAdminPassword(championshipDTO.adminPassword());
         championship.setCarGroup(championshipDTO.carGroup());
-        championship.setSubCarGroup(championshipDTO.subCarGroup().isBlank() ? null : championship.getSubCarGroup());
+        championship.setSubCarGroup(championshipDTO.subCarGroup().isBlank() ? null : championshipDTO.subCarGroup());
         championship.setTrackMedalsRequirement(championshipDTO.trackMedalsRequirement());
         championship.setSafetyRatingRequirement(championshipDTO.safetyRatingRequirement());
         championship.setRacecraftRatingRequirement(championshipDTO.racecraftRatingRequirement());
