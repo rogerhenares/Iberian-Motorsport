@@ -26,7 +26,6 @@ export class Championship {
     formationLapType: number;
     ignorePrematureDisconnects: number;
     imageContent: string;
-    startDate: string;
     style: string;
     raceList: Array<Race>;
     nextRace: Race;
@@ -41,7 +40,7 @@ export class Championship {
         this.id = -1;
         this.name= '';
         this.description= 'Campeonato de IML';
-        this.adminPassword= '';
+        this.adminPassword= 'IMLAdmin';
         this.carGroup= 'GT3';
         this.subCarGroup= '';
         this.trackMedalsRequirement= 3;
@@ -61,7 +60,6 @@ export class Championship {
         this.formationLapType= 0;
         this.ignorePrematureDisconnects= 1;
         this.imageContent= null;
-        this.startDate = null;
         this.style = null;
         this.raceList = null;
         this.disabled = true;

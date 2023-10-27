@@ -60,8 +60,6 @@ export class ChampionshipFormComponent {
 
             console.log("Flag 2", champData)
 
-            champData.startDate = this.prepareChampionshipDate(this.championshipForm.get('startDate').value);
-
             if (this.fileBase64) {
                 champData.imageContent = this.fileBase64;
             }
@@ -105,20 +103,11 @@ export class ChampionshipFormComponent {
     }
 
 
-    prepareChampionshipDate(championshipDate: string) {
-        championshipDate = championshipDate.replace('T', ' ')
-        if (championshipDate.length < 19) {
-            championshipDate = championshipDate + ':00';
-        }
-        return championshipDate;
-    }
-
     championshipFormBuilder() {
             this.championshipFormSubmitted = false;
 
         this.championshipForm = this.formBuilder.group({
             name: [this.championship.name, [Validators.required]],
-            startDate: [this.championship.startDate, [Validators.required]],
             style: [this.championship.style, [Validators.required]],
             description: [this.championship.description, [Validators.required]],
             password: [this.championship.password, [Validators.required]],
@@ -132,13 +121,13 @@ export class ChampionshipFormComponent {
             subCarGroup: [this.championship.subCarGroup],
             maxSubCarSlots: [this.championship.maxSubCarSlots],
             isRaceLocked: [this.championship.isRaceLocked, [ Validators.min(0), Validators.max(1)]],
-            randomizeTrackWhenEmpty: [this.championship.randomizeTrackWhenEmpty, [ Validators.min(0), Validators.max(1)]],
+            randomizeTrackWhenEmpty: [this.championship.randomizeTrackWhenEmpty || 0],
             allowAutoDq: [this.championship.allowAutoDq, [ Validators.min(0), Validators.max(1)]],
-            shortFormationLap: [this.championship.shortFormationLap, [ Validators.min(0), Validators.max(1)]],
-            ignorePrematureDisconnects: [this.championship.ignorePrematureDisconnects, [ Validators.min(0), Validators.max(1)]],
-            formationLapType: [String(this.championship.formationLapType), [Validators.required]],
-            centralEntryListPath: [this.championship.centralEntryListPath],
-            imageContent: [this.championship.imageContent],
+            shortFormationLap: [this.championship.shortFormationLap],
+            ignorePrematureDisconnects: [this.championship.ignorePrematureDisconnects],
+            formationLapType: [String(this.championship.formationLapType)],
+            centralEntryListPath: [this.championship.centralEntryListPath || ""],
+            imageContent: [this.championship.imageContent || ""],
             dumpLeaderboards: [1, [Validators.min(0), Validators.max(1)]],
             dumpEntryList: [1, [ Validators.min(0), Validators.max(1)]],
             disabled: [this.championship.disabled, Validators.required],

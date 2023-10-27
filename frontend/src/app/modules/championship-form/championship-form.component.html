@@ -27,13 +27,6 @@
                                                 <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.description.errors)">Description Error</mat-error>
                                             </mat-form-field>
                                         </div>
-                                        <div [hidden]="true">
-                                            <mat-form-field class="white-input" (click)="showPicker()">
-                                                <mat-label style="color: #00FFC0">Starting Date</mat-label>
-                                                <input matInput type="datetime-local" formControlName="startDate" id="datePicker"/>
-                                                <mat-error [hidden]="!(championshipFormSubmitted && championshipForm.controls.startDate.errors)">Starting Date Error</mat-error>
-                                            </mat-form-field>
-                                        </div>
                                     </div>
                                     <div class="item">
                                         <mat-form-field class="white-input">

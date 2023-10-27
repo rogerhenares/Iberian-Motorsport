@@ -110,10 +110,6 @@ public class Championship implements Serializable {
     @Column(name = "image_content")
     private String imageContent;
 
-    @NotNull
-    @Column(name = "start_date")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime startDate;
 
     @Column(name = "style")
     private String style;

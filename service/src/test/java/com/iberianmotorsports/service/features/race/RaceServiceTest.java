@@ -80,7 +80,7 @@ public class RaceServiceTest {
         raceMapper = new RaceMapper(raceRulesMapper, sessionMapper, bopMapper, carMapper);
         raceDTOMapper = new RaceDTOMapper(raceRulesDTOMapper, sessionDTOMapper, bopDTOMapper);
         //championshipService = new ChampionshipServiceImpl(championshipRepository, championshipCategoryRepository);
-        raceService = new RaceServiceImpl(championshipService, raceRepository, carService, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
+//        raceService = new RaceServiceImpl(championshipService, raceRepository, carService, raceMapper, sessionService, raceRulesService, sessionMapper, raceRulesMapper);
     }
 
     @Nested

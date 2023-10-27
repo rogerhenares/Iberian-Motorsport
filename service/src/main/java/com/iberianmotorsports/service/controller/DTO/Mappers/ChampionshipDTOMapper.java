@@ -46,7 +46,6 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getFormationLapType(),
                 championship.getIgnorePrematureDisconnects(),
                 championship.getImageContent(),
-                championship.getStartDate(),
                 championship.getStyle(),
                 championship.getRaceList().stream().map(raceDTOMapper).toList(),
                 championship.getDisabled(),

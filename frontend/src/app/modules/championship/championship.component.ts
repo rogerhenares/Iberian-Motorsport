@@ -19,7 +19,7 @@ export class ChampionshipComponent {
     @Output() selected = new EventEmitter<Championship>();
     @Output() loadingChange = new EventEmitter<boolean>();
 
-    pageable: Pageable = new Pageable(0, 3)
+    pageable: Pageable = new Pageable(0, 3);
     championships: Championship[];
     selectedChampionship: Championship;
     totalPages: number = 0;
@@ -108,14 +108,14 @@ export class ChampionshipComponent {
     goToPreviousPage() {
         if (this.pageable.page >= 1) {
             this.pageable.page = this.pageable.page.valueOf() - 1;
-            this.getChampionshipList(this.pageable.page);
+            this.getChampionshipList(this.pageable.page, this.criteria);
         }
     }
 
     goToNextPage() {
         if (this.pageable.page < this.totalPages) {
             this.pageable.page = this.pageable.page.valueOf() + 1;
-            this.getChampionshipList(this.pageable.page);
+            this.getChampionshipList(this.pageable.page, this.criteria);
         }
     }
 

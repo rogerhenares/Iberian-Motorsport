@@ -29,8 +29,6 @@ public record ChampionshipDTO(
         Integer formationLapType,
         Integer ignorePrematureDisconnects,
         String imageContent,
-        @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-        LocalDateTime startDate,
         String style,
         List<RaceDTO> raceList,
         Boolean disabled,

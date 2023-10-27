@@ -16,7 +16,7 @@ import {ChampionshipComponent} from "../championship/championship.component";
 export class ChampionshipListComponent {
 
     currentChampionshipsOpen = true;
-    upcomingChampionshipsOpen = true;
+    upcomingChampionshipsOpen = false;
     pastChampionshipsOpen = false;
     disabledChampionshipsOpen = false;
     totalPages: number = 0;
