@@ -8,28 +8,59 @@ import com.iberianmotorsports.service.model.parsing.export.*;
 import com.iberianmotorsports.service.model.parsing.imports.Sessions;
 import com.iberianmotorsports.service.model.parsing.properties.EntryListProperties;
 import com.iberianmotorsports.service.model.parsing.properties.EntryProperties;
+import com.iberianmotorsports.service.model.parsing.properties.ServerProperty;
 import com.iberianmotorsports.service.service.ExportDataService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Transactional
 @Service("ExportDataService")
 public class ExportDataServiceImpl implements ExportDataService {
 
+    private static final String FILE_NAME_BOP = "bop.json";
+    private static final String FILE_NAME_SETTINGS = "settings.json";
+    private static final String FILE_NAME_EVENT = "event.json";
+    private static final String FILE_NAME_EVENT_RULES = "eventRules.json";
+    private static final String FILE_NAME_ENTRYLIST = "entrylist.json";
+    public static final String SERVER_NAME_SEPARATOR = " | ";
+    public static final String SERVER_FOLDER_SEPARATOR = "-";
+    private static final String CFG_FOLDER_NAME = "cfg";
+
+    private final ServerProperty serverProperty;
+    private final EntryProperties entryProperties;
+    private final EntryListProperties entryListProperties;
+
     @Override
-    public void exportData(Race race, EntryProperties entryProperties, EntryListProperties entryListProperties) throws Exception {
+    public void exportData(Race race) throws Exception {
+        File championshipFolder = getChampionshipFolder(race);
+        createFolderIfNotExist(championshipFolder);
+        File raceFolder = getRaceFolder(race);
+        createFolderIfNotExist(raceFolder);
+        File defaultFilesFolder = new File(serverProperty.getDefaultFilesFolder());
+        if (defaultFilesFolder.exists()){
+            for (File defaultFile: Objects.requireNonNull(defaultFilesFolder.listFiles())) {
+                Files.copy(Path.of(defaultFile.toURI()), Path.of(raceFolder.toURI()));
+            }
+        }
+        File cfgFolder = new File(raceFolder.getAbsolutePath() + File.separator + CFG_FOLDER_NAME);
+        createFolderIfNotExist(raceFolder);
+
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
-        mapper.writeValue(new File("bop.json"), getBopEntries(race.getBopList(), race.getTrack()));
-        mapper.writeValue(new File("settings.json"), getSettings(race.getChampionship(), race));
-        mapper.writeValue(new File("event.json"), getEvent(race));
-        mapper.writeValue(new File("eventRules.json"), getEventRules(race.getRaceRules()));
+        mapper.writeValue(new File(cfgFolder.getAbsolutePath() + File.separator + FILE_NAME_BOP), getBopEntries(race.getBopList(), race.getTrack()));
+        mapper.writeValue(new File(cfgFolder.getAbsolutePath() + File.separator + FILE_NAME_SETTINGS), getSettings(race.getChampionship(), race));
+        mapper.writeValue(new File(cfgFolder.getAbsolutePath() + File.separator + FILE_NAME_EVENT), getEvent(race));
+        mapper.writeValue(new File(cfgFolder.getAbsolutePath() + File.separator + FILE_NAME_EVENT_RULES), getEventRules(race.getRaceRules()));
 
         List<Entry> entryList = new ArrayList<>();
         for (Grid grid : race.getChampionship().getGridList()) {
@@ -37,15 +68,41 @@ public class ExportDataServiceImpl implements ExportDataService {
                 entryList.add(getEntry(generateDriverList(grid), entryProperties, grid));
             }
         }
-        mapper.writeValue(new File("entrylist.json"), getEntryList(entryList, entryListProperties));
+        mapper.writeValue(new File(cfgFolder.getAbsolutePath() + File.separator + FILE_NAME_ENTRYLIST), getEntryList(entryList, entryListProperties));
+    }
 
+    @Override
+    public File getAccServerDir(Race race) {
+        return getRaceFolder(race);
+    }
+
+    private File getChampionshipFolder(Race race) {
+        return new File(serverProperty.getFolder() + File.separator + "C" + race.getChampionship().getId() +
+                SERVER_FOLDER_SEPARATOR + race.getChampionship().getName());
+    }
+
+    private File getRaceFolder(Race race) {
+        return new File(getChampionshipFolder(race).getAbsolutePath() + File.separator + "R" + race.getChampionship().getId() +
+                SERVER_FOLDER_SEPARATOR + race.getTrack());
+    }
+
+    private void createFolderIfNotExist(File folder) {
+        if(!folder.exists()){
+            Boolean createdFolder = folder.mkdir();
+            if(!createdFolder) {
+                throw new ServiceException(String.format("Unable to create folder for path -> {}", folder.getAbsolutePath()));
+            }
+        }
     }
 
     public Settings getSettings(Championship championship, Race race) {
         Settings settings = new Settings();
-        settings.setServerName("IML Iberian Motor Sports | " + championship.getName() + " | " + race.getTrack() + " | " + "#C" + championship.getId() + "R" + race.getId());
+        settings.setServerName(serverProperty.getServerName() + SERVER_NAME_SEPARATOR +
+                championship.getName() + SERVER_NAME_SEPARATOR +
+                race.getTrack() + SERVER_NAME_SEPARATOR +
+                "#C" + championship.getId() + "R" + race.getId());
         settings.setAdminPassword(championship.getAdminPassword());
-        settings.setCarGroup("FreeForAll");
+        settings.setCarGroup(serverProperty.getCategory());
         settings.setTrackMedalsRequirement(championship.getTrackMedalsRequirement());
         settings.setSafetyRatingRequirement(championship.getSafetyRatingRequirement());
         settings.setRacecraftRatingRequirement(championship.getRacecraftRatingRequirement());
@@ -126,7 +183,7 @@ public class ExportDataServiceImpl implements ExportDataService {
         Entry entry = new Entry();
         entry.setDrivers(driverList);
         entry.setRaceNumber(grid.getCarNumber());
-        entry.setForcedCarModel(entryProperties.getForceCarModel());
+        entry.setForcedCarModel(grid.getCar().getModelId());
         entry.setOverrideDriverInfo(entryProperties.getOverrideDriverInfo());
         entry.setDefaultGridPosition(entryProperties.getDefaultGridPosition());
         entry.setBallastKg(entryProperties.getBallastKg());

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "assettocorsa.entry")
 public class EntryProperties {
 
-    private Integer forceCarModel = -1;
     private Float overrideDriverInfo = 1F;
     private Integer defaultGridPosition = -1;
     private Integer ballastKg = 0;

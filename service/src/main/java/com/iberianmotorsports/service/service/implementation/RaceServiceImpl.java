@@ -13,6 +13,7 @@ import com.iberianmotorsports.service.model.RaceRules;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.repository.RaceRepository;
 import com.iberianmotorsports.service.service.*;
+import com.iberianmotorsports.service.utils.RaceStatus;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -197,4 +199,14 @@ public class RaceServiceImpl implements RaceService {
         }
     }
 
+    @Override
+    public void setRaceStatus(Race race, RaceStatus raceStatus) {
+        race.setStatus(raceStatus.name());
+        raceRepository.save(race);
+    }
+
+    @Override
+    public List<Race> getRaceByStatusAndDate(RaceStatus raceStatus, LocalDateTime currentTime) {
+        return raceRepository.findAllByStatusIsAndStartDateBefore(raceStatus.name(), currentTime);
+    }
 }

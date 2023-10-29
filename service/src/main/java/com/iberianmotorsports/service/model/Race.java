@@ -76,6 +76,9 @@ public class Race {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
 
+    @Column(name = "status")
+    private String status;
+
     @OneToOne(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
     private RaceRules raceRules;
 

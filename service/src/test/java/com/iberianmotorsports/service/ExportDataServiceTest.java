@@ -10,7 +10,6 @@ import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.ImportDataService;
 import com.iberianmotorsports.service.service.implementation.ExportDataServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -33,17 +32,12 @@ public class ExportDataServiceTest {
         exportDataService = new ExportDataServiceImpl();
     }
 
-    @Nested
-    public class export {
+    @Test
+    public void exportData() throws Exception {
+        EntryProperties entryProperties = new EntryProperties();
+        EntryListProperties entryListProperties = new EntryListProperties();
 
-        @Test
-        public void exportData() throws Exception {
-            EntryProperties entryProperties = new EntryProperties();
-            EntryListProperties entryListProperties = new EntryListProperties();
-
-            exportDataService.exportData(RaceFactory.race(), entryProperties, entryListProperties);
-
-        }
+        exportDataService.exportData(RaceFactory.race(), entryProperties, entryListProperties);
 
     }
 
