@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {AppContext} from "../../util/AppContext";
+import {ImportService} from "../../service/import.service";
+import {ExportService} from "../../service/export.service";
+import {Race} from "../../model/Race";
 
 @Component({
     selector: 'app-race-info',
@@ -12,6 +15,8 @@ export class RaceInfoComponent implements OnInit {
 
     constructor(
         public appContext: AppContext,
+        public importService: ImportService,
+        public exportService: ExportService
     ){}
 
     ngOnInit() {
@@ -51,6 +56,41 @@ export class RaceInfoComponent implements OnInit {
 
     getWeatherPercentage(number){
         return number * 100;
+    }
+
+    exportData(race: Race) {
+        this.exportService.exportData(race).subscribe(
+            response => {
+                console.log("Exported data");
+                console.log(response);
+            },
+            error => {
+                console.log("Error exporting data");
+                console.log(error);
+            }
+        );
+    }
+
+
+    importData(race: Race) {
+        this.importService.importData(race).subscribe(
+            response => {
+                console.log("Imported data");
+                console.log(response);
+            },
+            error=> {
+                console.log("Error importing data");
+                console.log(error)
+            }
+        );
+    }
+
+    canBeExported(race: Race) {
+        return race.status === 'PENDING' || race.status === 'EXPORT_FAILED';
+    }
+
+    canBeImported(race: Race) {
+        return race.status === 'LAUNCHED' || race.status === 'IMPORT_FAILED' || race.status === 'COMPLETED';
     }
 
 }

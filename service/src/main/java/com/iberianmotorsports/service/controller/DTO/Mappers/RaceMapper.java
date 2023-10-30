@@ -59,6 +59,7 @@ public class RaceMapper implements Function<RaceDTO, Race> {
                     return bop;
                 })
                 .toList());
+        race.setStatus(raceDTO.status());
         return race;
     }
 }

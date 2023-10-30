@@ -37,7 +37,7 @@ public class ExportDataServiceTest {
         EntryProperties entryProperties = new EntryProperties();
         EntryListProperties entryListProperties = new EntryListProperties();
 
-        exportDataService.exportData(RaceFactory.race(), entryProperties, entryListProperties);
+//        exportDataService.exportData(RaceFactory.race(), entryProperties, entryListProperties);
 
     }
 

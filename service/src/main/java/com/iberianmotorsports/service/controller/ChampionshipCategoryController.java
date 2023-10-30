@@ -24,5 +24,4 @@ public class ChampionshipCategoryController {
         ChampionshipCategory category = championshipCategoryService.findCategoryByChampionshipId(id);
         return new ResponseEntity<Object>(category, HttpStatus.OK);
     }
-
 }

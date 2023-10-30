@@ -29,7 +29,7 @@ public class CronServiceImpl implements CronService {
     ImportDataService importDataService;
 
     @Override
-    @Scheduled(cron = "0 0/1 * * * *", zone = "Europe/Madrid")
+//    @Scheduled(cron = "0 0/1 * * * *", zone = "Europe/Madrid")
     public void exportAndCreateServerACC() {
         logger.info("Launched cron job export");
         List<Race> exportRaceList = raceService.getRaceByStatusAndDate(RaceStatus.PENDING, LocalDateTime.now());
@@ -48,7 +48,7 @@ public class CronServiceImpl implements CronService {
     }
 
     @Override
-    @Scheduled(cron = "0 0/5 * * * *", zone = "Europe/Madrid")
+//    @Scheduled(cron = "0 0/5 * * * *", zone = "Europe/Madrid")
     public void importServerResultsACC() {
         logger.info("Launched cron job import");
         List<Race> importRaceList = raceService.getRaceByStatusAndDate(RaceStatus.LAUNCHED, LocalDateTime.now());

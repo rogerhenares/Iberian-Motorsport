@@ -36,7 +36,8 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                 race.getStartDate(),
                 raceRulesDTOMapper.apply(race.getRaceRules()),
                 race.getSessionList() != null ? race.getSessionList().stream().map(sessionDTOMapper).toList() : null,
-                race.getBopList() != null ? race.getBopList().stream().map(bopDTOMapper).toList() : null
+                race.getBopList() != null ? race.getBopList().stream().map(bopDTOMapper).toList() : null,
+                race.getStatus()
         );
     }
 

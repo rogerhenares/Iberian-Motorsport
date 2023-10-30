@@ -22,6 +22,7 @@ export class Race {
     bopDTOList: Bop[];
     grid: Grid;
     championshipId: number;
+    status: string;
 
     constructor() {
         this.id= -1;
@@ -42,5 +43,6 @@ export class Race {
         this.bopDTOList = [];
         this.grid = null;
         this.championshipId = null;
+        this.status = "PENDING";
     }
 }

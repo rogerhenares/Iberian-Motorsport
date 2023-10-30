@@ -27,6 +27,8 @@ import {SanctionService} from "../../service/sanction.service";
 import {CarService} from "../../service/car.service";
 import {ChampionshipCategoryService} from "../../service/championshipcategory.service";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ImportService} from "../../service/import.service";
+import {ExportService} from "../../service/export.service";
 
 @NgModule({
   imports: [
@@ -76,7 +78,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     GridRaceService,
     SanctionService,
     CarService,
-    ChampionshipCategoryService
+    ChampionshipCategoryService,
+    ImportService,
+    ExportService
   ],
   bootstrap: [AppComponent]
 })

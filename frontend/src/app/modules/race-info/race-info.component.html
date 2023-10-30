@@ -1,3 +1,7 @@
+<ng-container *ngIf="appContext.isAdmin()">
+    <button class="btn btn-primary" style="color: black" (click)="exportData(this.selectedRace)" [disabled]="!canBeExported(this.selectedRace)">Export Race</button>
+    <button class="btn btn-primary" style="color: black" (click)="importData(this.selectedRace)" [disabled]="!canBeImported(this.selectedRace)">Import Results</button>
+</ng-container>
 <h3 style="color: #ff9800">General Info</h3>
 <ul>
     <li>name : <span style="color:#00FFC0">{{selectedRace.serverName}}</span></li>

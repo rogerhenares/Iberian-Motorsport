@@ -22,6 +22,7 @@ public record RaceDTO (
         LocalDateTime startDate,
         RaceRulesDTO raceRulesDTO,
         List<SessionDTO> sessionDTOList,
-        List<BopDTO> bopDTOList
+        List<BopDTO> bopDTOList,
+        String status
 ) {
 }

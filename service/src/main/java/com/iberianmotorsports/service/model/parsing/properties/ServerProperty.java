@@ -13,4 +13,5 @@ public class ServerProperty {
     private String serverName;
     private String category;
     private String defaultFilesFolder;
+
 }
