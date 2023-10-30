@@ -48,7 +48,9 @@ export class UserProfileComponent implements OnInit {
       this.user.shortName = this.profileForm.value.shortName;
       this.userService.updateUserInfo(this.user).subscribe(response => {
         if(response){
-          this.appContext.setUser(response);
+          if (this.appContext.getLoggedUser().steamId === response.steamId){
+            this.appContext.setUser(response);
+          }
           this.requestSuccessSwal.fire()
           this.router.navigateByUrl("dashboard")
         }
