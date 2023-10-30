@@ -79,6 +79,7 @@ export class SanctionFormComponent {
         this.gridRaceService.getGridRaceForRace(raceId).subscribe(
             (gridRaceList) => {
                 this.gridRaceList = gridRaceList
+                console.log(this.gridRaceList)
             }
         )
     }

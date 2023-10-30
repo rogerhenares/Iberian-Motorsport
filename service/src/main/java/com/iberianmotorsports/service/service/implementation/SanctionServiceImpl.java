@@ -44,9 +44,13 @@ public class SanctionServiceImpl implements SanctionService {
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
                 sanction.getLicensePoints(), Boolean.TRUE);
         sanctionSaved.setGridRace(gridRaceService.getGridRace(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(), sanction.getGridRace().getGridRacePrimaryKey().getRace().getId()));
-        int totalPenalty = sanctionSaved.getGridRace().getSanctionList().stream().mapToInt(s -> Integer.parseInt(s.getPenalty())).sum();
-        sanctionSaved.getGridRace().setSanctionTime(totalPenalty);
-        gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+
+        if (!sanction.getInGame()) {
+            int totalPenalty = sanctionSaved.getGridRace().getSanctionList().stream().mapToInt(s -> Integer.parseInt(s.getPenalty())).sum();
+            sanctionSaved.getGridRace().setSanctionTime(totalPenalty);
+            gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+        }
+
         return sanctionSaved;
     }
 
@@ -61,8 +65,10 @@ public class SanctionServiceImpl implements SanctionService {
         sanctionRepository.delete(sanction);
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
                 sanction.getLicensePoints(), Boolean.FALSE);
-        sanction.getGridRace().setSanctionTime(sanction.getGridRace().getSanctionTime() - Integer.parseInt(sanction.getPenalty()));
-        gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+        if (!sanction.getInGame()) {
+            sanction.getGridRace().setSanctionTime(sanction.getGridRace().getSanctionTime() - Integer.parseInt(sanction.getPenalty()));
+            gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+        }
     }
 
     private Sanction getSanctionById(Long sanctionId) throws ServiceException {

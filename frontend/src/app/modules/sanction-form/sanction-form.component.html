@@ -49,6 +49,9 @@
                                         <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.licensePoints.errors)">License Points Error</mat-error>
                                     </mat-form-field>
                                 </div>
+                                <div>
+                                    <mat-checkbox formControlName="inGame" value="1">In Game</mat-checkbox>
+                                </div>
                             </div>
                             <div class="btn-block">
                                 <button id="submit" type="submit" class="btn btn-primary" (click)="sanctionSubmit()">Submit</button>
