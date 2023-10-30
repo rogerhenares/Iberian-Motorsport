@@ -11,7 +11,6 @@ import com.iberianmotorsports.service.model.parsing.imports.Penalty;
 import com.iberianmotorsports.service.model.parsing.imports.Results;
 import com.iberianmotorsports.service.model.parsing.properties.ServerProperty;
 import com.iberianmotorsports.service.repository.SanctionRepository;
-import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.GridRaceService;
 import com.iberianmotorsports.service.service.ImportDataService;
 import com.iberianmotorsports.service.service.RaceService;
@@ -24,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
@@ -32,18 +30,19 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static com.iberianmotorsports.service.service.implementation.ExportDataServiceImpl.SERVER_FOLDER_SEPARATOR;
+
 @Service
 @Transactional
 @AllArgsConstructor
-// TODO cambiar los distintos estados del RACE :D
 // TODO Mejora pasar los index de los sectores a una variable estática y los Q y R que sean un enum.
 public class ImportDataServiceImpl implements ImportDataService {
 
+    private static final String RESULT_FOLDER_NAME = "results";
+
     private final RaceService raceService;
     private final GridRaceService gridRaceService;
-    private final ChampionshipService championshipService;
     private final SanctionRepository sanctionRepository;
-
     private final ServerProperty serverProperty;
 
     @Value("#{'${pointsSystem}'}")
@@ -54,22 +53,25 @@ public class ImportDataServiceImpl implements ImportDataService {
 
     @Override
     public void importData(Race race) throws Exception {
-
+        if (Objects.isNull(race.getChampionship())){
+            race = raceService.findRaceById(race.getId());
+        }
         ObjectMapper objectMapper = new ObjectMapper();
 
-        File championshipFolder = new File(new URI(serverProperty.getFolder() + File.separator + "C" + race.getChampionship().getId() + "-" + race.getChampionship().getName()));
+        File championshipFolder = new File(serverProperty.getFolder() + File.separator + "C" + race.getChampionship().getId() + SERVER_FOLDER_SEPARATOR + race.getChampionship().getName());
         if(!championshipFolder.isDirectory()) {
-            throw new ServiceException(String.format("Folder for championship -> {} not found path -> {}", race.getChampionship().getId(), championshipFolder.getAbsolutePath()));
+            throw new ServiceException(String.format("Folder for championship -> {} not found path -> {}", race.getId(), championshipFolder.getAbsolutePath()));
         }
-        File raceFolderResults = new File(championshipFolder.getAbsolutePath() + File.separator + "R" + race.getId() + "-" + race.getTrack() + File.separator + "results");
+        File raceFolderResults = new File(championshipFolder.getAbsolutePath() + File.separator + "R" + race.getId() + SERVER_FOLDER_SEPARATOR + race.getTrack() + File.separator + RESULT_FOLDER_NAME);
         if(!raceFolderResults.isDirectory()) {
             throw new ServiceException(String.format("Folder for race -> {} not found path -> {}", race.getId(), raceFolderResults.getAbsolutePath()));
         }
 
+        Race finalRace = race;
         File raceResultFile = Arrays.stream(raceFolderResults.listFiles()).filter(file -> file.getName().contains("R")).findFirst()
-                .orElseThrow(() -> new ServiceException(String.format("Race Result file not found for race -> {} path -> {}", race.getId(), raceFolderResults.getAbsolutePath())));
+                .orElseThrow(() -> new ServiceException(String.format("Race Result file not found for race -> {} path -> {}", finalRace.getId(), raceFolderResults.getAbsolutePath())));
         File qualyResultFile = Arrays.stream(raceFolderResults.listFiles()).filter(file -> file.getName().contains("Q")).findFirst()
-                .orElseThrow(() -> new ServiceException(String.format("Qualy Result file not found for race -> {} path -> {}", race.getId(), raceFolderResults.getAbsolutePath())));
+                .orElseThrow(() -> new ServiceException(String.format("Qualy Result file not found for race -> {} path -> {}", finalRace.getId(), raceFolderResults.getAbsolutePath())));
 
         try (FileInputStream fisRace = new FileInputStream(raceResultFile.getAbsolutePath());
              FileInputStream fisQualy = new FileInputStream(qualyResultFile.getAbsolutePath());

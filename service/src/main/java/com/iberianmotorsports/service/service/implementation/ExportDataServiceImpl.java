@@ -3,21 +3,21 @@ package com.iberianmotorsports.service.service.implementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.iberianmotorsports.service.model.*;
-import com.iberianmotorsports.service.model.parsing.*;
+import com.iberianmotorsports.service.model.parsing.Driver;
 import com.iberianmotorsports.service.model.parsing.export.*;
 import com.iberianmotorsports.service.model.parsing.imports.Sessions;
 import com.iberianmotorsports.service.model.parsing.properties.EntryListProperties;
 import com.iberianmotorsports.service.model.parsing.properties.EntryProperties;
 import com.iberianmotorsports.service.model.parsing.properties.ServerProperty;
 import com.iberianmotorsports.service.service.ExportDataService;
+import com.iberianmotorsports.service.service.RaceService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.aspectj.util.FileUtil;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,21 +36,23 @@ public class ExportDataServiceImpl implements ExportDataService {
     public static final String SERVER_FOLDER_SEPARATOR = "-";
     private static final String CFG_FOLDER_NAME = "cfg";
 
+    private final RaceService raceService;
     private final ServerProperty serverProperty;
     private final EntryProperties entryProperties;
     private final EntryListProperties entryListProperties;
 
     @Override
     public void exportData(Race race) throws Exception {
+        if (Objects.isNull(race.getChampionship())){
+            race = raceService.findRaceById(race.getId());
+        }
         File championshipFolder = getChampionshipFolder(race);
         createFolderIfNotExist(championshipFolder);
         File raceFolder = getRaceFolder(race);
         createFolderIfNotExist(raceFolder);
         File defaultFilesFolder = new File(serverProperty.getDefaultFilesFolder());
         if (defaultFilesFolder.exists()){
-            for (File defaultFile: Objects.requireNonNull(defaultFilesFolder.listFiles())) {
-                Files.copy(Path.of(defaultFile.toURI()), Path.of(raceFolder.toURI()));
-            }
+            FileUtil.copyDir(defaultFilesFolder, raceFolder);
         }
         File cfgFolder = new File(raceFolder.getAbsolutePath() + File.separator + CFG_FOLDER_NAME);
         createFolderIfNotExist(raceFolder);
