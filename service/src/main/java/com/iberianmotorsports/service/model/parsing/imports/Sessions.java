@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class Sessions {
-    private Float hourOfDay;
-    private Float dayOfWeekend;
-    private Float timeMultiplier;
+    private Integer hourOfDay;
+    private Integer dayOfWeekend;
+    private Integer timeMultiplier;
     private String sessionType;
-    private Float sessionDurationMinutes;
+    private Integer sessionDurationMinutes;
 }

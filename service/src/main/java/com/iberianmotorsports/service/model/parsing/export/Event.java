@@ -14,6 +14,5 @@ public class Event {
     private Float cloudLevel;
     private Float rain;
     private Integer weatherRandomness;
-    private Float configVersion;
     private List<Sessions> sessions;
 }

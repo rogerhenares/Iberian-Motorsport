@@ -114,7 +114,7 @@ public class ExportDataServiceImpl implements ExportDataService {
         settings.setDumpLeaderboards(championship.getDumpLeaderboards());
         settings.setIsRaceLocked(championship.getIsRaceLocked());
         settings.setRandomizeTrackWhenEmpty(championship.getRandomizeTrackWhenEmpty());
-        settings.setCentralEntryListPath(championship.getCentralEntryListPath());
+        settings.setCentralEntryListPath("");
         settings.setAllowAutoDq(championship.getAllowAutoDq());
         settings.setShortFormationLap(championship.getFormationLapType());
         settings.setDumpEntryList(championship.getDumpEntryList());
@@ -124,11 +124,11 @@ public class ExportDataServiceImpl implements ExportDataService {
 
     public Sessions getSessions(Session session) {
         Sessions sessions = new Sessions();
-        sessions.setHourOfDay(session.getHourOfDay().floatValue());
-        sessions.setDayOfWeekend(session.getDayOfWeekend().floatValue());
-        sessions.setTimeMultiplier(session.getTimeMultiplier().floatValue());
+        sessions.setHourOfDay(session.getHourOfDay());
+        sessions.setDayOfWeekend(session.getDayOfWeekend());
+        sessions.setTimeMultiplier(session.getTimeMultiplier());
         sessions.setSessionType(session.getSessionType());
-        sessions.setSessionDurationMinutes(session.getSessionDurationMinutes().floatValue());
+        sessions.setSessionDurationMinutes(session.getSessionDurationMinutes());
         return sessions;
     }
 
