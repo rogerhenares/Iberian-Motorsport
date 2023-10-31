@@ -43,6 +43,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BopFormComponent} from "../../bop-form/bop-form.component";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import {BopFormComponent} from "../../bop-form/bop-form.component";
         MatExpansionModule,
         MatDatepickerModule,
         MatInputModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        ClipboardModule
     ],
   declarations: [
     LoginComponent,

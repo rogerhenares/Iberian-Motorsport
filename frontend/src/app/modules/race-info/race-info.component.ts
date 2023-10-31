@@ -3,6 +3,8 @@ import {AppContext} from "../../util/AppContext";
 import {ImportService} from "../../service/import.service";
 import {ExportService} from "../../service/export.service";
 import {Race} from "../../model/Race";
+import { Clipboard } from '@angular/cdk/clipboard';
+
 
 @Component({
     selector: 'app-race-info',
@@ -16,7 +18,8 @@ export class RaceInfoComponent implements OnInit {
     constructor(
         public appContext: AppContext,
         public importService: ImportService,
-        public exportService: ExportService
+        public exportService: ExportService,
+        public clipboard: Clipboard
     ){}
 
     ngOnInit() {
@@ -91,6 +94,10 @@ export class RaceInfoComponent implements OnInit {
 
     canBeImported(race: Race) {
         return race.status === 'LAUNCHED' || race.status === 'IMPORT_FAILED' || race.status === 'COMPLETED';
+    }
+
+    copyToClipboard(text: string) {
+        this.clipboard.copy(text);
     }
 
 }

@@ -4,3 +4,7 @@
 .align-right {
     margin-left: auto;
 }
+.tab-pane {
+    overflow: auto;
+}
+

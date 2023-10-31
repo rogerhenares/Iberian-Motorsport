@@ -4,7 +4,9 @@
 </ng-container>
 <h3 style="color: #ff9800">General Info</h3>
 <ul>
-    <li>name : <span style="color:#00FFC0">{{selectedRace.serverName}}</span></li>
+    <li>name : <span style="color:#00FFC0">{{selectedRace.serverName}}</span>
+        <i class="material-icons" style="cursor: pointer; margin-left: 10px;" (click)="copyToClipboard(selectedRace.serverName)">content_copy</i>
+    </li>
     <li>password : <span style="color:#00FFC0">{{selectedChampionship.password}}</span></li>
     <li *ngIf="appContext.isSteward() || appContext.isAdmin()">spectator password : <span style="color:#00FFC0">{{selectedChampionship.spectatorPassword}}</span></li>
     <li *ngIf=appContext.isAdmin()>admin password : <span style="color:#00FFC0">{{selectedChampionship.adminPassword}}</span> </li>

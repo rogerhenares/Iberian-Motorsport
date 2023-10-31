@@ -186,6 +186,7 @@ public class ExportDataServiceImpl implements ExportDataService {
         entry.setDrivers(driverList);
         entry.setRaceNumber(grid.getCarNumber());
         entry.setForcedCarModel(grid.getCar().getModelId());
+        entry.setTeamName(grid.getTeamName());
         entry.setOverrideDriverInfo(entryProperties.getOverrideDriverInfo());
         entry.setDefaultGridPosition(entryProperties.getDefaultGridPosition());
         entry.setBallastKg(entryProperties.getBallastKg());

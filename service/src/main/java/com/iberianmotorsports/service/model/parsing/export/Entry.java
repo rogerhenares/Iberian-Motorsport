@@ -12,6 +12,7 @@ public class Entry extends EntryProperties {
 
     private List<Driver> drivers;
     private Integer raceNumber;
+    private String teamName;
     private Integer forcedCarModel;
     private Float overrideDriverInfo;
     private Integer defaultGridPosition;
