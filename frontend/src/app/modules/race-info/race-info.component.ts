@@ -96,7 +96,8 @@ export class RaceInfoComponent implements OnInit {
         return race.status === 'LAUNCHED' || race.status === 'IMPORT_FAILED' || race.status === 'COMPLETED';
     }
 
-    copyToClipboard(text: string) {
+    copyToClipboard(championshipId: number, raceId: number) {
+        let text: string = "C" + championshipId + "R" + raceId;
         this.clipboard.copy(text);
     }
 
