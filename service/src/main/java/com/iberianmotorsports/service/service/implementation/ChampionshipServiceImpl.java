@@ -173,7 +173,10 @@ public class ChampionshipServiceImpl implements ChampionshipService {
             newChampionshipCategory.setChampionship(championship);
             championshipCategoryRepository.save(newChampionshipCategory);
         }
-        if(championship.getMaxSubCarSlots() != null  && championship.getSubCarGroup() != null) {
+        if(championship.getMaxSubCarSlots() != null  &&
+           championship.getSubCarGroup() != null &&
+           championship.getMaxSubCarSlots() > 0 &&
+           !championship.getSubCarGroup().trim().isBlank()) {
             for (String category: CarCategory.valueOf(championship.getSubCarGroup()).getValue()) {
                 ChampionshipCategory newChampionshipCategory = new ChampionshipCategory();
                 newChampionshipCategory.setCategory(category);
