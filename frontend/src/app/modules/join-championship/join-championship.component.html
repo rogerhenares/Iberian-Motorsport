@@ -18,7 +18,7 @@
                                     </mat-form-field>
                                     <mat-form-field>
                                         <mat-label style="color: #00FFC0">Car Number</mat-label>
-                                        <input style="color: #999999" matInput formControlName="carNumber" [readonly]="(this.isTeamChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin()))" minlength="1" maxlength="3"/>
+                                        <input style="color: #999999" matInput formControlName="carNumber" [readonly]="(this.isTeamChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin()))" min="1" minlength="1" maxlength="3"/>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.carNumber.errors)">Car Number Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field *ngIf="grid.carLicense != null || this.appContext.isAdmin()">

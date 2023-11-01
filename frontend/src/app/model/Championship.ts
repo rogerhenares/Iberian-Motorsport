@@ -55,7 +55,7 @@ export class Championship {
         this.randomizeTrackWhenEmpty= null;
         this.centralEntryListPath= null;
         this.allowAutoDq = 0;
-        this.shortFormationLap= 0;
+        this.shortFormationLap= 3;
         this.dumpEntryList= 1;
         this.formationLapType= 0;
         this.ignorePrematureDisconnects= 1;
