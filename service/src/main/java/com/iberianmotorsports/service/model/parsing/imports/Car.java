@@ -8,14 +8,14 @@ import java.util.List;
 @Data
 public class Car {
 
-    private Float carId;
-    private Float raceNumber;
-    private Float carModel;
+    private Integer carId;
+    private Integer raceNumber;
+    private Integer carModel;
     private Float cupCategory;
     private String carGroup;
     private String teamName;
     private Float nationality;
-    private Float carGuid;
+    private Integer carGuid;
     private Float teamGuid;
     private List<Driver> drivers;
 
