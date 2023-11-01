@@ -24,9 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -39,6 +37,7 @@ import static com.iberianmotorsports.service.service.implementation.ExportDataSe
 public class ImportDataServiceImpl implements ImportDataService {
 
     private static final String RESULT_FOLDER_NAME = "results";
+    private static final Long DEFAULT_ACC_ZERO_VALUE = 2147483648L;
 
     private final RaceService raceService;
     private final GridRaceService gridRaceService;
@@ -88,26 +87,30 @@ public class ImportDataServiceImpl implements ImportDataService {
 
     private void createGridRaceFromResults(Race race, Results results) {
         AtomicInteger index = new AtomicInteger(0);
+        Map<Integer, Integer> carPosition = new HashMap<>();
+        results.getSessionResult().getLeaderBoardLines().stream()
+                .map(entry -> {
+                    carPosition.put(entry.getCar().getRaceNumber(), index.get());
+                    index.incrementAndGet();
+                    return entry;
+                }).toList();
         Lap bestLap = findBestLap(results);
         race.getChampionship().getGridList().stream()
                 .map(grid -> results.getSessionResult().getLeaderBoardLines().stream()
-                        .filter(leaderBoardLine -> leaderBoardLine.getCar().getRaceNumber().equals(Float.valueOf(grid.getCarNumber())))
+                        .filter(leaderBoardLine -> leaderBoardLine.getCar().getRaceNumber().equals(grid.getCarNumber()))
                         .map(leaderBoardLine -> {
                             GridRace gridRace = new GridRace();
                             GridRacePrimaryKey gridRacePrimaryKey = new GridRacePrimaryKey(grid, raceService.findRaceById(race.getId()));
                             gridRace.setGridRacePrimaryKey(gridRacePrimaryKey);
                             if (Objects.equals(results.getSessionType(), "Q")) {
-                                setQualyData(gridRace, leaderBoardLine, index.get());
+                                setQualyData(gridRace, leaderBoardLine, carPosition.get(grid.getCarNumber()));
                             }
                             if (Objects.equals(results.getSessionType(), "R")) {
-                                setRaceData(gridRace, leaderBoardLine, index.get(), bestLap);
+                                setRaceData(gridRace, leaderBoardLine, carPosition.get(grid.getCarNumber()), bestLap);
                             }
                             results.getPenalties().stream()
-                                    .filter(penalty -> penalty.getCarId().equals(leaderBoardLine.getCar().getCarId()))
+                                    .filter(penalty -> penalty.getCarId().equals(Float.valueOf(leaderBoardLine.getCar().getCarId())))
                                     .forEach(penalty -> importSanctions(gridRace, penalty));
-
-                            index.incrementAndGet();
-
                             return gridRace;
                         })
                         .collect(Collectors.toList())
@@ -136,14 +139,13 @@ public class ImportDataServiceImpl implements ImportDataService {
     }
 
     private GridRace setRaceData(GridRace gridRace, LeaderBoardLine leaderBoardLine, int position, Lap bestLap) {
-        gridRace.setFirstSector(leaderBoardLine.getTiming().getBestSplits().get(0).longValue());
-        gridRace.setSecondSector(leaderBoardLine.getTiming().getBestSplits().get(1).longValue());
-        gridRace.setThirdSector(leaderBoardLine.getTiming().getBestSplits().get(2).longValue());
-        gridRace.setFinalTime(leaderBoardLine.getTiming().getTotalTime().longValue());
+        gridRace.setFirstSector(leaderBoardLine.getTiming().getBestSplits().get(0).longValue() == DEFAULT_ACC_ZERO_VALUE ? 0 : leaderBoardLine.getTiming().getBestSplits().get(0).longValue());
+        gridRace.setSecondSector(leaderBoardLine.getTiming().getBestSplits().get(1).longValue() == DEFAULT_ACC_ZERO_VALUE ? 0 : leaderBoardLine.getTiming().getBestSplits().get(1).longValue());
+        gridRace.setThirdSector(leaderBoardLine.getTiming().getBestSplits().get(2).longValue() == DEFAULT_ACC_ZERO_VALUE ? 0 : leaderBoardLine.getTiming().getBestSplits().get(2).longValue());
+        gridRace.setFinalTime(leaderBoardLine.getTiming().getTotalTime().longValue() >= DEFAULT_ACC_ZERO_VALUE ? 0 : leaderBoardLine.getTiming().getTotalTime().longValue());
         gridRace.setTotalLaps(leaderBoardLine.getTiming().getLapCount().intValue());
         long points  = pointsSystem.get(position).longValue();
-        if (Objects.equals(bestLap.getCarId(), leaderBoardLine.getCar().getCarId()))
-        { points += 1; }
+        if (Objects.equals(bestLap.getCarId(), Float.valueOf(leaderBoardLine.getCar().getCarId()))) { points += 1; }
         gridRace.setPoints(points);
         return gridRaceService.saveGridRace(gridRace);
     }
