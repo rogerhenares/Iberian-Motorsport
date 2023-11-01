@@ -6,7 +6,7 @@ export const tracks = [
     {name: 'Paul Ricard', code: 'paul_ricard'},
     {name: 'Misano', code: 'misano'},
     {name: 'Spa', code: 'spa'},
-    {name: 'Nurburging', code: 'nurburging'},
+    {name: 'Nurburgring', code: 'nurburgring'},
     {name: 'Barcelona', code: 'barcelona'},
     {name: 'Hungaroring', code: 'hungaroring'},
     {name: 'Zandvoort', code: 'zandvoort'},
@@ -20,7 +20,7 @@ export const tracks = [
     {name: 'Snetterton', code: 'snetterton'},
     {name: 'Cota', code: 'cota'},
     {name: 'Indianapolis', code: 'indianapolis'},
-    {name: 'Watkins Glen', code: 'waktins_glen'},
+    {name: 'Watkins Glen', code: 'watkins_glen'},
     {name: 'Valencia', code: 'valencia'}
 
 ]
