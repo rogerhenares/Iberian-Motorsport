@@ -63,9 +63,11 @@ export class ResultsComponent implements OnInit, OnChanges{
                     this.gridRace.forEach(gridRace => {
                         gridRace.grid = this.grid.find(grid => grid.id === gridRace.gridId);
                     });
-                    this.gridRaceFasterLap = Array.from(this.gridRace).sort((a,b) =>
-                        (b.firstSector + b.secondSector + b.thirdSector) -
-                        (a.firstSector + a.secondSector + a.thirdSector)).pop();
+                    this.gridRaceFasterLap = Array.from(this.gridRace)
+                        .filter(a => a.firstSector > 0 && a.secondSector > 0 && a.thirdSector > 0)
+                        .sort((a,b) =>
+                            (b.firstSector + b.secondSector + b.thirdSector) -
+                            (a.firstSector + a.secondSector + a.thirdSector)).pop();
                 },
                 (error) => {
                     console.error('Error fetching grid race data:', error);
