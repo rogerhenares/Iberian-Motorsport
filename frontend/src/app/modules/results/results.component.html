@@ -29,7 +29,7 @@
                     </td>
                     <td class="text-primary" style="text-align: left">
                         <p class="h4" *ngIf="isOnChampionship() || this.appContext.isAdmin()">
-                            {{formatTime(gridRace.finalTime)}} <span class="penalty-text"> +{{gridRace.sanctionTime}}</span>
+                            {{formatTime(gridRace.finalTime)}} <span class="penalty-text" *ngIf="gridRace.sanctionTime > 0"> +{{gridRace.sanctionTime}}</span>
                         </p>
                         <p class="h4" *ngIf="!isOnChampionship()">
                             {{formatTime(addSanctionToTotalTime(gridRace))}}
