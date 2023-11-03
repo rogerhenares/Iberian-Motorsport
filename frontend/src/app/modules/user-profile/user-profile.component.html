@@ -50,7 +50,7 @@
                                   <mat-label style="color: #00FFC0">Country</mat-label>
                                   <mat-select formControlName="nationality">
                                       <mat-option *ngFor="let country of countries" [value]="country.code">
-                                          {{country.name}}
+                                          <img style="height: 15px; margin-right: 3px" src="assets/flags/{{country.code.toLowerCase()}}.svg">&nbsp;{{country.name}}
                                       </mat-option>
                                   </mat-select>
                               </mat-form-field>

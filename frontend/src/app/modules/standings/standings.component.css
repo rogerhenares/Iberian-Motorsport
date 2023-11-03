@@ -139,3 +139,10 @@
     color: #00FFC0 !important;
 }
 
+::ng-deep .mat-tooltip {
+    background-color: #333333;
+    color: #999999;
+    font-family: raceSport;
+    font-size: 14px;
+}
+

@@ -29,9 +29,11 @@
                                     <mat-form-field>
                                         <mat-label style="color: #00FFC0">Car</mat-label>
                                         <mat-select formControlName="car" [disabled]="(this.isTeamChampionship() && !this.isNewGrid() && (!this.isGridManager() && !this.appContext.isAdmin()))">
-                                            <mat-option *ngFor="let car of this.championship.carList" [value]="car">
-                                                {{car.manufacturer}} - {{car.model}}
-                                            </mat-option>
+                                            <mat-optgroup *ngFor="let category of categorizedCars | keyvalue" [label]="category.key">
+                                                <mat-option *ngFor="let car of category.value" [value]="car">
+                                                    <img style="height: 30px; margin-right: 3px" src="assets/car-logo/{{car.manufacturer}}.png">&nbsp; {{car.manufacturer}} - {{car.model}}
+                                                </mat-option>
+                                            </mat-optgroup>
                                         </mat-select>
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.car.errors)">Car Error</mat-error>
                                     </mat-form-field>
@@ -44,7 +46,7 @@
                                         <br>
                                         <ng-container *ngFor="let user of grid?.driversList;">
                                             <span style="padding-left: 10px; color: #999999">
-                                                <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">
+                                                <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">&nbsp;
                                                 {{user?.firstName}} {{user?.lastName}} - {{user?.shortName}} - {{user?.steamId}}
                                             </span>
                                             <br>

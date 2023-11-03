@@ -19,7 +19,7 @@
                     <td class="nameColumn" style="text-align: left">
                         <ng-container *ngFor="let user of gridRace.grid.driversList">
                         <span>
-                           <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg"> {{user.firstName}} {{user.lastName}}
+                           <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">&nbsp; {{user.firstName}} {{user.lastName}}
                         </span>
                             <br>
                         </ng-container>

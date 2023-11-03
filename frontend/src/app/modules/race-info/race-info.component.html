@@ -1,63 +1,64 @@
-<ng-container *ngIf="appContext.isAdmin()">
-    <button class="btn btn-primary" style="color: black" (click)="exportData(this.selectedRace)" [disabled]="!canBeExported(this.selectedRace)">Export Race</button>
-    <button class="btn btn-primary" style="color: black" (click)="importData(this.selectedRace)" [disabled]="!canBeExported(this.selectedRace)">Import Results</button>
-</ng-container>
-<h3 style="color: #ff9800">General Info</h3>
-<ul>
-    <li>name : <span style="color:#00FFC0">IML Iberian Motor Sport | {{this.selectedChampionship.name}} | {{selectedRace.track}} | #C{{selectedChampionship.id}}R{{selectedRace.id}}</span>
-        <i class="material-icons" style="cursor: pointer; margin-left: 10px;" (click)="copyToClipboard(selectedChampionship.id, selectedRace.id)">content_copy</i>
-    </li>
-    <li>password : <span style="color:#00FFC0">{{selectedChampionship.password}}</span></li>
-    <li *ngIf="appContext.isSteward() || appContext.isAdmin()">spectator password : <span style="color:#00FFC0">{{selectedChampionship.spectatorPassword}}</span></li>
-    <li *ngIf=appContext.isAdmin()>admin password : <span style="color:#00FFC0">{{selectedChampionship.adminPassword}}</span> </li>
-</ul>
-<hr>
-<h3 style="color: #ff9800">Session</h3>
-<div class="row" style="text-align: left">
-    <div class="col-4 h4" style="color:#00FFC0" *ngFor="let session of selectedRace.sessionDTOList">
-        {{getSessionType(session.sessionType)}}
+<div style="overflow-x: hidden">
+    <ng-container *ngIf="appContext.isAdmin()">
+        <button class="btn btn-primary" style="color: black" (click)="exportData(this.selectedRace)" [disabled]="!canBeExported(this.selectedRace)">Export Race</button>
+        <button class="btn btn-primary" style="color: black" (click)="importData(this.selectedRace)" [disabled]="!canBeExported(this.selectedRace)">Import Results</button>
+    </ng-container>
+    <h3 style="color: #ff9800">General Info</h3>
+    <ul>
+        <li>name : <span style="color:#00FFC0">IML Iberian Motor Sport | {{this.selectedChampionship.name}} | {{selectedRace.track}} | #C{{selectedChampionship.id}}R{{selectedRace.id}}</span>
+            <i class="material-icons" style="cursor: pointer; margin-left: 10px;" (click)="copyToClipboard(selectedChampionship.id, selectedRace.id)">content_copy</i>
+        </li>
+        <li>password : <span style="color:#00FFC0">{{selectedChampionship.password}}</span></li>
+        <li *ngIf="appContext.isSteward() || appContext.isAdmin()">spectator password : <span style="color:#00FFC0">{{selectedChampionship.spectatorPassword}}</span></li>
+        <li *ngIf=appContext.isAdmin()>admin password : <span style="color:#00FFC0">{{selectedChampionship.adminPassword}}</span> </li>
+    </ul>
+    <hr>
+    <h3 style="color: #ff9800">Session</h3>
+    <div class="row" style="text-align: left; margin-left: 14px;">
+        <div class="col-3 h4" style="color:#00FFC0" *ngFor="let session of selectedRace.sessionDTOList">
+            {{getSessionType(session.sessionType)}}
+        </div>
     </div>
+    <div class="row" style="margin-left: 14px;">
+        <div class="col-3" *ngFor="let session of selectedRace.sessionDTOList">{{getDayOfWeekend(session.dayOfWeekend)}}</div>
+    </div>
+    <div class="row" style="margin-left: 14px;">
+        <div class="col-3" *ngFor="let session of selectedRace.sessionDTOList">Hour: {{session.hourOfDay}}:00</div>
+    </div>
+    <div class="row" style="margin-left: 14px;">
+        <div class="col-3" *ngFor="let session of selectedRace.sessionDTOList">{{session.sessionDurationMinutes}} min</div>
+    </div>
+    <hr>
+    <h3 style="color: #ff9800">Mandatory Pitstop</h3>
+    <ul>
+        <li *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount == 0">Not required</li>
+        <span *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount > 0">
+                                        <li>mandatory: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.mandatoryPitstopCount}}</span></li>
+                                        <li>window: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.pitWindowLengthSec/60}} min </span></li>
+                                        <li>Refueling:
+                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 0"> required </span>
+                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 1"> NOT required </span>
+                                        </li>
+                                        <li>Change tyres:
+                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 0"> required </span>
+                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 1"> NOT required </span>
+                                        </li>
+                                    </span>
+    </ul>
+    <hr>
+    <h3 style="color: #ff9800">Weather</h3>
+    <ul>
+        <li>Ambient temperature: <span style="color:#00FFC0">{{selectedRace.ambientTemp}} ºC </span></li>
+        <li>Cloud level: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.cloudLevel)}} %</span></li>
+        <li>Rain: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.rain)}} %</span></li>
+        <li>Weather randomness: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.weatherRandomness)}} % </span></li>
+    </ul>
+    <ng-container *ngIf="selectedRace.bopDTOList?.length > 0">
+    <h3 style="color: #ff9800">BALANCE OF PERFORMANCE</h3>
+            <ul>
+                <ng-container *ngFor="let bop of selectedRace.bopDTOList">
+                <li><span style="color:#00FFC0">{{bop.car.manufacturer}} {{bop.car.model}}</span> Ballast: <span style="color:#00FFC0">{{bop.ballastKg}} Kg</span> <span *ngIf="bop.restrictor != 0"> Restrictor: <span style="color:#00FFC0">{{bop.restrictor}}</span> </span> </li>
+                </ng-container>
+            </ul>
+    </ng-container>
 </div>
-<div class="row">
-    <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">{{getDayOfWeekend(session.dayOfWeekend)}}</div>
-</div>
-<div class="row">
-    <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">Hour: {{session.hourOfDay}}:00</div>
-</div>
-<div class="row">
-    <div class="col-4" *ngFor="let session of selectedRace.sessionDTOList">{{session.sessionDurationMinutes}} min</div>
-
-</div>
-<hr>
-<h3 style="color: #ff9800">Mandatory Pitstop</h3>
-<ul>
-    <li *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount == 0">Not required</li>
-    <span *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount > 0">
-                                    <li>mandatory: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.mandatoryPitstopCount}}</span></li>
-                                    <li>window: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.pitWindowLengthSec/60}} min </span></li>
-                                    <li>Refueling:
-                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 0"> required </span>
-                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 1"> NOT required </span>
-                                    </li>
-                                    <li>Change tyres:
-                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 0"> required </span>
-                                        <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 1"> NOT required </span>
-                                    </li>
-                                </span>
-</ul>
-<hr>
-<h3 style="color: #ff9800">Weather</h3>
-<ul>
-    <li>Ambient temperature: <span style="color:#00FFC0">{{selectedRace.ambientTemp}} ºC </span></li>
-    <li>Cloud level: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.cloudLevel)}} %</span></li>
-    <li>Rain: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.rain)}} %</span></li>
-    <li>Weather randomness: <span style="color:#00FFC0">{{getWeatherPercentage(selectedRace.weatherRandomness)}} % </span></li>
-</ul>
-<ng-container *ngIf="selectedRace.bopDTOList?.length > 0">
-<h3 style="color: #ff9800">BALANCE OF PERFORMANCE</h3>
-        <ul>
-            <ng-container *ngFor="let bop of selectedRace.bopDTOList">
-            <li><span style="color:#00FFC0">{{bop.car.manufacturer}} {{bop.car.model}}</span> Ballast: <span style="color:#00FFC0">{{bop.ballastKg}} Kg</span> <span *ngIf="bop.restrictor != 0"> Restrictor: <span style="color:#00FFC0">{{bop.restrictor}}</span> </span> </li>
-            </ng-container>
-        </ul>
-</ng-container>

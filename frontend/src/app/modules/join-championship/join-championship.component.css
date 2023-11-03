@@ -1,3 +1,27 @@
 ::ng-deep .mat-select-value-text {
     color: #999999;
 }
+
+::ng-deep .mat-select-panel-wrap{
+    padding-left: 1%;
+}
+
+::ng-deep .mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option{
+    color: #999999;
+}
+
+::ng-deep .mat-optgroup-label{
+    color: #ff9800 !important;
+    font-family: raceSport;
+}
+::ng-deep .mat-select-panel:not([class*=mat-elevation-z]){
+    background: #333333;
+}
+
+::ng-deep .mat-optgroup .mat-option:not(.mat-option-multiple){
+    color: #999999;
+}
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #00FFC0;
+}
