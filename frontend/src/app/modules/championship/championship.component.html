@@ -14,6 +14,10 @@
                         </span>
                     </h4>
                     <p class="card-category">{{championship.description}}&nbsp;&nbsp;|&nbsp;&nbsp;{{championship.style}}</p>
+                    <p class="card-category">
+                        <span>{{championship.carGroup}}</span>
+                        <span *ngIf="championship.subCarGroup">&nbsp;&nbsp;|&nbsp;&nbsp;{{championship.subCarGroup}}</span>
+                    </p>
                 </div>
                 <div class="card-footer">
                     <div class="stats">

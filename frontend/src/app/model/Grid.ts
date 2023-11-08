@@ -19,7 +19,7 @@ export class Grid {
     constructor() {
         this.id = this.id || -1;
         this.carNumber = this.carNumber || 0;
-        this.carLicense = null;
+        this.carLicense = "PRO";
         this.teamName = this.teamName || "";
         this.championshipId = this.championshipId || null;
         this.driversList = this.driversList || [];

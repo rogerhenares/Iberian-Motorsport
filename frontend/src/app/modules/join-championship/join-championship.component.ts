@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ChampionshipCategory} from "../../model/ChampionshipCategory";
 import {Championship} from "../../model/Championship";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
+import {Car} from "../../model/Car";
 
 @Component({
     selector: 'app-join-championship',
@@ -25,6 +26,7 @@ export class JoinChampionshipComponent implements OnInit {
     championship: Championship;
     teamSoloJoin: boolean = false;
     inputtedPassword: string;
+    categorizedCars = new Map<string, Car[]>();
 
     constructor(
         private router: Router,
@@ -44,6 +46,8 @@ export class JoinChampionshipComponent implements OnInit {
         console.log("join-champ -> ", this.championship);
         console.log("Grid ->", this.grid)
         this.gridFormBuilder();
+        this.categorizedCars.clear();
+        this.groupCarsByCategory();
     }
 
     gridFormBuilder() {
@@ -141,6 +145,17 @@ export class JoinChampionshipComponent implements OnInit {
                 });
             }
         }
+
+    groupCarsByCategory() {
+        this.championship.carList.forEach(car => {
+            const category = car.category;
+            if (this.categorizedCars.has(category)) {
+                this.categorizedCars.get(category)?.push(car);
+            } else {
+                this.categorizedCars.set(category, [car]);
+            }
+        });
+    }
 
     isSoloChampionship() {
         return this.championship.style === 'SOLO';
