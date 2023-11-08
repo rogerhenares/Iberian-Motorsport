@@ -1,7 +1,6 @@
 package com.iberianmotorsports.service.service.implementation;
 
 import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Race;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Transactional
@@ -73,25 +71,14 @@ public class GridRaceServiceImpl implements GridRaceService {
     }
 
     @Override
-    public void calculateDropRoundForGrid(Long gridId) {
+    public void calculateDropRoundForGrid(Grid grid) {
 
-        Grid grid = gridService.getGridById(gridId);
         if (grid.getGridRaceList().size() > 2) {
             grid.getGridRaceList().forEach(gridRace -> gridRace.setDropRound(false));
-
             grid.getGridRaceList().stream()
-                    .min(Comparator.comparing(GridRace::getPoints)).ifPresent(lowestGridRace -> lowestGridRace.setDropRound(true));
-
+                    .min(Comparator.comparing(GridRace::getPoints))
+                    .ifPresent(lowestGridRace -> lowestGridRace.setDropRound(true));
             grid.getGridRaceList().forEach(this::saveGridRace);
         }
     }
-
-    @Override
-    public void dropRoundForChampionship(Long championshipId) {
-        Championship championship = championshipService.findChampionshipById(championshipId);
-        championship.getGridList().forEach(grid -> calculateDropRoundForGrid(grid.getId()));
-
-    }
-
-
 }

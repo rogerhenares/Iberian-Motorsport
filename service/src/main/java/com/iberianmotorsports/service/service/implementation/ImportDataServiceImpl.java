@@ -1,8 +1,8 @@
 package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Grid;
+import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Sanction;
 import com.iberianmotorsports.service.model.composeKey.GridRacePrimaryKey;
@@ -13,7 +13,6 @@ import com.iberianmotorsports.service.model.parsing.imports.Results;
 import com.iberianmotorsports.service.model.parsing.properties.ServerProperty;
 import com.iberianmotorsports.service.repository.SanctionRepository;
 import com.iberianmotorsports.service.service.GridRaceService;
-import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.ImportDataService;
 import com.iberianmotorsports.service.service.RaceService;
 import lombok.AllArgsConstructor;
@@ -45,7 +44,6 @@ public class ImportDataServiceImpl implements ImportDataService {
     private final GridRaceService gridRaceService;
     private final SanctionRepository sanctionRepository;
     private final ServerProperty serverProperty;
-    private final GridService gridService;
 
     @Value("#{'${pointsSystem}'}")
     private List<Integer> pointsSystem;
@@ -184,7 +182,15 @@ public class ImportDataServiceImpl implements ImportDataService {
         long points  = pointsSystem.get(position).longValue();
         if (Objects.equals(bestLap.getCarId(), Float.valueOf(leaderBoardLine.getCar().getCarId()))) { points += 1; }
         gridRace.setPoints(points);
-        return gridRaceService.saveGridRace(gridRace);
+        GridRace savedGridRace = gridRaceService.saveGridRace(gridRace);
+        //TODO TEST Option A
+        gridRaceService.calculateDropRoundForGrid(savedGridRace.getGridRacePrimaryKey().getGrid());
+        //TODO TEST Option B
+        /*
+        savedGridRace.getGridRacePrimaryKey().getGrid().getGridRaceList().add(gridRace);
+        gridRaceService.calculateDropRoundForGrid(savedGridRace.getGridRacePrimaryKey().getGrid());
+         */
+        return savedGridRace;
     }
 
     private GridRace setQualyData(GridRace gridRace, LeaderBoardLine leaderBoardLine, int position) {

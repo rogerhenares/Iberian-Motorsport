@@ -1,5 +1,6 @@
 package com.iberianmotorsports.service.service;
 
+import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.GridRace;
 
 import java.util.List;
@@ -10,9 +11,7 @@ public interface GridRaceService {
 
     List<GridRace> getGridRaceForRace(Long raceId);
 
-    void calculateDropRoundForGrid(Long championshipId);
-
-    void dropRoundForChampionship(Long championshipId);
+    void calculateDropRoundForGrid(Grid grid);
 
     void calculateGridRace(Long raceId);
 
