@@ -18,5 +18,4 @@ public interface GridRepository extends JpaRepository<Grid, Long> {
 
     List<Grid> findGridsByChampionshipIdAndTeamName(Long championshipId, String teamName);
     Grid findGridByPassword(String password);
-
 }

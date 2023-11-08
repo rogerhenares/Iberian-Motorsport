@@ -30,6 +30,7 @@ public class GridRaceMapper implements Function<GridRaceDTO, GridRace> {
         gridRace.setSanctionList(gridRaceDTO.sanctionDTOList()
                         .stream()
                         .map(sanctionMapper).toList());
+        gridRace.setDropRound(gridRaceDTO.dropRound());
         gridRace.setGridRacePrimaryKey(getGridRace(gridRaceDTO.gridId(), gridRaceDTO.raceId()).getGridRacePrimaryKey());
         return gridRace;
     }

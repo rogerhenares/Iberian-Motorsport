@@ -10,6 +10,10 @@ public interface GridRaceService {
 
     List<GridRace> getGridRaceForRace(Long raceId);
 
+    void calculateDropRoundForGrid(Long championshipId);
+
+    void dropRoundForChampionship(Long championshipId);
+
     void calculateGridRace(Long raceId);
 
     GridRace saveGridRace(GridRace gridRace);

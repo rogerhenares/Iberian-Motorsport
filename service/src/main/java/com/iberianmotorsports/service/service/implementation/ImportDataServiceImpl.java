@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iberianmotorsports.service.model.GridRace;
+import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Sanction;
 import com.iberianmotorsports.service.model.composeKey.GridRacePrimaryKey;
@@ -12,6 +13,7 @@ import com.iberianmotorsports.service.model.parsing.imports.Results;
 import com.iberianmotorsports.service.model.parsing.properties.ServerProperty;
 import com.iberianmotorsports.service.repository.SanctionRepository;
 import com.iberianmotorsports.service.service.GridRaceService;
+import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.ImportDataService;
 import com.iberianmotorsports.service.service.RaceService;
 import lombok.AllArgsConstructor;
@@ -43,6 +45,7 @@ public class ImportDataServiceImpl implements ImportDataService {
     private final GridRaceService gridRaceService;
     private final SanctionRepository sanctionRepository;
     private final ServerProperty serverProperty;
+    private final GridService gridService;
 
     @Value("#{'${pointsSystem}'}")
     private List<Integer> pointsSystem;
@@ -82,6 +85,7 @@ public class ImportDataServiceImpl implements ImportDataService {
 
             createGridRaceFromResults(race, qualyResults);
             createGridRaceFromResults(race, raceResults);
+            createEmptyGridRaces(race, raceResults);
         }
     }
 
@@ -117,6 +121,39 @@ public class ImportDataServiceImpl implements ImportDataService {
                 )
                 .flatMap(List::stream)
                 .forEach(gridRace -> {});
+    }
+
+    private void createEmptyGridRaces(Race race, Results results){
+
+        List<Integer> resultsCarNumbers = results.getSessionResult().getLeaderBoardLines().stream()
+                .map(entry -> entry.getCar().getRaceNumber())
+                .toList();
+
+        List<Grid> missingGrids = race.getChampionship().getGridList().stream()
+                .filter(grid -> !resultsCarNumbers.contains(grid.getCarNumber()))
+                .toList();
+
+
+        missingGrids.forEach(grid -> { generateEmptyGridRace(grid, race);
+        });
+    }
+
+    private void generateEmptyGridRace(Grid grid, Race race) {
+        GridRace gridRace = new GridRace();
+        GridRacePrimaryKey gridRacePrimaryKey = new GridRacePrimaryKey(grid, race);
+        gridRace.setGridRacePrimaryKey(gridRacePrimaryKey);
+        gridRace.setFinalTime(0L);
+        gridRace.setFirstSector(0L);
+        gridRace.setSecondSector(0L);
+        gridRace.setThirdSector(0L);
+        gridRace.setQualyTime(0L);
+        gridRace.setQualyFirstSector(0L);
+        gridRace.setQualySecondSector(0L);
+        gridRace.setQualyThirdSector(0L);
+        gridRace.setTotalLaps(0);
+        gridRace.setQualyPosition(0);
+        gridRace.setPoints(0L);
+        gridRaceService.saveGridRace(gridRace);
     }
 
     private Long getChampionshipID(String serverName) {

@@ -1,11 +1,13 @@
 package com.iberianmotorsports.service.service.implementation;
 
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.composeKey.GridRacePrimaryKey;
 import com.iberianmotorsports.service.repository.GridRaceRepository;
+import com.iberianmotorsports.service.service.ChampionshipService;
 import com.iberianmotorsports.service.service.GridRaceService;
 import com.iberianmotorsports.service.service.GridService;
 import com.iberianmotorsports.service.service.RaceService;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class GridRaceServiceImpl implements GridRaceService {
 
-    //TODO generate grid race using .log file from acc server :D happy flowers (Dúchate hippy)
+    ChampionshipService championshipService;
 
     RaceService raceService;
 
@@ -57,8 +59,10 @@ public class GridRaceServiceImpl implements GridRaceService {
 
     @Override
     public void calculateGridRace(Long raceId) {
+
         List<GridRace> filteredList = getGridRaceForRace(raceId).stream()
                 .filter(gridRace -> gridRace.getFinalTime() != null)
+                .filter(gridRace -> gridRace.getFinalTime() > 0)
                 .sorted(Comparator.comparing(gridRace -> gridRace.getFinalTime() + (gridRace.getSanctionTime() * 1000)))
                 .toList();
 
@@ -67,4 +71,27 @@ public class GridRaceServiceImpl implements GridRaceService {
             gridRaceRepository.save(gridRace);
         }
     }
+
+    @Override
+    public void calculateDropRoundForGrid(Long gridId) {
+
+        Grid grid = gridService.getGridById(gridId);
+        if (grid.getGridRaceList().size() > 2) {
+            grid.getGridRaceList().forEach(gridRace -> gridRace.setDropRound(false));
+
+            grid.getGridRaceList().stream()
+                    .min(Comparator.comparing(GridRace::getPoints)).ifPresent(lowestGridRace -> lowestGridRace.setDropRound(true));
+
+            grid.getGridRaceList().forEach(this::saveGridRace);
+        }
+    }
+
+    @Override
+    public void dropRoundForChampionship(Long championshipId) {
+        Championship championship = championshipService.findChampionshipById(championshipId);
+        championship.getGridList().forEach(grid -> calculateDropRoundForGrid(grid.getId()));
+
+    }
+
+
 }

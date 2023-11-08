@@ -13,6 +13,7 @@ public record GridRaceDTO(
         Integer totalLaps,
         Integer sanctionTime,
         List<SanctionDTO> sanctionDTOList,
+        Boolean dropRound,
         Long raceId,
         Long gridId,
         GridDTO grid

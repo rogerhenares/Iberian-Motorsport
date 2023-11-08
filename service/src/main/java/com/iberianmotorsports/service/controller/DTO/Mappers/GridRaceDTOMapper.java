@@ -28,6 +28,7 @@ public class GridRaceDTOMapper implements Function<GridRace, GridRaceDTO> {
                 gridRace.getTotalLaps(),
                 gridRace.getSanctionTime(),
                 gridRace.getSanctionList().stream().map(sanctionDTOMapper).toList(),
+                gridRace.getDropRound(),
                 gridRace.getGridRacePrimaryKey().getRace().getId(),
                 gridRace.getGridRacePrimaryKey().getGrid().getId(),
                 gridDTOMapper.apply(gridRace.getGridRacePrimaryKey().getGrid())

@@ -57,12 +57,16 @@ public class GridServiceImpl  implements GridService {
         List<Grid> grids = gridRepository.findGridsByChampionshipId(championshipId);
         grids = grids.stream()
                 .map(grid -> {
-                    grid.setPoints(grid.getGridRaceList().stream().mapToDouble(GridRace::getPoints).sum());
+                    grid.setPoints(grid.getGridRaceList().stream()
+                            .filter(gridRace -> !gridRace.getDropRound())
+                            .mapToDouble(GridRace::getPoints)
+                            .sum());
                     grid.setManagerId(getGridManager(grid).getUserId());
                     return grid;
                 }).toList();
         return grids;
     }
+
 
     @Override
     public Grid findGridByPassword(String password) {
