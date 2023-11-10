@@ -32,6 +32,7 @@ public class GridMapper implements Function<GridDTO, Grid> {
         grid.setLicensePoints(gridDTO.licensePoints());
         grid.setPassword(gridDTO.password());
         grid.setDisabled(gridDTO.disabled());
+        grid.setNewManagerId(gridDTO.newManagerId());
         return grid;
     }
 }

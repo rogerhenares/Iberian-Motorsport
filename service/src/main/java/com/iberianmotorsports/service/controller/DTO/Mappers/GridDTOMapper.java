@@ -28,7 +28,8 @@ public class GridDTOMapper implements Function<Grid, GridDTO> {
                 grid.getPoints(),
                 grid.getLicensePoints(),
                 grid.getPassword(),
-                grid.getDisabled()
+                grid.getDisabled(),
+                grid.getNewManagerId()
         );
     }
 }

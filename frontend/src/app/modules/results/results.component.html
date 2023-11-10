@@ -31,7 +31,7 @@
                         <p class="h4" *ngIf="isOnChampionship() || this.appContext.isAdmin()">
                             {{formatTime(gridRace.finalTime)}} <span class="penalty-text" *ngIf="gridRace.sanctionTime > 0"> +{{gridRace.sanctionTime}}</span>
                         </p>
-                        <p class="h4" *ngIf="!isOnChampionship()">
+                        <p class="h4" *ngIf="!isOnChampionship() && gridRace.sanctionTime > 0">
                             {{formatTime(addSanctionToTotalTime(gridRace))}}
                         </p>
                     </td>
@@ -43,7 +43,12 @@
                             {{formatTime(gridRace.firstSector)}} - {{formatTime(gridRace.secondSector)}} - {{formatTime(gridRace.thirdSector)}}
                         </p>
                     </td>
-                    <td class="pointsColumn" style="text-align: left">{{gridRace.points}}</td>
+                    <td class="pointsColumn" style="text-align: left; display: flex; align-items: center;">
+                        {{gridRace.points}}
+                        <span style="color: red; margin-left: 5px; transform: translateY(2px);" *ngIf="gridRace.dropRound">
+                            <mat-icon matTooltip="Drop Round">highlight_off</mat-icon>
+                        </span>
+                    </td>
                 </tr>
             </ng-container>
         </ng-container>

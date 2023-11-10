@@ -151,7 +151,11 @@ public class ImportDataServiceImpl implements ImportDataService {
         gridRace.setTotalLaps(0);
         gridRace.setQualyPosition(0);
         gridRace.setPoints(0L);
-        gridRaceService.saveGridRace(gridRace);
+        GridRace savedGridRace = gridRaceService.saveGridRace(gridRace);
+        savedGridRace.getGridRacePrimaryKey().getGrid().getGridRaceList().add(gridRace);
+        gridRaceService.calculateDropRoundForGrid(grid);
+
+
     }
 
     private Long getChampionshipID(String serverName) {
@@ -184,12 +188,11 @@ public class ImportDataServiceImpl implements ImportDataService {
         gridRace.setPoints(points);
         GridRace savedGridRace = gridRaceService.saveGridRace(gridRace);
         //TODO TEST Option A
-        gridRaceService.calculateDropRoundForGrid(savedGridRace.getGridRacePrimaryKey().getGrid());
+//        gridRaceService.calculateDropRoundForGrid(savedGridRace.getGridRacePrimaryKey().getGrid());
         //TODO TEST Option B
-        /*
         savedGridRace.getGridRacePrimaryKey().getGrid().getGridRaceList().add(gridRace);
         gridRaceService.calculateDropRoundForGrid(savedGridRace.getGridRacePrimaryKey().getGrid());
-         */
+
         return savedGridRace;
     }
 

@@ -29,6 +29,7 @@ import {ChampionshipCategoryService} from "../../service/championshipcategory.se
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ImportService} from "../../service/import.service";
 import {ExportService} from "../../service/export.service";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import {ExportService} from "../../service/export.service";
         }
       }))}),
     LanguageTranslationModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   declarations: [
     AppComponent,

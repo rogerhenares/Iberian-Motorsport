@@ -135,6 +135,7 @@ public class GridServiceImpl  implements GridService {
         List<Grid> gridTeamSolo = List.of();
         validateLoggedUserFromGrid(gridToUpdate);
         boolean isTeamSoloChampionship = ChampionshipStyleType.TEAM_SOLO.getValue().equals(gridToUpdate.getChampionship().getStyle());
+        boolean isTeamChampionship = ChampionshipStyleType.TEAM.getValue().equals(gridToUpdate.getChampionship().getStyle());
         if (isTeamSoloChampionship) {
             gridTeamSolo = gridRepository.findGridsByChampionshipIdAndTeamName(
                     gridToUpdate.getChampionship().getId(),
@@ -165,6 +166,13 @@ public class GridServiceImpl  implements GridService {
         }
         if (RoleType.isAdminFromAuthentication()) {
             gridToUpdate.setCarLicense(grid.getCarLicense());
+        }
+        if (grid.getNewManagerId() != null){
+            GridUser gridUser = gridUserRepository.findGridUserByPrimaryKeyGridIdAndGridManagerTrue(grid.getId().intValue());
+            gridUser.setGridManager(Boolean.FALSE);
+            gridUserRepository.save(gridUser);
+
+            setGridManager(userService.findUserById(grid.getNewManagerId()), gridToUpdate);
         }
         if(isTeamSoloChampionship) {
             gridRepository.saveAll(gridTeamSolo);

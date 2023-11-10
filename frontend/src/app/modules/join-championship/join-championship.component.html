@@ -49,6 +49,9 @@
                                                 <img style="height: 15px;" src="assets/flags/{{user.nationality.toLowerCase()}}.svg">&nbsp;
                                                 {{user?.firstName}} {{user?.lastName}} - {{user?.shortName}} - {{user?.steamId}}
                                             </span>
+                                            <button *ngIf="this.isGridManager() && user.userId != grid.managerId" class="btn btn-primary" style="color: black; margin-left: 5px" (click)="giveManager($event, user)">
+                                                Give Manager
+                                            </button>
                                             <br>
                                         </ng-container>
                                     </ng-container>

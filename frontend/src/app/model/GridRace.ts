@@ -13,6 +13,7 @@ export class GridRace {
     sanctionDTOList: Array<Sanction>;
     raceId: number;
     gridId: number;
+    dropRound: boolean;
     grid: Grid;
 
     constructor() {
@@ -26,6 +27,7 @@ export class GridRace {
         this.sanctionDTOList= [];
         this.raceId = null;
         this.gridId = null;
+        this.dropRound = null;
         this.grid = null;
     }
 }

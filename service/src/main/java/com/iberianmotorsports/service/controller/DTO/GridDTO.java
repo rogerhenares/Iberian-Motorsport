@@ -14,6 +14,7 @@ public record GridDTO(
         Double points,
         Long licensePoints,
         String password,
-        Boolean disabled
+        Boolean disabled,
+        Long newManagerId
 ) {
 }

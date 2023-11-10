@@ -27,3 +27,7 @@ body {
 .custom-swal-title {
     color: white;
 }
+
+:host ::ng-deep .mat-tooltip {
+    color: white;
+}

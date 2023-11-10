@@ -8,6 +8,8 @@ import {ChampionshipCategory} from "../../model/ChampionshipCategory";
 import {Championship} from "../../model/Championship";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {Car} from "../../model/Car";
+import Swal from "sweetalert2";
+import {User} from "../../model/User";
 
 @Component({
     selector: 'app-join-championship',
@@ -81,7 +83,8 @@ export class JoinChampionshipComponent implements OnInit {
             points: this.grid.points,
             managerId: this.grid.managerId,
             password: this.grid.password,
-            disabled: this.grid.disabled
+            disabled: this.grid.disabled,
+            newManagerId: this.grid.newManagerId
         }
         if (history.state.grid) {
             if (this.isTeamChampionship()){
@@ -176,6 +179,33 @@ export class JoinChampionshipComponent implements OnInit {
     isDriver() {
         return this.grid.driversList.find(driver => driver.steamId === this.appContext.getLoggedUser().steamId) != undefined;
     }
+
+    giveManager(event, user: User) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You are about to assign a new manager. Do you want to proceed?",
+            background: '#151515',
+            showCancelButton: true,
+            confirmButtonColor: '#00EBB1',
+            cancelButtonColor: '#e91e63',
+            confirmButtonText: 'Yes, assign!'
+        }).then((result) => {
+            if (result.value) {
+                this.grid.newManagerId = user.userId;
+                this.gridService.updateGridEntry(this.grid).subscribe(
+                    response => {
+                        if(response) {
+                            this.router.navigateByUrl('/championship/' + this.championship.id)
+                        }
+                    }
+                )
+            }
+        })
+    }
+
+
 
     protected readonly history = history;
 }

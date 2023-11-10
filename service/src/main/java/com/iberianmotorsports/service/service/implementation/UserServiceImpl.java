@@ -77,6 +77,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserById(Long userId) {
+        return userRepository.findByUserId(userId).orElseThrow(() ->
+                new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription()));
+    }
+
+    @Override
     public User findUserByName(String name) {
         Optional<User> userOptional = userRepository.findByFirstName(name);
         if(userOptional.isEmpty()) throw new ServiceException(ErrorMessages.USER_NOT_IN_DB.getDescription());

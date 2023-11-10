@@ -14,8 +14,15 @@
                                     <div class="ct-chart" id=""></div>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-category" style="color: #ff9800">{{ formattedRace(race.track) }}</p>
+                                    <p class="card-category" style="color: #ff9800">
+                                        {{ formattedRace(race.track) }}
+                                        <mat-icon *ngIf="race.status == 'LAUNCHED'" matTooltip="Server Online"
+                                                  style="overflow: visible; top: 6px; color: green; margin-left: 5px;">
+                                            wifi_tethering
+                                        </mat-icon>
+                                    </p>
                                 </div>
+
                                 <div class="card-footer">
                                     <div class="stats">
                                         <i class="material-icons">access_time</i>{{race.startDate| date: 'MMM d, h:mm a'}}

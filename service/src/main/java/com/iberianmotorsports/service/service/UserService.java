@@ -13,6 +13,8 @@ public interface UserService {
 
     User findUserBySteamId(Long steamId);
 
+    User findUserById(Long id);
+
     User findUserByName(String name);
 
     Page<User> findAllUsers(Pageable pageable);
