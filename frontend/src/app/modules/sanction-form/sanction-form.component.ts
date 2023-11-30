@@ -65,7 +65,7 @@ export class SanctionFormComponent {
             this.sanctionService.createSanction(this.sanction).subscribe(response => {
                 if (response) {
                     this.requestSuccessSwal.fire();
-                    this.router.navigateByUrl("/championship/" + this.championshipId)
+                    //this.router.navigateByUrl("/championship/" + this.championshipId)
                     console.log("Sanction ->", this.sanction)
                 }
                 this.isSendingRequest = false;

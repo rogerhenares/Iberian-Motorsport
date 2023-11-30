@@ -9,6 +9,6 @@ public record SanctionDTO (
     Long gridId,
     GridDTO grid,
     Boolean inGame,
-    Long licensePoints
+    Float licensePoints
     ){
 }

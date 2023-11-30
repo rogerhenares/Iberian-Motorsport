@@ -31,7 +31,7 @@ public class Sanction implements Serializable {
     private Boolean inGame;
 
     @Column(name = "license_points")
-    private Long licensePoints;
+    private Float licensePoints;
 
     @ManyToOne
     @JoinColumns({

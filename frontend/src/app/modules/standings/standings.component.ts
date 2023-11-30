@@ -134,6 +134,7 @@ export class StandingsComponent implements OnInit, OnChanges {
         } else {
             this.filteredGrid = [...this.grid];
         }
+        this.teamGrid.sort((a, b) => b.points - a.points);
     }
 
     isGridDisbled(grid: Grid) {

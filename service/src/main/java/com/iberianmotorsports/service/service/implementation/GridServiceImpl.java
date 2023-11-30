@@ -203,7 +203,7 @@ public class GridServiceImpl  implements GridService {
     }
 
     @Override
-    public void updateGridLicensePoints(Long gridId, Long licensePoints, Boolean isApply) {
+    public void updateGridLicensePoints(Long gridId, Float licensePoints, Boolean isApply) {
         Grid grid = getGridById(gridId);
         grid.setLicensePoints(isApply ?
                 grid.getLicensePoints() - licensePoints :

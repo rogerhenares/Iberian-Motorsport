@@ -45,8 +45,14 @@ public class GridRaceServiceImpl implements GridRaceService {
         Race race = raceService.findRaceById(raceId);
         Grid grid = gridService.getGridById(gridId);
         GridRacePrimaryKey id = new GridRacePrimaryKey(grid, race);
-        return gridRaceRepository.findById(id)
+        GridRace gridRace = gridRaceRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorMessages.GRID_RACE_NOT_FOUND.getDescription()));
+        gridRace.getGridRacePrimaryKey().getGrid().getGridRaceList().size();
+        gridRace.getGridRacePrimaryKey().getGrid().getGridRaceList().stream().map(gridRaceLazy ->{
+            gridRaceLazy.getSanctionList().size();
+            return gridRaceLazy;
+        }).toList();
+        return gridRace;
     }
 
     @Override
@@ -72,13 +78,13 @@ public class GridRaceServiceImpl implements GridRaceService {
 
     @Override
     public void calculateDropRoundForGrid(Grid grid) {
-
-        if (grid.getGridRaceList().size() > 2) {
-            grid.getGridRaceList().forEach(gridRace -> gridRace.setDropRound(false));
-            grid.getGridRaceList().stream()
+        Grid gridToCheck = gridService.getGridById(grid.getId());
+        if (gridToCheck.getGridRaceList().size() > 2) {
+            gridToCheck.getGridRaceList().forEach(gridRace -> gridRace.setDropRound(false));
+            gridToCheck.getGridRaceList().stream()
                     .min(Comparator.comparing(GridRace::getPoints))
                     .ifPresent(lowestGridRace -> lowestGridRace.setDropRound(true));
-            grid.getGridRaceList().forEach(this::saveGridRace);
+            gridToCheck.getGridRaceList().forEach(this::saveGridRace);
         }
     }
 }

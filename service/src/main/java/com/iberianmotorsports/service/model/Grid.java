@@ -43,7 +43,7 @@ public class Grid implements Serializable {
     private Boolean disabled;
 
     @Column(name = "license_points")
-    private Long licensePoints;
+    private Float licensePoints;
 
     @Column(name = "password")
     private String password;

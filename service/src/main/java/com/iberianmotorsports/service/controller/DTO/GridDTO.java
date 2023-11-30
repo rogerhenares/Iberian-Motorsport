@@ -12,7 +12,7 @@ public record GridDTO(
         Long managerId,
         CarDTO car,
         Double points,
-        Long licensePoints,
+        Float licensePoints,
         String password,
         Boolean disabled,
         Long newManagerId

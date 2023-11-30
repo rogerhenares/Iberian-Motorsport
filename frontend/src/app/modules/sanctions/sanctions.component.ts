@@ -67,6 +67,10 @@ export class SanctionsComponent implements OnInit, OnChanges {
         this.sanctionService.deleteSanction(this.currentSanctionId).subscribe(() => this.loadSanctionList())
         window.location.reload();
     }
+
+    sortSanctionsByLapDescending() {
+        return this.sanctionsList.sort((a, b) => b.lap - a.lap);
+    }
 }
 
 

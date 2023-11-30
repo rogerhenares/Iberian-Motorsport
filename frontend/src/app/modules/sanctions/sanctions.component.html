@@ -8,9 +8,9 @@
             <th class="lapHeader">LAP</th>
             <th class="penaltyHeader">PENALTY</th>
             <th class="reasonHeader">REASON</th>
-            <th *ngIf="appContext.isAdmin()" class="inGameHeader">IN GAME</th>
+            <th class="inGameHeader">IN GAME</th>
         </thead>
-        <ng-container *ngFor="let sanction of sanctionsList; let i = index">
+        <ng-container *ngFor="let sanction of sortSanctionsByLapDescending(); let i = index">
             <tbody>
                 <tr [ngClass]="{'selected': isSanctionForLoggedUser(sanction)}">
                     <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style === 'TEAM'">{{sanction.grid.teamName}}</td>
@@ -18,12 +18,12 @@
                     <td class="lapColumn" style="text-align: left">{{sanction.lap}}</td>
                     <td class="penaltyColumn" style="text-align: left">{{sanction.penalty}}</td>
                     <td class="reasonColumn" style="text-align: left">{{sanction.reason}}</td>
-                    <td *ngIf="appContext.isAdmin()" class="inGameColumn" style="text-align: left">
+                    <td class="inGameColumn" style="text-align: left">
                         <mat-checkbox [checked]="sanction.inGame" [disabled]="true"></mat-checkbox>
                     </td>
                     <td class="text-right">
-                        <button class="btn btn-warning btn-sm" *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="editSanction(sanction.raceId, sanction.gridId, sanction)" style="color: black">Edit</button>
-                        <button class="btn btn-danger btn-sm" *ngIf="appContext.isAdmin()  && sanction.inGame == false" (click)="setSanctionId(sanction.id); deleteSanctionSwal.fire()" style="color: black">Delete</button>
+                        <button class="btn btn-warning btn-sm" *ngIf="appContext.isAdmin()" (click)="editSanction(sanction.raceId, sanction.gridId, sanction)" style="color: black">Edit</button>
+                        <button class="btn btn-danger btn-sm" *ngIf="appContext.isAdmin()" (click)="setSanctionId(sanction.id); deleteSanctionSwal.fire()" style="color: black">Delete</button>
                     </td>
                 </tr>
             </tbody>

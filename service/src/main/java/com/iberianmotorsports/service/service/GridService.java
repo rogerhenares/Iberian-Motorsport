@@ -6,7 +6,6 @@ import com.iberianmotorsports.service.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface GridService {
@@ -27,7 +26,7 @@ public interface GridService {
 
     Grid updateGridCarNumber(Long gridId, Integer carNumber);
 
-    void updateGridLicensePoints(Long gridId, Long licensePoints, Boolean isApply);
+    void updateGridLicensePoints(Long gridId, Float licensePoints, Boolean isApply);
 
     void addDriver(Long gridId, Long steamId, String password);
 

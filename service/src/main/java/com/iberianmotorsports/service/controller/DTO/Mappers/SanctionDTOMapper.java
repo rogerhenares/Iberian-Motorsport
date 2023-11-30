@@ -2,7 +2,6 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.GridDTO;
 import com.iberianmotorsports.service.controller.DTO.SanctionDTO;
-import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Sanction;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
