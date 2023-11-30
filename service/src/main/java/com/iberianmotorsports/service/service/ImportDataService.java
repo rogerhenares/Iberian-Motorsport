@@ -8,4 +8,5 @@ public interface ImportDataService {
 
     void importData(Race race) throws Exception;
 
+    boolean isResultsReady(Race race);
 }

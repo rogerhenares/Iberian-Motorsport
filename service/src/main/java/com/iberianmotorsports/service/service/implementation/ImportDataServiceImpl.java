@@ -34,7 +34,6 @@ import static com.iberianmotorsports.service.service.implementation.ExportDataSe
 @Service
 @Transactional
 @AllArgsConstructor
-// TODO Mejora pasar los index de los sectores a una variable estática y los Q y R que sean un enum.
 public class ImportDataServiceImpl implements ImportDataService {
 
     private static final String RESULT_FOLDER_NAME = "results";
@@ -87,6 +86,17 @@ public class ImportDataServiceImpl implements ImportDataService {
         }
     }
 
+    @Override
+    public boolean isResultsReady(Race race) {
+        File championshipFolder = new File(serverProperty.getFolder() + File.separator + "C" + race.getChampionship().getId() + SERVER_FOLDER_SEPARATOR + race.getChampionship().getName());
+        File raceFolderResults = new File(championshipFolder.getAbsolutePath() + File.separator + "R" + race.getId() + SERVER_FOLDER_SEPARATOR + race.getTrack() + File.separator + RESULT_FOLDER_NAME);
+        try{
+            return Arrays.stream(Objects.requireNonNull(raceFolderResults.listFiles())).anyMatch(file -> file.getName().contains("R"));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private void createGridRaceFromResults(Race race, Results results) {
         AtomicInteger index = new AtomicInteger(0);
         Map<Integer, Integer> carPosition = new HashMap<>();
@@ -105,14 +115,14 @@ public class ImportDataServiceImpl implements ImportDataService {
                             GridRacePrimaryKey gridRacePrimaryKey = new GridRacePrimaryKey(grid, raceService.findRaceById(race.getId()));
                             gridRace.setGridRacePrimaryKey(gridRacePrimaryKey);
                             if (Objects.equals(results.getSessionType(), "Q")) {
-                                setQualyData(gridRace, leaderBoardLine, carPosition.get(grid.getCarNumber()));
+                                gridRace = setQualyData(gridRace, leaderBoardLine, carPosition.get(grid.getCarNumber()));
                             }
                             if (Objects.equals(results.getSessionType(), "R")) {
                                 setRaceData(gridRace, leaderBoardLine, carPosition.get(grid.getCarNumber()), bestLap);
                             }
-                            results.getPenalties().stream()
-                                    .filter(penalty -> penalty.getCarId().equals(Float.valueOf(leaderBoardLine.getCar().getCarId())))
-                                    .forEach(penalty -> importSanctions(gridRace, penalty));
+                            //results.getPenalties().stream()
+                            //        .filter(penalty -> penalty.getCarId().equals(Float.valueOf(leaderBoardLine.getCar().getCarId())))
+                            //        .forEach(penalty -> importSanctions(gridRace, penalty));
                             return gridRace;
                         })
                         .collect(Collectors.toList())
@@ -187,9 +197,6 @@ public class ImportDataServiceImpl implements ImportDataService {
         if (Objects.equals(bestLap.getCarId(), Float.valueOf(leaderBoardLine.getCar().getCarId()))) { points += 1; }
         gridRace.setPoints(points);
         GridRace savedGridRace = gridRaceService.saveGridRace(gridRace);
-        //TODO TEST Option A
-//        gridRaceService.calculateDropRoundForGrid(savedGridRace.getGridRacePrimaryKey().getGrid());
-        //TODO TEST Option B
         savedGridRace.getGridRacePrimaryKey().getGrid().getGridRaceList().add(gridRace);
         gridRaceService.calculateDropRoundForGrid(savedGridRace.getGridRacePrimaryKey().getGrid());
 
@@ -205,7 +212,8 @@ public class ImportDataServiceImpl implements ImportDataService {
             long points = qualyPoints.get(position).longValue();
             gridRace.setPoints(points);
         }
-        return gridRaceService.saveGridRace(gridRace);
+        return gridRace;
+        //gridRaceService.saveGridRace(gridRace);
     }
 
     private Sanction importSanctions(GridRace gridRace, Penalty penalty) {

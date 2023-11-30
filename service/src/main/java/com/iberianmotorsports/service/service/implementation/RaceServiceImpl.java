@@ -207,6 +207,17 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public List<Race> getRaceByStatusAndDate(RaceStatus raceStatus, LocalDateTime currentTime) {
-        return raceRepository.findAllByStatusIsAndStartDateBefore(raceStatus.name(), currentTime);
+        List<Race> raceList = raceRepository.findAllByStatusIsAndStartDateBefore(raceStatus.name(), currentTime);
+        raceList = raceList.stream().map(race -> {
+            race.getChampionship().getGridList().size();
+            race.getChampionship().getGridList().stream().map(grid -> {
+                grid.getDrivers().size();
+                return grid;
+            });
+            race.getBopList().size();
+            race.getSessionList().size();
+            return race;
+        }).toList();
+        return raceList;
     }
 }

@@ -1,11 +1,13 @@
 package com.iberianmotorsports.service.model.parsing.imports;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iberianmotorsports.service.model.parsing.Driver;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Car {
 
     private Integer carId;
