@@ -141,7 +141,6 @@ public class ImportDataServiceImpl implements ImportDataService {
                 .filter(grid -> !resultsCarNumbers.contains(grid.getCarNumber()))
                 .toList();
 
-
         missingGrids.forEach(grid -> { generateEmptyGridRace(grid, race);
         });
     }

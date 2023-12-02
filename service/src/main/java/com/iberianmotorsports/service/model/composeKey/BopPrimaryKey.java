@@ -3,18 +3,18 @@ package com.iberianmotorsports.service.model.composeKey;
 import com.iberianmotorsports.service.model.Car;
 import com.iberianmotorsports.service.model.Race;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-@Getter
-@Setter
+@Data
 public class BopPrimaryKey implements Serializable {
 
     @ManyToOne

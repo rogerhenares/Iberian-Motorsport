@@ -60,4 +60,6 @@ public class GridRace implements Serializable {
     @OneToMany(mappedBy = "gridRace", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<Sanction> sanctionList;
+
+    @Transient Long timeWithPenalties;
 }

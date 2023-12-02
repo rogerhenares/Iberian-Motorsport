@@ -2,12 +2,11 @@ package com.iberianmotorsports.service.model.composeKey;
 
 import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.User;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -15,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-@Getter
+@Data
 public class GridUserPrimaryKey implements Serializable {
 
     @ManyToOne

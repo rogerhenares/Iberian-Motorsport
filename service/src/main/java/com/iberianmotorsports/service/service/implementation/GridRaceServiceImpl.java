@@ -67,7 +67,12 @@ public class GridRaceServiceImpl implements GridRaceService {
         List<GridRace> filteredList = getGridRaceForRace(raceId).stream()
                 .filter(gridRace -> gridRace.getFinalTime() != null)
                 .filter(gridRace -> gridRace.getFinalTime() > 0)
-                .sorted(Comparator.comparing(gridRace -> gridRace.getFinalTime() + (gridRace.getSanctionTime() * 1000)))
+                .map(gridRace -> {
+                    gridRace.setTimeWithPenalties(gridRace.getFinalTime() + (gridRace.getSanctionTime() * 1000));
+                    return gridRace;
+                })
+                .sorted(Comparator.comparing(GridRace::getTotalLaps).reversed()
+                        .thenComparing(GridRace::getTimeWithPenalties))
                 .toList();
 
         for (GridRace gridRace : filteredList) {
