@@ -41,19 +41,19 @@
                             <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings && !this.isGridDisbled()" (click)="leaveChampionshipSwal.fire()">Leave Championship</button>
                         </div>
                     </div>
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-auto text-left">-->
-<!--                            <button *ngIf=appContext.isAdmin() (click)="createNewRace(this.championship)" style="color: black" class="btn btn-primary">Add Race</button>-->
-<!--                            <button *ngIf=appContext.isAdmin() (click)="editRace(this.championship, selectedRace)" style="color: black" class="btn btn-warning">Edit Race</button>-->
-<!--                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalRace.fire()" style="color: black" class="btn btn-danger">Delete Race</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-auto">-->
-<!--                            <button *ngIf=appContext.isAdmin() (click)="editChampionship(this.championship)" style="color: black" class="btn btn-warning">Edit Championship</button>-->
-<!--                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalChampionship.fire()" style="color: black" class="btn btn-danger">Delete Championship</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="row">
+                        <div class="col-md-auto text-left">
+                            <button *ngIf=appContext.isAdmin() (click)="createNewRace(this.championship)" style="color: black" class="btn btn-primary">Add Race</button>
+                            <button *ngIf=appContext.isAdmin() (click)="editRace(this.championship, selectedRace)" style="color: black" class="btn btn-warning">Edit Race</button>
+                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalRace.fire()" style="color: black" class="btn btn-danger">Delete Race</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-auto">
+                            <button *ngIf=appContext.isAdmin() (click)="editChampionship(this.championship)" style="color: black" class="btn btn-warning">Edit Championship</button>
+                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalChampionship.fire()" style="color: black" class="btn btn-danger">Delete Championship</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
