@@ -33,7 +33,7 @@ export class ChampionshipDetailsComponent implements OnInit {
     championship: Championship;
     selectedRaceId: number | null = null;
     totalPages: number;
-    pageable: Pageable = new Pageable(0, 3);
+    pageable: Pageable = new Pageable(0, 10);
 
     selectedGrid: Grid;
     isAlreadyInStandings: boolean;
@@ -86,16 +86,6 @@ export class ChampionshipDetailsComponent implements OnInit {
         const start = this.pageable.page * this.pageable.size;
         const end = start + this.pageable.size;
         return this.races?.slice(start, end);
-    }
-
-    nextPage() {
-        this.pageable.page++;
-    }
-
-    previousPage() {
-        if (this.pageable.page > 0) {
-            this.pageable.page--;
-        }
     }
 
     getImage(race: Race) {

@@ -10,8 +10,9 @@
             <th class="reasonHeader">REASON</th>
             <th class="inGameHeader">IN GAME</th>
         </thead>
-        <ng-container *ngFor="let sanction of sortSanctionsByLapDescending(); let i = index">
-            <tbody>
+
+        <tbody>
+            <ng-container *ngFor="let sanction of sortSanctionsByLapDescending(); let i = index">
                 <tr [ngClass]="{'selected': isSanctionForLoggedUser(sanction)}">
                     <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style === 'TEAM'">{{sanction.grid.teamName}}</td>
                     <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style != 'TEAM'"><img style="height: 15px;" src="assets/flags/{{sanction?.grid.driversList[0].nationality.toLowerCase()}}.svg">&nbsp; {{sanction.grid.driversList[0].firstName}} {{sanction.grid.driversList[0].lastName}}</td>
@@ -26,34 +27,13 @@
                         <button class="btn btn-danger btn-sm" *ngIf="appContext.isAdmin()" (click)="setSanctionId(sanction.id); deleteSanctionSwal.fire()" style="color: black">Delete</button>
                     </td>
                 </tr>
-            </tbody>
-        </ng-container>
+            </ng-container>
+        </tbody>
     </ng-container>
 </table>
 <div>
     <button *ngIf="appContext.isAdmin()" (click)="createNewSanction(selectedRace.id, selectedChampionship.id)" style=" align-items: end; color: black" class="btn btn-primary">New Sanction</button>
 </div>
-
-
-<swal
-    #requestSuccessSwal
-    title=""
-    text=""
-    type="success"
-    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
-    cancelButtonText="{{'swal-cancel' | translate}}"
-    timer=2000>
-</swal>
-
-<swal
-    #requestFailSwal
-    title="{{'swal-cancelled.title' | translate}}"
-    text="{{'swal-cancelled.text' | translate}}"
-    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
-    cancelButtonText="{{'swal-cancel' | translate}}"
-    type="error"
-    timer=4000>
-</swal>
 
 <swal
     #deleteSanctionSwal

@@ -6,9 +6,9 @@
                     <h4 class="card-title">{{ championship?.name }}</h4>
                 </div>
                 <div class="card-body table-responsive">
-                    <div class="row">
-                        <div *ngFor="let race of pagedData()" class="col-md-4">
-                            <div class="card card-chart" style="flex: 1 1 300px; max-width: 400px;" [class.selected]="selectedRaceId == race.id" (click)="selectRace(race.id)">
+                    <div class="row"  style="height: 35vh; max-height: 395px; overflow-y: auto;">
+                        <div *ngFor="let race of pagedData()" style="padding: 0 15px;">
+                            <div class="card card-chart"  style="flex: 1 1 0; min-width: 300px; max-width: 400px; margin-bottom: 15px;" [class.selected]="selectedRaceId == race.id" (click)="selectRace(race.id)">
                                 <div class="card-header card-header-success" style="max-width: 360px; max-height: 270px; overflow: hidden; aspect-ratio: auto 4 / 3;">
                                     <img [src]="getImage(race)" alt="imagen circuito" style="width: 100%; height: 100%; object-fit: cover;">
                                     <div class="ct-chart" id=""></div>
@@ -32,36 +32,31 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <button class="btn btn-primary" style="color: black" [disabled]="this.pageable.page === 0" (click)="previousPage()">Previous</button>
-                            <button class="btn btn-primary" style="color: black" [disabled]="this.pageable.page === totalPages - 1 || totalPages <= 0" (click)="nextPage()">Next</button>
-                        </div>
-                        <div class="col-md-6 text-right align-self-center" *ngIf="!this.standings.isAlreadyInStandings">
-                            <button (click)="joinChampionship()" style="color: black" class="btn btn-primary" *ngIf="this.appContext.isUserLoggedIn()">Join Championship</button>
-                            <button (click)="joinTeamSwal.fire()" *ngIf="this.championship?.style != 'SOLO' && this.appContext.isUserLoggedIn()" style="color: black" class="btn btn-primary">Join Team</button>
-                        </div>
-                        <div class="col-md-6 text-right align-self-center">
-                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings && !this.isGridDisbled() || this.appContext.isAdmin()" (click)="editGrid(this.selectedGrid)">Edit entry</button>
-                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings && !this.isGridDisbled() || this.appContext.isAdmin()" (click)="leaveChampionshipSwal.fire()">Leave Championship</button>
-                        </div>
+                        <div class="col-md-auto text-left">
+                            <div *ngIf="!this.standings.isAlreadyInStandings">
+                                <button (click)="joinChampionship()" style="color: black" class="btn btn-primary" *ngIf="this.appContext.isUserLoggedIn()">Join Championship</button>
+                                <button (click)="joinTeamSwal.fire()" *ngIf="this.championship?.style != 'SOLO' && this.appContext.isUserLoggedIn()" style="color: black" class="btn btn-primary">Join Team</button>
+                            </div>
+                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings && !this.isGridDisbled()" (click)="editGrid(this.selectedGrid)">Edit entry</button>
+                            <button class="btn btn-primary" style="color: black" *ngIf="this.standings.isAlreadyInStandings && !this.isGridDisbled()" (click)="leaveChampionshipSwal.fire()">Leave Championship</button>
                         </div>
                     </div>
-                <div class="card-body table-responsive">
-
-                <div class="row justify-content-md-center">
-                        <div class="col-md-auto">
-                            <button *ngIf=appContext.isAdmin() (click)="createNewRace(this.championship)" style="color: black" class="btn btn-primary">Add Race</button>
-                            <button *ngIf=appContext.isAdmin() (click)="editRace(this.championship, selectedRace)" style="color: black" class="btn btn-warning">Edit Race</button>
-                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalRace.fire()" style="color: black" class="btn btn-danger">Delete Race</button>
-                        </div>
-                        <div class="col-md-auto">
-                            <button *ngIf=appContext.isAdmin() (click)="editChampionship(this.championship)" style="color: black" class="btn btn-warning">Edit Championship</button>
-                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalChampionship.fire()" style="color: black" class="btn btn-danger">Delete Championship</button>
-                        </div>
-                    </div>
-                    </div>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-auto text-left">-->
+<!--                            <button *ngIf=appContext.isAdmin() (click)="createNewRace(this.championship)" style="color: black" class="btn btn-primary">Add Race</button>-->
+<!--                            <button *ngIf=appContext.isAdmin() (click)="editRace(this.championship, selectedRace)" style="color: black" class="btn btn-warning">Edit Race</button>-->
+<!--                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalRace.fire()" style="color: black" class="btn btn-danger">Delete Race</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-auto">-->
+<!--                            <button *ngIf=appContext.isAdmin() (click)="editChampionship(this.championship)" style="color: black" class="btn btn-warning">Edit Championship</button>-->
+<!--                            <button *ngIf=appContext.isAdmin() (click)="deleteSwalChampionship.fire()" style="color: black" class="btn btn-danger">Delete Championship</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
+        </div>
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-header card-header-tabs card-header-danger">

@@ -1,4 +1,4 @@
-<div class="card-body table-responsive slide-animation">
+<div class="card-body table-responsive slide-animation" style="padding: 0 15px; margin-top: -15px;">
     <div class="row">
         <div class="col-md-4" *ngFor="let championship of championships">
             <div class="card card-chart" style="flex: 1 1 300px; max-width: 400px;" [class.selected]="selectedChampionship?.id == championship.id" (click)="selectChampionship(championship)">

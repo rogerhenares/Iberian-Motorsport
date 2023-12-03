@@ -4,3 +4,6 @@
 .align-right {
     margin-left: auto;
 }
+::-webkit-scrollbar {
+    display: none;
+}

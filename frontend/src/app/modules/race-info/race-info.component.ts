@@ -15,8 +15,11 @@ import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 export class RaceInfoComponent implements OnInit {
     @Input() selectedRace: any;
     @Input() selectedChampionship: any;
+    @Input() maxHeight: number;
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
+
+    maxTableHeight: number = 60;
 
     constructor(
         public appContext: AppContext,
@@ -26,8 +29,10 @@ export class RaceInfoComponent implements OnInit {
     ){}
 
     ngOnInit() {
+        if(this.maxHeight) {
+            this.maxTableHeight = this.maxHeight - 2;
+        }
     }
-
 
     getSessionType(type: string) {
         switch(type) {

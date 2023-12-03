@@ -25,3 +25,25 @@
 .fasterLap {
     color: purple;
 }
+
+tbody {
+    display: block;
+    height: 35vh;
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody::-webkit-scrollbar {
+    /*display: none;*/
+}
+
+thead, tbody tr {
+    display: table;
+    width: calc( 100% - 1em );
+    table-layout: fixed;/* even columns width , fix width of table too*/
+}
+
+thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}

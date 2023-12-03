@@ -24,7 +24,7 @@
             <p style="width: 100%;">There are no drivers for this category.</p>
         </div>
     </ng-container>
-    <table class="table" *ngIf="!(this.selectedValue === 'TEAM' && teamGrid?.length === 0) && !(filteredGrid.length === 0)">
+    <table #gridTable class="table" *ngIf="!(this.selectedValue === 'TEAM' && teamGrid?.length === 0) && !(filteredGrid.length === 0)">
         <thead class=" text-primary">
         <th class="posHeader">POS</th>
         <th class="nameHeader" *ngIf="!isTeamStandings()">DRIVER</th>
@@ -34,7 +34,7 @@
         <th class="categoryHeader" *ngIf="fullMode && this.selectedValue === 'TEAM'">DRIVERS</th>
         <th class="pointsHeader">POINTS</th>
         </thead>
-        <tbody>
+        <tbody [style.max-height.vh]="maxTableHeight">
         <ng-container *ngFor="let grid of this.selectedValue === 'TEAM' ? teamGrid : filteredGrid; let i = index">
             <tr [ngClass]="{'selected': grid === selectedGrid || grid?.isTeamForLoggedUser === true}" (click)="handleRowClick(grid)">
                 <td class="posColumn" style="text-align: left">{{i + 1}}</td>

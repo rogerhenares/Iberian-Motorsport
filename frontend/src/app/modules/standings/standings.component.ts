@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
 import { Race } from '../../model/Race';
 import { Grid } from '../../model/Grid';
 import { GridService } from '../../service/grid.service';
@@ -13,9 +23,13 @@ import {User} from "../../model/User";
     styleUrls: ['./standings.component.css']
 })
 export class StandingsComponent implements OnInit, OnChanges {
+
+    @ViewChild('gridTable') gridTable: ElementRef;
+
     @Input() selectedRace: Race;
     @Input() selectedChampionship: Championship;
     @Input() fullMode: boolean;
+    @Input() maxHeight: number;
 
     @Output() isAlreadyInStandingsChange = new EventEmitter<boolean>();
     @Output() selectedGridChange = new EventEmitter<Grid>();
@@ -26,6 +40,7 @@ export class StandingsComponent implements OnInit, OnChanges {
     selectedGrid: Grid;
     isAlreadyInStandings: boolean = false;
     selectedValue: string = "OVERALL";
+    maxTableHeight: number = 50;
 
     constructor(
         private gridService: GridService,
@@ -35,6 +50,9 @@ export class StandingsComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.loadGridForChampionship();
+        if(this.maxHeight) {
+            this.maxTableHeight = this.maxHeight - 10;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -135,6 +153,7 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.filteredGrid = [...this.grid];
         }
         this.teamGrid.sort((a, b) => b.points - a.points);
+        this.scrollToSelectedElement();
     }
 
     isGridDisbled(grid: Grid) {
@@ -153,4 +172,18 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.selectedChampionship.style === "TEAM";
     }
 
+    scrollToSelectedElement() {
+        if (this.gridTable && this.gridTable.nativeElement) {
+            const selectedElement = this.gridTable.nativeElement.querySelector('.selected');
+            if (selectedElement) {
+                const container = this.gridTable.nativeElement;
+                const offsetTop = selectedElement.offsetTop;
+                const containerHeight = container.clientHeight;
+                const elementHeight = selectedElement.clientHeight;
+
+                const scrollTo = offsetTop - (containerHeight - elementHeight) / 2;
+                container.scrollTop = scrollTo;
+            }
+        }
+    }
 }

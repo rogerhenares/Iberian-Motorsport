@@ -1,4 +1,4 @@
-<div style="overflow-x: hidden">
+<div style="overflow-x: hidden; overflow-y: auto; max-height: {{maxTableHeight}}vh;">
     <ng-container *ngIf="appContext.isAdmin()">
         <button class="btn btn-primary" style="color: black" (click)="exportData(this.selectedRace)" [disabled]="!canBeExported(this.selectedRace)">Export Race</button>
         <button class="btn btn-primary" style="color: black" (click)="importData(this.selectedRace)" [disabled]="!canBeImported(this.selectedRace)">Import Results</button>
@@ -35,17 +35,17 @@
     <ul>
         <li *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount == 0">Not required</li>
         <span *ngIf="selectedRace.raceRulesDTO.mandatoryPitstopCount > 0">
-                                        <li>mandatory: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.mandatoryPitstopCount}}</span></li>
-                                        <li>window: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.pitWindowLengthSec/60}} min </span></li>
-                                        <li>Refueling:
-                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 0"> required </span>
-                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 1"> NOT required </span>
-                                        </li>
-                                        <li>Change tyres:
-                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 0"> required </span>
-                                            <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 1"> NOT required </span>
-                                        </li>
-                                    </span>
+            <li>mandatory: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.mandatoryPitstopCount}}</span></li>
+            <li>window: <span style="color:#00FFC0">{{selectedRace.raceRulesDTO.pitWindowLengthSec/60}} min </span></li>
+            <li>Refueling:
+                <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 0"> required </span>
+                <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopRefuellingRequired != 1"> NOT required </span>
+            </li>
+            <li>Change tyres:
+                <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 0"> required </span>
+                <span style="color:#00FFC0" *ngIf="selectedRace?.raceRulesDTO.isMandatoryPitstopTyreChangeRequired != 1"> NOT required </span>
+            </li>
+        </span>
     </ul>
     <hr>
     <h3 style="color: #ff9800">Weather</h3>

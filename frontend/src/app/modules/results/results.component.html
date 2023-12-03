@@ -1,4 +1,4 @@
-<table class="table" style="text-align: center; overflow-y: auto; max-height: 400px">
+<table class="table" style="text-align: center; overflow-y: auto;">
     <div *ngIf="!gridRace?.length" style="width: 100%; color: #00EBB1">
         <p style="width: 100%;">There are no results for this race.</p>
     </div>
@@ -9,11 +9,11 @@
             <th class="carHeader">CAR</th>
             <th class="finalTimeHeader" *ngIf="fullMode === true">TOTAL TIME</th>
             <th class="timeHeader">BEST TIME</th>
-            <th class="qualyTimeHeader">QUALY TIME</th>
+            <th class="qualyTimeHeader" style="float: left">QUALY TIME</th>
             <th class="pointsHeader">POINTS</th>
         </thead>
 
-        <tbody>
+        <tbody [style.max-height.vh]="maxTableHeight">
         <ng-container *ngFor="let gridRace of gridRace; let i = index">
             <ng-container *ngIf="gridRace.grid">
                 <tr [ngClass]="{'selected': isGridRaceForLoggedUser(gridRace)}">

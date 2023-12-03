@@ -17,11 +17,13 @@ export class ResultsComponent implements OnInit, OnChanges{
     @Input() selectedRace: Race;
     @Input() selectedChampionship: Championship;
     @Input() fullMode: boolean;
+    @Input() maxHeight: number;
 
     grid: Array<Grid>;
     gridRace: Array<GridRace>;
     gridRaceFasterLap: GridRace;
     gridRaceFasterQualyLap: GridRace;
+    maxTableHeight: number = 60;
 
     constructor(
         private gridService: GridService,
@@ -32,6 +34,9 @@ export class ResultsComponent implements OnInit, OnChanges{
 
     ngOnInit(): void {
         this.loadGridForChampionship();
+        if(this.maxHeight) {
+            this.maxTableHeight = this.maxHeight - 5;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
