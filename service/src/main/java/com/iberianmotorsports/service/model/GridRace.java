@@ -57,7 +57,10 @@ public class GridRace implements Serializable {
     @Column(name = "drop_round")
     private Boolean dropRound = false;
 
-    @OneToMany(mappedBy = "gridRace", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @Column(name = "fast_lap")
+    private Boolean fastLap = false;
+
+    @OneToMany(mappedBy = "gridRace", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Sanction> sanctionList;
 

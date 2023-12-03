@@ -9,6 +9,11 @@ export class GridRace {
     thirdSector: number;
     finalTime: number;
     totalLaps: number;
+    qualyTime: number;
+    qualyFirstSector: number;
+    qualySecondSector: number;
+    qualyThirdSector: number;
+    qualyPosition: number;
     sanctionTime: number;
     sanctionDTOList: Array<Sanction>;
     raceId: number;
@@ -23,6 +28,11 @@ export class GridRace {
         this.thirdSector = null;
         this.finalTime = null;
         this.totalLaps = null;
+        this.qualyTime = null;
+        this.qualyFirstSector = null;
+        this.qualySecondSector = null;
+        this.qualyThirdSector = null;
+        this.qualyPosition = null;
         this.sanctionTime = null;
         this.sanctionDTOList= [];
         this.raceId = null;

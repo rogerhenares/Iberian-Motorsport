@@ -22,5 +22,4 @@ public class LeaderBoardLine {
     private Float missingMandatoryPitstop;
     @JsonProperty("driverTotalTimes")
     private List<?> driverTotalTimes;
-
 }

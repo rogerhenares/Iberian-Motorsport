@@ -11,7 +11,7 @@ import java.util.List;
 public class SessionResult {
 
     @JsonProperty("bestlap")
-    private Float bestLap;
+    private Integer bestLap;
 
     @JsonProperty("bestSplits")
     private List<Float> bestSplits;

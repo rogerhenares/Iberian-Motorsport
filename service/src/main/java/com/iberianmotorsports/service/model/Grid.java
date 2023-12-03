@@ -64,6 +64,9 @@ public class Grid implements Serializable {
     private Double points;
 
     @Transient
+    private Double pointsDrop;
+
+    @Transient
     private Long managerId;
 
     @Transient

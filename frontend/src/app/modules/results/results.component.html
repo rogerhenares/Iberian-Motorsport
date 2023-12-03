@@ -7,8 +7,9 @@
             <th class="posHeader">POS</th>
             <th class="nameHeader">NAME</th>
             <th class="carHeader">CAR</th>
-            <th class="finalTimeHeader">TOTAL TIME</th>
+            <th class="finalTimeHeader" *ngIf="fullMode === true">TOTAL TIME</th>
             <th class="timeHeader">BEST TIME</th>
+            <th class="qualyTimeHeader">QUALY TIME</th>
             <th class="pointsHeader">POINTS</th>
         </thead>
 
@@ -16,7 +17,21 @@
         <ng-container *ngFor="let gridRace of gridRace; let i = index">
             <ng-container *ngIf="gridRace.grid">
                 <tr [ngClass]="{'selected': isGridRaceForLoggedUser(gridRace)}">
-                    <td class="posColumn" style="text-align: left">{{i + 1}}</td>
+                    <td class="posColumn" style="text-align: left">
+                        <span *ngIf="gridRace.points === 0">
+                            <span *ngIf="gridRace.finalTime > 0"><mat-icon matTooltip="Retired" style="color:red;">remove_circle_outline</mat-icon></span>
+                            <span *ngIf="gridRace.finalTime === 0"><mat-icon matTooltip="No-show" style="color:red;">remove</mat-icon></span>
+                        </span>
+                        <span *ngIf="gridRace.points > 0">
+                            <span>{{i + 1}}</span>
+                            <span>
+                                <mat-icon *ngIf="i === gridRace.qualyPosition" style="position: absolute;">remove</mat-icon>
+                                <mat-icon *ngIf="i < gridRace.qualyPosition" style="position: absolute; color:#00EBB1;">keyboard_arrow_up</mat-icon>
+                                <mat-icon *ngIf="i > gridRace.qualyPosition" style="position: absolute; color:red;">keyboard_arrow_down</mat-icon>
+                            </span>
+                            <span style="padding-left: 20px;" matTooltip="Starting position"> ({{gridRace.qualyPosition + 1}})</span>
+                        </span>
+                    </td>
                     <td class="nameColumn" style="text-align: left">
                         <ng-container *ngFor="let user of gridRace.grid.driversList">
                         <span>
@@ -28,20 +43,40 @@
                     <td class="carColumn" style="text-align: left">
                         <img style="height: 30px" src="assets/car-logo/{{gridRace.grid.car.manufacturer}}.png">{{gridRace.grid.car.model}}
                     </td>
-                    <td class="text-primary" style="text-align: left">
-                        <p class="h4" *ngIf="isOnChampionship() || this.appContext.isAdmin()">
-                            {{formatTime(gridRace.finalTime)}} <span class="penalty-text" *ngIf="gridRace.sanctionTime > 0"> +{{gridRace.sanctionTime}}</span>
+                    <td class="text-primary" style="text-align: left" *ngIf="fullMode === true">
+                        <p class="h4" *ngIf="gridRace.finalTime === 0">
+                            -:--.---
                         </p>
-                        <p class="h4" *ngIf="!isOnChampionship() && gridRace.sanctionTime > 0">
+                        <p class="h4" *ngIf="(isOnChampionship() || this.appContext.isAdmin()) && gridRace.finalTime > 0">
+                            {{formatTime(gridRace.finalTime)}}
+                            <span class="penalty-text" matTooltip="{{formatTime(addSanctionToTotalTime(gridRace))}}" *ngIf="gridRace.sanctionTime > 0">
+                                + {{gridRace.sanctionTime}}
+                            </span>
+                        </p>
+                        <p class="h4" *ngIf="!isOnChampionship() && gridRace.sanctionTime > 0 && gridRace.finalTime > 0">
                             {{formatTime(addSanctionToTotalTime(gridRace))}}
                         </p>
                     </td>
                     <td class="text-primary" style="text-align: left">
-                        <p class="h4" [ngClass]="{'fasterLap' : isFasterLapGridRace(gridRace)}">
+                        <p class="h4" *ngIf="gridRace.firstSector === 0">
+                            -:--.---
+                        </p>
+                        <p class="h4" *ngIf="gridRace.firstSector > 0" [ngClass]="{'fasterLap' : isFasterLapGridRace(gridRace)}">
                             {{formatTime(gridRace.firstSector + gridRace.secondSector + gridRace.thirdSector) }}
                         </p>
-                        <p style="margin-top: -15px;" *ngIf="fullMode === true">
+                        <p style="margin-top: -15px; color: #999999" *ngIf="fullMode === true && gridRace.firstSector > 0">
                             {{formatTime(gridRace.firstSector)}} - {{formatTime(gridRace.secondSector)}} - {{formatTime(gridRace.thirdSector)}}
+                        </p>
+                    </td>
+                    <td class="text-primary" style="text-align: left">
+                        <p class="h4" *ngIf="gridRace.qualyFirstSector === 0">
+                            -:--.---
+                        </p>
+                        <p class="h4" *ngIf="gridRace.qualyFirstSector > 0" [ngClass]="{'fasterLap' : isFasterQualyLapGridRace(gridRace)}">
+                            {{formatTime(gridRace.qualyFirstSector + gridRace.qualySecondSector + gridRace.qualyThirdSector) }}
+                        </p>
+                        <p style="margin-top: -15px; color: #999999" *ngIf="fullMode === true && gridRace.qualyFirstSector > 0">
+                            {{formatTime(gridRace.qualyFirstSector)}} - {{formatTime(gridRace.qualySecondSector)}} - {{formatTime(gridRace.qualyThirdSector)}}
                         </p>
                     </td>
                     <td class="pointsColumn" style="text-align: left; display: flex; align-items: center;">

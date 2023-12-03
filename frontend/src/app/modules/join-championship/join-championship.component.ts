@@ -81,6 +81,7 @@ export class JoinChampionshipComponent implements OnInit {
             driversList: this.grid.driversList,
             licensePoints: this.grid.licensePoints,
             points: this.grid.points,
+            pointsDrop: this.grid.pointsDrop,
             managerId: this.grid.managerId,
             password: this.grid.password,
             disabled: this.grid.disabled,

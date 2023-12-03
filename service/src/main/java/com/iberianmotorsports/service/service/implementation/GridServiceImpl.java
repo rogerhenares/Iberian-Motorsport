@@ -61,6 +61,9 @@ public class GridServiceImpl  implements GridService {
                             .filter(gridRace -> !gridRace.getDropRound())
                             .mapToDouble(GridRace::getPoints)
                             .sum());
+                    grid.setPointsDrop(grid.getGridRaceList().stream()
+                            .mapToDouble(GridRace::getPoints)
+                            .sum());
                     grid.setManagerId(getGridManager(grid).getUserId());
                     return grid;
                 }).toList();

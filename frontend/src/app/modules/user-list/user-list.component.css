@@ -3,6 +3,23 @@
     vertical-align: middle;
 }
 
-td:first-child {
-    width: 50px;
+tbody {
+    display: block;
+    height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody::-webkit-scrollbar {
+    display: none;
+}
+
+thead, tbody tr {
+    display: table;
+    width: calc( 100% - 1em );
+    table-layout: fixed;/* even columns width , fix width of table too*/
+}
+
+thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
 }

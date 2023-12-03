@@ -116,7 +116,7 @@ export class StandingsComponent implements OnInit, OnChanges {
                 let teamCars = [];
                 let teamDrivers = [];
                 teamGridSplit.forEach(gridForTeam => {
-                    teamPoints += gridForTeam.points;
+                    teamPoints += gridForTeam.pointsDrop;
                     if (!teamCars.find(car => car.id === gridForTeam.car.id)) {
                         teamCars.push(gridForTeam.car);
                     }

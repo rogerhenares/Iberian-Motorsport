@@ -6,6 +6,10 @@
     text-align: left;
 }
 
+.mat-tooltip {
+    color: #DDDDDD;
+}
+
 .carColumn, .carHeader {
     text-align: left;
 }

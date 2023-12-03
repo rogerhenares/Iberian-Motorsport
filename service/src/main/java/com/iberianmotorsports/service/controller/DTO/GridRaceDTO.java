@@ -1,7 +1,5 @@
 package com.iberianmotorsports.service.controller.DTO;
 
-import com.iberianmotorsports.service.model.Grid;
-
 import java.util.List;
 
 public record GridRaceDTO(
@@ -11,6 +9,11 @@ public record GridRaceDTO(
         Long thirdSector,
         Long finalTime,
         Integer totalLaps,
+        Long qualyTime,
+        Long qualyFirstSector,
+        Long qualySecondSector,
+        Long qualyThirdSector,
+        Integer qualyPosition,
         Integer sanctionTime,
         List<SanctionDTO> sanctionDTOList,
         Boolean dropRound,

@@ -9,12 +9,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Timing {
 
-    private Float lastLap;
+    private Integer lastLap;
     private List<Object> lastSplits;
-    private Float bestLap;
+    private Integer bestLap;
     private List<Float> bestSplits;
-    private Float totalTime;
-    private Float lapCount;
+    private Integer totalTime;
+    private Integer lapCount;
     private Float lastSplitId;
 
 }

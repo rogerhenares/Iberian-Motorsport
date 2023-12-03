@@ -49,7 +49,7 @@ public class SanctionServiceImpl implements SanctionService {
             int totalPenalty = sanctionSaved.getGridRace().getSanctionList().stream().mapToInt(s -> Integer.parseInt(s.getPenalty())).sum();
             sanctionSaved.getGridRace().setSanctionTime(totalPenalty);
             gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
-            gridRaceService.calculateDropRoundForGrid(sanction.getGridRace().getGridRacePrimaryKey().getGrid());
+            gridRaceService.calculateDropRoundForRaceChampionship(sanctionSaved.getGridRace().getGridRacePrimaryKey().getRace());
         }
 
         return sanctionSaved;
@@ -69,7 +69,7 @@ public class SanctionServiceImpl implements SanctionService {
         if (!sanction.getInGame()) {
             sanction.getGridRace().setSanctionTime(sanction.getGridRace().getSanctionTime() - Integer.parseInt(sanction.getPenalty()));
             gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
-            gridRaceService.calculateDropRoundForGrid(sanction.getGridRace().getGridRacePrimaryKey().getGrid());
+            gridRaceService.calculateDropRoundForRaceChampionship(sanction.getGridRace().getGridRacePrimaryKey().getRace());
         }
     }
 

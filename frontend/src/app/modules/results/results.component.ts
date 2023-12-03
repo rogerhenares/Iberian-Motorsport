@@ -21,6 +21,7 @@ export class ResultsComponent implements OnInit, OnChanges{
     grid: Array<Grid>;
     gridRace: Array<GridRace>;
     gridRaceFasterLap: GridRace;
+    gridRaceFasterQualyLap: GridRace;
 
     constructor(
         private gridService: GridService,
@@ -59,7 +60,7 @@ export class ResultsComponent implements OnInit, OnChanges{
             this.gridRaceService.getGridRaceForRace(this.selectedRace.id).subscribe(
                 (gridRace) => {
                     this.gridRace = gridRace;
-                    this.gridRace.sort((a, b) => b.points - a.points);
+                    this.gridRace.sort((a, b) => {if(b.points !== a.points) return b.points - a.points; else return b.finalTime - a.finalTime;});
                     this.gridRace.forEach(gridRace => {
                         gridRace.grid = this.grid.find(grid => grid.id === gridRace.gridId);
                     });
@@ -68,6 +69,11 @@ export class ResultsComponent implements OnInit, OnChanges{
                         .sort((a,b) =>
                             (b.firstSector + b.secondSector + b.thirdSector) -
                             (a.firstSector + a.secondSector + a.thirdSector)).pop();
+                    this.gridRaceFasterQualyLap = Array.from(this.gridRace)
+                        .filter(a => a.qualyFirstSector > 0 && a.qualySecondSector > 0 && a.qualyThirdSector > 0)
+                        .sort((a,b) =>
+                            (b.qualyFirstSector + b.qualySecondSector + b.qualyThirdSector) -
+                            (a.qualyFirstSector + a.qualySecondSector + a.qualyThirdSector)).pop();
                 },
                 (error) => {
                     console.error('Error fetching grid race data:', error);
@@ -85,6 +91,9 @@ export class ResultsComponent implements OnInit, OnChanges{
         return this.gridRaceFasterLap.gridId === gridRace.gridId;
     }
 
+    isFasterQualyLapGridRace(gridRace: GridRace): boolean {
+        return this.gridRaceFasterQualyLap.gridId === gridRace.gridId;
+    }
     formatTime(totalMilliseconds: number): string {
         const milliseconds = totalMilliseconds % 1000;
         const totalSeconds = Math.floor(totalMilliseconds / 1000);

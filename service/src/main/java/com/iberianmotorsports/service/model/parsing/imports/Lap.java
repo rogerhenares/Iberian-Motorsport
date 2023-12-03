@@ -10,13 +10,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Lap {
     @JsonProperty("carId")
-    private Float carId;
+    private Integer carId;
 
     @JsonProperty("driverIndex")
     private Float dirverIndex;
 
     @JsonProperty("laptime")
-    private Float lapTime;
+    private Integer lapTime;
 
     @JsonProperty("isValidForBest")
     private Boolean isValidForBest;

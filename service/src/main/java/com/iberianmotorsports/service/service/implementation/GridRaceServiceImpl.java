@@ -1,15 +1,13 @@
 package com.iberianmotorsports.service.service.implementation;
 
 import com.iberianmotorsports.service.ErrorMessages;
+import com.iberianmotorsports.service.model.Championship;
 import com.iberianmotorsports.service.model.Grid;
 import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.composeKey.GridRacePrimaryKey;
 import com.iberianmotorsports.service.repository.GridRaceRepository;
-import com.iberianmotorsports.service.service.ChampionshipService;
-import com.iberianmotorsports.service.service.GridRaceService;
-import com.iberianmotorsports.service.service.GridService;
-import com.iberianmotorsports.service.service.RaceService;
+import com.iberianmotorsports.service.service.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Transactional
@@ -32,8 +31,11 @@ public class GridRaceServiceImpl implements GridRaceService {
 
     GridRaceRepository gridRaceRepository;
 
-    @Value("${pointsSystem}")
+    @Value("#{'${pointsSystem}'}")
     private List<Integer> pointsSystem;
+
+    @Value("#{'${qualyPoints}'}")
+    private List<Integer> qualyPoints;
 
     @Override
     public GridRace saveGridRace(GridRace gridRace){
@@ -76,7 +78,8 @@ public class GridRaceServiceImpl implements GridRaceService {
                 .toList();
 
         for (GridRace gridRace : filteredList) {
-            gridRace.setPoints(pointsSystem.get(filteredList.indexOf(gridRace)).longValue());
+            int position = filteredList.indexOf(gridRace);
+            calculatePointsToGridRace(gridRace, position, filteredList.get(0));
             gridRaceRepository.save(gridRace);
         }
     }
@@ -84,12 +87,33 @@ public class GridRaceServiceImpl implements GridRaceService {
     @Override
     public void calculateDropRoundForGrid(Grid grid) {
         Grid gridToCheck = gridService.getGridById(grid.getId());
-        if (gridToCheck.getGridRaceList().size() > 2) {
+        if (gridToCheck.getGridRaceList().size() > 1) {
             gridToCheck.getGridRaceList().forEach(gridRace -> gridRace.setDropRound(false));
             gridToCheck.getGridRaceList().stream()
                     .min(Comparator.comparing(GridRace::getPoints))
                     .ifPresent(lowestGridRace -> lowestGridRace.setDropRound(true));
             gridToCheck.getGridRaceList().forEach(this::saveGridRace);
+        }
+    }
+
+    @Override
+    public void calculatePointsToGridRace(GridRace gridRace, int position, GridRace winner) {
+        long points  = pointsSystem.get(position).longValue();
+        if (!Objects.isNull(winner) && winner.getFinalTime() > gridRace.getFinalTime()) {
+           points = 0;
+        }
+        points += gridRace.getFastLap() ? 1 : 0;
+        if (gridRace.getQualyPosition() < qualyPoints.size()) {
+            points += qualyPoints.get(gridRace.getQualyPosition()).longValue();
+        }
+        gridRace.setPoints(points);
+    }
+
+    @Override
+    public void calculateDropRoundForRaceChampionship(Race race) {
+        Championship championship = championshipService.findChampionshipById(race.getChampionship().getId());
+        for (Grid grid : championship.getGridList()) {
+            calculateDropRoundForGrid(grid);
         }
     }
 }

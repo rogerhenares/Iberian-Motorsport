@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, OnInit, ViewChild} from "@angular/core";
 import {AppContext} from "../../util/AppContext";
 import {ImportService} from "../../service/import.service";
 import {ExportService} from "../../service/export.service";
 import {Race} from "../../model/Race";
 import { Clipboard } from '@angular/cdk/clipboard';
+import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 
 
 @Component({
@@ -14,6 +15,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
 export class RaceInfoComponent implements OnInit {
     @Input() selectedRace: any;
     @Input() selectedChampionship: any;
+    @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
+    @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
 
     constructor(
         public appContext: AppContext,
@@ -64,10 +67,12 @@ export class RaceInfoComponent implements OnInit {
     exportData(race: Race) {
         this.exportService.exportData(race).subscribe(
             response => {
+                this.requestSuccessSwal.fire();
                 console.log("Exported data");
                 console.log(response);
             },
             error => {
+                this.requestFailSwal.fire();
                 console.log("Error exporting data");
                 console.log(error);
             }
@@ -78,10 +83,11 @@ export class RaceInfoComponent implements OnInit {
     importData(race: Race) {
         this.importService.importData(race).subscribe(
             response => {
+                this.requestSuccessSwal.fire();
                 console.log("Imported data");
-                console.log(response);
             },
             error=> {
+                this.requestFailSwal.fire();
                 console.log("Error importing data");
                 console.log(error)
             }
@@ -89,11 +95,13 @@ export class RaceInfoComponent implements OnInit {
     }
 
     canBeExported(race: Race) {
-        return race.status === 'PENDING' || race.status === 'EXPORT_FAILED';
+        return true;
+        //return race.status === 'PENDING' || race.status === 'EXPORT_FAILED';
     }
 
     canBeImported(race: Race) {
-        return race.status === 'LAUNCHED' || race.status === 'IMPORT_FAILED' || race.status === 'COMPLETED';
+        return true;
+        //return race.status === 'LAUNCHED' || race.status === 'IMPORT_FAILED' || race.status === 'COMPLETED' || race.status === 'STOP';
     }
 
     copyToClipboard(championshipId: number, raceId: number) {

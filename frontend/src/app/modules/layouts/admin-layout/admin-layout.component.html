@@ -4,11 +4,9 @@
         <div class="sidebar-background" style=""></div>
     </div>
     <div class="main-panel">
-        <app-navbar></app-navbar>
-        <router-outlet></router-outlet>
-        <div *ngIf="isMaps('maps')">
-            <app-footer></app-footer>
-        </div>
+        <app-navbar style="max-width: 5vw"></app-navbar>
+        <router-outlet style="max-height: 90vh;"></router-outlet>
+        <app-footer style="max-height: 10vh;"></app-footer>
     </div>
     <div class="fixed-plugin">
 </div>

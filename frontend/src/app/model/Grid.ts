@@ -11,6 +11,7 @@ export class Grid {
     driversList: Array<User>;
     car: Car;
     points: number;
+    pointsDrop: number;
     licensePoints: number;
     password: string;
     managerId: number;
@@ -26,6 +27,7 @@ export class Grid {
         this.driversList = this.driversList || [];
         this.car = this.car || null;
         this.points = this.points || 0;
+        this.pointsDrop = this.points || 0;
         this.licensePoints = this.licensePoints || 0;
         this.password = this.password || "";
         this.managerId = this.managerId || null;
