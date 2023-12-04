@@ -1,13 +1,15 @@
 .posColumn, .posHeader {
     text-align: left;
+    width: 10%;
+    padding-left: 0px;
 }
 
 .nameColumn, .nameHeader {
     text-align: left;
 }
 
-.mat-tooltip {
-    color: #DDDDDD;
+::ng-deep .mat-tooltip {
+    color: #00FFC0 !important;
 }
 
 .carColumn, .carHeader {
@@ -60,4 +62,3 @@ thead, tbody tr {
 thead {
     width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
 }
-

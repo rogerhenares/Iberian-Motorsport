@@ -69,7 +69,7 @@ export class SanctionsComponent implements OnInit, OnChanges {
     }
 
     sortSanctionsByLapDescending() {
-        return this.sanctionsList.sort((a, b) => b.lap - a.lap);
+        return this.sanctionsList.sort((a, b) => a.lap - b.lap);
     }
 }
 

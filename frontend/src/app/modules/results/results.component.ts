@@ -23,6 +23,7 @@ export class ResultsComponent implements OnInit, OnChanges{
     gridRace: Array<GridRace>;
     gridRaceFasterLap: GridRace;
     gridRaceFasterQualyLap: GridRace;
+    gridRaceWinner: GridRace;
     maxTableHeight: number = 60;
 
     constructor(
@@ -79,6 +80,7 @@ export class ResultsComponent implements OnInit, OnChanges{
                         .sort((a,b) =>
                             (b.qualyFirstSector + b.qualySecondSector + b.qualyThirdSector) -
                             (a.qualyFirstSector + a.qualySecondSector + a.qualyThirdSector)).pop();
+                    this.gridRaceWinner = this.gridRace[0];
                 },
                 (error) => {
                     console.error('Error fetching grid race data:', error);
@@ -114,6 +116,9 @@ export class ResultsComponent implements OnInit, OnChanges{
     }
 
     addSanctionToTotalTime(gridRace: GridRace) {
+        if(gridRace.gridId !== this.gridRaceWinner.gridId) {
+            return gridRace.finalTime + (gridRace.sanctionTime * 1000) - this.gridRaceWinner.finalTime;
+        }
         return gridRace.finalTime + (gridRace.sanctionTime * 1000);
     }
 

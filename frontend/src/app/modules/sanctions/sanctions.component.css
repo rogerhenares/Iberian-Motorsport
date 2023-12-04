@@ -35,7 +35,7 @@ tbody {
 }
 
 tbody::-webkit-scrollbar {
-    /*display: none;*/
+    display: none;
 }
 
 thead, tbody tr {

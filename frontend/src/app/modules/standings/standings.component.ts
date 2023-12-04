@@ -1,13 +1,12 @@
 import {
     Component,
-    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     OnInit,
-    Output,
+    Output, QueryList,
     SimpleChanges,
-    ViewChild
+    ViewChildren
 } from '@angular/core';
 import { Race } from '../../model/Race';
 import { Grid } from '../../model/Grid';
@@ -24,7 +23,7 @@ import {User} from "../../model/User";
 })
 export class StandingsComponent implements OnInit, OnChanges {
 
-    @ViewChild('gridTable') gridTable: ElementRef;
+    @ViewChildren('gridTableRow') gridTableRows: QueryList<any>;
 
     @Input() selectedRace: Race;
     @Input() selectedChampionship: Championship;
@@ -33,6 +32,7 @@ export class StandingsComponent implements OnInit, OnChanges {
 
     @Output() isAlreadyInStandingsChange = new EventEmitter<boolean>();
     @Output() selectedGridChange = new EventEmitter<Grid>();
+
 
     grid: Array<Grid>;
     filteredGrid: Array<Grid>;
@@ -93,6 +93,7 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.selectedGrid = grid;
             this.selectedGridChange.emit(this.selectedGrid)
         }
+        this.scrollToSelectedElement();
     }
 
     handleRowClick(selectedGridItem: Grid) {
@@ -152,8 +153,7 @@ export class StandingsComponent implements OnInit, OnChanges {
         } else {
             this.filteredGrid = [...this.grid];
         }
-        this.teamGrid.sort((a, b) => b.points - a.points);
-        this.scrollToSelectedElement();
+        this.teamGrid?.sort((a, b) => b.points - a.points);
     }
 
     isGridDisbled(grid: Grid) {
@@ -172,18 +172,15 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.selectedChampionship.style === "TEAM";
     }
 
-    scrollToSelectedElement() {
-        if (this.gridTable && this.gridTable.nativeElement) {
-            const selectedElement = this.gridTable.nativeElement.querySelector('.selected');
-            if (selectedElement) {
-                const container = this.gridTable.nativeElement;
-                const offsetTop = selectedElement.offsetTop;
-                const containerHeight = container.clientHeight;
-                const elementHeight = selectedElement.clientHeight;
-
-                const scrollTo = offsetTop - (containerHeight - elementHeight) / 2;
-                container.scrollTop = scrollTo;
+    private scrollToSelectedElement(): void {
+        const gridTableElement = this.gridTableRows;
+        console.log("TEST -> {} ", gridTableElement);
+        this.gridTableRows.forEach((element, index) => {
+            console.log(`WWW ${index + 1}:`, element.nativeElement);
+            if(element.classList.contains('selected')) {
+                console.log(`ROOOOOW ${index + 1}:`, element.nativeElement);
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-        }
+        });
     }
 }

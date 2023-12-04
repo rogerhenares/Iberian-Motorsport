@@ -8,8 +8,9 @@
             <th class="nameHeader">NAME</th>
             <th class="carHeader">CAR</th>
             <th class="finalTimeHeader" *ngIf="fullMode === true">TOTAL TIME</th>
-            <th class="timeHeader">BEST TIME</th>
-            <th class="qualyTimeHeader" style="float: left">QUALY TIME</th>
+            <th class="timeHeader" *ngIf="fullMode === true">BEST LAP</th>
+            <th class="timeHeader" *ngIf="fullMode !== true">LAP</th>
+            <th class="qualyTimeHeader" style="float: left">QUALY</th>
             <th class="pointsHeader">POINTS</th>
         </thead>
 
@@ -22,14 +23,13 @@
                             <span *ngIf="gridRace.finalTime > 0"><mat-icon matTooltip="Retired" style="color:red;">remove_circle_outline</mat-icon></span>
                             <span *ngIf="gridRace.finalTime === 0"><mat-icon matTooltip="No-show" style="color:red;">remove</mat-icon></span>
                         </span>
-                        <span *ngIf="gridRace.points > 0">
+                        <span *ngIf="gridRace.points > 0" matTooltip="Starting position {{gridRace.qualyPosition + 1}}">
                             <span>{{i + 1}}</span>
                             <span>
-                                <mat-icon *ngIf="i === gridRace.qualyPosition" style="position: absolute;">remove</mat-icon>
                                 <mat-icon *ngIf="i < gridRace.qualyPosition" style="position: absolute; color:#00EBB1;">keyboard_arrow_up</mat-icon>
                                 <mat-icon *ngIf="i > gridRace.qualyPosition" style="position: absolute; color:red;">keyboard_arrow_down</mat-icon>
                             </span>
-                            <span style="padding-left: 20px;" matTooltip="Starting position"> ({{gridRace.qualyPosition + 1}})</span>
+                            <span *ngIf="i !== gridRace.qualyPosition" style="padding-left: 20px;"> ({{gridRace.qualyPosition - i}})</span>
                         </span>
                     </td>
                     <td class="nameColumn" style="text-align: left">
@@ -47,15 +47,27 @@
                         <p class="h4" *ngIf="gridRace.finalTime === 0">
                             -:--.---
                         </p>
-                        <p class="h4" *ngIf="(isOnChampionship() || this.appContext.isAdmin()) && gridRace.finalTime > 0">
-                            {{formatTime(gridRace.finalTime)}}
-                            <span class="penalty-text" matTooltip="{{formatTime(addSanctionToTotalTime(gridRace))}}" *ngIf="gridRace.sanctionTime > 0">
-                                + {{gridRace.sanctionTime}}
-                            </span>
-                        </p>
-                        <p class="h4" *ngIf="!isOnChampionship() && gridRace.sanctionTime > 0 && gridRace.finalTime > 0">
-                            {{formatTime(addSanctionToTotalTime(gridRace))}}
-                        </p>
+                        <span *ngIf="gridRace.totalLaps === gridRaceWinner.totalLaps">
+                            <p class="h4" *ngIf="(isOnChampionship() || this.appContext.isAdmin()) && gridRace.finalTime > 0">
+                                <span *ngIf="gridRace.gridId === gridRaceWinner.gridId">
+                                    {{formatTime(gridRace.finalTime)}}
+                                </span>
+                                <span *ngIf="gridRace.gridId !== gridRaceWinner.gridId">
+                                    + {{formatTime(gridRace.finalTime - gridRaceWinner.finalTime)}}
+                                </span>
+                                <span class="penalty-text" matTooltip="{{formatTime(addSanctionToTotalTime(gridRace))}}" *ngIf="gridRace.sanctionTime > 0">
+                                    + {{gridRace.sanctionTime}}
+                                </span>
+                            </p>
+                            <p class="h4" *ngIf="!isOnChampionship() && gridRace.sanctionTime > 0 && gridRace.finalTime > 0">
+                                {{formatTime(addSanctionToTotalTime(gridRace))}}
+                            </p>
+                        </span>
+                        <span *ngIf="gridRace.totalLaps !== gridRaceWinner.totalLaps">
+                            <p class="h4">
+                                + {{gridRaceWinner.totalLaps - gridRace.totalLaps}} Laps
+                            </p>
+                        </span>
                     </td>
                     <td class="text-primary" style="text-align: left">
                         <p class="h4" *ngIf="gridRace.firstSector === 0">

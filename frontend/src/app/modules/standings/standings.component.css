@@ -76,6 +76,8 @@
 }
 .posColumn, .posHeader {
     text-align: left;
+    width: 9%;
+    padding-left: 0px;
 }
 
 .nameColumn, .nameHeader {

@@ -5,22 +5,22 @@
     <ng-container *ngIf="sanctionsList?.length">
         <thead class=" text-primary">
             <th class="teamHeader">NAME</th>
-            <th class="lapHeader">LAP</th>
+            <th class="lapHeader" style="padding-left: 4.5%">LAP</th>
             <th class="penaltyHeader">PENALTY</th>
             <th class="reasonHeader">REASON</th>
-            <th class="inGameHeader">IN GAME</th>
+            <th class="inGameHeader">POST RACE</th>
         </thead>
 
         <tbody>
             <ng-container *ngFor="let sanction of sortSanctionsByLapDescending(); let i = index">
                 <tr [ngClass]="{'selected': isSanctionForLoggedUser(sanction)}">
                     <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style === 'TEAM'">{{sanction.grid.teamName}}</td>
-                    <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style != 'TEAM'"><img style="height: 15px;" src="assets/flags/{{sanction?.grid.driversList[0].nationality.toLowerCase()}}.svg">&nbsp; {{sanction.grid.driversList[0].firstName}} {{sanction.grid.driversList[0].lastName}}</td>
-                    <td class="lapColumn" style="text-align: left">{{sanction.lap}}</td>
-                    <td class="penaltyColumn" style="text-align: left">{{sanction.penalty}}</td>
-                    <td class="reasonColumn" style="text-align: left">{{sanction.reason}}</td>
-                    <td class="inGameColumn" style="text-align: left">
-                        <mat-checkbox [checked]="sanction.inGame" [disabled]="true"></mat-checkbox>
+                    <td class="posColumn" style="text-align: left" *ngIf="selectedChampionship.style != 'TEAM'"><img style="height: 15px;" src="assets/flags/{{sanction?.grid.driversList[0].nationality.toLowerCase()}}.svg">&nbsp; {{sanction.grid.driversList[0].firstName}} {{sanction.grid.driversList[0].lastName}} ({{sanction.grid.carNumber}})</td>
+                    <td class="lapColumn" style="text-align: center">{{sanction.lap}}</td>
+                    <td class="penaltyColumn" style="text-align: center">+{{sanction.penalty}} Secs</td>
+                    <td class="reasonColumn" style="text-align: left; padding-left: 4%">{{sanction.reason}}</td>
+                    <td class="inGameColumn" style="padding-left: 15.5%">
+                        <mat-icon *ngIf="!sanction.inGame" style="position: absolute; color:#00EBB1;">done</mat-icon>
                     </td>
                     <td class="text-right">
                         <button class="btn btn-warning btn-sm" *ngIf="appContext.isAdmin()" (click)="editSanction(sanction.raceId, sanction.gridId, sanction)" style="color: black">Edit</button>
