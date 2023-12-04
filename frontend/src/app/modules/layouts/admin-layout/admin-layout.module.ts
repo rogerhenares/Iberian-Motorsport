@@ -44,6 +44,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BopFormComponent} from "../../bop-form/bop-form.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import {SummaryComponent} from "../../summary/summary.component";
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     NotificationsComponent,
     ChampionshipComponent,
     HomeComponent,
+    SummaryComponent,
     ChampionshipFormComponent,
     RaceRulesFormComponent,
     SessionFormComponent,

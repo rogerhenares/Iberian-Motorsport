@@ -16,7 +16,9 @@ export const ROUTES: RouteInfo[] = [
     { path: '/championship', title: 'Championships',  icon:'content_paste', class: '', logged: true, adminOnly: false },
     { path: '/user-profile', title: 'Profile',  icon:'person', class: '', logged: true, adminOnly: false },
     { path: '/login', title: 'Login', icon:'person', class: '', logged: false, adminOnly: false},
-    { path: '/user-list', title: 'Users', icon:'perm_contact_calendar', class: '', logged: true, adminOnly: true }
+    { path: '/user-list', title: 'Users', icon:'perm_contact_calendar', class: '', logged: true, adminOnly: true },
+    { path: '/summary', title: 'IML',  icon:'dashboard', class: '', logged: false, adminOnly: false },
+    { path: '/summary', title: 'IML',  icon:'dashboard', class: '', logged: true, adminOnly: false }
 ];
 
 @Component({

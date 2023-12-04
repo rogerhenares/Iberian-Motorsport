@@ -15,6 +15,7 @@ import {JoinChampionshipComponent} from "../../join-championship/join-championsh
 import {LoginComponent} from "../../login/login.component";
 import {SanctionFormComponent} from "../../sanction-form/sanction-form.component";
 import {UserListComponent} from "../../user-list/user-list.component";
+import {SummaryComponent} from "../../summary/summary.component";
 
 export const AdminLayoutRoutes: Routes = [
 
@@ -23,6 +24,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'login',          component: LoginComponent },
     { path: 'dashboard',      component: HomeComponent },
+    { path: 'summary',        component: SummaryComponent },
     { path: 'championship/new', component: ChampionshipFormComponent },
     { path: 'championship',    component: ChampionshipListComponent},
     { path: 'championship/:championshipId', component: ChampionshipDetailsComponent},

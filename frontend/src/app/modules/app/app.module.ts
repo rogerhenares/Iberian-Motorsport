@@ -30,6 +30,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ImportService} from "../../service/import.service";
 import {ExportService} from "../../service/export.service";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {SummaryComponent} from "../summary/summary.component";
 
 @NgModule({
   imports: [
