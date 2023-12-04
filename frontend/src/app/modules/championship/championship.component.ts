@@ -89,7 +89,8 @@ export class ChampionshipComponent {
         const date = new Date();
         const lastRace = championship.raceList.at(-1);
         let filter = championship.raceList.filter(race => new Date(race.startDate) > date);
-        return filter.length > 0 ? filter.pop() : lastRace;
+        console.log("FILTER -> {}", filter );
+        return filter.length > 0 ? filter[0] : lastRace;
     }
 
 

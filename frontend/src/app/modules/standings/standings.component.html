@@ -36,7 +36,7 @@
         </thead>
         <tbody [style.max-height.vh]="maxTableHeight">
         <ng-container *ngFor="let grid of this.selectedValue === 'TEAM' ? teamGrid : filteredGrid; let i = index">
-            <tr #gridTableRow  [ngClass]="{'selected': grid === selectedGrid || grid?.isTeamForLoggedUser === true}" (click)="handleRowClick(grid)">
+            <tr id="gridTR{{grid.id}}{{grid.teamName}}"  [ngClass]="{'selected': grid === selectedGrid || grid?.isTeamForLoggedUser === true}" (click)="handleRowClick(grid)">
                 <td class="posColumn" style="text-align: left">{{i + 1}}</td>
                 <td class="nameColumn" style="text-align: left">
                     <ng-container *ngIf="this.selectedValue !== 'TEAM' && this.selectedChampionship.style !=='TEAM'">

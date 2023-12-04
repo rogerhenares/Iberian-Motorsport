@@ -17,7 +17,7 @@
         <tbody [style.max-height.vh]="maxTableHeight">
         <ng-container *ngFor="let gridRace of gridRace; let i = index">
             <ng-container *ngIf="gridRace.grid">
-                <tr [ngClass]="{'selected': isGridRaceForLoggedUser(gridRace)}">
+                <tr id="gridRaceTR{{gridRace.grid.id}}" [ngClass]="{'selected': isGridRaceForLoggedUser(gridRace)}">
                     <td class="posColumn" style="text-align: left">
                         <span *ngIf="gridRace.points === 0">
                             <span *ngIf="gridRace.finalTime > 0"><mat-icon matTooltip="Retired" style="color:red;">remove_circle_outline</mat-icon></span>

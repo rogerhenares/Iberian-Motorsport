@@ -81,6 +81,7 @@ export class ResultsComponent implements OnInit, OnChanges{
                             (b.qualyFirstSector + b.qualySecondSector + b.qualyThirdSector) -
                             (a.qualyFirstSector + a.qualySecondSector + a.qualyThirdSector)).pop();
                     this.gridRaceWinner = this.gridRace[0];
+                    this.scrollToSelectedElement();
                 },
                 (error) => {
                     console.error('Error fetching grid race data:', error);
@@ -88,6 +89,10 @@ export class ResultsComponent implements OnInit, OnChanges{
             )
 
         }
+    }
+
+    selectGridRaceForLoggedUser(): GridRace{
+        return this.gridRace.find(gridRace => this.isGridRaceForLoggedUser(gridRace));
     }
 
     isGridRaceForLoggedUser(gridRace: GridRace): boolean {
@@ -122,4 +127,16 @@ export class ResultsComponent implements OnInit, OnChanges{
         return gridRace.finalTime + (gridRace.sanctionTime * 1000);
     }
 
+    scrollToSelectedElement(): void {
+        setTimeout(() => {
+            let selectedGrid = this.selectGridRaceForLoggedUser();
+            if(selectedGrid){
+                var id = "gridRaceTR"+selectedGrid.grid.id;
+                var elem = document.getElementById(id);
+                if(elem) {
+                    elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }, 700);
+    }
 }

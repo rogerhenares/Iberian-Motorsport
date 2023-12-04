@@ -1,10 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Championship} from "../../model/Championship";
 import {Router} from '@angular/router';
 import {Race} from "../../model/Race";
 import {AppContext} from "../../util/AppContext";
 import {CriteriaChampionship} from "../../model/CriteriaChampionship";
-import {ChampionshipComponent} from "../championship/championship.component";
 
 
 @Component({
@@ -33,11 +32,12 @@ export class HomeComponent implements OnInit {
 
     onSelectedChampionship(selectedChampionship: Championship) {
         this.selectChampionship(selectedChampionship);
+        this.selectTabInfo('standings')
     }
 
     onSelectedRace(selectedRace: Race){
         this.selectedRace = selectedRace;
-        this.selectTabInfo('standings')
+        //this.selectTabInfo('standings')
     }
 
     selectChampionship(selectedChampionship: Championship) {
@@ -55,13 +55,13 @@ export class HomeComponent implements OnInit {
         const elementsHeader = document.querySelectorAll('[id*="Header"]');
         const elementsContent = document.querySelectorAll('[id*="Content"]');
         elementsHeader.forEach(header => {
-            header.classList.remove('active');
+            header.classList?.remove('active');
         });
         elementsContent.forEach(content => {
-            content.classList.remove('active');
+            content.classList?.remove('active');
         });
-        elementHeader.classList.add('active');
-        elementTab.classList.add('active');
+        elementHeader.classList?.add('active');
+        elementTab.classList?.add('active');
     }
 }
 

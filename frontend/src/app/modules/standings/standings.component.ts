@@ -4,9 +4,8 @@ import {
     Input,
     OnChanges,
     OnInit,
-    Output, QueryList,
-    SimpleChanges,
-    ViewChildren
+    Output,
+    SimpleChanges
 } from '@angular/core';
 import { Race } from '../../model/Race';
 import { Grid } from '../../model/Grid';
@@ -22,8 +21,6 @@ import {User} from "../../model/User";
     styleUrls: ['./standings.component.css']
 })
 export class StandingsComponent implements OnInit, OnChanges {
-
-    @ViewChildren('gridTableRow') gridTableRows: QueryList<any>;
 
     @Input() selectedRace: Race;
     @Input() selectedChampionship: Championship;
@@ -154,6 +151,7 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.filteredGrid = [...this.grid];
         }
         this.teamGrid?.sort((a, b) => b.points - a.points);
+        this.scrollToSelectedElement();
     }
 
     isGridDisbled(grid: Grid) {
@@ -172,15 +170,20 @@ export class StandingsComponent implements OnInit, OnChanges {
             this.selectedChampionship.style === "TEAM";
     }
 
-    private scrollToSelectedElement(): void {
-        const gridTableElement = this.gridTableRows;
-        console.log("TEST -> {} ", gridTableElement);
-        this.gridTableRows.forEach((element, index) => {
-            console.log(`WWW ${index + 1}:`, element.nativeElement);
-            if(element.classList.contains('selected')) {
-                console.log(`ROOOOOW ${index + 1}:`, element.nativeElement);
-                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    scrollToSelectedElement(): void {
+        setTimeout(() => {
+            if(this.selectedGrid){
+                var id;
+                if(this.selectedValue === "TEAM") {
+                    id = "gridTR"+this.selectedGrid.teamName;
+                }else {
+                    id = "gridTR"+this.selectedGrid.id+this.selectedGrid.teamName;
+                }
+                var elem = document.getElementById(id);
+                if(elem) {
+                    elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
-        });
+        }, 700);
     }
 }
