@@ -15,7 +15,6 @@ export class SummaryComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.appContext.isUserLoggedToNavigate()
     }
 }
 
