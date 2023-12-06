@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
     invalidResponse= 'invalid';
     emptyParams = 'L2xvZ2lu';
-    steamParams = '';
+    steamParams;
     loading: boolean = true;
     invalid: boolean = false;
     constructor(public router: Router,
@@ -22,7 +22,17 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.steamParams = btoa(decodeURIComponent(this.router.url.replace("/login?", "")));
+        let urlParams = new URLSearchParams(this.router.url.replace("/login?", ""));
+        this.steamParams = '';
+        urlParams.forEach((value, key) => {
+            console.log("key {}, value {}", key, value);
+            let nextSeparator = "&";
+            if(key === "openid.sig") {
+                nextSeparator = "";
+            }
+            this.steamParams += key + "=" + value + nextSeparator;
+        });
+        this.steamParams = btoa(this.steamParams);
         this.authenticate();
     }
 
