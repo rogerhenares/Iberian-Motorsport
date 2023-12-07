@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        console.log("LOGIN V2")
         let urlParams = new URLSearchParams(this.router.url.replace("/login?", ""));
         this.steamParams = '';
         urlParams.forEach((value, key) => {
