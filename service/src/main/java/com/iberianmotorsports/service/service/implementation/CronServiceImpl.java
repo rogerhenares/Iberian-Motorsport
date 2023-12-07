@@ -3,10 +3,7 @@ package com.iberianmotorsports.service.service.implementation;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.Session;
 import com.iberianmotorsports.service.model.parsing.properties.ServerProperty;
-import com.iberianmotorsports.service.service.CronService;
-import com.iberianmotorsports.service.service.ExportDataService;
-import com.iberianmotorsports.service.service.ImportDataService;
-import com.iberianmotorsports.service.service.RaceService;
+import com.iberianmotorsports.service.service.*;
 import com.iberianmotorsports.service.utils.RaceStatus;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -29,6 +26,7 @@ public class CronServiceImpl implements CronService {
     private static final String ACC_SERVER_EXE_NAME = "accServer.exe";
 
     private final RaceService raceService;
+    private final GridRaceService gridRaceService;
     private final ExportDataService exportDataService;
     private final ImportDataService importDataService;
     private final ServerProperty serverProperty;
@@ -76,6 +74,7 @@ public class CronServiceImpl implements CronService {
                 try {
                     raceService.setRaceStatus(raceToBeLaunched, RaceStatus.IMPORTING);
                     importDataService.importData(raceToBeLaunched);
+                    gridRaceService.calculateDropRoundForRaceChampionship(raceToBeLaunched);
                     raceService.setRaceStatus(raceToBeLaunched, RaceStatus.COMPLETED);
                     logger.info("CRON JOB: IMPORTING COMPLETED RACE ID -> {} TRACK -> {}", raceToBeLaunched.getId(), raceToBeLaunched.getTrack());
                 } catch (Exception e){

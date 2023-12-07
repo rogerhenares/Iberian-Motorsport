@@ -23,13 +23,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import static com.iberianmotorsports.service.service.implementation.ExportDataServiceImpl.SERVER_FOLDER_SEPARATOR;
 
@@ -48,7 +45,7 @@ public class ImportDataServiceImpl implements ImportDataService {
     private final ServerProperty serverProperty;
 
     @Override
-    public void importData(Race race) throws Exception {
+    public void importData(Race race) {
         if (Objects.isNull(race.getChampionship())){
             race = raceService.findRaceById(race.getId());
         }
@@ -77,10 +74,18 @@ public class ImportDataServiceImpl implements ImportDataService {
             Results raceResults = objectMapper.readValue(isrRace, Results.class);
             Results qualyResults = objectMapper.readValue(isrQualy, Results.class);
 
-            createGridRaceFromResults(race, qualyResults);
-            createGridRaceFromResults(race, raceResults);
-            createEmptyGridRaces(race, raceResults);
+            createGridRaceFromResults(race, qualyResults, raceResults);
+            //createEmptyGridRaces(race, raceResults);
             gridRaceService.calculateDropRoundForRaceChampionship(race);
+        } catch (FileNotFoundException e) {
+            logger.info("ERROR FileNotFoundException",e);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            logger.info("ERROR IOException",e);
+            throw new RuntimeException(e);
+        } catch (Exception e){
+            logger.info("ERROR -> {}, ", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -95,40 +100,44 @@ public class ImportDataServiceImpl implements ImportDataService {
         }
     }
 
-    private void createGridRaceFromResults(Race race, Results results) {
-        AtomicInteger index = new AtomicInteger(0);
-        Map<Integer, Integer> carPosition = new HashMap<>();
+    private void createGridRaceFromResults(Race race, Results qualyResults, Results raceResults) {
+        AtomicInteger indexRace = new AtomicInteger(0);
+        AtomicInteger indexQualy = new AtomicInteger(0);
+        Map<Integer, Integer> carPositionRace = new HashMap<>();
+        Map<Integer, Integer> carPositionQualy = new HashMap<>();
+        Map<Integer, LeaderBoardLine> qualyLeaderBoard = new HashMap<>();
+        Map<Integer, LeaderBoardLine> raceLeaderBoard = new HashMap<>();
         GridRace winnerLapTime = new GridRace();
-        results.getSessionResult().getLeaderBoardLines().stream()
+        qualyResults.getSessionResult().getLeaderBoardLines().stream()
                 .map(entry -> {
-                    carPosition.put(entry.getCar().getRaceNumber(), index.get());
-                    if(index.get() == 0) {
-                        winnerLapTime.setFinalTime(entry.getTiming().getTotalTime().longValue());
-                    }
-                    index.incrementAndGet();
+                    carPositionQualy.put(entry.getCar().getRaceNumber(), indexQualy.get());
+                    qualyLeaderBoard.put(entry.getCar().getRaceNumber(), entry);
+                    indexQualy.incrementAndGet();
                     return entry;
                 }).toList();
-        Lap bestLap = findBestLap(results);
+        raceResults.getSessionResult().getLeaderBoardLines().stream()
+                .map(entry -> {
+                    carPositionRace.put(entry.getCar().getRaceNumber(), indexRace.get());
+                    raceLeaderBoard.put(entry.getCar().getRaceNumber(), entry);
+                    if(indexRace.get() == 0) {
+                        winnerLapTime.setFinalTime(entry.getTiming().getTotalTime().longValue());
+                    }
+                    indexRace.incrementAndGet();
+                    return entry;
+                }).toList();
+        Lap bestLapRace = findBestLap(raceResults);
         race.getChampionship().getGridList().stream()
-                .map(grid -> results.getSessionResult().getLeaderBoardLines().stream()
-                        .filter(leaderBoardLine -> leaderBoardLine.getCar().getRaceNumber().equals(grid.getCarNumber()))
-                        .map(leaderBoardLine -> {
-                            GridRace gridRace = getGridRace(race, grid);
-                            if (Objects.equals(results.getSessionType(), "Q")) {
-                                setQualyData(gridRace, leaderBoardLine, carPosition.get(grid.getCarNumber()), results.getLaps());
-                            }
-                            if (Objects.equals(results.getSessionType(), "R")) {
-                                setRaceData(gridRace, leaderBoardLine, carPosition.get(grid.getCarNumber()), bestLap, results.getLaps(), winnerLapTime);
-                            }
-                            //results.getPenalties().stream()
-                            //        .filter(penalty -> penalty.getCarId().equals(Float.valueOf(leaderBoardLine.getCar().getCarId())))
-                            //        .forEach(penalty -> importSanctions(gridRace, penalty));
-                            return gridRace;
-                        })
-                        .collect(Collectors.toList())
-                )
-                .flatMap(List::stream)
-                .forEach(gridRace -> {});
+                .map(grid -> {
+                    GridRace gridRace = getGridRace(race, grid);
+                    if(qualyLeaderBoard.containsKey(grid.getCarNumber())){
+                        setQualyData(gridRace, qualyLeaderBoard.get(grid.getCarNumber()), carPositionQualy.get(grid.getCarNumber()), qualyResults.getLaps());
+                    }
+                    if(qualyLeaderBoard.containsKey(grid.getCarNumber())){
+                        setRaceData(gridRace, raceLeaderBoard.get(grid.getCarNumber()), carPositionRace.get(grid.getCarNumber()), bestLapRace, raceResults.getLaps(), winnerLapTime);
+                    }
+                    gridRaceService.saveGridRace(gridRace);
+                    return gridRace;
+                }).toList();
     }
 
     private GridRace getGridRace(Race race, Grid grid) {
@@ -136,9 +145,7 @@ public class ImportDataServiceImpl implements ImportDataService {
         try {
             gridRace = gridRaceService.getGridRace(grid.getId(), race.getId());
         } catch (ServiceException sE) {
-            gridRace = new GridRace();
-            GridRacePrimaryKey gridRacePrimaryKey = new GridRacePrimaryKey(grid, race);
-            gridRace.setGridRacePrimaryKey(gridRacePrimaryKey);
+            gridRace = generateEmptyGridRace(grid, race);
         }
         return gridRace;
     }
@@ -156,7 +163,7 @@ public class ImportDataServiceImpl implements ImportDataService {
         missingGrids.forEach(grid -> generateEmptyGridRace(grid, race));
     }
 
-    private void generateEmptyGridRace(Grid grid, Race race) {
+    private GridRace generateEmptyGridRace(Grid grid, Race race) {
         GridRace gridRace = new GridRace();
         GridRacePrimaryKey gridRacePrimaryKey = new GridRacePrimaryKey(grid, race);
         gridRace.setGridRacePrimaryKey(gridRacePrimaryKey);
@@ -171,8 +178,7 @@ public class ImportDataServiceImpl implements ImportDataService {
         gridRace.setTotalLaps(0);
         gridRace.setQualyPosition(-1);
         gridRace.setPoints(0L);
-        GridRace savedGridRace = gridRaceService.saveGridRace(gridRace);
-        savedGridRace.getGridRacePrimaryKey().getGrid().getGridRaceList().add(gridRace);
+        return gridRace;
     }
 
     private Long getChampionshipID(String serverName) {
@@ -210,7 +216,7 @@ public class ImportDataServiceImpl implements ImportDataService {
     }
 
     private void setQualyData(GridRace gridRace, LeaderBoardLine leaderBoardLine, int position, List<Lap> laps) {
-        gridRace.setQualyTime(leaderBoardLine.getTiming().getBestLap().longValue());
+        gridRace.setQualyTime(leaderBoardLine.getTiming().getBestLap().longValue() >= DEFAULT_ACC_ZERO_VALUE ? 0 : leaderBoardLine.getTiming().getBestLap().longValue());
         Optional<Lap> bestLapSplits = laps.stream().filter(lap -> lap.getCarId().equals(leaderBoardLine.getCar().getCarId()))
                 .filter(Lap::getIsValidForBest)
                 .filter(lap -> lap.getLapTime().equals(leaderBoardLine.getTiming().getBestLap()))
@@ -219,7 +225,7 @@ public class ImportDataServiceImpl implements ImportDataService {
         gridRace.setQualySecondSector(bestLapSplits.isPresent() ? bestLapSplits.get().getSplits().get(1).longValue(): 0);
         gridRace.setQualyThirdSector(bestLapSplits.isPresent() ? bestLapSplits.get().getSplits().get(2).longValue(): 0);
         gridRace.setQualyPosition(position);
-        gridRaceService.saveGridRace(gridRace);
+        //gridRaceService.saveGridRace(gridRace);
     }
 
     private Sanction importSanctions(GridRace gridRace, Penalty penalty) {

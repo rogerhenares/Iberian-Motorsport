@@ -7,12 +7,16 @@ import com.iberianmotorsports.service.model.GridRace;
 import com.iberianmotorsports.service.model.Race;
 import com.iberianmotorsports.service.model.composeKey.GridRacePrimaryKey;
 import com.iberianmotorsports.service.repository.GridRaceRepository;
-import com.iberianmotorsports.service.service.*;
-import jakarta.transaction.Transactional;
+import com.iberianmotorsports.service.service.ChampionshipService;
+import com.iberianmotorsports.service.service.GridRaceService;
+import com.iberianmotorsports.service.service.GridService;
+import com.iberianmotorsports.service.service.RaceService;
 import lombok.AllArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -38,7 +42,8 @@ public class GridRaceServiceImpl implements GridRaceService {
     private List<Integer> qualyPoints;
 
     @Override
-    public GridRace saveGridRace(GridRace gridRace){
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public GridRace saveGridRace(GridRace gridRace) {
         return gridRaceRepository.save(gridRace);
     }
 
@@ -85,6 +90,7 @@ public class GridRaceServiceImpl implements GridRaceService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void calculateDropRoundForGrid(Grid grid) {
         Grid gridToCheck = gridService.getGridById(grid.getId());
         if (gridToCheck.getGridRaceList().size() > 1) {
