@@ -7,3 +7,12 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+.card-chart:hover {
+    box-shadow: 0 0 5px #00ffc0;
+    transform: scale(1.01);
+}
+
+.card-chart-feedback{
+    transition: .5s;
+}

@@ -9,7 +9,7 @@
                     <div class="row"  style="height: 35vh; max-height: 395px; overflow-y: auto;">
                         <div *ngFor="let race of pagedData()" style="padding: 0 15px;">
                             <div class="card card-chart"  style="flex: 1 1 0; min-width: 300px; max-width: 400px; margin-bottom: 15px;" [class.selected]="selectedRaceId == race.id" (click)="selectRace(race.id)">
-                                <div class="card-header card-header-success" style="max-width: 360px; max-height: 270px; overflow: hidden; aspect-ratio: auto 4 / 3;">
+                                <div class="card-header card-header-success" style="max-width: 360px; max-height: 270px; overflow: hidden; aspect-ratio: auto 4 / 3; padding: 5px;">
                                     <img [src]="getImage(race)" alt="imagen circuito" style="width: 100%; height: 100%; object-fit: cover;">
                                     <div class="ct-chart" id=""></div>
                                 </div>
