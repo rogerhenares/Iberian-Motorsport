@@ -440,6 +440,8 @@
   }
 
   &.card-chart {
+
+  
     .card-footer i:nth-child(1n+2){
       width: 18px;
       text-align: center;
@@ -495,7 +497,8 @@
       &:not(.card-header-icon):not(.card-header-text):not(.card-header-image){
         border-radius: $border-radius-base;
         margin-top: -20px;
-        padding: 15px;
+        padding: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
 
       .card-icon,
@@ -640,7 +643,9 @@
 
 .card-chart,
 .card-product {
+  background-color: #151515;
   .card-body + .card-footer {
+    
     border-top: 1px solid #eee;
   }
 }
