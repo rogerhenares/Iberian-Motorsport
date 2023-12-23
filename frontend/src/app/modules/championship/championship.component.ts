@@ -19,7 +19,7 @@ export class ChampionshipComponent {
     @Output() selected = new EventEmitter<Championship>();
     @Output() loadingChange = new EventEmitter<boolean>();
 
-    pageable: Pageable = new Pageable(0, 3);
+    pageable: Pageable = new Pageable(0, 6);
     championships: Championship[];
     selectedChampionship: Championship;
     totalPages: number = 0;

@@ -1,12 +1,9 @@
 import { Component } from "@angular/core";
 import { Championship } from "../../model/Championship";
-import { Pageable } from "../../model/Pageable";
 import { ChampionshipService } from "../../service/championship.service";
 import { Router } from "@angular/router";
 import {AppContext} from "../../util/AppContext";
-import {Race} from "../../model/Race";
 import {CriteriaChampionship} from "../../model/CriteriaChampionship";
-import {ChampionshipComponent} from "../championship/championship.component";
 
 @Component({
     selector: 'app-championship-list',

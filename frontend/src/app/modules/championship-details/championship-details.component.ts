@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ChampionshipService} from "../../service/championship.service";
 import {Championship} from "../../model/Championship";
@@ -7,11 +7,9 @@ import {Pageable} from "../../model/Pageable";
 import {AppContext} from "../../util/AppContext";
 import {RaceService} from "../../service/race.service";
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
-import Swal from "sweetalert2";
 import {StandingsComponent} from "../standings/standings.component";
 import {Grid} from "../../model/Grid";
 import {GridService} from "../../service/grid.service";
-import {UserService} from "../../service/user.service";
 
 @Component({
     selector: 'app-championship-details',

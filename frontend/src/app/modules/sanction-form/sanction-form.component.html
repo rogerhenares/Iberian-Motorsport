@@ -36,7 +36,7 @@
                                     <mat-label style="color: #00FFC0">Penalty to</mat-label>
                                     <mat-select formControlName="gridId" style="color: #999999">
                                         <mat-option *ngFor="let gridRace of gridRaceList" [value]="gridRace.gridId">
-                                            {{gridRace.grid.carNumber}} - {{gridRace.grid.teamName}} - {{gridRace.grid.car.manufacturer}} {{gridRace.grid.car.model}}
+                                            {{gridRace.grid.carNumber}} - {{gridRace.grid.teamName}} - {{getDriverList(gridRace)}} - {{gridRace.grid.car.manufacturer}} {{gridRace.grid.car.model}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error [hidden]="!(sanctionFormSubmitted && sanctionForm.controls.gridId.errors)">Grid Error</mat-error>

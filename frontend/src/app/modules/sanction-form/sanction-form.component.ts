@@ -7,6 +7,7 @@ import {Sanction} from "../../model/Sanction";
 import {GridRace} from "../../model/GridRace";
 import {GridRaceService} from "../../service/gridrace.service";
 import {Router} from "@angular/router";
+import {User} from "../../model/User";
 
 @Component({
     selector: 'app-sanction-form',
@@ -95,6 +96,15 @@ export class SanctionFormComponent {
             inGame: [sanction.inGame !== null ? sanction.inGame : 0],
             licensePoints: [sanction.licensePoints, [Validators.required]]
         })
+    }
+
+    getDriverList(gridRace: GridRace) {
+        let driverNameList = '';
+        gridRace.grid.driversList.forEach(driver => {
+            driverNameList += driver.firstName + " " + driver.lastName + " ";
+
+        })
+        return driverNameList;
     }
 
 }

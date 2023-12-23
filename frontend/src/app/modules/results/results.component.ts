@@ -122,7 +122,11 @@ export class ResultsComponent implements OnInit, OnChanges{
 
     addSanctionToTotalTime(gridRace: GridRace) {
         if(gridRace.gridId !== this.gridRaceWinner.gridId) {
-            return gridRace.finalTime + (gridRace.sanctionTime * 1000) - this.gridRaceWinner.finalTime;
+            let time = gridRace.finalTime + (gridRace.sanctionTime * 1000) - this.gridRaceWinner.finalTime;
+            if(time < 0) {
+                return 0;
+            }
+            return time;
         }
         return gridRace.finalTime + (gridRace.sanctionTime * 1000);
     }

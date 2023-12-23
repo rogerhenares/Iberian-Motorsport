@@ -12,7 +12,7 @@
             </mat-tab-group>
         </div>
     </ng-container>
-    <div>
+    <div style="text-align: left">
         <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-warning" (click)="editGrid(this.selectedGrid)">Edit Entry</button>
         <button *ngIf="appContext.isAdmin()&&fullMode===true" style="color: black" class="btn btn-danger" (click)="deleteSwalEntry.fire()">Delete Entry</button>
     </div>
