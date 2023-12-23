@@ -1,10 +1,7 @@
 package com.iberianmotorsports.service.service.implementation;
 
 import com.iberianmotorsports.service.ErrorMessages;
-import com.iberianmotorsports.service.model.Championship;
-import com.iberianmotorsports.service.model.Grid;
-import com.iberianmotorsports.service.model.GridRace;
-import com.iberianmotorsports.service.model.Race;
+import com.iberianmotorsports.service.model.*;
 import com.iberianmotorsports.service.model.composeKey.GridRacePrimaryKey;
 import com.iberianmotorsports.service.repository.GridRaceRepository;
 import com.iberianmotorsports.service.service.ChampionshipService;
@@ -41,6 +38,9 @@ public class GridRaceServiceImpl implements GridRaceService {
     @Value("#{'${qualyPoints}'}")
     private List<Integer> qualyPoints;
 
+    @Value("#{'${licensePointsInRaceToDSQ}'}")
+    private List<Float> licensePointsInRaceToDSQ;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public GridRace saveGridRace(GridRace gridRace) {
@@ -59,21 +59,27 @@ public class GridRaceServiceImpl implements GridRaceService {
             gridRaceLazy.getSanctionList().size();
             return gridRaceLazy;
         }).toList();
+        gridRace.setDsqRound(isDsqRound(gridRace));
         return gridRace;
     }
 
     @Override
     public List<GridRace> getGridRaceForRace(Long raceId) {
         Race race = raceService.findRaceById(raceId);
-        return gridRaceRepository.findGridRacesByGridRacePrimaryKey_Race(race);
+        List<GridRace> gridRaceList = gridRaceRepository.findGridRacesByGridRacePrimaryKey_Race(race);
+        return gridRaceList.stream().map(gridRace -> {
+                gridRace.setDsqRound(isDsqRound(gridRace));
+                return gridRace;
+                })
+            .toList();
     }
 
     @Override
     public void calculateGridRace(Long raceId) {
-
         List<GridRace> filteredList = getGridRaceForRace(raceId).stream()
                 .filter(gridRace -> gridRace.getFinalTime() != null)
                 .filter(gridRace -> gridRace.getFinalTime() > 0)
+                .filter(gridRace -> !isDsqRound(gridRace))
                 .map(gridRace -> {
                     gridRace.setTimeWithPenalties(gridRace.getFinalTime() + (gridRace.getSanctionTime() * 1000));
                     return gridRace;
@@ -81,10 +87,23 @@ public class GridRaceServiceImpl implements GridRaceService {
                 .sorted(Comparator.comparing(GridRace::getTotalLaps).reversed()
                         .thenComparing(GridRace::getTimeWithPenalties))
                 .toList();
-
         for (GridRace gridRace : filteredList) {
             int position = filteredList.indexOf(gridRace);
             calculatePointsToGridRace(gridRace, position, filteredList.get(0));
+            gridRaceRepository.save(gridRace);
+        }
+
+        List<GridRace> dqGridList = getGridRaceForRace(raceId).stream()
+                .filter(this::isDsqRound)
+                .map(gridRace -> {
+                    gridRace.setTimeWithPenalties(gridRace.getFinalTime() + (gridRace.getSanctionTime() * 1000));
+                    return gridRace;
+                })
+                .sorted(Comparator.comparing(GridRace::getTotalLaps).reversed()
+                        .thenComparing(GridRace::getTimeWithPenalties))
+                .toList();
+        for (GridRace gridRace : dqGridList) {
+            gridRace.setPoints(0L);
             gridRaceRepository.save(gridRace);
         }
     }
@@ -113,6 +132,19 @@ public class GridRaceServiceImpl implements GridRaceService {
             points += qualyPoints.get(gridRace.getQualyPosition()).longValue();
         }
         gridRace.setPoints(points);
+    }
+
+    private Boolean isDsqRound(GridRace gridRace) {
+        return getTotalLicensePointsFromRace(gridRace) >= licensePointsInRaceToDSQ.get(0);
+    }
+
+    private Float getTotalLicensePointsFromRace(GridRace gridRace){
+        List<Float> totalPointList = gridRace.getSanctionList().stream().map(Sanction::getLicensePoints).toList();
+        float totalPoints = 0;
+        for (float points: totalPointList) {
+            totalPoints += points;
+        }
+        return totalPoints;
     }
 
     @Override

@@ -19,6 +19,7 @@ export class GridRace {
     raceId: number;
     gridId: number;
     dropRound: boolean;
+    dsqRound: boolean;
     grid: Grid;
 
     constructor() {
@@ -38,6 +39,7 @@ export class GridRace {
         this.raceId = null;
         this.gridId = null;
         this.dropRound = null;
+        this.dsqRound = null;
         this.grid = null;
     }
 }

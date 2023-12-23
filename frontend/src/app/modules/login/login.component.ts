@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log("LOGIN V2")
+        console.log("LOGIN V2.1")
         let urlParams = new URLSearchParams(this.router.url.replace("/login?", ""));
         this.steamParams = '';
         urlParams.forEach((value, key) => {
-            console.log("key {}, value {}", key, value);
+            console.log("key value ", key, value);
             let nextSeparator = "&";
             if(key === "openid.sig") {
                 nextSeparator = "";

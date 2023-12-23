@@ -132,7 +132,7 @@ public class ImportDataServiceImpl implements ImportDataService {
                     if(qualyLeaderBoard.containsKey(grid.getCarNumber())){
                         setQualyData(gridRace, qualyLeaderBoard.get(grid.getCarNumber()), carPositionQualy.get(grid.getCarNumber()), qualyResults.getLaps());
                     }
-                    if(qualyLeaderBoard.containsKey(grid.getCarNumber())){
+                    if(raceLeaderBoard.containsKey(grid.getCarNumber())){
                         setRaceData(gridRace, raceLeaderBoard.get(grid.getCarNumber()), carPositionRace.get(grid.getCarNumber()), bestLapRace, raceResults.getLaps(), winnerLapTime);
                     }
                     gridRaceService.saveGridRace(gridRace);

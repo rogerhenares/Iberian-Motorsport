@@ -36,7 +36,8 @@ public class GridRaceDTOMapper implements Function<GridRace, GridRaceDTO> {
                 gridRace.getDropRound(),
                 gridRace.getGridRacePrimaryKey().getRace().getId(),
                 gridRace.getGridRacePrimaryKey().getGrid().getId(),
-                gridDTOMapper.apply(gridRace.getGridRacePrimaryKey().getGrid())
+                gridDTOMapper.apply(gridRace.getGridRacePrimaryKey().getGrid()),
+                gridRace.getDsqRound()
                 );
     }
 }

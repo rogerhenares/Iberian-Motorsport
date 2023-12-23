@@ -19,6 +19,7 @@ public record GridRaceDTO(
         Boolean dropRound,
         Long raceId,
         Long gridId,
-        GridDTO grid
+        GridDTO grid,
+        Boolean dsqRound
 ) {
 }

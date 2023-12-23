@@ -44,14 +44,13 @@ public class SanctionServiceImpl implements SanctionService {
         gridService.updateGridLicensePoints(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(),
                 sanction.getLicensePoints(), Boolean.TRUE);
         sanctionSaved.setGridRace(gridRaceService.getGridRace(sanction.getGridRace().getGridRacePrimaryKey().getGrid().getId(), sanction.getGridRace().getGridRacePrimaryKey().getRace().getId()));
-
-        if (!sanction.getInGame()) {
-            int totalPenalty = sanctionSaved.getGridRace().getSanctionList().stream().mapToInt(s -> Integer.parseInt(s.getPenalty())).sum();
-            sanctionSaved.getGridRace().setSanctionTime(totalPenalty);
-            gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
-            gridRaceService.calculateDropRoundForRaceChampionship(sanctionSaved.getGridRace().getGridRacePrimaryKey().getRace());
-        }
-
+        int totalPenalty = sanctionSaved.getGridRace().getSanctionList().stream()
+                .filter(s -> !s.getInGame())
+                .mapToInt(s -> Integer.parseInt(s.getPenalty()))
+                .sum();
+        sanctionSaved.getGridRace().setSanctionTime(totalPenalty);
+        gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+        gridRaceService.calculateDropRoundForRaceChampionship(sanctionSaved.getGridRace().getGridRacePrimaryKey().getRace());
         return sanctionSaved;
     }
 
@@ -68,9 +67,9 @@ public class SanctionServiceImpl implements SanctionService {
                 sanction.getLicensePoints(), Boolean.FALSE);
         if (!sanction.getInGame()) {
             sanction.getGridRace().setSanctionTime(sanction.getGridRace().getSanctionTime() - Integer.parseInt(sanction.getPenalty()));
-            gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
-            gridRaceService.calculateDropRoundForRaceChampionship(sanction.getGridRace().getGridRacePrimaryKey().getRace());
         }
+        gridRaceService.calculateGridRace(sanction.getGridRace().getGridRacePrimaryKey().getRace().getId());
+        gridRaceService.calculateDropRoundForRaceChampionship(sanction.getGridRace().getGridRacePrimaryKey().getRace());
     }
 
     private Sanction getSanctionById(Long sanctionId) throws ServiceException {

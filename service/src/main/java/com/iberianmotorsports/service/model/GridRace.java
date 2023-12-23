@@ -65,4 +65,5 @@ public class GridRace implements Serializable {
     private List<Sanction> sanctionList;
 
     @Transient Long timeWithPenalties;
+    @Transient Boolean dsqRound;
 }
