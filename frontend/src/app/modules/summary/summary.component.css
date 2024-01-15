@@ -1,7 +1,7 @@
+ 
 .body-text {   
     padding: 10px;
     color: #c0c0c0;
-    text-align: left;
 }
 
 .info-content {
@@ -9,6 +9,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
 }
 
 h3{
@@ -19,27 +20,20 @@ h3{
 .foto-inicio{
     max-width: fit-content;
     height: auto;
-    margin-right: 2%;
-    margin-left: 2%;
-    margin-top: 15px;
-    margin-bottom: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: inset 4px 4px rgba(0, 0, 0, 0.2); 
     flex-grow: 1;
     border-radius: 4px;
-    /*
-    align-content: center;
-    margin-top: -100px;
-    margin-bottom: -100px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;*/
+    width: 50%;
+    height: auto;
+    border: #00ffc0 solid 6px;
 }
 
 .objectives-card {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: row;
-    gap: 100px;
+    gap: 50px;
     align-items: center;
     justify-content: center;
     overflow-x: hidden;
@@ -57,7 +51,7 @@ h3{
  }
 
 .card-chart{
-    transition: .5s;
+    transition: .1s;
 }
 
 .objectives-card-content {
@@ -66,7 +60,7 @@ h3{
     align-items: center;
     max-width: 300px;
     min-width: 200px;
-    min-height: 300px;
+    min-height: 280px;
     background-color: #161616;
     border-radius: 10px;
     padding: 10px;
@@ -82,10 +76,11 @@ h3{
 
 .welcome-card-content p:last-of-type {
     border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .welcome-card-content {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -94,11 +89,14 @@ h3{
     min-height: 300px;
     background-color: #161616;
     border-radius: 10px;
-    padding: 50px;
+    padding: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     flex-grow: 1;
     transition: 300ms ease-in-out;
-    margin-top: 10px;
+}
+
+.important-text {
+    color: #00ffc0;
 }
 
 
@@ -115,7 +113,7 @@ h3{
     background-color: #00ffc0;
     height: 1px;
     width: 80%;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .objectives-card-content i {
@@ -124,17 +122,7 @@ h3{
     padding-bottom: 10px;
     padding-top: 10px;
     color: #c0c0c0;
-    /*border-bottom: solid 1px #00ffc0;*/
     transform: scale(2);
-    transition: 1000ms;
-}
-
-.objectives-card-content:hover.objectives-card-content:nth-child(1) i{
-    transform: scale(2) rotate(36deg);
-}
-
-.objectives-card-content:hover.objectives-card-content:nth-child(2) i{
-    animation: shake 0.5s;
 }
 
 .swiper-wrapper {
@@ -151,11 +139,17 @@ h3{
 
 @keyframes shake {
     0% { transform: scale(2); }
-    33% { transform: scale(2) rotate(-5deg); }
-    66% { transform: scale(2) rotate(5deg); }
+    33% { transform: scale(2) rotate(-5deg) translate3d(-3px, 0, 0); }
+    66% { transform: scale(2) rotate(5deg) translate3d(3px, 0, 0); }
     100% { transform: scale(2); }
   }
 
+  @keyframes wiggle {
+    0% { transform: scale(2) }
+    33% { transform: scale(2) translate3d(-3px, 0, 0);}
+    66% { transform: scale(2) translate3d(3px, 0, 0);}
+    100% { transform: scale(2) }
+  }  
 
 
 
@@ -163,14 +157,6 @@ h3{
     min-width: 40%;
 
 }
-
-.foto-inicio{
-    width: 50%;
-    height: auto;
-    border: #00ffc0 solid 6px;
-    margin: 30px;
-}
-
 
 
 .card-body-button-responsivep{
@@ -207,3 +193,207 @@ h3{
 
   }
 
+/* A PARTIR IML ESPORTS*/
+
+.iml-esports-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.foto-esports{
+    width: 39%;
+    height: auto;
+    border: #00ffc0 solid 6px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: inset 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.esports-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+
+.text-carousel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    background-color: #161616;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 358px;
+}
+
+.button {
+    cursor: pointer;
+    font-size: 18px;
+    color: #00ffc0;
+    border-radius: 50%;
+    background-color: transparent;
+    font-weight: 600;
+    transition: all 0.1s ease-in;
+    overflow: hidden;
+    border: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    width: 42px;
+  }
+
+.right {
+    margin-right: 20px;
+}
+
+.left {
+    margin-left: 20px;
+}
+
+.right:hover {
+    color: #c0c0c0;
+    transform:translateX(5px);
+}
+
+.left:hover {
+    color: #c0c0c0;
+    transform:translateX(-5px);
+}
+
+button i {
+    font-size: 40px;
+}
+
+.container-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    padding: 50px;
+}
+
+.stat-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}
+
+.stats-value {
+    font-size: 50px;
+    text-align: center;
+    background: linear-gradient(60deg, #00FFC0, #00FFC080);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 44;
+}
+
+.stats-description {
+    color: #c0c0c0;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 0;
+    flex: 1;
+}
+
+.container-esports-members {
+    padding: 50px;
+    flex: 1;
+}
+
+.members-text {
+    text-align: center;
+    padding: 10px;
+    color: #c0c0c0;
+    font-size: 27px;
+    background: linear-gradient(60deg, #00FFC0 20%, #00FFC080 90%);;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    font-weight: bold;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    color: #c0c0c0;
+}
+
+.nombrecito::marker {
+    color: #00FFC0;
+}
+
+.nombrecito{
+    transition: 0.5;
+}
+
+.container-esports-academy {
+    padding: 50px;
+    flex: 1;
+}
+
+.academy-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.academy-container:nth-child(1) {
+    border-right: solid 1px #333333;
+}
+
+.academy-objectives{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    color: #c0c0c0;
+}
+
+.academy-text{
+    color: #c0c0c0;
+    font-size: 27px;
+    background: linear-gradient(60deg, #00FFC0 20%, #00FFC080 90%);;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    text-align: center;
+    
+}
+
+.academy-container i {
+    font-size: 40px;
+    color: #00FFC0
+}
+
+.academy-container p {
+    flex: 1;
+}
+
+@media (max-width: 600px) {
+    .foto-inicio {
+        display: none;
+    }
+    .foto-esports {
+        display: none;
+    }
+}
+
+@media (max-width: 1000px) {
+        .text-carousel {
+        display: none;
+    }
+}
