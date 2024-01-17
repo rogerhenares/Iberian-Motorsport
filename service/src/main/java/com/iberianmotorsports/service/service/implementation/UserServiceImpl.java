@@ -117,10 +117,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(saveUser);
     }
 
-    private Boolean isLoggedUserAdmin() {
+    public static Boolean isLoggedUserAdmin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals(RoleType.ADMIN.getValue()));
+    }
+
+    public static Boolean isLoggedUserSteward() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals(RoleType.STEWARD.getValue()));
     }
 
     @Override

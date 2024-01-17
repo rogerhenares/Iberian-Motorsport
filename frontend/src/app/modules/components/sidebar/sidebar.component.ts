@@ -19,7 +19,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/user-list', title: 'Users', icon:'perm_contact_calendar', class: '', logged: true, adminOnly: true },
     { path: '/summary', title: 'IML',  icon:'dashboard', class: '', logged: false, adminOnly: false },
     { path: '/summary', title: 'IML',  icon:'dashboard', class: '', logged: true, adminOnly: false },
-    { path: '/esports', title: 'IML Esports', icon: 'videogame_asset', class: '', logged: false, adminOnly: false}
+    { path: '/esports', title: 'IML Esports', icon: 'videogame_asset', class: '', logged: false, adminOnly: false},
+    { path: '/esports', title: 'IML Esports', icon: 'videogame_asset', class: '', logged: true, adminOnly: false}
 ];
 
 @Component({

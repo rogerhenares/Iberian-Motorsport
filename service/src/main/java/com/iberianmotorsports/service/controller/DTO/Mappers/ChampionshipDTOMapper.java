@@ -2,6 +2,7 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.ChampionshipDTO;
 import com.iberianmotorsports.service.model.Championship;
+import com.iberianmotorsports.service.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,17 @@ public class ChampionshipDTOMapper implements Function<Championship, Championshi
                 championship.getId(),
                 championship.getName(),
                 championship.getDescription(),
-                championship.getAdminPassword(),
+                UserServiceImpl.isLoggedUserAdmin() || UserServiceImpl.isLoggedUserSteward() ? championship.getAdminPassword() : "",
                 championship.getCarGroup(),
                 championship.getSubCarGroup(),
                 championship.getTrackMedalsRequirement(),
                 championship.getSafetyRatingRequirement(),
                 championship.getRacecraftRatingRequirement(),
-                championship.getPassword(),
-                championship.getSpectatorPassword(),
+                !Objects.isNull(championship.getIsLoggedUserInChampionship()) && championship.getIsLoggedUserInChampionship() ||
+                        UserServiceImpl.isLoggedUserAdmin() ||
+                        UserServiceImpl.isLoggedUserSteward()
+                        ? championship.getPassword() : "",
+                UserServiceImpl.isLoggedUserAdmin() || UserServiceImpl.isLoggedUserSteward() ? championship.getSpectatorPassword() : "",
                 championship.getMaxCarSlots(),
                 championship.getMaxSubCarSlots(),
                 championship.getDumpLeaderboards(),

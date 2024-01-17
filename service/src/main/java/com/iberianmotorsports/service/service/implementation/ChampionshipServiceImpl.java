@@ -57,7 +57,18 @@ public class ChampionshipServiceImpl implements ChampionshipService {
                 carService.getCarsByCategories(
                         getCategoriesForChampionship(championshipOptional.get()))
         );
-        return championshipOptional.orElse(null);
+        Championship championship = championshipOptional.get();
+        Long steamId = null;
+        try{
+            steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e){ }
+        if (steamId != null) {
+            Long finalSteamId = steamId;
+            championship.setIsLoggedUserInChampionship(championship.getGridList().stream()
+                    .anyMatch(grid -> grid.getDrivers().stream()
+                            .anyMatch(user -> user.getSteamId().equals(finalSteamId))));
+        }
+        return championship;
     }
 
     @Override
@@ -65,7 +76,18 @@ public class ChampionshipServiceImpl implements ChampionshipService {
         Optional<Championship> championshipOptional = championshipRepository.findByName(name);
         if (championshipOptional.isEmpty())
             throw new ServiceException(ErrorMessages.CHAMPIONSHIP_NOT_IN_DB.getDescription());
-        return championshipOptional.orElse(null);
+        Championship championship = championshipOptional.get();
+        Long steamId = null;
+        try{
+            steamId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e){ }
+        if (steamId != null) {
+            Long finalSteamId = steamId;
+            championship.setIsLoggedUserInChampionship(championship.getGridList().stream()
+                    .anyMatch(grid -> grid.getDrivers().stream()
+                            .anyMatch(user -> user.getSteamId().equals(finalSteamId))));
+        }
+        return championship;
     }
 
     @Override
