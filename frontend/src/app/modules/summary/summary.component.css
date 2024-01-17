@@ -1,0 +1,195 @@
+ 
+.body-text {   
+    padding: 10px;
+    color: #c0c0c0;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+h3{
+    padding: 10px;
+    margin-bottom: -10px;
+}
+
+.foto-inicio{
+    max-width: fit-content;
+    height: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: inset 4px 4px rgba(0, 0, 0, 0.2); 
+    flex-grow: 1;
+    border-radius: 4px;
+    width: 50%;
+    height: auto;
+    border: #00ffc0 solid 6px;
+}
+
+.objectives-card {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    flex-wrap: wrap;
+}
+
+.objectives-card-content:hover {
+    box-shadow: 0 0 5px #00ffc0;
+    transform: scale(1.02);
+}
+
+.card-chart:hover {
+    box-shadow: 0 0 5px #00ffc0;
+    transform: scale(1.01);
+ }
+
+.card-chart{
+    transition: .1s;
+}
+
+.objectives-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px;
+    min-width: 200px;
+    min-height: 280px;
+    background-color: #161616;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    flex-grow: 1;
+    transition: 300ms ease-in-out;
+}
+
+.welcome-card-content p {
+    border-bottom: #464646 solid 1px;
+    padding-bottom: 20px;
+}
+
+.welcome-card-content p:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.welcome-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 800px;
+    min-width: 200px;
+    min-height: 300px;
+    background-color: #161616;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    flex-grow: 1;
+    transition: 300ms ease-in-out;
+}
+
+.important-text {
+    color: #00ffc0;
+}
+
+
+.objectives-card-content p {
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #c0c0c0;
+}
+
+.objectives-card-content div {
+    background-color: #00ffc0;
+    height: 1px;
+    width: 80%;
+    margin-top: 10px;
+}
+
+.objectives-card-content i {
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #c0c0c0;
+    transform: scale(2);
+}
+
+.swiper-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.swiper-slide {
+    background-color: #161616;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+@keyframes shake {
+    0% { transform: scale(2); }
+    33% { transform: scale(2) rotate(-5deg) translate3d(-3px, 0, 0); }
+    66% { transform: scale(2) rotate(5deg) translate3d(3px, 0, 0); }
+    100% { transform: scale(2); }
+  }
+
+  @keyframes wiggle {
+    0% { transform: scale(2) }
+    33% { transform: scale(2) translate3d(-3px, 0, 0);}
+    66% { transform: scale(2) translate3d(3px, 0, 0);}
+    100% { transform: scale(2) }
+  }  
+
+
+
+.info-content-text{
+    min-width: 40%;
+
+}
+
+
+.card-body-button-responsivep{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.my-button {
+    padding: 10px 20px;
+    background-color: #00ffc0;
+    color: #c0c0c0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+  .my-button:hover {
+    background-color: #ffffff;
+    color: black;
+  }
+
+  .youtube {
+    padding: 10px 20px;
+    background-color: #00ffc0;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+  .youtube:hover {
+    background-color: #ff0000;
+
+  }
+

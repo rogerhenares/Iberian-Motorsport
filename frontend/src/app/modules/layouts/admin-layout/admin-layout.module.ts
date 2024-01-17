@@ -41,9 +41,10 @@ import {UserListComponent} from "../../user-list/user-list.component";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BopFormComponent} from "../../bop-form/bop-form.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import {SummaryComponent} from "../../summary/summary.component";
+import {EsportsComponent} from 'app/modules/esports/esports.component';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     NotificationsComponent,
     ChampionshipComponent,
     HomeComponent,
+    SummaryComponent,
     ChampionshipFormComponent,
     RaceRulesFormComponent,
     SessionFormComponent,
@@ -96,7 +98,8 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     SanctionsComponent,
     SanctionFormComponent,
     UserListComponent,
-    BopFormComponent
+    BopFormComponent,
+    EsportsComponent
   ]
 })
 
