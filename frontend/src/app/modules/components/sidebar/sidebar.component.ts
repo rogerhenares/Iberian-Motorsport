@@ -18,7 +18,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/login', title: 'Login', icon:'person', class: '', logged: false, adminOnly: false},
     { path: '/user-list', title: 'Users', icon:'perm_contact_calendar', class: '', logged: true, adminOnly: true },
     { path: '/summary', title: 'IML',  icon:'dashboard', class: '', logged: false, adminOnly: false },
-    { path: '/summary', title: 'IML',  icon:'dashboard', class: '', logged: true, adminOnly: false }
+    { path: '/summary', title: 'IML',  icon:'dashboard', class: '', logged: true, adminOnly: false },
+    { path: '/esports', title: 'IML Esports', icon: 'videogame_asset', class: '', logged: false, adminOnly: false}
 ];
 
 @Component({
@@ -26,7 +27,7 @@ export const ROUTES: RouteInfo[] = [
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit { 
   menuItems: any[];
 
   constructor(

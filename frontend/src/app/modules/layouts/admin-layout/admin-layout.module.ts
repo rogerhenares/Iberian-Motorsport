@@ -44,6 +44,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {BopFormComponent} from "../../bop-form/bop-form.component";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {SummaryComponent} from "../../summary/summary.component";
+import {EsportsComponent} from 'app/modules/esports/esports.component';
 
 
 @NgModule({
@@ -97,7 +98,8 @@ import {SummaryComponent} from "../../summary/summary.component";
     SanctionsComponent,
     SanctionFormComponent,
     UserListComponent,
-    BopFormComponent
+    BopFormComponent,
+    EsportsComponent
   ]
 })
 
