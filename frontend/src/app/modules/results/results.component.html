@@ -59,8 +59,8 @@
                                     + {{gridRace.sanctionTime}}
                                 </span>
                             </p>
-                            <p class="h4" *ngIf="!isOnChampionship() && gridRace.sanctionTime > 0 && gridRace.finalTime > 0">
-                                + {{formatTime(addSanctionToTotalTime(gridRace))}}
+                            <p class="h4" *ngIf="!isOnChampionship() && gridRace.finalTime > 0">
+                                <span *ngIf="i != 0">+</span> {{formatTime(addSanctionToTotalTime(gridRace))}}
                             </p>
                         </span>
                         <span *ngIf="gridRace.totalLaps !== gridRaceWinner.totalLaps && gridRace.finalTime > 0">
