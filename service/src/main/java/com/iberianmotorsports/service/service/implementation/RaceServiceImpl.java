@@ -66,6 +66,7 @@ public class RaceServiceImpl implements RaceService {
         Race race = raceMapper.apply(raceDTO);
         race.setChampionship(championshipService.findChampionshipById(race.getChampionshipId()));
         race.setBopList(new ArrayList<>());
+        race.setStatus(RaceStatus.PENDING.name());
         Race savedRace = raceRepository.save(race);
         savedRace.getBopList().addAll(raceMapper.apply(raceDTO).getBopList().stream()
             .map(bop -> {

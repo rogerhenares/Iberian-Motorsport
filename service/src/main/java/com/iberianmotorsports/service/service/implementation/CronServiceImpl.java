@@ -47,9 +47,7 @@ public class CronServiceImpl implements CronService {
                     logger.info("CRON JOB: LAUNCHED RACE ID -> {} TRACK -> {} INFO -> {}", raceToBeLaunched.getId(), raceToBeLaunched.getTrack(), serverProcess.info());
                     //CompletableFuture.runAsync(() -> asyncStopServerAfterRace(serverProcess, raceToBeLaunched));
                     ExecutorService executorService = Executors.newFixedThreadPool(5);
-                    executorService.submit(() -> {
-                        asyncStopServerAfterRace(serverProcess, raceToBeLaunched);
-                    });
+                    executorService.submit(() -> asyncStopServerAfterRace(serverProcess, raceToBeLaunched));
                     raceService.setRaceStatus(raceToBeLaunched, RaceStatus.LAUNCHED);
                 } catch (Exception e){
                     raceService.setRaceStatus(raceToBeLaunched, RaceStatus.EXPORT_FAILED);
