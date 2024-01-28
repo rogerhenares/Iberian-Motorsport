@@ -8,9 +8,10 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public enum CarCategory {
-    FREE("GT3;GT4;CUP;TCX;CHL;ST"),
+    FREE("GT3;GT4;GT2;CUP;TCX;CHL;ST"),
     GT3("GT3"),
     GT4("GT4"),
+    GT2("GT2"),
     CUP("CUP"),
     TCX("TCX"),
     CHL("CHL"),

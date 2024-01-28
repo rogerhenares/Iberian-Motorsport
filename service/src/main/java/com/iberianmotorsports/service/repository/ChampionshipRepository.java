@@ -16,13 +16,17 @@ public interface ChampionshipRepository extends JpaRepository<Championship, Long
 
     Optional<Championship> findByName(String name);
 
+    /**
+     * Include to auto remove champ from dashboard after 24 hours
+     * WHERE c.disabled = false AND c.finished = false AND gu = :driver AND g.disabled = false
+     *             AND TIMESTAMPADD(HOUR, 24, r.startDate) > current_timestamp
+     */
     @Query("""
         SELECT c FROM Championship c
             JOIN c.gridList g
             JOIN g.drivers gu
             LEFT JOIN c.raceList r
         WHERE c.disabled = false AND c.finished = false AND gu = :driver AND g.disabled = false
-            AND TIMESTAMPADD(HOUR, 24, r.startDate) > current_timestamp
         GROUP BY c
         ORDER BY TIMESTAMPDIFF(SECOND, current_timestamp, MIN(r.startDate)) ASC
     """)

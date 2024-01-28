@@ -21,6 +21,6 @@ export const tracks = [
     {name: 'Cota', code: 'cota'},
     {name: 'Indianapolis', code: 'indianapolis'},
     {name: 'Watkins Glen', code: 'watkins_glen'},
-    {name: 'Valencia', code: 'valencia'}
-
+    {name: 'Valencia', code: 'valencia'},
+    {name: 'Red Bull Ring', code: 'red_bull_ring'}
 ]
