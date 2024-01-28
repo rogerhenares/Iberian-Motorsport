@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
         let urlParams = new URLSearchParams(this.router.url.replace("/login?", ""));
         this.steamParams = '';
         urlParams.forEach((value, key) => {
-            console.log("key value ", key, value);
             let nextSeparator = "&";
             if(key === "openid.sig") {
                 nextSeparator = "";
@@ -48,7 +47,6 @@ export class LoginComponent implements OnInit {
                 if (response) {
                     this.loading = false;
                     if(response.token === this.invalidResponse){
-                        console.log("unable to validate steam token");
                         this.invalid = true;
                         return;
                     }
@@ -58,7 +56,6 @@ export class LoginComponent implements OnInit {
             },
             error => {
                 this.loading = false;
-                console.log('ERROR ON AUTHENTICATE: ', error)
             });
     }
 
@@ -87,7 +84,6 @@ export class LoginComponent implements OnInit {
                 }
             },
             error => {
-                console.log("unable to fetch steam URL");
             }
         )
     }

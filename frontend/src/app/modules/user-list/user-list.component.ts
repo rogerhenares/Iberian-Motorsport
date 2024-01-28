@@ -36,7 +36,6 @@ export class UserListComponent implements OnInit {
     }
 
     selectUser(user: User) {
-        console.log("User selected ->", user)
         this.router.navigateByUrl('/user-profile', {state: {user: user}})
     }
 

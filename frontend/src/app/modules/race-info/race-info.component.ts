@@ -73,12 +73,10 @@ export class RaceInfoComponent implements OnInit {
         this.exportService.exportData(race).subscribe(
             response => {
                 this.requestSuccessSwal.fire();
-                console.log("Exported data");
                 console.log(response);
             },
             error => {
                 this.requestFailSwal.fire();
-                console.log("Error exporting data");
                 console.log(error);
             }
         );
@@ -89,11 +87,9 @@ export class RaceInfoComponent implements OnInit {
         this.importService.importData(race).subscribe(
             response => {
                 this.requestSuccessSwal.fire();
-                console.log("Imported data");
             },
             error=> {
                 this.requestFailSwal.fire();
-                console.log("Error importing data");
                 console.log(error)
             }
         );

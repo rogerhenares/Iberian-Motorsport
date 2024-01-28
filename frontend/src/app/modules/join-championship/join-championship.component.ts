@@ -45,8 +45,6 @@ export class JoinChampionshipComponent implements OnInit {
             this.teamSoloJoin = history.state.teamSoloJoin;
             this.inputtedPassword = history.state.password;
         }
-        console.log("join-champ -> ", this.championship);
-        console.log("Grid ->", this.grid)
         this.gridFormBuilder();
         this.categorizedCars.clear();
         this.groupCarsByCategory();
@@ -114,7 +112,6 @@ export class JoinChampionshipComponent implements OnInit {
                 gridToSave.licensePoints = 0
                 gridToSave.points = 0
                 gridToSave.password = null
-                console.log("Grid to save ->", gridToSave)
                 this.gridService.createGridEntry(gridToSave).subscribe(
                     response => {
                         if (response) {
@@ -126,7 +123,6 @@ export class JoinChampionshipComponent implements OnInit {
             }
 
             else {
-                    console.log("Grid to update ->", this.grid)
                     this.gridService.updateGridEntry(gridToSave).subscribe(
                         response => {
                             if (response) {

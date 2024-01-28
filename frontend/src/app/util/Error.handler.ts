@@ -11,8 +11,6 @@ import { ErrorBoolean } from '../model/ErrorBoolean';
  */
 export function handleError<T> (operation = 'operation', result: T, errorNotify?: any) {
     return (error: any): Observable<T> => {
-        console.log('TCL: error', error);
-        console.log("🚀 ~ file: Error.handler.ts ~ line 16 ~ return ~ errorNotify", errorNotify)
         if (errorNotify instanceof ErrorBoolean) {
             errorNotify.show();
         }
@@ -28,7 +26,6 @@ export function handleError<T> (operation = 'operation', result: T, errorNotify?
             errorNotify.fire();
         }
         if (errorNotify === true) {
-            console.log('TLC: error-> result', error)
             result = error.error.error;
         }
         // Let the app keep running by returning an empty result.

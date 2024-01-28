@@ -67,7 +67,6 @@ export class SanctionFormComponent {
                 if (response) {
                     this.requestSuccessSwal.fire();
                     //this.router.navigateByUrl("/championship/" + this.championshipId)
-                    console.log("Sanction ->", this.sanction)
                 }
                 this.isSendingRequest = false;
             });
@@ -80,7 +79,6 @@ export class SanctionFormComponent {
         this.gridRaceService.getGridRaceForRace(raceId).subscribe(
             (gridRaceList) => {
                 this.gridRaceList = gridRaceList
-                console.log(this.gridRaceList)
             }
         )
     }

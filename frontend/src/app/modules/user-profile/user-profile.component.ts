@@ -35,13 +35,11 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getData()
-    console.log("init ->", this.user)
   }
 
   onSubmit(){
     if(this.profileForm.valid){
       this.updateUserRoles();
-      console.log('submit ->', this.user)
       this.user.nationality = this.profileForm.value.nationality;
       this.user.firstName = this.profileForm.value.firstName;
       this.user.lastName = this.profileForm.value.lastName;
@@ -81,8 +79,6 @@ export class UserProfileComponent implements OnInit {
             if (user) {
               this.user = user;
               this.profileFormBuilder();
-              console.log("userService - getLoggedUser ->", this.user)
-
             }
           });
     }

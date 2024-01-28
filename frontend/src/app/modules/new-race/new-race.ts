@@ -168,8 +168,6 @@ export class NewRace {
     }
 
     newBOP() {
-        console.log("BOP LIST -> {}", this.race.bopDTOList);
-        console.log("BOP selected -> {}", this.selectedBop);
         this.selectedBop = new Bop();
     }
 
@@ -178,7 +176,6 @@ export class NewRace {
     }
 
     bopSelected(bop: Bop, index: number) {
-        console.log("bop selected -> {}",bop);
         this.selectedBopIndex = index;
         this.selectedBop = bop;
     }

@@ -44,21 +44,16 @@ export class ChampionshipFormComponent {
         if (history.state.championship) {
             this.championship = history.state.championship;
             this.imageSrc = this.championship.imageContent;
-            console.log(this.championship)
         }
         this.championshipFormBuilder();
     }
 
     onSubmit() {
-        console.log("Flag 1")
         this.championshipFormSubmitted= true;
-        console.log("To Submit ->", this.championshipForm.value);
         if (this.championshipForm.valid) {
 
             const champData = {...this.championshipForm.value};
             champData.id = this.championship.id
-
-            console.log("Flag 2", champData)
 
             if (this.fileBase64) {
                 champData.imageContent = this.fileBase64;

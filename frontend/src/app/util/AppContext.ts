@@ -72,21 +72,17 @@ export class AppContext extends EventEmitter<User> implements CanActivate {
 
     isUserLoggedIn() : boolean {
         if(this.loadLoggedUser()) {
-            console.log('user has credentials');
             return true;
         } else {
-            console.log('user without credentials');
             return false;
         }
     }
 
     canActivate(): boolean {
         if (this.loadLoggedUser()) {
-            console.log('Can activate passed');
             this.router.navigate(['/dashboard']);
             return true;
         } else {
-            console.log('Can activate denied');
             this.router.navigate(['/championship']);
             return false;
         }

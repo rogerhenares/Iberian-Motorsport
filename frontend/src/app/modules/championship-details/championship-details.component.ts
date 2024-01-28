@@ -66,7 +66,6 @@ export class ChampionshipDetailsComponent implements OnInit {
                         this.selectedRaceId = this.races[0].id;
                         this.selectedRace = this.races[0]
                     }
-                    console.log("Championship ->" ,this.championship)
                 },
                 (error: any) => {
                     console.error('Error fetching championship details:', error);
@@ -144,7 +143,6 @@ export class ChampionshipDetailsComponent implements OnInit {
 
     onSelectedGridChange(grid: Grid) {
         this.selectedGrid = grid;
-        console.log("Selected Grid", this.selectedGrid);
     }
 
     editGrid(grid: Grid): void {

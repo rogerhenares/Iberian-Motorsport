@@ -33,14 +33,12 @@ export class ChampionshipComponent {
     ){}
 
     ngOnInit(): void {
-        console.log("Criterial for champ home page -> {}", this.criteria );
         this.getChampionshipList(this.pageable.page, this.criteria);
     }
 
     getChampionshipList(page: number, criteria?: CriteriaChampionship) {
         this.loading = true;
         this.loadingChange.emit(this.loading)
-        console.log("***Criterial for champ home page -> {}", this.criteria );
         if (!criteria) {
             this.pageable.page = page;
             this.championshipService.getChampionshipList(this.pageable).subscribe(
@@ -89,7 +87,6 @@ export class ChampionshipComponent {
         const date = new Date();
         const lastRace = championship.raceList.at(-1);
         let filter = championship.raceList.filter(race => new Date(race.startDate) > date);
-        console.log("FILTER -> {}", filter );
         return filter.length > 0 ? filter[0] : lastRace;
     }
 
@@ -103,7 +100,6 @@ export class ChampionshipComponent {
     selectChampionship(championship: Championship) {
         this.selectedChampionship = championship;
         this.selected.emit(championship);
-        console.log("Championship ->", championship)
     }
 
     goToPreviousPage() {

@@ -116,7 +116,6 @@ export class StandingsComponent implements OnInit, OnChanges {
     onSelectionChange(event: any) {
         this.selectedValue = event.tab.textLabel;
         if (this.selectedValue === "PRO" || this.selectedValue === "SILVER") {
-            console.log("filtering");
             this.filteredGrid = this.grid.filter(item => item.carLicense === this.selectedValue);
         } else if (this.selectedValue === 'TEAM') {
             let teamNameList = [];
