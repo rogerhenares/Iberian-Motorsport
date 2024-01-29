@@ -75,7 +75,7 @@
                         </ng-container>
                     </ng-container>
                 </td>
-                <td class="nameColumn" style="text-align: left" *ngIf="fullMode && this.selectedValue !== 'TEAM'">
+                <td class="teamHeader" style="text-align: left" *ngIf="fullMode && this.selectedValue !== 'TEAM' && this.selectedChampionship.style !=='TEAM'">
                     <span>{{grid.teamName}}</span>
                 </td>
                 <td class="carColumn" style="text-align: left">
