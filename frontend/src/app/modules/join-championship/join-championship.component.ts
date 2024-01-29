@@ -50,7 +50,9 @@ export class JoinChampionshipComponent implements OnInit {
         this.gridFormBuilder();
         this.categorizedCars.clear();
         this.groupCarsByCategory();
-        this.grid.password = this.inputtedPassword;
+        if(this.inputtedPassword) {
+            this.grid.password = this.inputtedPassword;
+        }
     }
 
     gridFormBuilder() {
