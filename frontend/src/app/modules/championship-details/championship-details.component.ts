@@ -10,6 +10,7 @@ import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {StandingsComponent} from "../standings/standings.component";
 import {Grid} from "../../model/Grid";
 import {GridService} from "../../service/grid.service";
+import {Clipboard} from "@angular/cdk/clipboard";
 
 @Component({
     selector: 'app-championship-details',
@@ -42,7 +43,8 @@ export class ChampionshipDetailsComponent implements OnInit {
         public appContext : AppContext,
         public router: Router,
         public raceService: RaceService,
-        public gridService: GridService
+        public gridService: GridService,
+        public clipboard: Clipboard
     ) {
     }
 
@@ -193,6 +195,9 @@ export class ChampionshipDetailsComponent implements OnInit {
             return this.selectedGrid.disabled;
         }
         return false;
+    }
+    copyToClipboard(grid: Grid) {
+        this.clipboard.copy(grid.password);
     }
 
 }

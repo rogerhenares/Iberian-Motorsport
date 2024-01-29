@@ -10,6 +10,7 @@ import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {Car} from "../../model/Car";
 import Swal from "sweetalert2";
 import {User} from "../../model/User";
+import {Clipboard} from "@angular/cdk/clipboard";
 
 @Component({
     selector: 'app-join-championship',
@@ -34,7 +35,8 @@ export class JoinChampionshipComponent implements OnInit {
         private router: Router,
         public appContext: AppContext,
         private gridService: GridService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        public clipboard: Clipboard
     ) {
     }
     ngOnInit() {
@@ -58,13 +60,16 @@ export class JoinChampionshipComponent implements OnInit {
             championshipId: [this.championship.id],
             driversList: [this.teamSoloJoin === true? null : this.grid.driversList],
             car: [this.championship.carList.find(c => c.id === this.grid?.car?.id) , [Validators.required]],
-            teamName: [this.grid.teamName, [Validators.required]],
+            teamName: [this.grid.teamName, [Validators.required, Validators.pattern('^[a-zA-Z0-9][a-zA-Z0-9\\s]*$')]],
             disabled: [this.grid.disabled]
         })
     }
 
 
     join(){
+        if(this.gridForm.invalid) {
+            return;
+        }
         if (!this.grid.driversList.some(driver => driver.steamId === this.appContext.getLoggedUser().steamId)) {
             let newUser = {...this.appContext.getLoggedUser()};
             this.grid.driversList.push(newUser);
@@ -111,7 +116,6 @@ export class JoinChampionshipComponent implements OnInit {
                 gridToSave.id = null
                 gridToSave.licensePoints = 0
                 gridToSave.points = 0
-                gridToSave.password = null
                 this.gridService.createGridEntry(gridToSave).subscribe(
                     response => {
                         if (response) {
@@ -202,7 +206,10 @@ export class JoinChampionshipComponent implements OnInit {
         })
     }
 
-
+    copyToClipboard(password: string) {
+        console.log("copyToClipboard -> {}" ,password);
+        this.clipboard.copy(password);
+    }
 
     protected readonly history = history;
 }

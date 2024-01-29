@@ -85,7 +85,7 @@ public class ExportDataServiceImpl implements ExportDataService {
 
     private File getRaceFolder(Race race) {
         return new File(getChampionshipFolder(race).getAbsolutePath() + File.separator + "R" + race.getId() +
-                SERVER_FOLDER_SEPARATOR + race.getTrack());
+                SERVER_FOLDER_SEPARATOR + race.getTrack() + File.separator);
     }
 
     private void createFolderIfNotExist(File folder) {

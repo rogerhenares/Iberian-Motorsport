@@ -2,6 +2,8 @@ package com.iberianmotorsports.service.controller.DTO.Mappers;
 
 import com.iberianmotorsports.service.controller.DTO.GridDTO;
 import com.iberianmotorsports.service.model.Grid;
+import com.iberianmotorsports.service.service.implementation.UserServiceImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,15 @@ public class GridDTOMapper implements Function<Grid, GridDTO> {
 
     @Override
     public GridDTO apply(Grid grid) {
+        Object steamId = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean isUserInGrid = false;
+        if(!steamId.equals("anonymousUser")){
+            Long loggedUserSteamId = (Long) steamId;
+            isUserInGrid = grid.getDrivers().stream().anyMatch(user -> user.getSteamId().equals(loggedUserSteamId));
+            if(UserServiceImpl.isLoggedUserAdmin() || UserServiceImpl.isLoggedUserSteward()) {
+                isUserInGrid = true;
+            }
+        }
         return new GridDTO(
                 grid.getId(),
                 grid.getCarNumber(),
@@ -28,7 +39,7 @@ public class GridDTOMapper implements Function<Grid, GridDTO> {
                 grid.getPoints(),
                 grid.getPointsDrop(),
                 grid.getLicensePoints(),
-                grid.getPassword(),
+                isUserInGrid ? grid.getPassword() : "",
                 grid.getDisabled(),
                 grid.getNewManagerId()
         );

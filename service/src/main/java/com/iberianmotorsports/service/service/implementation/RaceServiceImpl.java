@@ -211,10 +211,7 @@ public class RaceServiceImpl implements RaceService {
         List<Race> raceList = raceRepository.findAllByStatusIsAndStartDateBefore(raceStatus.name(), currentTime);
         raceList = raceList.stream().map(race -> {
             race.getChampionship().getGridList().size();
-            race.getChampionship().getGridList().stream().map(grid -> {
-                grid.getDrivers().size();
-                return grid;
-            });
+            race.getChampionship().getGridList().stream().map(grid -> grid.getDrivers().size()).toList();
             race.getBopList().size();
             race.getSessionList().size();
             return race;

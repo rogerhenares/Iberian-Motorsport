@@ -60,8 +60,8 @@ export class HomeComponent implements OnInit {
         elementsContent.forEach(content => {
             content.classList?.remove('active');
         });
-        elementHeader.classList?.add('active');
-        elementTab.classList?.add('active');
+        elementHeader?.classList?.add('active');
+        elementTab?.classList?.add('active');
     }
 }
 

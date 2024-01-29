@@ -13,7 +13,7 @@ import {CriteriaChampionship} from "../../model/CriteriaChampionship";
 export class ChampionshipListComponent {
 
     currentChampionshipsOpen = true;
-    upcomingChampionshipsOpen = false;
+    upcomingChampionshipsOpen = true;
     pastChampionshipsOpen = false;
     disabledChampionshipsOpen = false;
     totalPages: number = 0;

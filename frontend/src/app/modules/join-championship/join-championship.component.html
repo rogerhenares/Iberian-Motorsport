@@ -38,8 +38,9 @@
                                         <mat-error [hidden]="!(gridSubmitted && gridForm.controls.car.errors)">Car Error</mat-error>
                                     </mat-form-field>
                                     <mat-form-field *ngIf="grid?.password">
-                                        <mat-label style="color: #00FFC0">Password</mat-label>
-                                        <input style="color: #999999" matInput [value]="grid.password" *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"  [readonly]="true"/>
+                                        <mat-label style="color: #00FFC0"> Password </mat-label>
+                                        <input style="color: #999999; padding-top: 10px; max-width: 5vw; float:left" matInput [value]="grid.password" *ngIf="!this.isSoloChampionship() && !this.isNewGrid()"  [readonly]="true"/>
+                                        <i class="material-icons" style="cursor: pointer; margin-left: 10px; float: left; color: #00FFC0" (click)="copyToClipboard(grid.password)">content_copy</i>
                                     </mat-form-field>
                                     <ng-container *ngIf="this.isTeamChampionship() && !this.isNewGrid()">
                                         <mat-label style="color: #00FFC0">Drivers</mat-label>

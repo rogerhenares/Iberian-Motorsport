@@ -1,5 +1,5 @@
 <div class="card-body table-responsive slide-animation" style="padding: 0 15px; margin-top: -15px;">
-    <div class="row" style="height: 40vh; max-height: 485px; overflow-y: auto;" *ngIf="championships.length > 0">
+    <div class="row" style="height: 40vh; max-height: 485px; overflow-y: auto;" *ngIf="championships?.length > 0">
         <div *ngFor="let championship of championships" style="padding: 0 15px;">
             <div class="card card-chart card-chart-feedback" style="flex: 1 1 300px; max-width: 400px;" [class.selected]="selectedChampionship?.id == championship.id" (click)="selectChampionship(championship)">
                 <div class="card-header card-header-success" style="max-width: 360px; max-height: 270px; overflow: hidden; aspect-ratio: auto 4 / 3; padding: 5px;">

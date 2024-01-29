@@ -79,9 +79,9 @@ public class GridServiceImpl  implements GridService {
     @Override
     public Grid createGridEntry(@Valid GridDTO gridDTO) {
         Grid grid = gridMapper.apply(gridDTO);
-        validateGridForChampionship(grid);
         loadDriversForGrid(grid);
         grid.setChampionship(championshipService.findChampionshipById(grid.getChampionship().getId()));
+        validateGridForChampionship(grid);
         grid.setCar(carService.getCarById(grid.getCar().getId()));
         grid.setCarLicense("PRO");
         grid.setDisabled(Boolean.FALSE);
@@ -91,7 +91,7 @@ public class GridServiceImpl  implements GridService {
             while (findGridByPassword(generatedString) != null) {
                 generatedString = RandomStringUtils.random(5, true, true);
             }
-            grid.setPassword(generatedString);
+            grid.setPassword(generatedString.toUpperCase());
         }
 
         Grid createdGrid = gridRepository.saveAndFlush(grid);
@@ -318,6 +318,7 @@ public class GridServiceImpl  implements GridService {
         }
         validateCarNumberForChampionship(grid.getChampionship().getId(), grid.getCarNumber());
         validateCarForGrid(grid);
+        validateTeamNameForGrid(grid);
         if(isChampionshipGridFull(grid.getChampionship().getId())){
             throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
         }
@@ -328,6 +329,31 @@ public class GridServiceImpl  implements GridService {
             throw new ServiceException(ErrorMessages.GRID_CAR_IS_NOT_ALLOWED_FOR_THIS_CHAMPIONSHIP.getDescription());
         }
         //TODO validate if car is available for charity
+    }
+
+    private void validateTeamNameForGrid(Grid grid){
+        if(grid.getChampionship().getStyle().equals("SOLO")){
+            return;
+        }
+        if(grid.getChampionship().getStyle().equals("TEAM-SOLO")){
+            List<Grid> gridWithTeamName = grid.getChampionship().getGridList().stream()
+                    .filter(gridChamp -> gridChamp.getTeamName().equalsIgnoreCase(grid.getTeamName())).toList();
+            if(gridWithTeamName.size() == 2) {
+                throw new ServiceException(ErrorMessages.TEAM_ALREADY_FULL.getDescription());
+            }
+            if(gridWithTeamName.size() == 1) {
+                if(!gridWithTeamName.stream().findFirst().get().getPassword().equals(grid.getPassword())){
+                    throw new ServiceException(ErrorMessages.TEAM_ALREADY_CREATED_PASSWORD_TO_JOIN_REQUIRED.getDescription());
+                }
+                if(!gridWithTeamName.stream().findFirst().get().getCar().getId().equals(grid.getCar().getId())) {
+                    throw new ServiceException(ErrorMessages.CAR_TEAM_NOT_EQUAL.getDescription());
+                }
+            }
+        }
+        if(grid.getChampionship().getStyle().equals("TEAM") &&
+            grid.getChampionship().getGridList().stream().anyMatch(gridChamp -> gridChamp.getTeamName().equalsIgnoreCase(grid.getTeamName()))){
+            throw new ServiceException(ErrorMessages.TEAM_NAME_ALREADY_EXISTS.getDescription());
+        }
     }
 
     private void loadDriversForGrid(Grid grid) {
