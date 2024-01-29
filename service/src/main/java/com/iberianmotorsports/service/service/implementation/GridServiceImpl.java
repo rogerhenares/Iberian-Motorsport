@@ -317,7 +317,7 @@ public class GridServiceImpl  implements GridService {
             driverValidForChampionship(driver.getSteamId(), grid.getChampionship().getId());
         }
         validateCarNumberForChampionship(grid.getChampionship().getId(), grid.getCarNumber());
-        validateCarForGrid(grid);
+        //validateCarForGrid(grid);
         validateTeamNameForGrid(grid);
         if(isChampionshipGridFull(grid.getChampionship().getId())){
             throw new ServiceException(ErrorMessages.GRID_CHAMPIONSHIP_IS_FULL.getDescription());
