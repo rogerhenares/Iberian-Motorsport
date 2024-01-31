@@ -11,7 +11,7 @@
                             <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <i class="material-icons">close</i>
                             </button>
-                            <span style="color: black">It seems like you are not enrolled in any championship.<br>Why don't you join one?</span>
+                            <span style="color: black"> {{'no-championship-joined-message' | translate}} </span>
                         </div>
                     </ng-container>
                     <app-championship [isCreation]="false" [isExpandible]="false" (loadingChange)="loading = $event" (selected)=onSelectedChampionship($event)></app-championship>

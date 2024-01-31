@@ -20,6 +20,7 @@ export class JoinChampionshipComponent implements OnInit {
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
+    @ViewChild('carNumberUsed', {static : true}) carNumberUsedSwal: SwalComponent;
 
     grid: Grid = new Grid();
     gridForm: FormGroup;
@@ -29,6 +30,8 @@ export class JoinChampionshipComponent implements OnInit {
     teamSoloJoin: boolean = false;
     inputtedPassword: string;
     categorizedCars = new Map<string, Car[]>();
+    unusableNumbers: number[] = [];
+
 
     constructor(
         private router: Router,
@@ -40,6 +43,7 @@ export class JoinChampionshipComponent implements OnInit {
     ngOnInit() {
         const navigation = this.router.getCurrentNavigation();
         this.championship = history.state.championship;
+        this.checkValidNumber();
         if (history.state.grid) {
             this.grid = history.state.grid;
             this.teamSoloJoin = history.state.teamSoloJoin;
@@ -71,6 +75,7 @@ export class JoinChampionshipComponent implements OnInit {
             let newUser = {...this.appContext.getLoggedUser()};
             this.grid.driversList.push(newUser);
         }
+
         let gridToSave: Grid = {
             id: this.grid.id,
             car: this.gridForm.value.car,
@@ -90,22 +95,24 @@ export class JoinChampionshipComponent implements OnInit {
         if (history.state.grid) {
             if (this.isTeamChampionship()){
                 if(this.isGridManager() || this.appContext.isAdmin()) {
-                    this.gridService.updateGridEntry(gridToSave).subscribe(
+                    this.gridService.updateGridEntry(gridToSave, this.carNumberUsedSwal).subscribe(
                         response => {
                             if (response) {
                                 this.requestSuccessSwal.fire()
                                 this.router.navigateByUrl('/championship/' + this.championship.id)
                             }
-                        });
+                        }
+                        );
                 }
                 else {
-                    this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId, this.inputtedPassword).subscribe(
+                    this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId, this.inputtedPassword, this.carNumberUsedSwal).subscribe(
                     response => {
                         if (response) {
                             this.requestSuccessSwal.fire()
                             this.router.navigateByUrl('/championship/' + this.championship.id)
                         }
-                    });
+                    }
+                    );
                 }
             }
             else if (this.teamSoloJoin === true) {
@@ -115,7 +122,7 @@ export class JoinChampionshipComponent implements OnInit {
                 gridToSave.points = 0
                 gridToSave.password = null
                 console.log("Grid to save ->", gridToSave)
-                this.gridService.createGridEntry(gridToSave).subscribe(
+                this.gridService.createGridEntry(gridToSave, this.carNumberUsedSwal).subscribe(
                     response => {
                         if (response) {
                             this.requestSuccessSwal.fire()
@@ -127,7 +134,7 @@ export class JoinChampionshipComponent implements OnInit {
 
             else {
                     console.log("Grid to update ->", this.grid)
-                    this.gridService.updateGridEntry(gridToSave).subscribe(
+                    this.gridService.updateGridEntry(gridToSave, this.carNumberUsedSwal).subscribe(
                         response => {
                             if (response) {
                                 this.requestSuccessSwal.fire()
@@ -138,14 +145,12 @@ export class JoinChampionshipComponent implements OnInit {
                 }
             }
         else {
-            this.gridService.createGridEntry(gridToSave).subscribe(
+            this.gridService.createGridEntry(gridToSave, this.carNumberUsedSwal).subscribe(
                 response => {
                     if (response) {
                         this.requestSuccessSwal.fire()
                         this.router.navigateByUrl('/dashboard');
                     }
-                },
-                error => {
                 });
             }
         }
@@ -206,7 +211,18 @@ export class JoinChampionshipComponent implements OnInit {
         })
     }
 
-
+    checkValidNumber() {
+        this.gridService.getGridForChampionship(this.championship.id).subscribe(
+            response => {
+                response.forEach(grid => {
+                    this.unusableNumbers.push(grid.carNumber);
+                });
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
 
     protected readonly history = history;
 }

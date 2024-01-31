@@ -104,6 +104,7 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public Race updateRace(RaceDTO raceDTO) {
+
         Race race = raceMapper.apply(raceDTO);
         Race raceToUpdate = findRaceById(race.getId());
 

@@ -14,32 +14,32 @@ services:
 #            - "C:/Users/Roger/Desktop/Work/Iberian Motorsport/Docker/Volumes:/var/lib/mysql/data"
         ports:
             - 3306:3306
-    service:
-        build:
-            dockerfile: Dockerfile
-        container_name: iberian_motosport_service
-        networks:
-            - iberian-motosport-network
-        environment:
-            - STEAM_CLIENT_HOST=https://localhost/
-            - FLYWAY_LOCATIONS=classpath:db/migration
-        ports:
-            - 8080:8080
-        depends_on:
-            - database
-    nginx:
-        image: nginx:latest
-        ports:
-            - 80:80
-            - 443:443
-        volumes:
-            - ./dist:/usr/share/nginx/html
-            - ./nginx/conf.d:/etc/nginx/conf.d
-            - ./nginx/ssl:/etc/ssl
-        networks:
-            - iberian-motosport-network
-        depends_on:
-            - service
+#    service:
+#        build:
+#            dockerfile: Dockerfile
+#        container_name: iberian_motosport_service
+#        networks:
+#            - iberian-motosport-network
+#        environment:
+#            - STEAM_CLIENT_HOST=https://localhost/
+#            - FLYWAY_LOCATIONS=classpath:db/migration
+#        ports:
+#            - 8080:8080
+#        depends_on:
+#            - database
+#    nginx:
+#        image: nginx:latest
+#        ports:
+#            - 80:80
+#            - 443:443
+#        volumes:
+#            - ./dist:/usr/share/nginx/html
+#            - ./nginx/conf.d:/etc/nginx/conf.d
+#            - ./nginx/ssl:/etc/ssl
+#        networks:
+#            - iberian-motosport-network
+#        depends_on:
+#            - service
 networks:
     iberian-motosport-network:
         driver: bridge

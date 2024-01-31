@@ -5,6 +5,7 @@ import {ExportService} from "../../service/export.service";
 import {Race} from "../../model/Race";
 import { Clipboard } from '@angular/cdk/clipboard';
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
+import {Championship} from "../../model/Championship";
 
 
 @Component({
@@ -113,5 +114,11 @@ export class RaceInfoComponent implements OnInit {
         let text: string = "C" + championshipId + "R" + raceId;
         this.clipboard.copy(text);
     }
+
+    findRaceRound(selectedRace: Race, selectedChampionship: Championship): number {
+        let raceRound = this.selectedChampionship.raceList.findIndex(race => race.id === selectedRace.id) + 1;
+        return raceRound;
+    }
+
 
 }

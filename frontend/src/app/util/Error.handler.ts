@@ -21,15 +21,15 @@ export function handleError<T> (operation = 'operation', result: T, errorNotify?
         }
         if (errorNotify instanceof SwalComponent) {
             if (error.status === 409) {
-                errorNotify.text = error.error.error.message + ', error code: ' + error.error.error.platform_error_code;
+                errorNotify.title = error.error;
             } else {
-                errorNotify.text = error.statusText;
+                errorNotify.title = error.error;
             }
             errorNotify.fire();
         }
         if (errorNotify === true) {
             console.log('TLC: error-> result', error)
-            result = error.error.error;
+            result = error.error;
         }
         // Let the app keep running by returning an empty result.
         return of(result as T);
