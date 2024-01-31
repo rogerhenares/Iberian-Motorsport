@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.iberianmotorsports.service.ErrorMessages.GRID_DRIVER_NOT_ALLOWED;
@@ -137,6 +138,9 @@ public class GridServiceImpl  implements GridService {
         Car carToUpdate = carService.getCarById(grid.getCar().getId());
         List<Grid> gridTeamSolo = List.of();
         validateLoggedUserFromGrid(gridToUpdate);
+        if (!Objects.equals(grid.getCarNumber(), gridToUpdate.getCarNumber())) {
+            validateCarNumberForChampionship(gridToUpdate.getChampionship().getId(), grid.getCarNumber());
+        }
         boolean isTeamSoloChampionship = ChampionshipStyleType.TEAM_SOLO.getValue().equals(gridToUpdate.getChampionship().getStyle());
         boolean isTeamChampionship = ChampionshipStyleType.TEAM.getValue().equals(gridToUpdate.getChampionship().getStyle());
         if (isTeamSoloChampionship) {

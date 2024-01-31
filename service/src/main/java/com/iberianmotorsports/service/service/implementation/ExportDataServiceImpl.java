@@ -102,6 +102,7 @@ public class ExportDataServiceImpl implements ExportDataService {
         settings.setServerName(serverProperty.getServerName() + SERVER_NAME_SEPARATOR +
                 championship.getName() + SERVER_NAME_SEPARATOR +
                 race.getTrack() + SERVER_NAME_SEPARATOR +
+                findRaceRound(championship, race) + SERVER_NAME_SEPARATOR +
                 "#C" + championship.getId() + "R" + race.getId());
         settings.setAdminPassword(championship.getAdminPassword());
         settings.setCarGroup(serverProperty.getCategory());
@@ -218,4 +219,13 @@ public class ExportDataServiceImpl implements ExportDataService {
         return entries;
     }
 
+    public String findRaceRound(Championship championship, Race race) {
+        List<Race> raceList = championship.getRaceList();
+        for (int i = 0; i < raceList.size(); i++) {
+            if (raceList.get(i).getId().equals(race.getId())) {
+                return "Round" + i+1;
+            }
+        }
+        return "Round" + 0;
+    }
 }

@@ -115,7 +115,7 @@
     "text-file-name":"Nombre",
     "text-file-date":"Fecha",
     "uploader-text.model.list.empty":"No hay modelos de entrenamiento disponibles.",
-    "uploader-text.shapefiles": "Introduzca los ficheros que contienen los datos con la información geográfica",  
+    "uploader-text.shapefiles": "Introduzca los ficheros que contienen los datos con la información geográfica",
     "uploader-text.select.model": "Seleccione el modelo que quiera utilizar durante el proceso de predicción. El modelo tiene que estar estructurado con el mismo esquema que el fichero de clientes potenciales.",
     "uploader-text.business": "Introduzca el fichero con datos adicionales para el modelo.",
     "uploader-text.done.training": "Al confirmar se iniciará un nuevo proceso de entrenamiento, deteniendo cualquier otro proceso de entrenamiento o predicción en curso.",
@@ -165,7 +165,7 @@
     "swal-profile-not-completed.title":"Perfil no completado",
     "swal-profile-not-completed.text":"Por favor, complete su perfil para usar la aplicación de forma correcta.",
     "swal-profile-not-completed.success.title":"Perfil completado",
-    
+
     "timeline-process.list.empty":"No se ha iniciado el proceso de entrenamiento del modelo.",
     "timeline-title.file.load":"Ficheros cargados",
     "timeline-title.google.maps":"Procesamiento Google Maps",
@@ -211,7 +211,7 @@
     "timeline-title.model.training.status.started":"Se ha empezado a entrenar el modelo.",
     "timeline-title.model.training.status.done":"Se ha finalizado de entrenar el modelo.",
     "timeline-title.model.training.status.error":"Ha ocurrido algún error al entrenar el modelo, el proceso de entrenamiento se ha detenido.",
-    
+
     "timeline-title.model.test.status.waiting":"Predicción.",
     "timeline-title.model.test.status.started":"Se ha empezado a realizar la predicción de los clientes.",
     "timeline-title.model.test.status.done":"Se ha finalizado la predicción.",
@@ -230,12 +230,12 @@
     "TRAINING_PLOTS":"TRAINING PLOTS",
     "TRAINING_FEATURES":"TRAINING FEATURES",
     "GOOGLE_PLACES_DETAILS":"GOOGLE PLACES DETAILS",
-    
-    
+
+
     "model.options.test":"Ejecución del Modelo",
     "model.options.load.training":"Entrenamiento del Modelo de Propensión a la Compra",
     "model.options.load.test":"Ejecución del Modelo de Propensión a la Compra",
-    
+
     "uploader-text.clients.active.erp":"1. Entrenar un modelo con clientes objetivo que provengan del CRM y que se ejecutará sobre clientes potenciales también del CRM.",
     "uploader-text.clients.active.erp.test":"1. Ejecutar el modelo de propensión a la compra sobre un fichero de clientes potenciales que provengan del CRM.",
     "uploader-text.clients.deactivate.erp": "2. Entrenar un modelo con clientes objetivo (pueden provenir o no del CRM) y que se ejecutará sobre clientes potenciales de una base de datos externa.",
@@ -244,7 +244,7 @@
     "uploader-text.clients.suggest.caseNotERP": "CASO 2: La aplicación permite entrenar y hacer predicciones sobre otras fuentes de datos con menos información. Pero entonces las variables que hay de haber al fichero de clientes objetivo que se utiliza para el entrenamiento tienen que coincidir con las variables disponibles de los clientes potenciales de la base de datos externa.",
     "uploader-text.extension.clients.erp":"*Tiene que subir 4 ficheros y marcarlos con su respectivo tipo. Solo se admiten ficheros con la extensión .csv.",
     "uploader-text.clients.suggest":"",
-    
+
     "timeline-title.file.load.training":"Carga de los Clientes Objetivo",
     "timeline-title.file.load.test":"Carga de los Clientes Potenciales",
 
@@ -317,7 +317,7 @@
     "column-file-unable-to-parsed":"El archivo tiene múltiples valores no detectados, verifique la integridad del archivo",
 
     "document-download-disclaimer":"Se ha iniciado una descarga",
-    
+
     "consumption-list.empty":"No hay ficheros disponibles.",
     "consumption-list.empty-result":"No hay resultados que visualizar, inicie un proceso de predicción.",
 
@@ -341,5 +341,5 @@
     "uploader-text.clients.consumption.prediction.date":"Introduzca la fecha hasta donde se empezara a realizar la predicción",
     "uploader-text.disclaimer.prediction.date":"La fecha seleccionada debe ser un Lunes",
 
-    "":""
+    "no-championship-joined-message":"Parece que no te has unido a ningún campeonato<br> ¿Por qué no te unes a uno?"
 }

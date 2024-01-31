@@ -5,7 +5,7 @@
     "catalan": "Catalan",
     "header-menu.profile":"Profile",
     "header-menu.logout":"Log out",
-    
+
     "sidebar-menu.training": "Propensity Training",
     "sidebar-menu.test": "Propensity Prediction",
     "sidebar-menu.users": "Users",
@@ -116,7 +116,7 @@
     "text-file-date":"Date",
     "uploader-text.model.list.empty":"No training models available.",
     "uploader-text.select.model": "Select the model you want to use during the prediction process. The model must be previously trained on data with the same structure as the potential clients file.",
-    "uploader-text.shapefiles": "Enter the files that contain the data with the geographic information",  
+    "uploader-text.shapefiles": "Enter the files that contain the data with the geographic information",
     "uploader-text.business": "Enter the files with additional data for the model.",
     "uploader-text.done.training": "Upon confirmation, a new training process will begin, stopping any other ongoing training or prediction process.",
     "uploader-text.done.test": "Upon confirmation, a new prediction process will start, stopping any other ongoing training or prediction process.",
@@ -125,7 +125,7 @@
     "uploader-btn.next":"Next",
     "uploader-btn.upload": "Upload Files",
     "uploader-btn.confirm": "Confirm",
-    "uploader-text.extension.clients":"*Both CSV and XLS(X) files are supported",    
+    "uploader-text.extension.clients":"*Both CSV and XLS(X) files are supported",
     "uploader-text.extension.shapefiles":"*Only files with the extension .shp, .shx and .dbf are supported",
     "uploader-text.extension.business":"*Only files with the extension .csv are supported",
     "uploader-text.extension.model":"",
@@ -137,6 +137,8 @@
     "swal-cancelled.title":"Cancelled!",
     "swal-cancelled.text":"Something when wrong.",
     "swal-deleted.user.title":"Deleted!",
+    "swal-carNumberUsed.title":"The car is already being used",
+    "swal-carNumberUsed.text":"Please choose another car number.",
     "swal-deleted.user.text":"User has been deleted.",
     "swal-model.update.cancelled.title":"Upload Process Canceled",
     "swal-model.update.cancelled.text":"The upload process has been successfully canceled.",
@@ -164,8 +166,8 @@
     "swal-google-places-key-replace.success.text":"",
     "swal-profile-not-completed.title": "Profile not completed",
     "swal-profile-not-completed.text": "Please, complete your profile to use the application properly",
-    
-    "timeline-process.list.empty",:"Training model process has not started.",
+
+    "timeline-process.list.empty":"Training model process has not started.",
     "timeline-title.file.load":"Files loaded",
     "timeline-title.google.maps":"Google Maps Processing",
     "timeline-title.file.extra":"Additional files",
@@ -233,7 +235,7 @@
     "model.options.test":"Model Execution",
     "model.options.load.training":"Propensity Purchase Model Training",
     "model.options.load.test":"Execution of the Propensity Purchase Model",
-    
+
     "uploader-text.clients.active.erp":"1. Train a model with target clients that come from the CRM and that will be executed on potential customers also from the CRM.",
     "uploader-text.clients.active.erp.test":"1. Execute the propensity purchase model on a file of potential customers that come from the CRM.",
     "uploader-text.clients.deactivate.erp": "2. Train a model with target clients (may or may not come from the CRM) and that will be executed on potential clients of an external database.",
@@ -242,7 +244,7 @@
     "uploader-text.clients.suggest.caseNotERP": "CASE 2: The application allows you to train and make predictions about other data sources with less information. But then the variables that must be available to the target customers file that is used for the training must match the available variables of the potential clients of the external database.",
     "uploader-text.extension.clients.erp":"*Must upload 4 files and mark them with their respective type. Only files with the extension .csv are supported.",
     "uploader-text.clients.suggest":"",
-    
+
     "timeline-title.file.load.training":"Customer Load Target",
     "timeline-title.file.load.test":"Loading Potential Customers",
 
@@ -314,7 +316,7 @@
     "check-file-integrity":"File has multiple undetected values, check file integrity",
     "column-file-unable-to-parsed":"File has multiple undetected values, check file integrity",
     "document-download-disclaimer":"Download has started",
-    
+
     "consumption-list.empty":"There are no files available.",
     "consumption-list.empty-result":"There are no results to display, start a prediction process.",
 
@@ -337,6 +339,6 @@
 
     "uploader-text.clients.consumption.prediction.date":"Enter the date until where the prediction will begin",
     "uploader-text.disclaimer.prediction.date":"The selected date must be a Monday",
-    
-    "":""
+
+    "no-championship-joined-message": "It seems like you are not enrolled in any championship.<br>Why don't you join one?"
 }

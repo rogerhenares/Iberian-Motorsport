@@ -21,6 +21,7 @@ export class JoinChampionshipComponent implements OnInit {
 
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
+    @ViewChild('errorSwal', {static : true}) errorSwal: SwalComponent;
 
     grid: Grid = new Grid();
     gridForm: FormGroup;
@@ -96,7 +97,7 @@ export class JoinChampionshipComponent implements OnInit {
         if (history.state.grid) {
             if (this.isTeamChampionship()){
                 if(this.isGridManager() || this.appContext.isAdmin()) {
-                    this.gridService.updateGridEntry(gridToSave).subscribe(
+                    this.gridService.updateGridEntry(gridToSave, this.errorSwal).subscribe(
                         response => {
                             if (response) {
                                 this.requestSuccessSwal.fire()
@@ -105,7 +106,7 @@ export class JoinChampionshipComponent implements OnInit {
                         });
                 }
                 else {
-                    this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId, this.inputtedPassword).subscribe(
+                    this.gridService.addDriver(gridToSave, this.appContext.getLoggedUser().steamId, this.inputtedPassword, this.errorSwal).subscribe(
                     response => {
                         if (response) {
                             this.requestSuccessSwal.fire()
@@ -119,7 +120,7 @@ export class JoinChampionshipComponent implements OnInit {
                 gridToSave.id = null
                 gridToSave.licensePoints = 0
                 gridToSave.points = 0
-                this.gridService.createGridEntry(gridToSave).subscribe(
+                this.gridService.createGridEntry(gridToSave, this.errorSwal).subscribe(
                     response => {
                         if (response) {
                             this.requestSuccessSwal.fire()
@@ -130,7 +131,7 @@ export class JoinChampionshipComponent implements OnInit {
             }
 
             else {
-                    this.gridService.updateGridEntry(gridToSave).subscribe(
+                    this.gridService.updateGridEntry(gridToSave, this.errorSwal).subscribe(
                         response => {
                             if (response) {
                                 this.requestSuccessSwal.fire()
@@ -141,14 +142,12 @@ export class JoinChampionshipComponent implements OnInit {
                 }
             }
         else {
-            this.gridService.createGridEntry(gridToSave).subscribe(
+            this.gridService.createGridEntry(gridToSave, this.errorSwal).subscribe(
                 response => {
                     if (response) {
                         this.requestSuccessSwal.fire()
                         this.router.navigateByUrl('/dashboard');
                     }
-                },
-                error => {
                 });
             }
         }

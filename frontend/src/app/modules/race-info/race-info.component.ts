@@ -5,6 +5,7 @@ import {ExportService} from "../../service/export.service";
 import {Race} from "../../model/Race";
 import { Clipboard } from '@angular/cdk/clipboard';
 import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
+import {Championship} from "../../model/Championship";
 
 
 @Component({
@@ -108,6 +109,11 @@ export class RaceInfoComponent implements OnInit {
     copyToClipboard(championshipId: number, raceId: number) {
         let text: string = "C" + championshipId + "R" + raceId;
         this.clipboard.copy(text);
+    }
+
+    findRaceRound(selectedRace: Race): number {
+        let raceRound = this.selectedChampionship.raceList.findIndex(race => race.id === selectedRace.id) + 1;
+        return raceRound;
     }
 
 }
