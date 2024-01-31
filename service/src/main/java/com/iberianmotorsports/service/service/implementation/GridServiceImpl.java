@@ -141,6 +141,10 @@ public class GridServiceImpl  implements GridService {
         if (!Objects.equals(grid.getCarNumber(), gridToUpdate.getCarNumber())) {
             validateCarNumberForChampionship(gridToUpdate.getChampionship().getId(), grid.getCarNumber());
         }
+        if(!Objects.equals(grid.getTeamName(), gridToUpdate.getTeamName())) {
+            gridToUpdate.setTeamName(grid.getTeamName());
+            validateTeamNameForGrid(gridToUpdate);
+        }
         boolean isTeamSoloChampionship = ChampionshipStyleType.TEAM_SOLO.getValue().equals(gridToUpdate.getChampionship().getStyle());
         boolean isTeamChampionship = ChampionshipStyleType.TEAM.getValue().equals(gridToUpdate.getChampionship().getStyle());
         if (isTeamSoloChampionship) {
@@ -355,7 +359,8 @@ public class GridServiceImpl  implements GridService {
             }
         }
         if(grid.getChampionship().getStyle().equals("TEAM") &&
-            grid.getChampionship().getGridList().stream().anyMatch(gridChamp -> gridChamp.getTeamName().equalsIgnoreCase(grid.getTeamName()))){
+            grid.getChampionship().getGridList().stream().anyMatch(gridChamp -> gridChamp.getTeamName().equalsIgnoreCase(grid.getTeamName())
+                    && !Objects.equals(grid.getId(), gridChamp.getId()))) {
             throw new ServiceException(ErrorMessages.TEAM_NAME_ALREADY_EXISTS.getDescription());
         }
     }

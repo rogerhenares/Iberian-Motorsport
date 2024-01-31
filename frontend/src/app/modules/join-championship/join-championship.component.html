@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <hr>
-                        <ng-container *ngIf="(isDriver() && isGridManager()) || !isDriver() || this.appContext.isAdmin()">
+                        <ng-container *ngIf="((isDriver() && isGridManager()) || !isDriver() || this.appContext.isAdmin())">
                             <div class="btn-block" *ngIf="!history.state.grid">
                                 <button type="submit" class="btn btn-primary" style="color: black">Join</button>
                             </div>
@@ -84,9 +84,11 @@
     title=""
     text=""
     type="success"
-    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    confirmButtonText="{{'swal-confirm' | translate}}"
+    confirmButtonColor="#15B1B0"
     cancelButtonText="{{'swal-cancel' | translate}}"
     timer=2000,
+    [focusCancel]="true"
     className="custom-swal">
 ></swal>
 
@@ -94,19 +96,21 @@
     #requestFailSwal
     title="{{'swal-cancelled.title' | translate}}"
     text="{{'swal-cancelled.text' | translate}}"
-    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
+    confirmButtonText="{{'swal-confirm' | translate}}"
+    confirmButtonColor="#15B1B0"
     cancelButtonText="{{'swal-cancel' | translate}}"
     type="error"
+    [focusCancel]="true"
     timer=4000
     className="custom-swal"
 ></swal>
 
 <swal
-    #carNumberUsed
-    title="{{'carNumberUsed.text' | translate}}"
-    confirmButtonText="{{'swal-confirm' | translate}}"    confirmButtonColor="#15B1B0"
-    cancelButtonText="{{'swal-cancel' | translate}}"
-    type="error"
+    #errorSwal
+    title="{{'swal-error.title' | translate}}"
+    confirmButtonText="{{'swal-confirm' | translate}}"
+    confirmButtonColor="#00FFC0"
+    type="warning"
     timer=4000
     className="custom-swal"
 ></swal>

@@ -25,3 +25,16 @@
 ::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
     color: #00FFC0;
 }
+
+::ng-deep .swal2-title {
+    position: relative;
+    max-width: 100%;
+    margin: 0 0 .4em;
+    padding: 0;
+    color: #FFFD;
+    font-size: 1.875em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: none;
+    word-wrap: break-word;
+}

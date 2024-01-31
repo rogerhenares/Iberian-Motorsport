@@ -5,8 +5,11 @@
     </ng-container>
     <h3 style="color: #ff9800">General Info</h3>
     <ul>
-        <li>name : <span style="color:#00FFC0">IML Iberian Motoresports League | {{this.selectedChampionship.name}} | {{selectedRace.track}} | Round {{findRaceRound(selectedChampionship, selectedRace)}} | #C{{selectedChampionship.id}}R{{selectedRace.id}}</span>
-            <i class="material-icons" style="cursor: pointer; margin-left: 10px;" (click)="copyToClipboard(selectedChampionship.id, selectedRace.id)">content_copy</i>
+        <li>name :
+            <span style="color:#00FFC0">
+                IML Iberian Motoresports League | {{this.selectedChampionship.name}} | {{selectedRace.track}} | Round {{findRaceRound(selectedRace)}} | #C{{selectedChampionship.id}}R{{selectedRace.id}}
+            </span>
+                <i class="material-icons" style="cursor: pointer; margin-left: 10px;" (click)="copyToClipboard(selectedChampionship.id, selectedRace.id)">content_copy</i>
         </li>
         <li *ngIf="selectedChampionship.password">password : <span style="color:#00FFC0">{{selectedChampionship.password}}</span></li>
         <li *ngIf="appContext.isSteward() || appContext.isAdmin()">spectator password : <span style="color:#00FFC0">{{selectedChampionship.spectatorPassword}}</span></li>

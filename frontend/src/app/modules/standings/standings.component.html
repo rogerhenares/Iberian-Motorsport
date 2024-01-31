@@ -60,7 +60,7 @@
                         <ng-container *ngIf="selectedChampionship.style === 'TEAM'">
                             <mat-expansion-panel class="mat-elevation-z0" style="background: transparent; color: #999999; padding-top: 0px; margin-bottom: 1px; padding-right: 0px;" >
                                 <mat-expansion-panel-header>
-                                    <span>{{grid.teamName}}</span>
+                                    <span>{{grid.teamName}}</span> <span *ngIf="fullMode"> &nbsp; ({{grid.carNumber}}) </span>
                                     <span *ngIf="this.isGridDisbled(grid)" style="margin-left: 3px">
                                         <mat-icon style="position: absolute; float: right; margin-left: 5px">cancel</mat-icon>
                                     </span>

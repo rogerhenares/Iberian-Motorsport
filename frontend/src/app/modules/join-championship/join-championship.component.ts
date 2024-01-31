@@ -60,7 +60,7 @@ export class JoinChampionshipComponent implements OnInit {
         this.gridSubmitted = false;
         this.gridForm = this.formBuilder.group({
             carNumber: [this.teamSoloJoin === true? null : this.grid.carNumber, [Validators.required, Validators.pattern('^[0-9]{1,3}$')]],
-            carLicense: [this.teamSoloJoin === true? null : this.grid.carLicense],
+            carLicense: [this.teamSoloJoin === true? "PRO" : this.grid.carLicense],
             championshipId: [this.championship.id],
             driversList: [this.teamSoloJoin === true? null : this.grid.driversList],
             car: [this.championship.carList.find(c => c.id === this.grid?.car?.id) , [Validators.required]],
@@ -68,7 +68,6 @@ export class JoinChampionshipComponent implements OnInit {
             disabled: [this.grid.disabled]
         })
     }
-
 
     join(){
         if(this.gridForm.invalid) {
@@ -111,6 +110,8 @@ export class JoinChampionshipComponent implements OnInit {
                         if (response) {
                             this.requestSuccessSwal.fire()
                             this.router.navigateByUrl('/championship/' + this.championship.id)
+                        } else {
+                            this.grid.driversList.pop();
                         }
                     });
                 }
@@ -125,6 +126,8 @@ export class JoinChampionshipComponent implements OnInit {
                         if (response) {
                             this.requestSuccessSwal.fire()
                             this.router.navigateByUrl('/championship/' + this.championship.id)
+                        } else {
+                            this.grid.driversList.pop();
                         }
                     }
                 )
@@ -136,6 +139,8 @@ export class JoinChampionshipComponent implements OnInit {
                             if (response) {
                                 this.requestSuccessSwal.fire()
                                 this.router.navigateByUrl('/championship/' + this.championship.id)
+                            } else {
+                                this.grid.driversList.pop();
                             }
                         }
                     )
@@ -147,6 +152,8 @@ export class JoinChampionshipComponent implements OnInit {
                     if (response) {
                         this.requestSuccessSwal.fire()
                         this.router.navigateByUrl('/dashboard');
+                    } else {
+                        this.grid.driversList.pop();
                     }
                 });
             }

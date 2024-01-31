@@ -41,10 +41,10 @@ public enum ErrorMessages {
     GRID_PASSWORD_INCORRECT(37, "Grid password is incorrect"),
     BOP_NOT_FOUND(38, "Bop not found"),
     IMPORT_UNABLE_TO_GET_FAST_LAP(39, "Unable to extract fast lap"),
-    TEAM_NAME_ALREADY_EXISTS(40, "Unable to create a grid with an existing Team name"),
-    TEAM_ALREADY_FULL(41, "Unable to create a grid, Team is complete"),
-    TEAM_ALREADY_CREATED_PASSWORD_TO_JOIN_REQUIRED(41, "Unable to create a grid, Team already exists, join using the password"),
-    CAR_TEAM_NOT_EQUAL(42, "Unable to create a grid, Car should be the same"),
+    TEAM_NAME_ALREADY_EXISTS(40, "Team name already exists"),
+    TEAM_ALREADY_FULL(41, "Team is complete"),
+    TEAM_ALREADY_CREATED_PASSWORD_TO_JOIN_REQUIRED(41, "Team already exists, join using the password"),
+    CAR_TEAM_NOT_EQUAL(42, "Unable to join, Car must be the same"),
 
     DEFAULT(999, "");
 
