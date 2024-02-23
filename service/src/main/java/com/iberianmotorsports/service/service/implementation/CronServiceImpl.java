@@ -42,12 +42,11 @@ public class CronServiceImpl implements CronService {
                     raceService.setRaceStatus(raceToBeLaunched, RaceStatus.EXPORTING);
                     exportDataService.exportData(raceToBeLaunched);
                     File raceFolder = exportDataService.getAccServerDir(raceToBeLaunched);
-                    ProcessBuilder processBuilder = new ProcessBuilder(raceFolder.getPath() + File.separator + ACC_SERVER_EXE_NAME);
-                    Process serverProcess = processBuilder.start();
-                    logger.info("CRON JOB: LAUNCHED RACE ID -> {} TRACK -> {} INFO -> {}", raceToBeLaunched.getId(), raceToBeLaunched.getTrack(), serverProcess.info());
-                    //CompletableFuture.runAsync(() -> asyncStopServerAfterRace(serverProcess, raceToBeLaunched));
-                    ExecutorService executorService = Executors.newFixedThreadPool(5);
-                    executorService.submit(() -> asyncStopServerAfterRace(serverProcess, raceToBeLaunched));
+                    ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "cd /d " + raceFolder +" && "+ACC_SERVER_EXE_NAME);
+                    processBuilder.directory(new File(raceFolder.getPath()));
+                    logger.info("Working Directory: " + processBuilder.directory().getAbsolutePath());
+                    processBuilder.start();
+                    logger.info("CRON JOB: LAUNCHED RACE ID -> {} TRACK -> {} DIR -> {}", raceToBeLaunched.getId(), raceToBeLaunched.getTrack(), raceFolder.getPath());
                     raceService.setRaceStatus(raceToBeLaunched, RaceStatus.LAUNCHED);
                 } catch (Exception e){
                     raceService.setRaceStatus(raceToBeLaunched, RaceStatus.EXPORT_FAILED);
@@ -80,24 +79,6 @@ public class CronServiceImpl implements CronService {
                     logger.info("CRON JOB: IMPORTING FAILED RACE ID -> {} TRACK -> {} ERROR -> {}", raceToBeLaunched.getId(), raceToBeLaunched.getTrack(), e.getMessage());
                 }
             }
-        }
-    }
-
-    @Async
-    public void asyncStopServerAfterRace(Process serverProcess, Race raceLaunched) {
-        logger.info("CRON JOB: ASYNC METHOD RACE ID -> {} TRACK -> {}", raceLaunched.getId(), raceLaunched.getTrack());
-        while (!importDataService.isResultsReady(raceLaunched)) {
-            try {
-                logger.info("CRON JOB: THREAD SLEEP RACE ID -> {} TRACK -> {}", raceLaunched.getId(), raceLaunched.getTrack());
-                Thread.sleep(1 * 60 * 1000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        if(importDataService.isResultsReady(raceLaunched)) {
-            logger.info("CRON JOB: STOP RACE ID -> {} TRACK -> {}", raceLaunched.getId(), raceLaunched.getTrack());
-            serverProcess.destroy();
-            raceService.setRaceStatus(raceLaunched, RaceStatus.STOP);
         }
     }
 }

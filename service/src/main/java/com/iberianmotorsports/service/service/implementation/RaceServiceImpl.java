@@ -212,6 +212,7 @@ public class RaceServiceImpl implements RaceService {
         raceList = raceList.stream().map(race -> {
             race.getChampionship().getGridList().size();
             race.getChampionship().getGridList().stream().map(grid -> grid.getDrivers().size()).toList();
+            race.getChampionship().getRaceList().size();
             race.getBopList().size();
             race.getSessionList().size();
             return race;
