@@ -340,5 +340,5 @@
     "uploader-text.clients.consumption.prediction.date":"Enter the date until where the prediction will begin",
     "uploader-text.disclaimer.prediction.date":"The selected date must be a Monday",
 
-    "no-championship-joined-message": "It seems like you are not enrolled in any championship.<br>Why don't you join one?"
+    "no-championship-joined-message": "It seems like you are not enrolled in any championship. Why don't you join one?"
 }

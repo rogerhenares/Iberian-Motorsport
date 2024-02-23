@@ -15,7 +15,6 @@ public interface GridRepository extends JpaRepository<Grid, Long> {
     Optional<Grid> findGridByChampionshipIdAndDriversContains(Long championshipId, User driver);
     Optional<Grid> findGridByChampionshipIdAndCarNumber(Long championshipId, Integer carNumber);
     List<Grid> findGridsByDriversContainsAndDisabledIsFalse(User user);
-
     List<Grid> findGridsByChampionshipIdAndTeamName(Long championshipId, String teamName);
     Grid findGridByPassword(String password);
 }

@@ -341,5 +341,5 @@
     "uploader-text.clients.consumption.prediction.date":"Introduzca la fecha hasta donde se empezara a realizar la predicción",
     "uploader-text.disclaimer.prediction.date":"La fecha seleccionada debe ser un Lunes",
 
-    "no-championship-joined-message":"Parece que no te has unido a ningún campeonato<br> ¿Por qué no te unes a uno?"
+    "no-championship-joined-message":"Parece que no te has unido a ningún campeonato. ¿Por qué no te unes a uno?"
 }

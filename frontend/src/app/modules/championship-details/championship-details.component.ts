@@ -23,7 +23,7 @@ export class ChampionshipDetailsComponent implements OnInit {
     @ViewChild('requestFailSwal', {static : true}) requestFailSwal: SwalComponent;
     @ViewChild('requestSuccessSwal', {static : true}) requestSuccessSwal: SwalComponent;
     @ViewChild('profileNotCompletedSwal', {static: true}) profileNotCompletedSwal: SwalComponent;
-
+    @ViewChild('teamCodeCopiedToClipBoardCompletedSwal', {static: true}) teamCodeCopiedToClipBoardCompletedSwal: SwalComponent;
     @ViewChild(StandingsComponent, {static: true}) standings: StandingsComponent;
 
     races: Race[];
@@ -198,6 +198,7 @@ export class ChampionshipDetailsComponent implements OnInit {
     }
     copyToClipboard(grid: Grid) {
         this.clipboard.copy(grid.password);
+        this.teamCodeCopiedToClipBoardCompletedSwal.fire();
     }
 
 }

@@ -45,6 +45,9 @@ public enum ErrorMessages {
     TEAM_ALREADY_FULL(41, "Team is complete"),
     TEAM_ALREADY_CREATED_PASSWORD_TO_JOIN_REQUIRED(41, "Team already exists, join using the password"),
     CAR_TEAM_NOT_EQUAL(42, "Unable to join, Car must be the same"),
+    TEAM_ALREADY_HAVE_TWO_GRIDS(43, "Unable to join, Team has already two drivers"),
+    TEAM_SOLO_NOT_FOUND(44, "Unable to join, Team not found"),
+    TEAM_SOLO_CAR_NOT_MATCHES(45, "Unable to join, Must use the same car model"),
 
     DEFAULT(999, "");
 

@@ -28,8 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.iberianmotorsports.service.ErrorMessages.GRID_DRIVER_NOT_ALLOWED;
-import static com.iberianmotorsports.service.ErrorMessages.GRID_PASSWORD_INCORRECT;
+import static com.iberianmotorsports.service.ErrorMessages.*;
 
 @AllArgsConstructor
 @Transactional
@@ -87,12 +86,17 @@ public class GridServiceImpl  implements GridService {
         grid.setCarLicense("PRO");
         grid.setDisabled(Boolean.FALSE);
 
-        if (!ChampionshipStyleType.SOLO.getValue().equals(grid.getChampionship().getStyle())) {
-            String generatedString = RandomStringUtils.random(5, true, true);
-            while (findGridByPassword(generatedString) != null) {
-                generatedString = RandomStringUtils.random(5, true, true);
+        if(ChampionshipStyleType.TEAM_SOLO.getValue().equals(grid.getChampionship().getStyle())) {
+            if(!grid.getPassword().isBlank()) {
+                List<Grid> teamGrid = gridRepository.findGridsByChampionshipIdAndTeamName(
+                        grid.getChampionship().getId(), grid.getTeamName());
+                validationForTeamSoloJoin(teamGrid, grid);
+                grid.setCar(teamGrid.get(0).getCar());
             }
-            grid.setPassword(generatedString.toUpperCase());
+        }
+        if (!ChampionshipStyleType.SOLO.getValue().equals(grid.getChampionship().getStyle()) &&
+                grid.getPassword().isBlank()) {
+            grid.setPassword(generateGridPassword());
         }
 
         Grid createdGrid = gridRepository.saveAndFlush(grid);
@@ -112,6 +116,14 @@ public class GridServiceImpl  implements GridService {
         else {
             throw new ServiceException(GRID_PASSWORD_INCORRECT.getDescription());
         }
+    }
+
+    private String generateGridPassword(){
+        String generatedString = RandomStringUtils.random(5, true, true);
+        while (findGridByPassword(generatedString) != null) {
+            generatedString = RandomStringUtils.random(5, true, true);
+        }
+        return generatedString.toUpperCase();
     }
 
     @Override
@@ -136,61 +148,68 @@ public class GridServiceImpl  implements GridService {
         Grid grid = gridMapper.apply(gridDTO);
         Grid gridToUpdate = getGridById(grid.getId());
         Car carToUpdate = carService.getCarById(grid.getCar().getId());
-        List<Grid> gridTeamSolo = List.of();
         validateLoggedUserFromGrid(gridToUpdate);
         if (!Objects.equals(grid.getCarNumber(), gridToUpdate.getCarNumber())) {
             validateCarNumberForChampionship(gridToUpdate.getChampionship().getId(), grid.getCarNumber());
         }
-        if(!Objects.equals(grid.getTeamName(), gridToUpdate.getTeamName())) {
-            gridToUpdate.setTeamName(grid.getTeamName());
-            validateTeamNameForGrid(gridToUpdate);
-        }
         boolean isTeamSoloChampionship = ChampionshipStyleType.TEAM_SOLO.getValue().equals(gridToUpdate.getChampionship().getStyle());
-        boolean isTeamChampionship = ChampionshipStyleType.TEAM.getValue().equals(gridToUpdate.getChampionship().getStyle());
         if (isTeamSoloChampionship) {
-            gridTeamSolo = gridRepository.findGridsByChampionshipIdAndTeamName(
-                    gridToUpdate.getChampionship().getId(),
-                    gridToUpdate.getTeamName());
-        }
-        if (!gridToUpdate.getChampionship().getStarted() || RoleType.isAdminFromAuthentication()) {
-            if(isTeamSoloChampionship) {
-                gridTeamSolo = gridTeamSolo.stream().map(gridTeam -> {
-                    gridTeam.setTeamName(grid.getTeamName());
-                    gridTeam.setCar(carToUpdate);
-                    return gridTeam;
-                }).toList();
-            }else {
-                gridToUpdate.setTeamName(grid.getTeamName());
-                gridToUpdate.setCar(grid.getCar());
-            }
-            gridToUpdate.setCarNumber(grid.getCarNumber());
-        } else {
-            if(isTeamSoloChampionship) {
-                gridTeamSolo = gridTeamSolo.stream().map(gridTeam -> {
-                    gridTeam.setCar(carToUpdate);
-                    return gridTeam;
-                }).toList();
-            }else {
-                gridToUpdate.setTeamName(grid.getTeamName());
-            }
-            gridToUpdate.setTeamName(grid.getTeamName());
-        }
-        if (RoleType.isAdminFromAuthentication()) {
-            gridToUpdate.setCarLicense(grid.getCarLicense());
-        }
-        if (grid.getNewManagerId() != null){
-            GridUser gridUser = gridUserRepository.findGridUserByPrimaryKeyGridIdAndGridManagerTrue(grid.getId().intValue());
-            gridUser.setGridManager(Boolean.FALSE);
-            gridUserRepository.save(gridUser);
-
-            setGridManager(userService.findUserById(grid.getNewManagerId()), gridToUpdate);
-        }
-        if(isTeamSoloChampionship) {
-            gridRepository.saveAll(gridTeamSolo);
-        } else {
-            gridRepository.save(gridToUpdate);
+            upgradeTeamSoloGrid(gridToUpdate, grid, carToUpdate);
+        }else {
+            updateGrid(gridToUpdate, grid, carToUpdate);
         }
         return gridToUpdate;
+    }
+
+    private void upgradeTeamSoloGrid(Grid gridToUpdate, Grid gridUpdate, Car carToUpdate) {
+        boolean isTeamNameValidationRequired = !Objects.equals(gridUpdate.getTeamName(), gridToUpdate.getTeamName());
+        if(isTeamNameValidationRequired) {
+            gridUpdate.setChampionship(gridToUpdate.getChampionship());
+            validateTeamNameForGrid(gridUpdate);
+        }
+        List<Grid> gridTeamSolo = gridRepository.findGridsByChampionshipIdAndTeamName(
+                gridToUpdate.getChampionship().getId(),
+                gridToUpdate.getTeamName());
+        gridTeamSolo = (!gridToUpdate.getChampionship().getStarted() || RoleType.isAdminFromAuthentication()) ?
+                gridTeamSolo.stream().map(gridTeam -> {
+                    gridTeam.setTeamName(gridUpdate.getTeamName());
+                    gridTeam.setCar(carToUpdate);
+                    if(gridTeam.getDrivers().contains(gridToUpdate.getDrivers().get(0))){
+                        gridTeam.setCarNumber(gridUpdate.getCarNumber());
+                    }
+                    if (RoleType.isAdminFromAuthentication()) {
+                        gridToUpdate.setCarLicense(gridUpdate.getCarLicense());
+                    }
+                    return gridTeam;
+                }).toList() :
+                gridTeamSolo.stream().map(gridTeam -> {
+                    gridTeam.setTeamName(gridToUpdate.getTeamName());
+                    return gridTeam;
+                }).toList();
+        gridRepository.saveAll(gridTeamSolo);
+    }
+
+    private void updateGrid(Grid gridToUpdate, Grid gridUpdate, Car carToUpdate) {
+
+        if (!gridToUpdate.getChampionship().getStarted() || RoleType.isAdminFromAuthentication()) {
+            gridToUpdate.setCar(carToUpdate);
+            gridToUpdate.setCarNumber(gridUpdate.getCarNumber());
+        }
+        if(!Objects.equals(gridUpdate.getTeamName(), gridToUpdate.getTeamName())) {
+            gridUpdate.setChampionship(gridToUpdate.getChampionship());
+            validateTeamNameForGrid(gridUpdate);
+            gridToUpdate.setTeamName(gridUpdate.getTeamName());
+        }
+        if (RoleType.isAdminFromAuthentication()) {
+            gridToUpdate.setCarLicense(gridUpdate.getCarLicense());
+        }
+        if (gridUpdate.getNewManagerId() != null){
+            GridUser gridUser = gridUserRepository.findGridUserByPrimaryKeyGridIdAndGridManagerTrue(gridUpdate.getId().intValue());
+            gridUser.setGridManager(Boolean.FALSE);
+            gridUserRepository.save(gridUser);
+            setGridManager(userService.findUserById(gridUpdate.getNewManagerId()), gridToUpdate);
+        }
+        gridRepository.save(gridToUpdate);
     }
 
     @Override
@@ -373,6 +392,18 @@ public class GridServiceImpl  implements GridService {
 
     private boolean isPasswordCorrect(String password, Grid grid){
         return password.equals(grid.getPassword());
+    }
+
+    private void validationForTeamSoloJoin(List<Grid> teamGrid, Grid grid) {
+        if(teamGrid.size() > 2) {
+            throw new ServiceException(TEAM_ALREADY_HAVE_TWO_GRIDS.getDescription());
+        }
+        if(teamGrid.isEmpty()) {
+            throw new ServiceException(TEAM_SOLO_NOT_FOUND.getDescription());
+        }
+        if(!teamGrid.get(0).getPassword().equalsIgnoreCase(grid.getPassword())){
+            throw new ServiceException(GRID_PASSWORD_INCORRECT.getDescription());
+        }
     }
 
 }
